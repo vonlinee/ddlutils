@@ -19,15 +19,6 @@ package org.apache.ddlutils.platform.mckoi;
  * under the License.
  */
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Types;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
@@ -43,210 +34,185 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 /**
  * The Mckoi database platform implementation.
- * 
+ *
  * @version $Revision: 231306 $
  */
-public class MckoiPlatform extends PlatformImplBase
-{
-    /** Database name of this platform. */
-    public static final String DATABASENAME     = "McKoi";
-    /** The standard McKoi jdbc driver. */
-    public static final String JDBC_DRIVER      = "com.mckoi.JDBCDriver";
-    /** The subprotocol used by the standard McKoi driver. */
-    public static final String JDBC_SUBPROTOCOL = "mckoi";
+public class MckoiPlatform extends PlatformImplBase {
+  /**
+   * Database name of this platform.
+   */
+  public static final String DATABASENAME = "McKoi";
+  /**
+   * The standard McKoi jdbc driver.
+   */
+  public static final String JDBC_DRIVER = "com.mckoi.JDBCDriver";
+  /**
+   * The subprotocol used by the standard McKoi driver.
+   */
+  public static final String JDBC_SUBPROTOCOL = "mckoi";
 
-    /**
-     * Creates a new platform instance.
-     */
-    public MckoiPlatform()
-    {
-        PlatformInfo info = getPlatformInfo();
+  /**
+   * Creates a new platform instance.
+   */
+  public MckoiPlatform() {
+    PlatformInfo info = getPlatformInfo();
 
-        info.setIndicesSupported(false);
-        info.setIndicesEmbedded(true);
-        info.setDefaultValueUsedForIdentitySpec(true);
-        info.setAutoCommitModeForLastIdentityValueReading(false);
+    info.setIndicesSupported(false);
+    info.setIndicesEmbedded(true);
+    info.setDefaultValueUsedForIdentitySpec(true);
+    info.setAutoCommitModeForLastIdentityValueReading(false);
 
-        info.addNativeTypeMapping(Types.ARRAY,    "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.BIT,      "BOOLEAN", Types.BOOLEAN);
-        info.addNativeTypeMapping(Types.DATALINK, "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.DISTINCT, "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.FLOAT,    "DOUBLE",  Types.DOUBLE);
-        info.addNativeTypeMapping(Types.NULL,     "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.OTHER,    "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.REF,      "BLOB",    Types.BLOB);
-        info.addNativeTypeMapping(Types.STRUCT,   "BLOB",    Types.BLOB);
+    info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.BIT, "BOOLEAN", Types.BOOLEAN);
+    info.addNativeTypeMapping(Types.DATALINK, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.DISTINCT, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.FLOAT, "DOUBLE", Types.DOUBLE);
+    info.addNativeTypeMapping(Types.NULL, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.OTHER, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.REF, "BLOB", Types.BLOB);
+    info.addNativeTypeMapping(Types.STRUCT, "BLOB", Types.BLOB);
 
-        info.setDefaultSize(Types.CHAR,      1024);
-        info.setDefaultSize(Types.VARCHAR,   1024);
-        info.setDefaultSize(Types.BINARY,    1024);
-        info.setDefaultSize(Types.VARBINARY, 1024);
-        
-        setSqlBuilder(new MckoiBuilder(this));
-        setModelReader(new MckoiModelReader(this));
-    }
+    info.setDefaultSize(Types.CHAR, 1024);
+    info.setDefaultSize(Types.VARCHAR, 1024);
+    info.setDefaultSize(Types.BINARY, 1024);
+    info.setDefaultSize(Types.VARBINARY, 1024);
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName()
-    {
-        return DATABASENAME;
-    }
+    setSqlBuilder(new MckoiBuilder(this));
+    setModelReader(new MckoiModelReader(this));
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException
-    {
-        // For McKoi, you create databases by simply appending "?create=true" to the connection url
-        if (JDBC_DRIVER.equals(jdbcDriverClassName))
-        {
-            StringBuffer creationUrl = new StringBuffer();
-            Connection   connection  = null;
+  /**
+   * {@inheritDoc}
+   */
+  public String getName() {
+    return DATABASENAME;
+  }
 
-            creationUrl.append(connectionUrl);
-            // TODO: It might be safer to parse the URN and check whethere there is already a parameter there
-            //       (in which case e'd have to use '&' instead)
-            creationUrl.append("?create=true");
-            if ((parameters != null) && !parameters.isEmpty())
-            {
-                for (Iterator it = parameters.entrySet().iterator(); it.hasNext();)
-                {
-                    Map.Entry entry = (Map.Entry)it.next();
+  /**
+   * {@inheritDoc}
+   */
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException {
+    // For McKoi, you create databases by simply appending "?create=true" to the connection url
+    if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
+      StringBuffer creationUrl = new StringBuffer();
+      Connection connection = null;
 
-                    // no need to specify create twice (and create=false wouldn't help anyway)
-                    if (!"create".equalsIgnoreCase(entry.getKey().toString()))
-                    {
-                        creationUrl.append("&");
-                        creationUrl.append(entry.getKey().toString());
-                        creationUrl.append("=");
-                        if (entry.getValue() != null)
-                        {
-                            creationUrl.append(entry.getValue().toString());
-                        }
-                    }
-                }
+      creationUrl.append(connectionUrl);
+      // TODO: It might be safer to parse the URN and check whethere there is already a parameter there
+      //       (in which case e'd have to use '&' instead)
+      creationUrl.append("?create=true");
+      if ((parameters != null) && !parameters.isEmpty()) {
+        for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
+          Map.Entry entry = (Map.Entry) it.next();
+
+          // no need to specify create twice (and create=false wouldn't help anyway)
+          if (!"create".equalsIgnoreCase(entry.getKey().toString())) {
+            creationUrl.append("&");
+            creationUrl.append(entry.getKey().toString());
+            creationUrl.append("=");
+            if (entry.getValue() != null) {
+              creationUrl.append(entry.getValue());
             }
-            if (getLog().isDebugEnabled())
-            {
-                getLog().debug("About to create database using this URL: "+creationUrl.toString());
-            }
-            try
-            {
-                Class.forName(jdbcDriverClassName);
-
-                connection = DriverManager.getConnection(creationUrl.toString(), username, password);
-                logWarnings(connection);
-            }
-            catch (Exception ex)
-            {
-                throw new DatabaseOperationException("Error while trying to create a database", ex);
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    try
-                    {
-                        connection.close();
-                    }
-                    catch (SQLException ex)
-                    {}
-                }
-            }
+          }
         }
-        else
-        {
-            throw new UnsupportedOperationException("Unable to create a McKoi database via the driver "+jdbcDriverClassName);
+      }
+      if (getLog().isDebugEnabled()) {
+        getLog().debug("About to create database using this URL: " + creationUrl);
+      }
+      try {
+        Class.forName(jdbcDriverClassName);
+
+        connection = DriverManager.getConnection(creationUrl.toString(), username, password);
+        logWarnings(connection);
+      } catch (Exception ex) {
+        throw new DatabaseOperationException("Error while trying to create a database", ex);
+      } finally {
+        if (connection != null) {
+          try {
+            connection.close();
+          } catch (SQLException ex) {
+          }
         }
+      }
+    } else {
+      throw new UnsupportedOperationException("Unable to create a McKoi database via the driver " + jdbcDriverClassName);
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate()
-    {
-        return new DefaultTableDefinitionChangesPredicate()
-        {
-            public boolean areSupported(Table intermediateTable, List changes)
-            {
-                // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
-                // Thus, we reject all table level changes and instead redefine the handling of the
-                // RecreateTableChange
-                return false;
-            }
-        };
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void processChange(Database currentModel, CreationParameters params, RecreateTableChange change) throws IOException
-    {
+  /**
+   * {@inheritDoc}
+   */
+  protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
+    return new DefaultTableDefinitionChangesPredicate() {
+      public boolean areSupported(Table intermediateTable, List changes) {
         // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
-        // We only have to handle auto-increment changes manually
-        MckoiBuilder sqlBuilder   = (MckoiBuilder)getSqlBuilder();
-        Table        changedTable = findChangedTable(currentModel, change);
+        // Thus, we reject all table level changes and instead redefine the handling of the
+        // RecreateTableChange
+        return false;
+      }
+    };
+  }
 
-        for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext();)
-        {
-            TableChange tableChange = (TableChange)it.next();
+  /**
+   * {@inheritDoc}
+   */
+  public void processChange(Database currentModel, CreationParameters params, RecreateTableChange change) throws IOException {
+    // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
+    // We only have to handle auto-increment changes manually
+    MckoiBuilder sqlBuilder = (MckoiBuilder) getSqlBuilder();
+    Table changedTable = findChangedTable(currentModel, change);
 
-            if (tableChange instanceof ColumnDefinitionChange)
-            {
-                ColumnDefinitionChange colChange  = (ColumnDefinitionChange)tableChange;
-                Column                 origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
-                Column                 newColumn  = colChange.getNewColumn();
+    for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
+      TableChange tableChange = (TableChange) it.next();
 
-                if (!origColumn.isAutoIncrement() && newColumn.isAutoIncrement())
-                {
-                    sqlBuilder.createAutoIncrementSequence(changedTable, origColumn);
-                }
-            }
-            else if (tableChange instanceof AddColumnChange)
-            {
-                AddColumnChange addColumnChange = (AddColumnChange)tableChange;
+      if (tableChange instanceof ColumnDefinitionChange colChange) {
+        Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
+        Column newColumn = colChange.getNewColumn();
 
-                if (addColumnChange.getNewColumn().isAutoIncrement())
-                {
-                    sqlBuilder.createAutoIncrementSequence(changedTable, addColumnChange.getNewColumn());
-                }
-            }
+        if (!origColumn.isAutoIncrement() && newColumn.isAutoIncrement()) {
+          sqlBuilder.createAutoIncrementSequence(changedTable, origColumn);
         }
+      } else if (tableChange instanceof AddColumnChange addColumnChange) {
 
-        Map parameters = (params == null ? null : params.getParametersFor(changedTable));
-        
-        sqlBuilder.writeRecreateTableStmt(currentModel, change.getTargetTable(), parameters);
-
-        // we have to defer removal of the sequences until they are no longer used
-        for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext();)
-        {
-            TableChange tableChange = (TableChange)it.next();
-    
-            if (tableChange instanceof ColumnDefinitionChange)
-            {
-                ColumnDefinitionChange colChange  = (ColumnDefinitionChange)tableChange;
-                Column                 origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
-                Column                 newColumn  = colChange.getNewColumn();
-
-                if (origColumn.isAutoIncrement() && !newColumn.isAutoIncrement())
-                {
-                    sqlBuilder.dropAutoIncrementSequence(changedTable, origColumn);
-                }
-            }
-            else if (tableChange instanceof RemoveColumnChange)
-            {
-                RemoveColumnChange removeColumnChange = (RemoveColumnChange)tableChange;
-                Column             removedColumn      = changedTable.findColumn(removeColumnChange.getChangedColumn(), isDelimitedIdentifierModeOn());
-
-                if (removedColumn.isAutoIncrement())
-                {
-                    sqlBuilder.dropAutoIncrementSequence(changedTable, removedColumn);
-                }
-            }
+        if (addColumnChange.getNewColumn().isAutoIncrement()) {
+          sqlBuilder.createAutoIncrementSequence(changedTable, addColumnChange.getNewColumn());
         }
+      }
     }
+
+    Map parameters = (params == null ? null : params.getParametersFor(changedTable));
+
+    sqlBuilder.writeRecreateTableStmt(currentModel, change.getTargetTable(), parameters);
+
+    // we have to defer removal of the sequences until they are no longer used
+    for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
+      TableChange tableChange = (TableChange) it.next();
+
+      if (tableChange instanceof ColumnDefinitionChange colChange) {
+        Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
+        Column newColumn = colChange.getNewColumn();
+
+        if (origColumn.isAutoIncrement() && !newColumn.isAutoIncrement()) {
+          sqlBuilder.dropAutoIncrementSequence(changedTable, origColumn);
+        }
+      } else if (tableChange instanceof RemoveColumnChange removeColumnChange) {
+        Column removedColumn = changedTable.findColumn(removeColumnChange.getChangedColumn(), isDelimitedIdentifierModeOn());
+
+        if (removedColumn.isAutoIncrement()) {
+          sqlBuilder.dropAutoIncrementSequence(changedTable, removedColumn);
+        }
+      }
+    }
+  }
 }

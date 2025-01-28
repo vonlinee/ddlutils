@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>DB 2</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       The DdlUtils support for <a href="ext:db2">IBM DB2</a> is based upon version <strong>7</strong>.
       The datatypes and SQL elements in DB2 are described in the
@@ -39,28 +39,50 @@
       Platform identifiers:
     </p>
     <ul>
-      <li><code>DB2</code> for the v7 platform</li>
-      <li><code>DB2v8</code> for the v8 platform</li>
+      <li>
+        <code>DB2</code>
+        for the v7 platform
+      </li>
+      <li>
+        <code>DB2v8</code>
+        for the v8 platform
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC drivers:
     </p>
     <ul>
-      <li><code>com.ibm.db2.jcc.DB2Driver</code></li>
-      <li><code>COM.ibm.db2.jdbc.app.DB2Driver</code></li>
-      <li><code>COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver</code></li>
-      <li><code>com.ibm.as400.access.AS400JDBCDriver</code></li>
+      <li>
+        <code>com.ibm.db2.jcc.DB2Driver</code>
+      </li>
+      <li>
+        <code>COM.ibm.db2.jdbc.app.DB2Driver</code>
+      </li>
+      <li>
+        <code>COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver</code>
+      </li>
+      <li>
+        <code>com.ibm.as400.access.AS400JDBCDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocols:
     </p>
     <ul>
-      <li><code>jdbc:db2</code></li>
-      <li><code>jdbc:db2os390</code></li>
-      <li><code>jdbc:2os390sqlj</code></li>
-      <li><code>jdbc:as400</code></li>
+      <li>
+        <code>jdbc:db2</code>
+      </li>
+      <li>
+        <code>jdbc:db2os390</code>
+      </li>
+      <li>
+        <code>jdbc:2os390sqlj</code>
+      </li>
+      <li>
+        <code>jdbc:as400</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -75,11 +97,13 @@
       <tr>
         <td class="platformPropName">The database's maximum identifier length</td>
         <td class="platformPropValue">18 for the v7 platform<br/>The v8 platform supports 128 characters
-                                      for identifiers (e.g. table names), 30 characters for column names,
-                                      and 18 for constraints and foreign keys</td>
+          for identifiers (e.g. table names), 30 characters for column names,
+          and 18 for constraints and foreign keys
+        </td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -91,7 +115,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -136,8 +161,10 @@
       <tr>
         <td>BIT</td>
         <td>SMALLINT</td>
-        <td>DB2 has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>DB2 has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>BLOB</td>
@@ -147,8 +174,10 @@
       <tr>
         <td>BOOLEAN</td>
         <td>SMALLINT</td>
-        <td>DB2 has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>DB2 has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>CHAR</td>

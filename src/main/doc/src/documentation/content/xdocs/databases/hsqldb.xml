@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>HsqlDB</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       DdlUtils supports the <a href="ext:hsqldb">HSQLDB</a> database, version <strong>1.7.2</strong> or newer.
       SQL Documentation for HSQLDB can be found in the distribution, and for the newest version
@@ -33,21 +33,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>HsqlDb</code></li>
+      <li>
+        <code>HsqlDb</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>org.hsqldb.jdbcDriver</code></li>
+      <li>
+        <code>org.hsqldb.jdbcDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:hsqldb</code></li>
+      <li>
+        <code>jdbc:hsqldb</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -64,7 +70,8 @@
         <td class="platformPropValue">unlimited</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -76,7 +83,8 @@
         <td class="platformPropValue">no</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -243,8 +251,10 @@
       <tr>
         <td>TINYINT</td>
         <td>SMALLINT</td>
-        <td>JDBC's TINYINT requires a value range of -255 to 255, but HsqlDb's is only -128 to 127<br/>
-            Will be read back as SMALLINT</td>
+        <td>JDBC's TINYINT requires a value range of -255 to 255, but HsqlDb's is only -128 to 127
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>VARBINARY</td>

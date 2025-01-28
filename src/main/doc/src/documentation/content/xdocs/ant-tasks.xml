@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
-    <title>Using DdlUtils' Ant tasks</title> 
-  </header> 
-  <body> 
+<document>
+  <header>
+    <title>Using DdlUtils' Ant tasks</title>
+  </header>
+  <body>
     <section>
       <title>DdlUtils' Ant tasks</title>
       <p>
@@ -58,8 +58,8 @@
     </fileset>
 
     <createDatabase failonerror="false"/>
-    <writeSchemaToDatabase/> 
-    <writeDataToDatabase datafile="src/data/data.xml"/> 
+    <writeSchemaToDatabase/>
+    <writeDataToDatabase datafile="src/data/data.xml"/>
   </ddlToDatabase>
 </target>]]></source>
       <p>
@@ -113,7 +113,8 @@
     <section>
       <title>DdlToDatabaseTask reference</title>
       <p>
-        Class name: <code>org.apache.ddlutils.task.DdlToDatabaseTask</code>
+        Class name:
+        <code>org.apache.ddlutils.task.DdlToDatabaseTask</code>
       </p>
       <p>
         This is the container for sub tasks that operate in the direction file -> database, eg.
@@ -133,7 +134,8 @@
           <td>databaseType</td>
           <td>no</td>
           <td>axion, cloudscape, db2, derby, firebird, hsqldb, interbase, maxdb, mckoi, mssql,
-              mysql, mysql5, oracle, oracle9, oracle10, postgresql, sapdb, sybase</td>
+            mysql, mysql5, oracle, oracle9, oracle10, postgresql, sapdb, sybase
+          </td>
           <td></td>
           <td>
             The database type. You should only need to specify this if DdlUtils is not able to
@@ -149,7 +151,8 @@
           <td></td>
           <td>
             The single file that contains the database file. Use this instead of an embedded
-            <code>fileset</code> if you only have one schema file.
+            <code>fileset</code>
+            if you only have one schema file.
           </td>
         </tr>
         <tr>
@@ -174,7 +177,8 @@
             In most databases, undelimited identifiers will be converted to uppercase by the database,
             and the case of the identifier is ignored when performing any SQL command. Undelimited
             identifiers can contain only alphanumerical characters and the underscore. Also, no reserved
-            words can be used as such identifiers.<br/>
+            words can be used as such identifiers.
+            <br/>
             The limitations do not exist for delimited identifiers. However case of the identifier will be
             important in every SQL command executed against the database.
           </td>
@@ -216,11 +220,23 @@
           for the supported properties. Usually you only need to specify
         </p>
         <ul>
-          <li><code>url</code> - the jdbc connection url</li>
-          <li><code>driverClassName</code> - the fully qualified class name of the jdbc driver
-              (which must be in the classpath that you used to define the DdlToDatabaseTask task)</li>
-          <li><code>username</code> - the username</li>
-          <li><code>password</code> - the password</li>
+          <li>
+            <code>url</code>
+            - the jdbc connection url
+          </li>
+          <li>
+            <code>driverClassName</code>
+            - the fully qualified class name of the jdbc driver
+            (which must be in the classpath that you used to define the DdlToDatabaseTask task)
+          </li>
+          <li>
+            <code>username</code>
+            - the username
+          </li>
+          <li>
+            <code>password</code>
+            - the password
+          </li>
         </ul>
       </section>
       <section>
@@ -228,7 +244,8 @@
         <p>
           The sub task for creating the target database. Note that this is only supported on some database
           platforms. See <a href="site:documentation/database-support">here</a> for details on which
-          platforms support this.<br/>
+          platforms support this.
+          <br/>
           This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
           the <code>schemaFile</code> attribute can be omitted.
         </p>
@@ -266,8 +283,10 @@
               <td>yes</td>
               <td></td>
               <td></td>
-              <td>Specifies the name of the parameter. See <a href="site:documentation/database-support">here</a>
-                  for the parameters supported by the individual platforms.</td>
+              <td>Specifies the name of the parameter. See
+                <a href="site:documentation/database-support">here</a>
+                for the parameters supported by the individual platforms.
+              </td>
             </tr>
             <tr>
               <td>platforms</td>
@@ -276,7 +295,8 @@
               <td></td>
               <td>
                 Comma-separated list of platforms where the parameter shall be processed (see
-                <code>databaseType</code> attribute above for the Possible&nbsp;values). For every platform
+                <code>databaseType</code>
+                attribute above for the Possible&nbsp;values). For every platform
                 not in this list, the parameter is ignored. If none is given, then the parameter
                 is processed for every platform.
               </td>
@@ -286,7 +306,8 @@
               <td>no</td>
               <td></td>
               <td></td>
-              <td>The parameter value. If none is given, <code>null</code> is used.</td>
+              <td>The parameter value. If none is given, <code>null</code> is used.
+              </td>
             </tr>
           </table>
         </section>
@@ -296,7 +317,8 @@
         <p>
           The sub task for dropping the target database. Note that this is only supported on some database
           platforms. See <a href="site:documentation/database-support">here</a> for details on which
-          platforms support this.<br/>
+          platforms support this.
+          <br/>
           This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
           the <code>schemaFile</code> attribute can be omitted.
         </p>
@@ -320,7 +342,8 @@
       <section>
         <title>Subtask: writeDtdToFile</title>
         <p>
-          Creates a DTD that specifies the layout for data XML files.<br/>
+          Creates a DTD that specifies the layout for data XML files.
+          <br/>
           This sub task does not require a database connection, so the <code>dataSource</code> subelement
           can be omitted.
         </p>
@@ -368,7 +391,8 @@
             <td>true, false</td>
             <td>true</td>
             <td>Specifies whether DdlUtils shall alter existing tables rather than dropping them and
-                creating them new.</td>
+              creating them new.
+            </td>
           </tr>
           <tr>
             <td>doDrops</td>
@@ -378,7 +402,8 @@
             <td>
               Whether tables and external constraints can be dropped if necessary. Note that this is also
               relevant when <code>alterDatabase</code> is <code>true</code>. For instance, a table has a
-              foreign key constraint in the database but not in the schema. If <code>doDrops = true</code>
+              foreign key constraint in the database but not in the schema. If
+              <code>doDrops = true</code>
               then DdlUtils will drop the constraint, otherwise it will be unchanged thus possibly leading
               to unexpected errors.
             </td>
@@ -413,8 +438,10 @@
               <td>yes</td>
               <td></td>
               <td></td>
-              <td>Specifies the name of the parameter. See <a href="site:documentation/database-support">here</a>
-                  for the parameters supported by the individual platforms.</td>
+              <td>Specifies the name of the parameter. See
+                <a href="site:documentation/database-support">here</a>
+                for the parameters supported by the individual platforms.
+              </td>
             </tr>
             <tr>
               <td>platforms</td>
@@ -423,7 +450,8 @@
               <td></td>
               <td>
                 Comma-separated list of platforms where the parameter shall be processed (see
-                <code>databaseType</code> attribute above for the Possible&nbsp;values). For every platform
+                <code>databaseType</code>
+                attribute above for the Possible&nbsp;values). For every platform
                 not in this list, the parameter is ignored. If none is given, then the parameter
                 is processed for every platform.
               </td>
@@ -447,7 +475,8 @@
               <td>no</td>
               <td></td>
               <td></td>
-              <td>The parameter value. If none is given, <code>null</code> is used.</td>
+              <td>The parameter value. If none is given, <code>null</code> is used.
+              </td>
             </tr>
           </table>
         </section>
@@ -458,7 +487,8 @@
           Creates the SQL commands necessary to create the schema in the database that is described by
           the schema XML files specified for the enclosing task. Note that this subtask requires either
           the specification of the data source in the enclosing task, or the use of the
-          <code>databaseType</code> attribute at the enclosing task.
+          <code>databaseType</code>
+          attribute at the enclosing task.
         </p>
         <table>
           <tr>
@@ -515,7 +545,8 @@
           inserted, then the dependent ones. Obviously this requires that no circular references exist
           in the schema (DdlUtils currently does not check this). Also, the referenced entries must be
           present in the data, otherwise the task will fail. This behavior can be turned off via the
-          <code>ensureForeignKeyOrder</code> attribute.
+          <code>ensureForeignKeyOrder</code>
+          attribute.
         </p>
         <p>
           In order to define data for foreign key dependencies that use auto-incrementing primary keys,
@@ -536,8 +567,10 @@
             <td></td>
             <td>1</td>
             <td>The maximum number of insert statements to combine in one batch. The number typically
-                depends on the JDBC driver and the amount of available memory.<br/>
-                This value is only used if <code>useBatchMode</code> is <code>true</code>.</td>
+              depends on the JDBC driver and the amount of available memory.
+              <br/>
+              This value is only used if <code>useBatchMode</code> is <code>true</code>.
+            </td>
           </tr>
           <tr>
             <td>dataFile</td>
@@ -552,7 +585,8 @@
             <td>true, false</td>
             <td>true</td>
             <td>Whether DdlUtils shall honor the foreign key order or simply assume that the entry
-                order is ok.</td>
+              order is ok.
+            </td>
           </tr>
           <tr>
             <td>failOnError</td>
@@ -567,10 +601,11 @@
             <td>true, false</td>
             <td>false</td>
             <td>Whether DdlUtils shall use batch-mode for inserting the data. In this mode, insert statements
-                for the same table are bundled together and executed as one statement which can be a lot
-                faster than single insert statements. To achieve the highest performance, you should group
-                the data in the XML file according to the tables because a batch insert only works for one
-                table which means when the table changes the batch is executed and a new one will be started.</td>
+              for the same table are bundled together and executed as one statement which can be a lot
+              faster than single insert statements. To achieve the highest performance, you should group
+              the data in the XML file according to the tables because a batch insert only works for one
+              table which means when the table changes the batch is executed and a new one will be started.
+            </td>
           </tr>
         </table>
         <section>
@@ -609,7 +644,9 @@
             </tr>
             <tr>
               <td>column</td>
-              <td>either this together with <code>table</code> or <code>jdbcType</code></td>
+              <td>either this together with <code>table</code> or
+                <code>jdbcType</code>
+              </td>
               <td></td>
               <td></td>
               <td>
@@ -618,7 +655,9 @@
             </tr>
             <tr>
               <td>jdbcType</td>
-              <td>either this or <code>table</code> + <code>column</code></td>
+              <td>either this or <code>table</code> +
+                <code>column</code>
+              </td>
               <td></td>
               <td></td>
               <td>
@@ -628,7 +667,9 @@
             </tr>
             <tr>
               <td>table</td>
-              <td>either this together with <code>column</code> or <code>jdbcType</code></td>
+              <td>either this together with <code>column</code> or
+                <code>jdbcType</code>
+              </td>
               <td></td>
               <td></td>
               <td>
@@ -684,7 +725,8 @@
     <section>
       <title>DatabaseToDdlTask reference</title>
       <p>
-        Class name: <code>org.apache.ddlutils.task.DatabaseToDdlTask</code>
+        Class name:
+        <code>org.apache.ddlutils.task.DatabaseToDdlTask</code>
       </p>
       <p>
         This is the container for sub tasks that operate in the direction database -> file, eg.
@@ -716,7 +758,8 @@
           <td>databaseType</td>
           <td>no</td>
           <td>axion, cloudscape, db2, derby, firebird, hsqldb, interbase, maxdb, mckoi, mssql,
-              mysql, mysql5, oracle, oracle9, oracle10, postgresql, sapdb, sybase</td>
+            mysql, mysql5, oracle, oracle9, oracle10, postgresql, sapdb, sybase
+          </td>
           <td></td>
           <td>
             The database type. You should only need to specify this if DdlUtils is not able to
@@ -783,7 +826,8 @@
             In most databases, undelimited identifiers will be converted to uppercase by the database,
             and the case of the identifier is ignored when performing any SQL command. Undelimited
             identifiers can contain only alphanumerical characters and the underscore. Also, no reserved
-            words can be used as such identifiers.<br/>
+            words can be used as such identifiers.
+            <br/>
             The limitations do not exist for delimited identifiers. However case of the identifier will be
             important in every SQL command executed against the database.
           </td>
@@ -798,11 +842,23 @@
           for the supported properties. Usually you only need to specify
         </p>
         <ul>
-          <li><code>url</code> - the jdbc connection url</li>
-          <li><code>driverClassName</code> - the fully qualified class name of the jdbc driver
-              (which must be in the classpath that you used to define the DdlToDatabaseTask task)</li>
-          <li><code>username</code> - the username</li>
-          <li><code>password</code> - the password</li>
+          <li>
+            <code>url</code>
+            - the jdbc connection url
+          </li>
+          <li>
+            <code>driverClassName</code>
+            - the fully qualified class name of the jdbc driver
+            (which must be in the classpath that you used to define the DdlToDatabaseTask task)
+          </li>
+          <li>
+            <code>username</code>
+            - the username
+          </li>
+          <li>
+            <code>password</code>
+            - the password
+          </li>
         </ul>
       </section>
       <section>

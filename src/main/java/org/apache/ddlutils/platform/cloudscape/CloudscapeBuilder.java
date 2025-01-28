@@ -19,44 +19,40 @@ package org.apache.ddlutils.platform.cloudscape;
  * under the License.
  */
 
-import java.io.IOException;
-
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.SqlBuilder;
 
+import java.io.IOException;
+
 /**
  * The SQL Builder for Cloudscape.
- * 
+ *
  * @version $Revision$
  */
-public class CloudscapeBuilder extends SqlBuilder
-{
-    /**
-     * Creates a new builder instance.
-     * 
-     * @param platform The plaftform this builder belongs to
-     */
-    public CloudscapeBuilder(Platform platform)
-    {
-        super(platform);
-        addEscapedCharSequence("'", "''");
-    }
+public class CloudscapeBuilder extends SqlBuilder {
+  /**
+   * Creates a new builder instance.
+   *
+   * @param platform The plaftform this builder belongs to
+   */
+  public CloudscapeBuilder(Platform platform) {
+    super(platform);
+    addEscapedCharSequence("'", "''");
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException
-    {
-        print("GENERATED ALWAYS AS IDENTITY");
-    }
+  /**
+   * {@inheritDoc}
+   */
+  protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
+    print("GENERATED ALWAYS AS IDENTITY");
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getSelectLastIdentityValues(Table table)
-    {
-        return "VALUES IDENTITY_VAL_LOCAL()";
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public String getSelectLastIdentityValues(Table table) {
+    return "VALUES IDENTITY_VAL_LOCAL()";
+  }
 }

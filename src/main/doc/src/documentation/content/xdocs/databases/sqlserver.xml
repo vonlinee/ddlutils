@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>SQL Server</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       The <a href="ext:sqlserver">SQL Server</a> is supported form version <strong>6.5</strong> onwards.
       Information about the versions prior to SQL Server 2000 however is difficult to find online, you'll
@@ -39,24 +39,36 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>MsSql</code></li>
+      <li>
+        <code>MsSql</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC drivers:
     </p>
     <ul>
-      <li><code>com.microsoft.jdbc.sqlserver.SQLServerDriver</code></li>
-      <li><code>com.microsoft.sqlserver.jdbc.SQLServerDriver</code></li>
+      <li>
+        <code>com.microsoft.jdbc.sqlserver.SQLServerDriver</code>
+      </li>
+      <li>
+        <code>com.microsoft.sqlserver.jdbc.SQLServerDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocols:
     </p>
     <ul>
-      <li><code>jdbc:microsoft:sqlserver</code></li>
-      <li><code>jdbc:sqlserver</code></li>
-      <li><code>jdbc:sqljdbc</code></li>
+      <li>
+        <code>jdbc:microsoft:sqlserver</code>
+      </li>
+      <li>
+        <code>jdbc:sqlserver</code>
+      </li>
+      <li>
+        <code>jdbc:sqljdbc</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -73,7 +85,8 @@
         <td class="platformPropValue">128</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -85,7 +98,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -246,13 +260,16 @@
         <td>TIMESTAMP</td>
         <td>DATETIME</td>
         <td>The native <code>TIMESTAMP</code> type of SQL Server serves a different purpose: it provides a counter
-            that automatically increments upon each insertion or update of the table.</td>
+          that automatically increments upon each insertion or update of the table.
+        </td>
       </tr>
       <tr>
         <td>TINYINT</td>
         <td>SMALLINT</td>
-        <td>The native <code>TINYINT</code> type only supports values between 0 and 255.<br/>
-            Will be read back as SMALLINT</td>
+        <td>The native <code>TINYINT</code> type only supports values between 0 and 255.
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>VARBINARY</td>

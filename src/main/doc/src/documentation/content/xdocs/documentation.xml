@@ -18,17 +18,18 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
-    <title>Overview</title> 
-  </header> 
-  <body> 
+<document>
+  <header>
+    <title>Overview</title>
+  </header>
+  <body>
     <section>
       <title>What is DdlUtils</title>
       <p>
         In short, DdlUtils is both a library and a set of <a href="ext:ant">Ant</a> tasks that allows
         the manipulation of schemas in a database. It allows to create and drop complete databases,
-        and the creation, alteration and removal of tables.<br/>
+        and the creation, alteration and removal of tables.
+        <br/>
         Additionally, it provides an easy way to insert data that is specified in XML, into a database
         and the reverse, extracting data from a database into an XML file.
       </p>
@@ -41,7 +42,7 @@
     <section>
       <title>Where to start</title>
       <p>
-        There are basically two ways to use  DdlUtils which are explained in these sections:
+        There are basically two ways to use DdlUtils which are explained in these sections:
       </p>
       <ul>
         <li>

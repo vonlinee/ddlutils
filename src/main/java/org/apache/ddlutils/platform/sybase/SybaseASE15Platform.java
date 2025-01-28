@@ -21,27 +21,26 @@ package org.apache.ddlutils.platform.sybase;
 
 /**
  * The platform implementation for Sybase ASE 15 and above.
- * 
+ *
  * @version $Revision:  $
  */
-public class SybaseASE15Platform extends SybasePlatform
-{
-    /** Database name of this platform. */
-    public static final String DATABASENAME     = "SybaseASE15";
-    
-    /**
-     * Creates a new platform instance.
-     */
-    public SybaseASE15Platform()
-    {
-        super();
-    }
+public class SybaseASE15Platform extends SybasePlatform {
+  /**
+   * Database name of this platform.
+   */
+  public static final String DATABASENAME = "SybaseASE15";
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName()
-    {
-        return DATABASENAME;
-    }
+  /**
+   * Creates a new platform instance.
+   */
+  public SybaseASE15Platform() {
+    super();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public String getName() {
+    return DATABASENAME;
+  }
 }

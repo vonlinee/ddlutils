@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>PostgreSQL</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       DdlUtils supports <a href="ext:postgresql">PostgreSQL</a> version <strong>7.2.8</strong> and newer. SQL syntax
       details and supported datatypes are described in the <a href="ext:postgresql/manual">Manual</a>.
@@ -32,21 +32,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>PostgreSql</code></li>
+      <li>
+        <code>PostgreSql</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>org.postgresql.Driver</code></li>
+      <li>
+        <code>org.postgresql.Driver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:postgresql</code></li>
+      <li>
+        <code>jdbc:postgresql</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -63,7 +69,8 @@
         <td class="platformPropValue">31</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -75,7 +82,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>

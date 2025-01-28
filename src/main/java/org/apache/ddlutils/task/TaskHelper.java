@@ -23,53 +23,43 @@ import java.util.ArrayList;
 
 /**
  * Contains some utility functions for the Ant tasks.
- * 
+ *
  * @version $Revision: $
  */
-public class TaskHelper
-{
-    /**
-     * Parses the given comma-separated string list. A comma within a string needs to be
-     * escaped as '\,'. Also, the individual strings are not trimmed but returned as-is.
-     * 
-     * @param stringList The comma-separated list of strings
-     * @return The strings as an array
-     */
-    public String[] parseCommaSeparatedStringList(String stringList)
-    {
-        String[]  tokens = stringList.split(",");
-        ArrayList values = new ArrayList();
-        String    last   = null;
+public class TaskHelper {
+  /**
+   * Parses the given comma-separated string list. A comma within a string needs to be
+   * escaped as '\,'. Also, the individual strings are not trimmed but returned as-is.
+   *
+   * @param stringList The comma-separated list of strings
+   * @return The strings as an array
+   */
+  public String[] parseCommaSeparatedStringList(String stringList) {
+    String[] tokens = stringList.split(",");
+    ArrayList values = new ArrayList();
+    String last = null;
 
-        for (int idx = 0; idx < tokens.length; idx++)
-        {
-            String  str         = tokens[idx];
-            int     strLen      = str.length();
-            boolean endsInSlash = (strLen > 0) && (str.charAt(strLen - 1) == '\\') &&
-                                  ((strLen == 1) || (str.charAt(strLen - 2) != '\\'));
+    for (int idx = 0; idx < tokens.length; idx++) {
+      String str = tokens[idx];
+      int strLen = str.length();
+      boolean endsInSlash = (strLen > 0) && (str.charAt(strLen - 1) == '\\') &&
+        ((strLen == 1) || (str.charAt(strLen - 2) != '\\'));
 
-            if (last != null)
-            {
-                last += "," + str;
-                if (!endsInSlash)
-                {
-                    values.add(last);
-                    last = null;
-                }
-            }
-            else if (endsInSlash)
-            {
-                last = str.substring(0, strLen - 1);
-            }
-            else
-            {
-                values.add(str);
-            }
+      if (last != null) {
+        last += "," + str;
+        if (!endsInSlash) {
+          values.add(last);
+          last = null;
         }
-        if (last != null)
-        {
-            values.add(last + ",");
-        }
-        return (String[])values.toArray(new String[values.size()]);
+      } else if (endsInSlash) {
+        last = str.substring(0, strLen - 1);
+      } else {
+        values.add(str);
+      }
     }
+    if (last != null) {
+      values.add(last + ",");
+    }
+    return (String[]) values.toArray(new String[values.size()]);
+  }
 }

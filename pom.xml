@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
   distributed with this work for additional information
@@ -23,9 +23,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-   <groupId>org.apache</groupId>
-   <artifactId>apache</artifactId>
-   <version>9</version>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>9</version>
   </parent>
   <groupId>org.apache.ddlutils</groupId>
   <artifactId>ddlutils</artifactId>
@@ -37,7 +37,7 @@
   </description>
   <inceptionYear>2005</inceptionYear>
   <url>http://db.apache.org/ddlutils</url>
-  
+
   <mailingLists>
     <mailingList>
       <name>Ddlutils Dev List</name>
@@ -183,56 +183,84 @@
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
-<!-- 
-    <dependency>
-      <groupId>axion</groupId>
-      <artifactId>axion</artifactId>
-      <version>1.0-M3-dev</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derbyclient</artifactId>
-      <version>10.1.2.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>1.8.0.4</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>mckoi</groupId>
-      <artifactId>mckoi</artifactId>
-      <version>1.0.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>3.1.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>8.1-404.jdbc3</version>
-      <scope>test</scope>
-    </dependency>
- -->
+    <!--
+        <dependency>
+          <groupId>axion</groupId>
+          <artifactId>axion</artifactId>
+          <version>1.0-M3-dev</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derbyclient</artifactId>
+          <version>10.1.2.1</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>1.8.0.4</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>mckoi</groupId>
+          <artifactId>mckoi</artifactId>
+          <version>1.0.2</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>3.1.12</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>8.1-404.jdbc3</version>
+          <scope>test</scope>
+        </dependency>
+     -->
     <!-- NB: No public driver for DB2, interbase, sapdb, oracle, sqlserver -->
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.0</version>
+        <configuration>
+          <!-- 一般而言，target与source是保持一致的，但是，有时候为了让程序能在其他版本的jdk中运行(对于低版本目标jdk，源代码中不能使用低版本jdk中不支持的语法)，会存在target不同于source的情况 -->
+          <source>${maven.compiler.source}</source> <!-- 源代码使用的JDK版本 -->
+          <target>${maven.compiler.source}</target> <!-- 需要生成的目标class文件的编译版本 -->
+          <encoding>${project.build.sourceEncoding}</encoding><!-- 字符集编码，防止中文乱码 -->
+          <skipTests>true</skipTests><!-- 跳过测试 -->
+          <verbose>true</verbose>
+          <showWarnings>true</showWarnings>
+          <fork>true</fork><!-- 要使compilerVersion标签生效，还需要将fork设为true，用于明确表示编译版本配置的可用 -->
+          <executable><!-- path-to-javac --></executable><!-- 使用指定的javac命令，例如：<executable>${JAVA_1_4_HOME}/bin/javac</executable> -->
+          <compilerVersion>1.3</compilerVersion><!-- 指定插件将使用的编译器的版本 -->
+          <!-- 这下面的是可选项 -->
+          <!-- 编译器使用的初始内存 -->
+          <meminitial>128m</meminitial>
+          <!-- 编译器使用的最大内存 -->
+          <maxmem>512m</maxmem>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 
   <profiles>
     <profile>
       <id>checkstyle</id>
       <build>
         <defaultGoal>checkstyle:checkstyle</defaultGoal>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-checkstyle-plugin</artifactId>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
             <configuration>
               <consoleOutput>true</consoleOutput>
               <failsOnError>true</failsOnError>
@@ -240,12 +268,13 @@
               <configLocation>src/main/checkstyle/ddlutils-checks.xml</configLocation>
               <headerLocation>src/main/checkstyle/license-check.txt</headerLocation>
             </configuration>
-	      </plugin>
-	      </plugins>
-	  </build>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <profile>
+      <id>test-hsqldb</id>
       <activation>
         <property>
           <name>testDb</name>
@@ -260,24 +289,54 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-	  <build>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <configuration>
-	          <systemProperties>
-	            <property>
-	              <name>jdbc.properties.file</name>
-	              <value>/jdbc.properties.hsqldb</value>
-	            </property>
-	          </systemProperties>
-	        </configuration>
-	      </plugin>
-	    </plugins>
-	  </build>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <systemProperties>
+                <property>
+                  <name>jdbc.properties.file</name>
+                  <value>/jdbc.properties.hsqldb</value>
+                </property>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>java8</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+        <jdk>8</jdk>
+      </activation>
+      <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+      </properties>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.8.1</version>
+            <configuration>
+              <skip>true</skip>
+              <source>${java.version}</source>
+              <target>${java.version}</target>
+              <encoding>${project.build.sourceEncoding}</encoding>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
+
 
   <reporting>
     <plugins>
@@ -294,7 +353,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.8</version>
+        <version>3.4.0</version>
         <configuration>
           <stylesheetfile>src/site/javadoc/stylesheet.css</stylesheetfile>
         </configuration>

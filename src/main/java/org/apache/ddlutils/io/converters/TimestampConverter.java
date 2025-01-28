@@ -25,35 +25,27 @@ import java.sql.Types;
 /**
  * Converts between {@link java.sql.Timestamp} and {@link java.lang.String} using the standard
  * representation "yyyy-mm-dd hh:mm:ss.fffffffff".
- * 
+ *
  * @version $Revision: 289996 $
  */
-public class TimestampConverter implements SqlTypeConverter 
-{
-    /**
-     * {@inheritDoc}
-     */
-    public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException
-    {
-        if (textRep == null)
-        {
-            return null;
-        }
-        else if (sqlTypeCode == Types.TIMESTAMP)
-        {
-            return Timestamp.valueOf(textRep);
-        }
-        else
-        {
-            return textRep;
-        }
+public class TimestampConverter implements SqlTypeConverter {
+  /**
+   * {@inheritDoc}
+   */
+  public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
+    if (textRep == null) {
+      return null;
+    } else if (sqlTypeCode == Types.TIMESTAMP) {
+      return Timestamp.valueOf(textRep);
+    } else {
+      return textRep;
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public String convertToString(Object obj, int sqlTypeCode) throws ConversionException
-    {
-        return obj == null ? null : ((Timestamp)obj).toString();
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public String convertToString(Object obj, int sqlTypeCode) throws ConversionException {
+    return obj == null ? null : obj.toString();
+  }
 }

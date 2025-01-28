@@ -18,13 +18,14 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>MaxDB/SapDB</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
-      The <a href="ext:sapdb">SapDB</a> database was open-sourced and rebranded <a href="ext:maxdb">MaxDB</a> 
+      The <a href="ext:sapdb">SapDB</a> database was open-sourced and rebranded
+      <a href="ext:maxdb">MaxDB</a>
       beginning with version 7.4. DdlUtils supports SapDB version <strong>7.2</strong> and MaxDB version
       <strong>7.5</strong>, and newer. Documentation of the SQL supported by SapDB is found in the
       <a href="ext:sapdb/manual">Reference manual</a>. Likewise, documentation for MaxDB is contained in
@@ -35,22 +36,30 @@
       Platform identifiers:
     </p>
     <ul>
-      <li><code>MaxDB</code></li>
-      <li><code>SapDB</code></li>
+      <li>
+        <code>MaxDB</code>
+      </li>
+      <li>
+        <code>SapDB</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>com.sap.dbtech.jdbc.DriverSapDB</code></li>
+      <li>
+        <code>com.sap.dbtech.jdbc.DriverSapDB</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:sapdb</code></li>
+      <li>
+        <code>jdbc:sapdb</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -67,7 +76,8 @@
         <td class="platformPropValue">32</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -79,7 +89,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>

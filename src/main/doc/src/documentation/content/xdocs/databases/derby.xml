@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>Derby/Cloudscape</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       DdlUtils supports <a href="ext:cloudscape">Cloudscape</a> version 10.0. Information about the
       SQL elements and datatypes of Cloudscape is found in the
@@ -43,25 +43,46 @@
       Platform identifiers:
     </p>
     <ul>
-      <li><code>Derby</code> for the Derby platform</li>
-      <li><code>Cloudscape</code> for the Cloudscape platform</li>
+      <li>
+        <code>Derby</code>
+        for the Derby platform
+      </li>
+      <li>
+        <code>Cloudscape</code>
+        for the Cloudscape platform
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC drivers:
     </p>
     <ul>
-      <li><code>org.apache.derby.jdbc.ClientDriver</code> (Derby)</li>
-      <li><code>org.apache.derby.jdbc.EmbeddedDriver</code> (Derby)</li>
+      <li>
+        <code>org.apache.derby.jdbc.ClientDriver</code>
+        (Derby)
+      </li>
+      <li>
+        <code>org.apache.derby.jdbc.EmbeddedDriver</code>
+        (Derby)
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocols:
     </p>
     <ul>
-      <li><code>jdbc:derby</code> (Derby)</li>
-      <li><code>jdbc:db2j:net</code> (Cloudscape)</li>
-      <li><code>jdbc:cloudscape:net</code> (Cloudscape)</li>
+      <li>
+        <code>jdbc:derby</code>
+        (Derby)
+      </li>
+      <li>
+        <code>jdbc:db2j:net</code>
+        (Cloudscape)
+      </li>
+      <li>
+        <code>jdbc:cloudscape:net</code>
+        (Cloudscape)
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -78,7 +99,8 @@
         <td class="platformPropValue">128</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -90,7 +112,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -135,8 +158,10 @@
       <tr>
         <td>BIT</td>
         <td>SMALLINT</td>
-        <td>Cloudscape/Derby have no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>Cloudscape/Derby have no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>BLOB</td>
@@ -146,8 +171,10 @@
       <tr>
         <td>BOOLEAN</td>
         <td>SMALLINT</td>
-        <td>Cloudscape/Derby have no native boolean type<br/>
-            Will be read back as BOOLEAN</td>
+        <td>Cloudscape/Derby have no native boolean type
+          <br/>
+          Will be read back as BOOLEAN
+        </td>
       </tr>
       <tr>
         <td>CHAR</td>
@@ -181,12 +208,14 @@
       </tr>
       <tr>
         <td>DOUBLE</td>
-        <td>Cloudscape: DOUBLE PRECISION<br/>Derby: DOUBLE</td>
+        <td>Cloudscape: DOUBLE PRECISION<br/>Derby: DOUBLE
+        </td>
         <td></td>
       </tr>
       <tr>
         <td>FLOAT</td>
-        <td>Cloudscape: DOUBLE PRECISION<br/>Derby: DOUBLE</td>
+        <td>Cloudscape: DOUBLE PRECISION<br/>Derby: DOUBLE
+        </td>
         <td>Will be read back as DOUBLE</td>
       </tr>
       <tr>

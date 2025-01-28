@@ -19,107 +19,88 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
+import org.apache.commons.beanutils.ConversionException;
+import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.ddlutils.model.TypeMap;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.sql.Types;
 
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtils;
-import org.apache.ddlutils.model.TypeMap;
-
 /**
  * Helper class for dealing with default values, e.g. converting them to other types.
- * 
+ *
  * @version $Revision: 289996 $
  */
-public class DefaultValueHelper
-{
-    /**
-     * Converts the given default value from the specified original to the target
-     * jdbc type.
-     * 
-     * @param defaultValue     The default value
-     * @param originalTypeCode The original type code
-     * @param targetTypeCode   The target type code
-     * @return The converted default value 
-     */
-    public String convert(String defaultValue, int originalTypeCode, int targetTypeCode)
-    {
-        String result = defaultValue;
+public class DefaultValueHelper {
+  /**
+   * Converts the given default value from the specified original to the target
+   * jdbc type.
+   *
+   * @param defaultValue     The default value
+   * @param originalTypeCode The original type code
+   * @param targetTypeCode   The target type code
+   * @return The converted default value
+   */
+  public String convert(String defaultValue, int originalTypeCode, int targetTypeCode) {
+    String result = defaultValue;
 
-        if (defaultValue != null)
-        {
-            switch (originalTypeCode)
-            {
-                case Types.BIT:
-                case Types.BOOLEAN:
-                    result = convertBoolean(defaultValue, targetTypeCode).toString();
-                    break;
-                case Types.DATE:
-                	if (targetTypeCode == Types.TIMESTAMP)
-                	{
-                		try
-                		{
-                			Date date = Date.valueOf(result);
+    if (defaultValue != null) {
+      switch (originalTypeCode) {
+        case Types.BIT:
+        case Types.BOOLEAN:
+          result = convertBoolean(defaultValue, targetTypeCode).toString();
+          break;
+        case Types.DATE:
+          if (targetTypeCode == Types.TIMESTAMP) {
+            try {
+              Date date = Date.valueOf(result);
 
-                			return new Timestamp(date.getTime()).toString();
-                		}
-                		catch (IllegalArgumentException ex)
-                		{}
-                	}
-                	break;
-                case Types.TIME:
-                	if (targetTypeCode == Types.TIMESTAMP)
-                	{
-                		try
-                		{
-                			Time time = Time.valueOf(result);
-
-                			return new Timestamp(time.getTime()).toString();
-                		}
-                		catch (IllegalArgumentException ex)
-                		{}
-                	}
-                    break;
+              return new Timestamp(date.getTime()).toString();
+            } catch (IllegalArgumentException ex) {
             }
-        }
-        return result;
+          }
+          break;
+        case Types.TIME:
+          if (targetTypeCode == Types.TIMESTAMP) {
+            try {
+              Time time = Time.valueOf(result);
+
+              return new Timestamp(time.getTime()).toString();
+            } catch (IllegalArgumentException ex) {
+            }
+          }
+          break;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * Converts a boolean default value to the given target type.
+   *
+   * @param defaultValue   The default value
+   * @param targetTypeCode The target type code
+   * @return The converted value
+   */
+  private Object convertBoolean(String defaultValue, int targetTypeCode) {
+    Boolean value = null;
+    Object result = null;
+
+    try {
+      value = (Boolean) ConvertUtils.convert(defaultValue, Boolean.class);
+    } catch (ConversionException ex) {
+      return defaultValue;
     }
 
-    /**
-     * Converts a boolean default value to the given target type.
-     * 
-     * @param defaultValue   The default value
-     * @param targetTypeCode The target type code
-     * @return The converted value
-     */
-    private Object convertBoolean(String defaultValue, int targetTypeCode)
-    {
-        Boolean value  = null;
-        Object  result = null;
-
-        try
-        {
-            value = (Boolean)ConvertUtils.convert(defaultValue, Boolean.class);
-        }
-        catch (ConversionException ex)
-        {
-            return defaultValue;
-        }
-        
-        if ((targetTypeCode == Types.BIT) || (targetTypeCode == Types.BOOLEAN))
-        {
-            result = value;
-        }
-        else if (TypeMap.isNumericType(targetTypeCode))
-        {
-            result = (value.booleanValue() ? new Integer(1) : new Integer(0));
-        }
-        else
-        {
-            result = value.toString();
-        }
-        return result;
+    if ((targetTypeCode == Types.BIT) || (targetTypeCode == Types.BOOLEAN)) {
+      result = value;
+    } else if (TypeMap.isNumericType(targetTypeCode)) {
+      result = (value.booleanValue() ? Integer.valueOf(1) : Integer.valueOf(0));
+    } else {
+      result = value.toString();
     }
+    return result;
+  }
 }
