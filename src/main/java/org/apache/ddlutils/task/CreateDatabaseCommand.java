@@ -97,8 +97,8 @@ public class CreateDatabaseCommand extends DatabaseCommand {
    * @param platformName The name of the platform
    * @return The filtered parameters
    */
-  private Map<String, String> getFilteredParameters(String platformName) {
-    LinkedHashMap<String, String> parameters = new LinkedHashMap<>();
+  private Map<String, Object> getFilteredParameters(String platformName) {
+    LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
 
     for (Parameter param : _parameters) {
       if (param.isForPlatform(platformName)) {

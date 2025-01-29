@@ -304,7 +304,7 @@ public class DumpMetadataTask extends Task {
    */
   private void dumpProperty(PrettyPrintingXmlWriter xmlWriter, Object obj, Method propGetter) {
     try {
-      addProperty(xmlWriter, getPropertyName(propGetter.getName()), propGetter.invoke(obj, null));
+      addProperty(xmlWriter, getPropertyName(propGetter.getName()), propGetter.invoke(obj, (Object) null));
     } catch (Throwable ex) {
       log("Could not dump property " + propGetter.getName() + ": " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
     }

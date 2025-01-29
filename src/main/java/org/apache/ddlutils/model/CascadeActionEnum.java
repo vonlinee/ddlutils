@@ -67,6 +67,14 @@ public enum CascadeActionEnum {
   private final String name;
   private final int value;
 
+  public String getName() {
+    return name;
+  }
+
+  public int getValue() {
+    return value;
+  }
+
   /**
    * Creates a new enum object.
    *

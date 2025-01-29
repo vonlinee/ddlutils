@@ -230,7 +230,7 @@ public class TestDatabaseIO extends TestCase {
       readModel("<data-base xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "'></data-base>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -758,7 +758,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing a single foreignkey.
    */
-  public void testSingleForeignkey() throws Exception {
+  public void testSingleForeignKey() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='SomeTable'\n" +
@@ -829,7 +829,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing a foreignkey with two references.
    */
-  public void testForeignkeyWithTwoReferences() throws Exception {
+  public void testForeignKeyWithTwoReferences() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='SomeTable'\n" +
@@ -935,14 +935,14 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
   /**
    * Tests a database model containing a named foreignkey.
    */
-  public void testNamedForeignkey() throws Exception {
+  public void testNamedForeignKey() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='SomeTable'\n" +
@@ -1007,8 +1007,8 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing foreignkeys with onUpdate values.
    */
-  public void testForeignkeysWithOnUpdate() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+  public void testForeignKeysWithOnUpdate() throws Exception {
+    StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
     modelXml.append("  <table name='SomeTable'\n");
@@ -1026,8 +1026,8 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("            type='VARCHAR'\n");
     modelXml.append("            size='16'\n");
     modelXml.append("            description='The foreign key'/>\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); ) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+    for (Iterator<CascadeActionEnum> it = CascadeActionEnum.iterator(); it.hasNext(); ) {
+      CascadeActionEnum enumValue = it.next();
 
       modelXml.append("    <foreign-key name='foreignkey ");
       modelXml.append(enumValue.getName());
@@ -1061,8 +1061,8 @@ public class TestDatabaseIO extends TestCase {
 
     int idx = 0;
 
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+    for (Iterator<CascadeActionEnum> it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
+      CascadeActionEnum enumValue = it.next();
       ForeignKey fk = anotherTable.getForeignKey(idx);
 
       assertEquals("foreignkey " + enumValue.getName(), enumValue, CascadeActionEnum.NONE, someTable, 1, fk);
@@ -1099,8 +1099,8 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing foreignkeys with onDelete values.
    */
-  public void testForeignkeysWithOnDelete() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+  public void testForeignKeysWithOnDelete() throws Exception {
+    StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
     modelXml.append("  <table name='SomeTable'\n");
@@ -1118,8 +1118,8 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("            type='VARCHAR'\n");
     modelXml.append("            size='16'\n");
     modelXml.append("            description='The foreign key'/>\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); ) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+
+    for (CascadeActionEnum enumValue : CascadeActionEnum.values()) {
 
       modelXml.append("    <foreign-key name='foreignkey ");
       modelXml.append(enumValue.getName());
@@ -1129,6 +1129,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("       <reference local='Some_ID' foreign='ID'/>\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>");
 
@@ -1153,8 +1154,8 @@ public class TestDatabaseIO extends TestCase {
 
     int idx = 0;
 
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+    for (Iterator<CascadeActionEnum> it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
+      CascadeActionEnum enumValue = it.next();
       ForeignKey fk = anotherTable.getForeignKey(idx);
 
       assertEquals("foreignkey " + enumValue.getName(), CascadeActionEnum.NONE, enumValue, someTable, 1, fk);
@@ -1169,9 +1170,8 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("  </table>\n");
     modelXml.append("  <table name=\"AnotherTable\" description=\"And another table\">\n");
     modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
 
+    for (CascadeActionEnum enumValue : CascadeActionEnum.values()) {
       modelXml.append("    <foreign-key foreignTable=\"SomeTable\" name=\"foreignkey ");
       modelXml.append(enumValue.getName());
       if (enumValue != CascadeActionEnum.NONE) {
@@ -1182,6 +1182,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\" />\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>\n");
 
@@ -1217,7 +1218,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1250,7 +1251,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1283,7 +1284,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1316,7 +1317,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1349,7 +1350,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -1382,7 +1383,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -1415,7 +1416,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -1448,7 +1449,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1481,7 +1482,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -2043,7 +2044,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -2423,7 +2424,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests that an exception is generated when the a unique index references an undefined column.
+   * Tests that an exception is generated when the unique index references an undefined column.
    */
   public void testUndefinedUniqueColumn() {
     try {
@@ -2473,7 +2474,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
