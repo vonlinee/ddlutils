@@ -20,10 +20,10 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
-import org.apache.ddlutils.dynabean.SqlDynaBean;
+import org.apache.ddlutils.data.SqlDynaBean;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;

@@ -98,6 +98,7 @@ public class AddColumnChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
     Column newColumn = new CloneHelper().clone(_newColumn, true);

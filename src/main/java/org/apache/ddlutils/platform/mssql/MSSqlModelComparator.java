@@ -93,13 +93,13 @@ public class MSSqlModelComparator extends ModelComparator {
    * {@inheritDoc}
    */
   @Override
-  protected List<RemoveIndexChange> checkForRemovedIndexes(Database sourceModel,
+  protected List<TableChange> checkForRemovedIndexes(Database sourceModel,
                                         Table sourceTable,
                                         Database intermediateModel,
                                         Table intermediateTable,
                                         Database targetModel,
                                         Table targetTable) {
-    List<RemoveIndexChange> changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+    List<TableChange> changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
     Index[] targetIndexes = targetTable.getIndices();
     List<RemoveIndexChange> additionalChanges = new ArrayList<>();
 

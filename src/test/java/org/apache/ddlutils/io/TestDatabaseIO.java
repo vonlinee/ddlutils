@@ -242,7 +242,7 @@ public class TestDatabaseIO extends TestCase {
       readModel("<database></database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1120,7 +1120,6 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("            description='The foreign key'/>\n");
 
     for (CascadeActionEnum enumValue : CascadeActionEnum.values()) {
-
       modelXml.append("    <foreign-key name='foreignkey ");
       modelXml.append(enumValue.getName());
       modelXml.append("' foreignTable='SomeTable' onDelete='");
@@ -1153,9 +1152,7 @@ public class TestDatabaseIO extends TestCase {
       anotherTable.getColumn(0));
 
     int idx = 0;
-
-    for (Iterator<CascadeActionEnum> it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = it.next();
+    for (CascadeActionEnum enumValue : CascadeActionEnum.values()) {
       ForeignKey fk = anotherTable.getForeignKey(idx);
 
       assertEquals("foreignkey " + enumValue.getName(), CascadeActionEnum.NONE, enumValue, someTable, 1, fk);
@@ -1489,7 +1486,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing two foreignkeys.
    */
-  public void testTwoForeignkeys() throws Exception {
+  public void testTwoForeignKeys() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='SomeTable'\n" +
@@ -1578,7 +1575,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing two foreignkeys with the same name.
    */
-  public void testTwoForeignkeysWithSameName() throws Exception {
+  public void testTwoForeignKeysWithSameName() throws Exception {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1617,7 +1614,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -1804,7 +1801,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -1830,7 +1827,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -1913,7 +1910,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests a database model with an unique index with two columns.
+   * Tests a database model with a unique index with two columns.
    */
   public void testUniqueIndexWithTwoColumns() throws Exception {
     Database model = readModel(
@@ -2024,7 +2021,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests a database model with an unique index without index columns.
+   * Tests a database model with a unique index without index columns.
    */
   public void testUniqueIndexWithoutColumns() throws Exception {
     try {
@@ -2049,7 +2046,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests a database model with an unique index with an index column that references an undefined column.
+   * Tests a database model with a unique index with an index column that references an undefined column.
    */
   public void testUniqueIndexWithUndefinedColumns() throws Exception {
     try {
@@ -2075,7 +2072,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests a database model with an unique index with an index column that has no name.
+   * Tests a database model with a unique index with an index column that has no name.
    */
   public void testUniqueIndexWithNoNameColumn() throws Exception {
     try {
@@ -2370,7 +2367,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2396,7 +2393,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2419,7 +2416,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2442,7 +2439,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2507,7 +2504,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2540,7 +2537,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (ModelException ex) {
+    } catch (ModelException ignored) {
     }
   }
 
@@ -2555,7 +2552,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 

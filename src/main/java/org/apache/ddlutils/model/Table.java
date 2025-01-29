@@ -760,7 +760,6 @@ public class Table implements Serializable {
    */
   @Override
   public String toString() {
-
     return "Table [name=" +
       getName() +
       "; " +

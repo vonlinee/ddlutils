@@ -292,7 +292,7 @@ public class MSSqlBuilder extends SqlBuilder {
    * {@inheritDoc}
    */
   @Override
-  public String getDeleteSql(Table table, Map pkValues, boolean genPlaceholders) {
+  public String getDeleteSql(Table table, Map<String, Object> pkValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getDeleteSql(table, pkValues, genPlaceholders);
   }
 
@@ -300,7 +300,7 @@ public class MSSqlBuilder extends SqlBuilder {
    * {@inheritDoc}
    */
   @Override
-  public String getInsertSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getInsertSql(table, columnValues, genPlaceholders);
   }
 
@@ -308,7 +308,7 @@ public class MSSqlBuilder extends SqlBuilder {
    * {@inheritDoc}
    */
   @Override
-  public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getUpdateSql(table, columnValues, genPlaceholders);
   }
 

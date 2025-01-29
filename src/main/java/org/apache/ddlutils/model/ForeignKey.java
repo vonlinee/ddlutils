@@ -22,7 +22,7 @@ package org.apache.ddlutils.model;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.ddlutils.util.ListOrderedSet;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -293,7 +293,7 @@ public class ForeignKey implements Serializable {
    */
   public boolean hasLocalColumn(String columnName, boolean caseSensitive) {
     for (int idx = 0; idx < getReferenceCount(); idx++) {
-      if (StringUtilsExt.equals(columnName, getReference(idx).getLocalColumnName(), caseSensitive)) {
+      if (StringUtils.equals(columnName, getReference(idx).getLocalColumnName(), caseSensitive)) {
         return true;
       }
     }
@@ -329,7 +329,7 @@ public class ForeignKey implements Serializable {
    */
   public boolean hasForeignColumn(String columnName, boolean caseSensitive) {
     for (int idx = 0; idx < getReferenceCount(); idx++) {
-      if (StringUtilsExt.equals(columnName, getReference(idx).getForeignColumnName(), caseSensitive)) {
+      if (StringUtils.equals(columnName, getReference(idx).getForeignColumnName(), caseSensitive)) {
         return true;
       }
     }

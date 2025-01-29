@@ -81,7 +81,8 @@ public class SybaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Table table = super.readTable(metaData, values);
 
     if (table != null) {
@@ -94,7 +95,8 @@ public class SybaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if ((column.getTypeCode() == Types.DECIMAL) && (column.getSizeAsInt() == 19) && (column.getScale() == 0)) {
@@ -128,7 +130,8 @@ public class SybaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected void readIndex(DatabaseMetaDataWrapper metaData, Map values, Map knownIndices) throws SQLException {
+  @Override
+  protected void readIndex(DatabaseMetaDataWrapper metaData, Map<String, Object> values, Map<String, Index> knownIndices) throws SQLException {
     if (getPlatform().isDelimitedIdentifierModeOn()) {
       String indexName = (String) values.get("INDEX_NAME");
 
@@ -137,7 +140,7 @@ public class SybaseModelReader extends JdbcModelReader {
       if (indexName != null) {
         String delimiter = getPlatformInfo().getDelimiterToken();
 
-        if ((indexName != null) && indexName.startsWith(delimiter) && indexName.endsWith(delimiter)) {
+        if (indexName.startsWith(delimiter) && indexName.endsWith(delimiter)) {
           indexName = indexName.substring(delimiter.length(), indexName.length() - delimiter.length());
           values.put("INDEX_NAME", indexName);
         }
@@ -149,7 +152,8 @@ public class SybaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  @Override
+  protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     // Sybase (or jConnect) does not return the foreign key names, thus we have to
     // read the foreign keys manually from the system tables
     final String colQuery =
@@ -167,7 +171,7 @@ public class SybaseModelReader extends JdbcModelReader {
 
     PreparedStatement colStmt = null;
     PreparedStatement refObjStmt = null;
-    ArrayList result = new ArrayList();
+    ArrayList<ForeignKey> result = new ArrayList<>();
 
     try {
       colStmt = getConnection().prepareStatement(colQuery);
@@ -225,6 +229,7 @@ public class SybaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) throws SQLException {
     // We can simply check the sysindexes table where a specific flag is set for pk indexes
     final String query = "SELECT name = sysindexes.name FROM sysindexes, sysobjects WHERE sysobjects.name = ? " +

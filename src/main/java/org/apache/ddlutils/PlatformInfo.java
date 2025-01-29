@@ -261,22 +261,22 @@ public class PlatformInfo {
   /**
    * Contains the supported ON UPDATE actions.
    */
-  private final HashSet _supportedOnUpdateActions = new HashSet<>();
+  private final HashSet<CascadeActionEnum> _supportedOnUpdateActions = new HashSet<>();
 
   /**
    * Contains the supported ON DELETE actions.
    */
-  private final HashSet _supportedOnDeleteActions = new HashSet<>();
+  private final HashSet<CascadeActionEnum> _supportedOnDeleteActions = new HashSet<>();
 
   /**
    * Contains for each ON UPDATE action the list of equivalent actions.
    */
-  private final HashMap _equivalentOnUpdateActions = new HashMap<>();
+  private final HashMap<CascadeActionEnum, Set<CascadeActionEnum>> _equivalentOnUpdateActions = new HashMap<>();
 
   /**
    * Contains for each ON DELETE action the list of equivalent actions.
    */
-  private final HashMap _equivalentOnDeleteActions = new HashMap<>();
+  private final HashMap<CascadeActionEnum, Set<CascadeActionEnum>> _equivalentOnDeleteActions = new HashMap<>();
 
   /**
    * Creates a new platform info object.
@@ -299,8 +299,8 @@ public class PlatformInfo {
     _typesWithPrecisionAndScale.add(Types.DECIMAL);
     _typesWithPrecisionAndScale.add(Types.NUMERIC);
 
-    _supportedOnUpdateActions.addAll(CascadeActionEnum.getEnumList());
-    _supportedOnDeleteActions.addAll(CascadeActionEnum.getEnumList());
+    _supportedOnUpdateActions.addAll(Arrays.asList(CascadeActionEnum.values()));
+    _supportedOnDeleteActions.addAll(Arrays.asList(CascadeActionEnum.values()));
   }
 
   // properties influencing the definition of columns
@@ -1032,9 +1032,7 @@ public class PlatformInfo {
     try {
       Field constant = Types.class.getField(jdbcTypeName);
 
-      if (constant != null) {
-        addNativeTypeMapping(constant.getInt(null), nativeType);
-      }
+      addNativeTypeMapping(constant.getInt(null), nativeType);
     } catch (Exception ex) {
       // ignore -> won't be defined
       _log.warn("Cannot add native type mapping for undefined jdbc type " + jdbcTypeName, ex);
@@ -1150,9 +1148,7 @@ public class PlatformInfo {
     try {
       Field constant = Types.class.getField(jdbcTypeName);
 
-      if (constant != null) {
-        setDefaultSize(constant.getInt(null), defaultSize);
-      }
+      setDefaultSize(constant.getInt(null), defaultSize);
     } catch (Exception ex) {
       // ignore -> won't be defined
       _log.warn("Cannot add default size for undefined jdbc type " + jdbcTypeName, ex);
@@ -1272,8 +1268,8 @@ public class PlatformInfo {
    */
   public void addEquivalentOnUpdateActions(CascadeActionEnum actionA, CascadeActionEnum actionB) {
     if (!actionA.equals(actionB)) {
-      Set actionsEquivalentToActionA = (Set) _equivalentOnUpdateActions.get(actionA);
-      Set actionsEquivalentToActionB = (Set) _equivalentOnUpdateActions.get(actionB);
+      Set<CascadeActionEnum> actionsEquivalentToActionA = _equivalentOnUpdateActions.get(actionA);
+      Set<CascadeActionEnum> actionsEquivalentToActionB = _equivalentOnUpdateActions.get(actionB);
 
       if (actionsEquivalentToActionA == null) {
         actionsEquivalentToActionA = new HashSet<>();
@@ -1297,7 +1293,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the two actions are equivalent
    */
   public boolean areEquivalentOnUpdateActions(CascadeActionEnum actionA, CascadeActionEnum actionB) {
-    Set actionsEquivalentToActionA = (Set) _equivalentOnUpdateActions.get(actionA);
+    Set<CascadeActionEnum> actionsEquivalentToActionA = _equivalentOnUpdateActions.get(actionA);
 
     return actionsEquivalentToActionA != null && actionsEquivalentToActionA.contains(actionB);
   }
@@ -1311,8 +1307,8 @@ public class PlatformInfo {
    */
   public void addEquivalentOnDeleteActions(CascadeActionEnum actionA, CascadeActionEnum actionB) {
     if (!actionA.equals(actionB)) {
-      Set actionsEquivalentToActionA = (Set) _equivalentOnDeleteActions.get(actionA);
-      Set actionsEquivalentToActionB = (Set) _equivalentOnDeleteActions.get(actionB);
+      Set<CascadeActionEnum> actionsEquivalentToActionA = _equivalentOnDeleteActions.get(actionA);
+      Set<CascadeActionEnum> actionsEquivalentToActionB = _equivalentOnDeleteActions.get(actionB);
 
       if (actionsEquivalentToActionA == null) {
         actionsEquivalentToActionA = new HashSet<>();
@@ -1336,7 +1332,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the two actions are equivalent
    */
   public boolean areEquivalentOnDeleteActions(CascadeActionEnum actionA, CascadeActionEnum actionB) {
-    Set actionsEquivalentToActionA = (Set) _equivalentOnDeleteActions.get(actionA);
+    Set<CascadeActionEnum> actionsEquivalentToActionA = _equivalentOnDeleteActions.get(actionA);
 
     return actionsEquivalentToActionA != null && actionsEquivalentToActionA.contains(actionB);
   }

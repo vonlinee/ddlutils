@@ -770,7 +770,7 @@ public class JdbcModelReader {
 
     String description = (String) values.get("REMARKS");
 
-    if (!org.apache.ddlutils.util.StringUtilsExt.isEmpty(description)) {
+    if (!org.apache.ddlutils.util.StringUtils.isEmpty(description)) {
       column.setDescription(description);
     }
     return column;

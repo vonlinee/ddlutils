@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DdlUtilsException;
@@ -35,7 +34,7 @@ import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.util.ListOrderedMap;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
 import java.io.Writer;
@@ -680,7 +679,7 @@ public abstract class SqlBuilder {
    * @param database The database
    */
   public void dropTables(Database database) throws IOException {
-    // we're dropping the external foreignkeys first
+    // we're dropping the external foreign keys first
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
 
@@ -690,10 +689,10 @@ public abstract class SqlBuilder {
       }
     }
 
-    // Next we drop the tables in reverse order to avoid referencial problems
+    // Next we drop the tables in reverse order to avoid reference problems
     // TODO: It might be more useful to either (or both)
-    //       * determine an order in which the tables can be dropped safely (via the foreignkeys)
-    //       * alter the tables first to drop the internal foreignkeys
+    //       * determine an order in which the tables can be dropped safely (via the foreign keys)
+    //       * alter the tables first to drop the internal foreign keys
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
 
@@ -839,7 +838,7 @@ public abstract class SqlBuilder {
    *                        prepared statement (both for the pk values and the object values)
    * @return The update sql
    */
-  public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
@@ -1258,7 +1257,7 @@ public abstract class SqlBuilder {
 
     String sizeSpec = getSizeSpec(column);
 
-    if (!StringUtilsExt.isEmpty(sizeSpec)) {
+    if (!StringUtils.isEmpty(sizeSpec)) {
       sqlType.append("(");
       sqlType.append(sizeSpec);
       sqlType.append(")");
@@ -1341,7 +1340,7 @@ public abstract class SqlBuilder {
 
     for (Map.Entry<String, String> stringStringEntry : _charSequencesToEscape.entrySet()) {
 
-      result = StringUtils.replace(result, stringStringEntry.getKey(), stringStringEntry.getValue());
+      result = org.apache.commons.lang.StringUtils.replace(result, stringStringEntry.getKey(), stringStringEntry.getValue());
     }
     return result;
   }
@@ -1474,7 +1473,7 @@ public abstract class SqlBuilder {
     // desired type, in order to avoid repeated altering of a perfectly valid column
     return (getPlatformInfo().getTargetJdbcType(desiredColumn.getTypeCode()) != currentColumn.getTypeCode()) ||
       (desiredColumn.isRequired() != currentColumn.isRequired()) ||
-      (sizeMatters && !StringUtils.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
+      (sizeMatters && !org.apache.commons.lang.StringUtils.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
       !defaultsEqual;
   }
 

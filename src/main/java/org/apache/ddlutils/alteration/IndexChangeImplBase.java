@@ -36,7 +36,7 @@ public abstract class IndexChangeImplBase extends TableChangeImplBase
   /**
    * The names of the columns in the index.
    */
-  private final List _columnNames = new ArrayList();
+  private final List<String> _columnNames = new ArrayList<>();
 
   /**
    * Creates a new change object.
@@ -55,6 +55,7 @@ public abstract class IndexChangeImplBase extends TableChangeImplBase
   /**
    * {@inheritDoc}
    */
+  @Override
   public Index findChangedIndex(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 
@@ -65,7 +66,7 @@ public abstract class IndexChangeImplBase extends TableChangeImplBase
         if (curIndex.getColumnCount() == _columnNames.size()) {
           for (int colIdx = 0; colIdx < curIndex.getColumnCount(); colIdx++) {
             String curColName = curIndex.getColumn(colIdx).getName();
-            String expectedColName = (String) _columnNames.get(colIdx);
+            String expectedColName = _columnNames.get(colIdx);
 
             if ((caseSensitive && curColName.equals(expectedColName)) ||
               (!caseSensitive && curColName.equalsIgnoreCase(expectedColName))) {

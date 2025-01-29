@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.util.ListOrderedSet;
 
 import java.util.Iterator;

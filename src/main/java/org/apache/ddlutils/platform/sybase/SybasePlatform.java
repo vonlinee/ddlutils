@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform.sybase;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
@@ -73,7 +73,7 @@ public class SybasePlatform extends PlatformImplBase {
    */
   public static final String JDBC_DRIVER_OLD = "com.sybase.jdbc.SybDriver";
   /**
-   * The subprotocol used by the standard Sybase driver.
+   * The sub protocol used by the standard Sybase driver.
    */
   public static final String JDBC_SUBPROTOCOL = "sybase:Tds";
 

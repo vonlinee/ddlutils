@@ -66,7 +66,7 @@ public abstract class Command {
    * re-throwing it (wrapped in a build exception) or only logging it.
    *
    * @param ex  The exception
-   * @param msg The message to use unless this the exception is rethrown and it is
+   * @param msg The message to use unless this the exception is rethrown, and it is
    *            already a build exception
    */
   protected void handleException(Exception ex, String msg) throws BuildException {

@@ -19,8 +19,8 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.beanutils.ConversionException;
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.ddlutils.data.ConversionException;
+import org.apache.ddlutils.data.ConvertUtils;
 import org.apache.ddlutils.model.TypeMap;
 
 import java.sql.Date;

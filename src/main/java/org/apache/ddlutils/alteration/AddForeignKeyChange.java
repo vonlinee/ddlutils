@@ -58,6 +58,7 @@ public class AddForeignKeyChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database database, boolean caseSensitive) {
     findChangedTable(database, caseSensitive).addForeignKey(_newForeignKey);
   }

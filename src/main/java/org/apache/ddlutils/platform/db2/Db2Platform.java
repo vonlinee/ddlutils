@@ -34,7 +34,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
 import java.sql.Types;
@@ -157,7 +157,8 @@ public class Db2Platform extends PlatformImplBase {
           // DB2 cannot add IDENTITY columns, and required columns need a default value
           return (addColumnChange.getNextColumn() == null) &&
             !addColumnChange.getNewColumn().isAutoIncrement() &&
-            (!addColumnChange.getNewColumn().isRequired() || !StringUtilsExt.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
+            (!addColumnChange.getNewColumn().isRequired() ||
+              !StringUtils.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
         } else {
           return false;
         }

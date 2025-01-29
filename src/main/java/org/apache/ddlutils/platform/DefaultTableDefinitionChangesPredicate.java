@@ -26,7 +26,6 @@ import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.model.Table;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ public class DefaultTableDefinitionChangesPredicate implements TableDefinitionCh
   }
 
   /**
-   * Checks whether the given change is suppored.
+   * Checks whether the given change is supported.
    *
    * @param intermediateTable The current table to which this change would be applied
    * @param change            The table change

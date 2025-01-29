@@ -32,7 +32,7 @@ public class RemovePrimaryKeyChange extends TableChangeImplBase {
   /**
    * Creates a new change object.
    *
-   * @param tableName The name of he table to remove the primary key from
+   * @param tableName The name of the table to remove the primary key from
    */
   public RemovePrimaryKeyChange(String tableName) {
     super(tableName);
@@ -41,12 +41,13 @@ public class RemovePrimaryKeyChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
     Column[] pkCols = table.getPrimaryKeyColumns();
 
-    for (int idx = 0; idx < pkCols.length; idx++) {
-      pkCols[idx].setPrimaryKey(false);
+    for (Column pkCol : pkCols) {
+      pkCol.setPrimaryKey(false);
     }
   }
 }

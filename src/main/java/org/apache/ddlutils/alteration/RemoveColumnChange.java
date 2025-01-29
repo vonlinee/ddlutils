@@ -40,6 +40,7 @@ public class RemoveColumnChange extends ColumnChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     findChangedTable(model, caseSensitive).removeColumn(findChangedColumn(model, caseSensitive));
   }

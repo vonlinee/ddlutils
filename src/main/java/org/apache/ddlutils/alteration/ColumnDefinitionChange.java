@@ -22,7 +22,8 @@ package org.apache.ddlutils.alteration;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.util.StringUtilsExt;
+
+import java.util.Objects;
 
 /**
  * Represents the change of one or more aspects of the definition of a column, such as
@@ -68,7 +69,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * Determines whether the jdbc type of the given target column is different from the one of the given source column.
    * This method uses the platform info object to determine the actual jdbc type that the target column would have
-   * in the database, and compares that to the type of he source column.
+   * in the database, and compares that to the type of the source column.
    *
    * @param platformInfo The info object for the current platform
    * @param sourceColumn The source column
@@ -95,7 +96,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
     boolean sizeMatters = platformInfo.hasSize(targetTypeCode);
     boolean scaleMatters = platformInfo.hasPrecisionAndScale(targetTypeCode);
 
-    if (sizeMatters && !StringUtilsExt.equals(sourceColumn.getSize(), targetColumn.getSize())) {
+    if (sizeMatters && !Objects.equals(sourceColumn.getSize(), targetColumn.getSize())) {
       return true;
     } else return scaleMatters &&
       ((sourceColumn.getPrecisionRadix() != targetColumn.getPrecisionRadix()) ||
@@ -177,6 +178,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Column column = findChangedColumn(model, caseSensitive);
 

@@ -19,8 +19,8 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DatabaseOperationException;
@@ -47,8 +47,8 @@ import org.apache.ddlutils.alteration.RemovePrimaryKeyChange;
 import org.apache.ddlutils.alteration.RemoveTableChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
-import org.apache.ddlutils.dynabean.SqlDynaProperty;
+import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.SqlDynaProperty;
 import org.apache.ddlutils.model.CloneHelper;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -143,6 +143,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public SqlBuilder getSqlBuilder() {
     return _builder;
   }
@@ -159,6 +160,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public JdbcModelReader getModelReader() {
     if (_modelReader == null) {
       _modelReader = new JdbcModelReader(this);
@@ -178,6 +180,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public PlatformInfo getPlatformInfo() {
     return _info;
   }
@@ -185,6 +188,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isScriptModeOn() {
     return _scriptModeOn;
   }
@@ -192,6 +196,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setScriptModeOn(boolean scriptModeOn) {
     _scriptModeOn = scriptModeOn;
   }
@@ -199,6 +204,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isSqlCommentsOn() {
     return _sqlCommentsOn;
   }
@@ -206,6 +212,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setSqlCommentsOn(boolean sqlCommentsOn) {
     if (!getPlatformInfo().isSqlCommentsSupported() && sqlCommentsOn) {
       throw new DdlUtilsException("Platform " + getName() + " does not support SQL comments");
@@ -216,6 +223,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDelimitedIdentifierModeOn() {
     return _delimitedIdentifierModeOn;
   }
@@ -223,6 +231,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDelimitedIdentifierModeOn(boolean delimitedIdentifierModeOn) {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported() && delimitedIdentifierModeOn) {
       throw new DdlUtilsException("Platform " + getName() + " does not support delimited identifier");
@@ -233,6 +242,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isIdentityOverrideOn() {
     return _identityOverrideOn;
   }
@@ -240,6 +250,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setIdentityOverrideOn(boolean identityOverrideOn) {
     _identityOverrideOn = identityOverrideOn;
   }
@@ -247,6 +258,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isForeignKeysSorted() {
     return _foreignKeysSorted;
   }
@@ -254,6 +266,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setForeignKeysSorted(boolean foreignKeysSorted) {
     _foreignKeysSorted = foreignKeysSorted;
   }
@@ -261,6 +274,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDefaultOnUpdateActionUsedIfUnsupported() {
     return _useDefaultOnUpdateActionIfUnsupported;
   }
@@ -268,6 +282,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDefaultOnUpdateActionUsedIfUnsupported(boolean useDefault) {
     _useDefaultOnUpdateActionIfUnsupported = useDefault;
   }
@@ -275,6 +290,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isDefaultOnDeleteActionUsedIfUnsupported() {
     return _useDefaultOnDeleteActionIfUnsupported;
   }
@@ -282,6 +298,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void setDefaultOnDeleteActionUsedIfUnsupported(boolean useDefault) {
     _useDefaultOnDeleteActionIfUnsupported = useDefault;
   }
@@ -313,6 +330,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int evaluateBatch(String sql, boolean continueOnError) throws DatabaseOperationException {
     Connection connection = borrowConnection();
 
@@ -395,6 +413,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void shutdownDatabase() throws DatabaseOperationException {
     Connection connection = borrowConnection();
 
@@ -408,6 +427,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void shutdownDatabase(Connection connection) throws DatabaseOperationException {
     // Per default do nothing as most databases don't need this
   }
@@ -1400,7 +1420,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public Iterator<DynaBean> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     Statement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     Iterator<DynaBean> answer = null;
 
     try {
@@ -1695,9 +1715,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public void insert(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException {
     SqlDynaClass dynaClass = model.getDynaClassFor(dynaBean);
     SqlDynaProperty[] properties = getPropertiesForInsertion(model, dynaClass, dynaBean);
-    Column[] autoIncrColumns = getRelevantIdentityColumns(model, dynaClass, dynaBean);
+    Column[] autoIncrementColumns = getRelevantIdentityColumns(model, dynaClass, dynaBean);
 
-    if ((properties.length == 0) && (autoIncrColumns.length == 0)) {
+    if ((properties.length == 0) && (autoIncrementColumns.length == 0)) {
       _log.warn("Cannot insert instances of type " + dynaClass + " because it has no usable properties");
       return;
     }
@@ -1709,7 +1729,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       _log.debug("About to execute SQL: " + insertSql);
     }
 
-    if (autoIncrColumns.length > 0) {
+    if (autoIncrementColumns.length > 0) {
       if (!getPlatformInfo().isLastIdentityValueReadable()) {
         _log.warn("The database does not support querying for auto-generated column values");
       } else {
@@ -1749,7 +1769,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       closeStatement(statement);
     }
     if (queryIdentitySql != null) {
-      Statement queryStmt = null;
+      Statement queryStmt;
       ResultSet lastInsertedIds = null;
 
       try {
@@ -1768,13 +1788,13 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
         lastInsertedIds.next();
 
-        for (int idx = 0; idx < autoIncrColumns.length; idx++) {
+        for (int idx = 0; idx < autoIncrementColumns.length; idx++) {
           // we're using the index rather than the name because we cannot know how
           // the SQL statement looks like; rather we assume that we get the values
           // back in the same order as the auto increment columns
-          Object value = getObjectFromResultSet(lastInsertedIds, autoIncrColumns[idx], idx + 1);
+          Object value = getObjectFromResultSet(lastInsertedIds, autoIncrementColumns[idx], idx + 1);
 
-          PropertyUtils.setProperty(dynaBean, autoIncrColumns[idx].getName(), value);
+          PropertyUtils.setProperty(dynaBean, autoIncrementColumns[idx].getName(), value);
         }
       } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
         // Can't happen because we're using dyna beans

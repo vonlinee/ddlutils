@@ -19,8 +19,8 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.PropertyUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;

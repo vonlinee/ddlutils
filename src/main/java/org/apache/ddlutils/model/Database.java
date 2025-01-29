@@ -19,12 +19,12 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.ddlutils.dynabean.DynaClassCache;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
-import org.apache.ddlutils.dynabean.SqlDynaException;
+import org.apache.ddlutils.data.DynaClassCache;
+import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.SqlDynaException;
 
 import java.io.Serializable;
 import java.sql.Types;
@@ -518,7 +518,7 @@ public class Database implements Serializable {
   }
 
   /**
-   * Returns the {@link org.apache.ddlutils.dynabean.SqlDynaClass} for the given table name. If it does not
+   * Returns the {@link SqlDynaClass} for the given table name. If it does not
    * exist yet, a new one will be created based on the Table definition.
    *
    * @param tableName The name of the table to create the bean for
@@ -532,7 +532,7 @@ public class Database implements Serializable {
   }
 
   /**
-   * Returns the {@link org.apache.ddlutils.dynabean.SqlDynaClass} for the given dyna bean.
+   * Returns the {@link SqlDynaClass} for the given dyna bean.
    *
    * @param bean The dyna bean
    * @return The <code>SqlDynaClass</code> for the given bean

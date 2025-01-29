@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Task for getting structural info and data from a live database. Eg. it has sub tasks for
+ * Task for getting structural info and data from a live database. E.g. it has sub-tasks for
  * writing the schema of the live database or the data currently in it to an XML file, for
  * creating the DTDs for these data files, and for generating SQL to creating a schema in the
  * database to a file.

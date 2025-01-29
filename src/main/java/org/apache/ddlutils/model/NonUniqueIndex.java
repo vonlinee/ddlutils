@@ -19,9 +19,6 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-
 import java.util.ArrayList;
 
 /**
@@ -30,10 +27,6 @@ import java.util.ArrayList;
  * @version $Revision: 289996 $
  */
 public class NonUniqueIndex extends IndexImplBase {
-  /**
-   * Unique ID for serialization purposes.
-   */
-  private static final long serialVersionUID = -3591499395114850301L;
 
   /**
    * {@inheritDoc}
@@ -55,21 +48,6 @@ public class NonUniqueIndex extends IndexImplBase {
     result._columns = (ArrayList<IndexColumn>) _columns.clone();
 
     return result;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public boolean equals(Object obj) {
-    if (obj instanceof NonUniqueIndex) {
-      NonUniqueIndex other = (NonUniqueIndex) obj;
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_columns, other._columns)
-        .isEquals();
-    } else {
-      return false;
-    }
   }
 
   /**
@@ -99,18 +77,7 @@ public class NonUniqueIndex extends IndexImplBase {
    * {@inheritDoc}
    */
   @Override
-  public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_columns)
-      .toHashCode();
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
   public String toString() {
-
     return "Index [name=" +
       getName() +
       "; " +
@@ -124,7 +91,6 @@ public class NonUniqueIndex extends IndexImplBase {
   @Override
   public String toVerboseString() {
     StringBuilder result = new StringBuilder();
-
     result.append("Index [");
     result.append(getName());
     result.append("] columns:");

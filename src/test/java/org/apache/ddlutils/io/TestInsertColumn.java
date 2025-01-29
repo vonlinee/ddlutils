@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.Test;
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;

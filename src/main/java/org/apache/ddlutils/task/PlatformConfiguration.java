@@ -49,7 +49,7 @@ public class PlatformConfiguration {
    */
   private boolean _sortForeignKeys;
   /**
-   * Whether to shutdown the database after the task has finished.
+   * Whether to shut down the database after the task has finished.
    */
   private boolean _shutdownDatabase;
   /**

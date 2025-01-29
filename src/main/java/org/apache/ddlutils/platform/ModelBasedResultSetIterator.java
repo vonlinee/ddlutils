@@ -19,14 +19,14 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.beanutils.BasicDynaBean;
-import org.apache.commons.beanutils.BasicDynaClass;
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.DynaClass;
-import org.apache.commons.beanutils.DynaProperty;
+import org.apache.ddlutils.data.BasicDynaBean;
+import org.apache.ddlutils.data.BasicDynaClass;
+import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.DynaClass;
+import org.apache.ddlutils.data.DynaProperty;
 import org.apache.ddlutils.DatabaseOperationException;
-import org.apache.ddlutils.dynabean.SqlDynaBean;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
+import org.apache.ddlutils.data.SqlDynaBean;
+import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -44,8 +44,8 @@ import java.util.NoSuchElementException;
 
 /**
  * This is an iterator that is specifically targeted at traversing result sets.
- * If the query is against a known table, then {@link org.apache.ddlutils.dynabean.SqlDynaBean} instances
- * are created from the rows, otherwise normal {@link org.apache.commons.beanutils.DynaBean} instances
+ * If the query is against a known table, then {@link SqlDynaBean} instances
+ * are created from the rows, otherwise normal {@link DynaBean} instances
  * are created.
  *
  * @version $Revision: 289996 $
@@ -307,7 +307,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
 
         conn = stmt.getConnection();
 
-        // also closes the resultset
+        // also closes the result set
         _platform.closeStatement(stmt);
       } catch (SQLException ex) {
         // we ignore it

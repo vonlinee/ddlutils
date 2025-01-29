@@ -36,10 +36,11 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
 import java.sql.Types;
+import java.util.Objects;
 
 /**
  * The SapDB platform implementation.
@@ -115,6 +116,7 @@ public class SapDbPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -124,6 +126,7 @@ public class SapDbPlatform extends PlatformImplBase {
    *
    * @return The comparator
    */
+  @Override
   protected ModelComparator getModelComparator() {
     ModelComparator comparator = super.getModelComparator();
 
@@ -135,8 +138,11 @@ public class SapDbPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof RemoveColumnChange) ||
           (change instanceof AddPrimaryKeyChange) ||
@@ -149,7 +155,7 @@ public class SapDbPlatform extends PlatformImplBase {
           // a default value or be IDENTITY
           return (addColumnChange.getNextColumn() == null) &&
             (!addColumnChange.getNewColumn().isRequired() ||
-              !StringUtilsExt.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
+              !StringUtils.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
         } else if (change instanceof ColumnDefinitionChange) {
           ColumnDefinitionChange colChange = (ColumnDefinitionChange) change;
           // SapDB has a ALTER TABLE MODIFY COLUMN, but it is limited regarding the type conversions
@@ -241,7 +247,7 @@ public class SapDbPlatform extends PlatformImplBase {
     Table changedTable = findChangedTable(currentModel, change);
     Column changedColumn = changedTable.findColumn(change.getChangedColumn(), isDelimitedIdentifierModeOn());
 
-    if (!StringUtilsExt.equals(changedColumn.getDefaultValue(), change.getNewColumn().getDefaultValue())) {
+    if (!Objects.equals(changedColumn.getDefaultValue(), change.getNewColumn().getDefaultValue())) {
       ((SapDbBuilder) getSqlBuilder()).changeColumnDefaultValue(changedTable,
         changedColumn,
         change.getNewColumn().getDefaultValue());

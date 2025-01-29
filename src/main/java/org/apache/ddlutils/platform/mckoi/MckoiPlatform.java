@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -169,16 +168,15 @@ public class MckoiPlatform extends PlatformImplBase {
 
   /**
    * {@inheritDoc}
-   */  @Override
+   */
+  @Override
   public void processChange(Database currentModel, CreationParameters params, RecreateTableChange change) throws IOException {
     // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
     // We only have to handle auto-increment changes manually
     MckoiBuilder sqlBuilder = (MckoiBuilder) getSqlBuilder();
     Table changedTable = findChangedTable(currentModel, change);
 
-    for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
-      TableChange tableChange = (TableChange) it.next();
-
+    for (TableChange tableChange : change.getOriginalChanges()) {
       if (tableChange instanceof ColumnDefinitionChange) {
         ColumnDefinitionChange colChange = (ColumnDefinitionChange) tableChange;
         Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
@@ -195,14 +193,12 @@ public class MckoiPlatform extends PlatformImplBase {
       }
     }
 
-    Map parameters = (params == null ? null : params.getParametersFor(changedTable));
+    Map<String, Object> parameters = (params == null ? null : params.getParametersFor(changedTable));
 
     sqlBuilder.writeRecreateTableStmt(currentModel, change.getTargetTable(), parameters);
 
     // we have to defer removal of the sequences until they are no longer used
-    for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
-      TableChange tableChange = (TableChange) it.next();
-
+    for (TableChange tableChange : change.getOriginalChanges()) {
       if (tableChange instanceof ColumnDefinitionChange) {
         ColumnDefinitionChange colChange = (ColumnDefinitionChange) tableChange;
         Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());

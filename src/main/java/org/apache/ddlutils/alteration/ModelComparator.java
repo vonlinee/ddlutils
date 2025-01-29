@@ -28,7 +28,7 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ForeignKey;
 import org.apache.ddlutils.model.Index;
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -434,13 +434,13 @@ public class ModelComparator {
    * @param targetTable       The target table
    * @return The changes
    */
-  protected List<RemoveIndexChange> checkForRemovedIndexes(Database sourceModel,
+  protected List<TableChange> checkForRemovedIndexes(Database sourceModel,
                                         Table sourceTable,
                                         Database intermediateModel,
                                         Table intermediateTable,
                                         Database targetModel,
                                         Table targetTable) {
-    List<RemoveIndexChange> changes = new ArrayList<>();
+    List<TableChange> changes = new ArrayList<>();
     Index[] indexes = intermediateTable.getIndices();
 
     for (Index sourceIndex : indexes) {
@@ -721,7 +721,7 @@ public class ModelComparator {
         changePK = true;
       } else if (curPK.length > 0) {
         for (int pkColumnIdx = 0; (pkColumnIdx < curPK.length) && !changePK; pkColumnIdx++) {
-          if (!StringUtilsExt.equals(curPK[pkColumnIdx].getName(), targetPK[pkColumnIdx].getName(), _caseSensitive)) {
+          if (!StringUtils.equals(curPK[pkColumnIdx].getName(), targetPK[pkColumnIdx].getName(), _caseSensitive)) {
             changePK = true;
           }
         }
@@ -753,7 +753,7 @@ public class ModelComparator {
 
   /**
    * Compares the two columns and returns the change necessary to create the second
-   * column from the first one if they differe.
+   * column from the first one if they differ.
    *
    * @param sourceTable  The source table which contains the source column
    * @param sourceColumn The source column

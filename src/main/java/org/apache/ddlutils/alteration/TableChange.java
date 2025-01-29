@@ -39,7 +39,7 @@ public interface TableChange extends ModelChange {
    * Finds the table object corresponding to the changed table in the given database model.
    *
    * @param model         The database model
-   * @param caseSensitive Whether identifiers are case sensitive
+   * @param caseSensitive Whether identifiers are case-sensitive
    * @return The table object or <code>null</code> if it could not be found
    */
   Table findChangedTable(Database model, boolean caseSensitive);

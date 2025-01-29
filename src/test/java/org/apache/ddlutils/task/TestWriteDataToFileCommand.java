@@ -20,8 +20,8 @@ package org.apache.ddlutils.task;
  */
 
 import junit.framework.Test;
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
+import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DatabaseIO;
 

@@ -22,7 +22,6 @@ package org.apache.ddlutils.task;
 import org.apache.ddlutils.model.Table;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /**

@@ -28,7 +28,7 @@ import org.apache.ddlutils.model.ForeignKey;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.SqlBuilder;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
 
@@ -41,7 +41,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public SapDbBuilder(Platform platform) {
     super(platform);
@@ -215,7 +215,7 @@ public class SapDbBuilder extends SqlBuilder {
     boolean charSizeChanged = TypeMap.isTextType(targetColumn.getTypeCode()) &&
       TypeMap.isTextType(targetColumn.getTypeCode()) &&
       ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn) &&
-      !StringUtilsExt.isEmpty(targetColumn.getSize());
+      !StringUtils.isEmpty(targetColumn.getSize());
 
     if (charSizeChanged) {
       print("SUBSTR(");

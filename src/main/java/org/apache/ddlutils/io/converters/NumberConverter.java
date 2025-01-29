@@ -19,7 +19,7 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.ddlutils.data.ConvertUtils;
 
 import java.math.BigDecimal;
 import java.sql.Types;

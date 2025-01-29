@@ -24,15 +24,15 @@ package org.apache.ddlutils.alteration;
  *
  * @version $Revision: $
  */
-public class Pair {
+public class Pair<K, V> {
   /**
    * The first object.
    */
-  private final Object _firstObj;
+  private final K _firstObj;
   /**
    * The first object.
    */
-  private final Object _secondObj;
+  private final V _secondObj;
 
   /**
    * Creates a pair object.
@@ -40,7 +40,7 @@ public class Pair {
    * @param firstObj  The first object
    * @param secondObj The second object
    */
-  public Pair(Object firstObj, Object secondObj) {
+  public Pair(K firstObj, V secondObj) {
     _firstObj = firstObj;
     _secondObj = secondObj;
   }
@@ -50,7 +50,7 @@ public class Pair {
    *
    * @return The first object
    */
-  public Object getFirst() {
+  public K getFirst() {
     return _firstObj;
   }
 
@@ -59,7 +59,7 @@ public class Pair {
    *
    * @return The second object
    */
-  public Object getSecond() {
+  public V getSecond() {
     return _secondObj;
   }
 }

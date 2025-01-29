@@ -34,7 +34,7 @@ public class Oracle10Builder extends Oracle8Builder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public Oracle10Builder(Platform platform) {
     super(platform);

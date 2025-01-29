@@ -21,14 +21,14 @@ package org.apache.ddlutils;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestSuite;
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.beanutils.DynaProperty;
+import org.apache.ddlutils.data.BeanUtils;
+import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.DynaProperty;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.dynabean.SqlDynaBean;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
-import org.apache.ddlutils.dynabean.SqlDynaProperty;
+import org.apache.ddlutils.data.SqlDynaBean;
+import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.SqlDynaProperty;
 import org.apache.ddlutils.io.BinaryObjectsHelper;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataToDatabaseSink;
@@ -46,7 +46,7 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultValueHelper;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -1041,7 +1041,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         ForeignKey actualFk = actual.getForeignKey(actualFkIdx);
         String actualName = getPlatform().getSqlBuilder().shortenName(actualFk.getName(), getSqlBuilder().getMaxForeignKeyNameLength());
 
-        if (StringUtilsExt.equals(expectedName, actualName, caseSensitive)) {
+        if (StringUtils.equals(expectedName, actualName, caseSensitive)) {
           assertEquals(expectedFk,
             actualFk,
             caseSensitive);

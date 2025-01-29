@@ -1,4 +1,4 @@
-package org.apache.ddlutils.dynabean;
+package org.apache.ddlutils.data;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,7 +19,6 @@ package org.apache.ddlutils.dynabean;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaProperty;
 import org.apache.ddlutils.model.Column;
 
 /**
@@ -31,10 +30,6 @@ import org.apache.ddlutils.model.Column;
  * @version $Revision$
  */
 public class SqlDynaProperty extends DynaProperty {
-  /**
-   * Unique ID for serializaion purposes.
-   */
-  private static final long serialVersionUID = -4491018827449106588L;
 
   /**
    * The column for which this dyna property is defined.
@@ -57,7 +52,7 @@ public class SqlDynaProperty extends DynaProperty {
    * @param column The column
    * @param type   The type of the property
    */
-  public SqlDynaProperty(Column column, Class type) {
+  public SqlDynaProperty(Column column, Class<?> type) {
     super(column.getName(), type);
     _column = column;
   }

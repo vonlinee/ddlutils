@@ -19,11 +19,11 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.dynabean.SqlDynaBean;
-import org.apache.ddlutils.dynabean.SqlDynaClass;
+import org.apache.ddlutils.data.SqlDynaBean;
+import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Table;

@@ -19,12 +19,14 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
+import java.util.Objects;
+
 /**
  * Helper class containing string utility functions.
  *
  * @version $Revision: $
  */
-public class StringUtilsExt extends org.apache.commons.lang.StringUtils {
+public class StringUtils {
   /**
    * Compares the two given strings in a case-sensitive or insensitive manner
    * depending on the <code>caseSensitive</code> parameter.
@@ -35,6 +37,17 @@ public class StringUtilsExt extends org.apache.commons.lang.StringUtils {
    * @return <code>true</code> if the two strings are equal
    */
   public static boolean equals(String strA, String strB, boolean caseSensitive) {
-    return caseSensitive ? equals(strA, strB) : equalsIgnoreCase(strA, strB);
+    if (strA == null) {
+      return strB == null;
+    }
+    return caseSensitive ? Objects.equals(strA, strB) : strA.equalsIgnoreCase(strB);
+  }
+
+  public static boolean equals(String str1, String str2) {
+    return Objects.equals(str1, str2);
+  }
+
+  public static boolean isEmpty(String str) {
+    return str == null || str.isEmpty();
   }
 }

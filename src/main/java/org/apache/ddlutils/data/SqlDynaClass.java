@@ -1,4 +1,4 @@
-package org.apache.ddlutils.dynabean;
+package org.apache.ddlutils.data;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one
@@ -19,8 +19,6 @@ package org.apache.ddlutils.dynabean;
  * under the License.
  */
 
-import org.apache.commons.beanutils.BasicDynaClass;
-import org.apache.commons.beanutils.DynaProperty;
 import org.apache.ddlutils.model.Table;
 
 import java.util.ArrayList;
@@ -33,10 +31,6 @@ import java.util.List;
  * @version $Revision$
  */
 public class SqlDynaClass extends BasicDynaClass {
-  /**
-   * Unique ID for serializaion purposes.
-   */
-  private static final long serialVersionUID = -5768155698352911245L;
 
   /**
    * The table for which this dyna class is defined.

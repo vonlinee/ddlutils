@@ -19,16 +19,17 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Base class for indexes.
  *
  * @version $Revision: $
  */
-public abstract class IndexImplBase implements Index {
+abstract class IndexImplBase implements Index {
   /**
    * The name of the index.
    */
@@ -101,7 +102,7 @@ public abstract class IndexImplBase implements Index {
     for (int idx = 0; idx < _columns.size(); idx++) {
       IndexColumn curColumn = getColumn(idx);
 
-      if (StringUtilsExt.equals(columnName, curColumn.getName(), caseSensitive)) {
+      if (StringUtils.equals(columnName, curColumn.getName(), caseSensitive)) {
         return true;
       }
     }
@@ -140,5 +141,18 @@ public abstract class IndexImplBase implements Index {
   @Override
   public void removeColumn(int idx) {
     _columns.remove(idx);
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    if (this == object) return true;
+    if (!(object instanceof IndexImplBase)) return false;
+    IndexImplBase that = (IndexImplBase) object;
+    return Objects.equals(_name, that._name) && Objects.equals(_columns, that._columns);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(_name, _columns);
   }
 }

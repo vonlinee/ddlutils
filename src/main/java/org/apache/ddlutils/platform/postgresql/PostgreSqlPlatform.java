@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform.postgresql;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
@@ -27,7 +27,7 @@ import org.apache.ddlutils.alteration.ModelComparator;
 import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
-import org.apache.ddlutils.dynabean.SqlDynaProperty;
+import org.apache.ddlutils.data.SqlDynaProperty;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;

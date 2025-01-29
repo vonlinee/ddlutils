@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.data.DynaBean;
 
 /**
  * Marks classes that can receive dyna beans read by the {@link org.apache.ddlutils.io.DataReader}.

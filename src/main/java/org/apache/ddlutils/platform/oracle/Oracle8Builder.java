@@ -28,7 +28,7 @@ import org.apache.ddlutils.model.Index;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.SqlBuilder;
-import org.apache.ddlutils.util.StringUtilsExt;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
 import java.sql.Types;
@@ -377,7 +377,7 @@ public class Oracle8Builder extends SqlBuilder {
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     boolean sizeChanged = TypeMap.isTextType(targetColumn.getTypeCode()) &&
       ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn) &&
-      !StringUtilsExt.isEmpty(targetColumn.getSize());
+      !StringUtils.isEmpty(targetColumn.getSize());
 
     if (sizeChanged) {
       print("SUBSTR(");

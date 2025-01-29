@@ -25,7 +25,6 @@ import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
