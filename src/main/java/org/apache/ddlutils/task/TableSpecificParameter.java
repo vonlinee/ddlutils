@@ -39,7 +39,7 @@ public class TableSpecificParameter extends Parameter {
   /**
    * The tables for which this parameter is applicable.
    */
-  private final ArrayList _tables = new ArrayList();
+  private final ArrayList<String> _tables = new ArrayList<>();
 
   /**
    * Specifies the comma-separated list of table names in whose creation this parameter
@@ -82,9 +82,7 @@ public class TableSpecificParameter extends Parameter {
     if (_tables.isEmpty()) {
       return true;
     }
-    for (Iterator it = _tables.iterator(); it.hasNext(); ) {
-      String tableName = (String) it.next();
-
+    for (String tableName : _tables) {
       if ((caseSensitive && tableName.equals(table.getName())) ||
         (!caseSensitive && tableName.equalsIgnoreCase(table.getName()))) {
         return true;

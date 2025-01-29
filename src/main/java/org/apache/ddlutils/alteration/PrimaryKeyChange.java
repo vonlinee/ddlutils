@@ -66,15 +66,16 @@ public class PrimaryKeyChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
     Column[] pkCols = table.getPrimaryKeyColumns();
 
-    for (int idx = 0; idx < pkCols.length; idx++) {
-      pkCols[idx].setPrimaryKey(false);
+    for (Column pkCol : pkCols) {
+      pkCol.setPrimaryKey(false);
     }
-    for (int idx = 0; idx < _newPrimaryKeyColumns.length; idx++) {
-      Column column = table.findColumn(_newPrimaryKeyColumns[idx], caseSensitive);
+    for (String newPrimaryKeyColumn : _newPrimaryKeyColumns) {
+      Column column = table.findColumn(newPrimaryKeyColumn, caseSensitive);
 
       column.setPrimaryKey(true);
     }

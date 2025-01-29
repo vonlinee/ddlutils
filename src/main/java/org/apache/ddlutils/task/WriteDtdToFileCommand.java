@@ -28,7 +28,7 @@ import java.io.FileWriter;
 
 /**
  * Creates a DTD that specifies the layout for data XML files.<br/>
- * This sub task does not require a database connection, so the <code>dataSource</code>
+ * This sub-task does not require a database connection, so the <code>dataSource</code>
  * sub element of the enclosing task can be omitted.
  *
  * @version $Revision: 289996 $
@@ -53,6 +53,7 @@ public class WriteDtdToFileCommand extends Command {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return true;
   }
@@ -60,6 +61,7 @@ public class WriteDtdToFileCommand extends Command {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     if (_outputFile == null) {
       throw new BuildException("No output file specified");

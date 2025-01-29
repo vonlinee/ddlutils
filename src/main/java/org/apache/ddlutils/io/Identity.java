@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Stores the identity of an database object as defined by its primary keys. Is used
+ * Stores the identity of a database object as defined by its primary keys. Is used
  * by {@link org.apache.ddlutils.io.DataToDatabaseSink} class for inserting objects
  * in the correct order.
  *
@@ -44,7 +44,7 @@ public class Identity {
   /**
    * The identity columns and their values.
    */
-  private final HashMap _columnValues = new HashMap();
+  private final HashMap<String, Object> _columnValues = new HashMap<>();
 
   /**
    * Creates a new identity object for the given table.
@@ -109,10 +109,13 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof Identity otherIdentity)) {
+    if (!(obj instanceof Identity)) {
       return false;
     }
+
+    Identity otherIdentity = (Identity) obj;
 
     if (!_table.equals(otherIdentity._table)) {
       return false;
@@ -120,10 +123,8 @@ public class Identity {
     if (_columnValues.keySet().size() != otherIdentity._columnValues.keySet().size()) {
       return false;
     }
-    for (Iterator it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Map.Entry<String, Object> entry : _columnValues.entrySet()) {
       Object otherValue = otherIdentity._columnValues.get(entry.getKey());
-
       if (entry.getValue() == null) {
         if (otherValue != null) {
           return false;
@@ -141,6 +142,7 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return toString().hashCode();
   }
@@ -148,13 +150,14 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
 
     buffer.append(_table.getName());
     buffer.append(":");
-    for (Iterator it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Iterator<Map.Entry<String, Object>> it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
+      Map.Entry<String, Object> entry = it.next();
 
       buffer.append(entry.getKey());
       buffer.append("=");

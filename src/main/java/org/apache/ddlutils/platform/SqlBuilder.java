@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,6 +34,7 @@ import org.apache.ddlutils.model.IndexColumn;
 import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.util.ListOrderedMap;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
@@ -56,7 +56,7 @@ import java.util.Map;
  * <p>
  * An implementation of this class can always delegate down to some templating technology such as Velocity if
  * it requires. Though often that can be quite complex when attempting to reuse code across many databases.
- * Hopefully only a small amount code needs to be changed on a per database basis.
+ * Hopefully only a small amount code needs to be changed on a per-database basis.
  *
  * @version $Revision$
  */
@@ -109,7 +109,7 @@ public abstract class SqlBuilder {
   /**
    * The character sequences that need escaping.
    */
-  private final Map _charSequencesToEscape = new ListOrderedMap();
+  private final Map<String, String> _charSequencesToEscape = new ListOrderedMap<>();
 
   //
   // Configuration
@@ -209,7 +209,7 @@ public abstract class SqlBuilder {
   public void setValueLocale(String localeStr) {
     if (localeStr != null) {
       int sepPos = localeStr.indexOf('_');
-      String language = null;
+      String language;
       String country = null;
       String variant = null;
 
@@ -224,23 +224,21 @@ public abstract class SqlBuilder {
       } else {
         language = localeStr;
       }
-      if (language != null) {
-        Locale locale = null;
+      Locale locale;
 
-        if (variant != null) {
-          locale = new Locale(language, country, variant);
-        } else if (country != null) {
-          locale = new Locale(language, country);
-        } else {
-          locale = new Locale(language);
-        }
-
-        _valueLocale = localeStr;
-        setValueDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, locale));
-        setValueTimeFormat(DateFormat.getTimeInstance(DateFormat.SHORT, locale));
-        setValueNumberFormat(NumberFormat.getNumberInstance(locale));
-        return;
+      if (variant != null) {
+        locale = new Locale(language, country, variant);
+      } else if (country != null) {
+        locale = new Locale(language, country);
+      } else {
+        locale = new Locale(language);
       }
+
+      _valueLocale = localeStr;
+      setValueDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, locale));
+      setValueTimeFormat(DateFormat.getTimeInstance(DateFormat.SHORT, locale));
+      setValueNumberFormat(NumberFormat.getNumberInstance(locale));
+      return;
     }
     _valueLocale = null;
     setValueDateFormat(null);
@@ -401,7 +399,7 @@ public abstract class SqlBuilder {
         params == null ? null : params.getParametersFor(table));
     }
 
-    // we're writing the external foreignkeys last to ensure that all referenced tables are already defined
+    // we're writing the external foreign keys last to ensure that all referenced tables are already defined
     createForeignKeys(database);
   }
 
@@ -413,7 +411,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void createTemporaryTable(Database database, Table table, Map parameters) throws IOException {
+  protected void createTemporaryTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     createTable(database, table, parameters);
   }
 
@@ -438,7 +436,7 @@ public abstract class SqlBuilder {
    * @param targetTable The target table
    */
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
-    ListOrderedMap columns = new ListOrderedMap();
+    ListOrderedMap<Column, Column> columns = new ListOrderedMap<>();
 
     for (int idx = 0; idx < sourceTable.getColumnCount(); idx++) {
       Column sourceColumn = sourceTable.getColumn(idx);
@@ -454,18 +452,18 @@ public abstract class SqlBuilder {
     print("INSERT INTO ");
     printIdentifier(getTableName(targetTable));
     print(" (");
-    for (Iterator columnIt = columns.keySet().iterator(); columnIt.hasNext(); ) {
-      printIdentifier(getColumnName((Column) columnIt.next()));
+    for (Iterator<Column> columnIt = columns.keySet().iterator(); columnIt.hasNext(); ) {
+      printIdentifier(getColumnName(columnIt.next()));
       if (columnIt.hasNext()) {
         print(",");
       }
     }
     print(") SELECT ");
-    for (Iterator columnsIt = columns.entrySet().iterator(); columnsIt.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) columnsIt.next();
+    for (Iterator<Map.Entry<Column, Column>> columnsIt = columns.entrySet().iterator(); columnsIt.hasNext(); ) {
+      Map.Entry<Column, Column> entry = columnsIt.next();
 
-      writeCastExpression((Column) entry.getKey(),
-        (Column) entry.getValue());
+      writeCastExpression(entry.getKey(),
+        entry.getValue());
       if (columnsIt.hasNext()) {
         print(",");
       }
@@ -519,7 +517,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     writeTableCreationStmt(database, table, parameters);
     writeTableCreationStmtEnding(table, parameters);
 
@@ -631,7 +629,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Writes a single foreign key constraint using a alter table statement.
+   * Writes a single foreign key constraint using an alter table statement.
    *
    * @param database   The database model
    * @param table      The table
@@ -687,7 +685,7 @@ public abstract class SqlBuilder {
       Table table = database.getTable(idx);
 
       if ((table.getName() != null) &&
-        (table.getName().length() > 0)) {
+        (!table.getName().isEmpty())) {
         dropForeignKeys(table);
       }
     }
@@ -700,7 +698,7 @@ public abstract class SqlBuilder {
       Table table = database.getTable(idx);
 
       if ((table.getName() != null) &&
-        (table.getName().length() > 0)) {
+        (!table.getName().isEmpty())) {
         writeTableComment(table);
         dropTable(table);
       }
@@ -782,8 +780,8 @@ public abstract class SqlBuilder {
    *                        prepared statement
    * @return The insertion sql
    */
-  public String getInsertSql(Table table, Map columnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("INSERT INTO ");
+  public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
+    StringBuilder buffer = new StringBuilder("INSERT INTO ");
     boolean addComma = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -842,7 +840,7 @@ public abstract class SqlBuilder {
    * @return The update sql
    */
   public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("UPDATE ");
+    StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -899,8 +897,8 @@ public abstract class SqlBuilder {
    *                        prepared statement (both for the pk values and the object values)
    * @return The update sql
    */
-  public String getUpdateSql(Table table, Map oldColumnValues, Map newColumnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("UPDATE ");
+  public String getUpdateSql(Table table, Map<String, Object> oldColumnValues, Map<String, Object> newColumnValues, boolean genPlaceholders) {
+    StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -948,7 +946,7 @@ public abstract class SqlBuilder {
   /**
    * Creates the SQL for deleting an object from the specified table. Depending on
    * the value of <code>genPlaceholders</code>, the generated SQL will contain
-   * prepared statement place holders or concrete values. Only those primary key
+   * prepared statement placeholders or concrete values. Only those primary key
    * columns wil be used that are present in the given map. If the map is null or
    * completely empty, then the SQL will not have a WHERE clause. The SQL will contain
    * the columns in the order defined in the table.
@@ -959,8 +957,8 @@ public abstract class SqlBuilder {
    *                        prepared statement
    * @return The delete sql
    */
-  public String getDeleteSql(Table table, Map pkValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("DELETE FROM ");
+  public String getDeleteSql(Table table, Map<String, Object> pkValues, boolean genPlaceholders) {
+    StringBuilder buffer = new StringBuilder("DELETE FROM ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -969,9 +967,7 @@ public abstract class SqlBuilder {
 
       Column[] pkCols = table.getPrimaryKeyColumns();
 
-      for (int pkColIdx = 0; pkColIdx < pkCols.length; pkColIdx++) {
-        Column column = pkCols[pkColIdx];
-
+      for (Column column : pkCols) {
         if (pkValues.containsKey(column.getName())) {
           if (addSep) {
             buffer.append(" AND ");
@@ -1002,7 +998,7 @@ public abstract class SqlBuilder {
       return "NULL";
     }
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     // TODO: Handle binary types (BINARY, VARBINARY, LONGVARBINARY, BLOB)
     switch (column.getTypeCode()) {
@@ -1095,7 +1091,7 @@ public abstract class SqlBuilder {
     int delta = originalLength - desiredLength;
     int startCut = desiredLength / 2;
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append(name, 0, startCut);
     if (((startCut == 0) || (name.charAt(startCut - 1) != '_')) &&
@@ -1149,7 +1145,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void writeTableCreationStmt(Database database, Table table, Map parameters) throws IOException {
+  protected void writeTableCreationStmt(Database database, Table table, Map<String, Object> parameters) throws IOException {
     print("CREATE TABLE ");
     printlnIdentifier(getTableName(table));
     println("(");
@@ -1177,7 +1173,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void writeTableCreationStmtEnding(Table table, Map parameters) throws IOException {
+  protected void writeTableCreationStmtEnding(Table table, Map<String, Object> parameters) throws IOException {
     printEndOfStatement();
   }
 
@@ -1256,7 +1252,7 @@ public abstract class SqlBuilder {
    */
   protected String getSqlType(Column column, String nativeType) {
     int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
-    StringBuffer sqlType = new StringBuffer();
+    StringBuilder sqlType = new StringBuilder();
 
     sqlType.append(sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType);
 
@@ -1306,7 +1302,7 @@ public abstract class SqlBuilder {
    * @return The size spec
    */
   protected String getSizeSpec(Column column) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     Object sizeSpec = column.getSize();
 
     if (sizeSpec == null) {
@@ -1343,10 +1339,9 @@ public abstract class SqlBuilder {
   protected String escapeStringValue(String value) {
     String result = value;
 
-    for (Iterator it = _charSequencesToEscape.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Map.Entry<String, String> stringStringEntry : _charSequencesToEscape.entrySet()) {
 
-      result = StringUtils.replace(result, (String) entry.getKey(), (String) entry.getValue());
+      result = StringUtils.replace(result, stringStringEntry.getKey(), stringStringEntry.getValue());
     }
     return result;
   }
@@ -1362,7 +1357,7 @@ public abstract class SqlBuilder {
    */
   protected boolean isValidDefaultValue(String defaultSpec, int typeCode) {
     return (defaultSpec != null) &&
-      ((defaultSpec.length() > 0) ||
+      ((!defaultSpec.isEmpty()) ||
         (!TypeMap.isNumericType(typeCode) && !TypeMap.isDateTimeType(typeCode)));
   }
 
@@ -1449,7 +1444,7 @@ public abstract class SqlBuilder {
   /**
    * Compares the current column in the database with the desired one.
    * Type, nullability, size, scale, default value, and precision radix are
-   * the attributes checked.  Currently default values are compared, and
+   * the attributes checked.  Currently, default values are compared, and
    * null and empty string are considered equal.
    *
    * @param currentColumn The current column as it is in the database
@@ -1494,10 +1489,10 @@ public abstract class SqlBuilder {
    */
   public String getForeignKeyName(Table table, ForeignKey fk) {
     String fkName = fk.getName();
-    boolean needsName = (fkName == null) || (fkName.length() == 0);
+    boolean needsName = (fkName == null) || (fkName.isEmpty());
 
     if (needsName) {
-      StringBuffer name = new StringBuffer();
+      StringBuilder name = new StringBuilder();
 
       for (int idx = 0; idx < fk.getReferenceCount(); idx++) {
         name.append(fk.getReference(idx).getLocalColumnName());
@@ -1526,7 +1521,7 @@ public abstract class SqlBuilder {
    * @return The constraint name
    */
   public String getConstraintName(String prefix, Table table, String secondPart, String suffix) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     if (prefix != null) {
       result.append(prefix);
@@ -1595,7 +1590,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Writes the indexes embedded within the create table statement.
+   * Writes the indexes embedded within the creation table statement.
    *
    * @param table The table
    */
@@ -1615,7 +1610,7 @@ public abstract class SqlBuilder {
    * @param index The index
    */
   protected void writeEmbeddedIndexCreateStmt(Table table, Index index) throws IOException {
-    if ((index.getName() != null) && (index.getName().length() > 0)) {
+    if ((index.getName() != null) && (!index.getName().isEmpty())) {
       print(" CONSTRAINT ");
       printIdentifier(getIndexName(index));
     }
@@ -1664,7 +1659,7 @@ public abstract class SqlBuilder {
 
 
   /**
-   * Writes the foreign key constraints inside a create table () clause.
+   * Writes the foreign key constraints inside a creation table () clause.
    *
    * @param database The database model
    * @param table    The table
@@ -1743,20 +1738,20 @@ public abstract class SqlBuilder {
     }
     if (action != getPlatformInfo().getDefaultOnDeleteAction()) {
       print(" ON DELETE ");
-      switch (action.getValue()) {
-        case CascadeActionEnum.VALUE_CASCADE:
+      switch (action) {
+        case CASCADE:
           print("CASCADE");
           break;
-        case CascadeActionEnum.VALUE_SET_NULL:
+        case SET_NULL:
           print("SET NULL");
           break;
-        case CascadeActionEnum.VALUE_SET_DEFAULT:
+        case SET_DEFAULT:
           print("SET DEFAULT");
           break;
-        case CascadeActionEnum.VALUE_RESTRICT:
+        case RESTRICT:
           print("RESTRICT");
           break;
-        case CascadeActionEnum.VALUE_NONE:
+        case NONE:
           print("NO ACTION");
           break;
         default:
@@ -1786,20 +1781,20 @@ public abstract class SqlBuilder {
     }
     if (action != getPlatformInfo().getDefaultOnUpdateAction()) {
       print(" ON UPDATE ");
-      switch (action.getValue()) {
-        case CascadeActionEnum.VALUE_CASCADE:
+      switch (action) {
+        case CASCADE:
           print("CASCADE");
           break;
-        case CascadeActionEnum.VALUE_SET_NULL:
+        case SET_NULL:
           print("SET NULL");
           break;
-        case CascadeActionEnum.VALUE_SET_DEFAULT:
+        case SET_DEFAULT:
           print("SET DEFAULT");
           break;
-        case CascadeActionEnum.VALUE_RESTRICT:
+        case RESTRICT:
           print("RESTRICT");
           break;
-        case CascadeActionEnum.VALUE_NONE:
+        case NONE:
           print("NO ACTION");
           break;
         default:
@@ -1839,7 +1834,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Prints the end of statement text, which is typically a semi colon followed by
+   * Prints the end of statement text, which is typically a semicolon followed by
    * a carriage return.
    */
   protected void printEndOfStatement() throws IOException {

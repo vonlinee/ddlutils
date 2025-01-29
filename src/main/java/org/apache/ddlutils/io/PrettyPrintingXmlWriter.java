@@ -74,7 +74,7 @@ public class PrettyPrintingXmlWriter {
     } else {
       bufferedOutput = new BufferedOutputStream(output);
     }
-    if ((encoding == null) || (encoding.length() == 0)) {
+    if ((encoding == null) || (encoding.isEmpty())) {
       _encoding = "UTF-8";
     } else {
       _encoding = encoding;
@@ -229,7 +229,7 @@ public class PrettyPrintingXmlWriter {
    */
   public void writeNamespace(String prefix, String namespaceUri) throws DdlUtilsXMLException {
     try {
-      if ((prefix == null) || (prefix.length() == 0)) {
+      if ((prefix == null) || (prefix.isEmpty())) {
         _writer.writeDefaultNamespace(namespaceUri);
       } else {
         _writer.writeNamespace(prefix, namespaceUri);

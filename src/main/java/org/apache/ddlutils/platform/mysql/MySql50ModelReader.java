@@ -44,6 +44,7 @@ public class MySql50ModelReader extends MySqlModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 

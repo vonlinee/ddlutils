@@ -57,6 +57,7 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     print("DROP TABLE ");
     printIdentifier(getTableName(table));
@@ -65,14 +66,15 @@ public class PostgreSqlBuilder extends SqlBuilder {
 
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      dropAutoIncrementSequence(table, columns[idx]);
+    for (Column column : columns) {
+      dropAutoIncrementSequence(table, column);
     }
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropIndex(Table table, Index index) throws IOException {
     print("DROP INDEX ");
     printIdentifier(getIndexName(index));
@@ -82,7 +84,8 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       Column column = table.getColumn(idx);
 
@@ -120,6 +123,7 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     print("UNIQUE DEFAULT nextval('");
     printIdentifier(getConstraintName(null, table, column.getName(), "seq"));
@@ -129,13 +133,14 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     Column[] columns = table.getAutoIncrementColumns();
 
     if (columns.length == 0) {
       return null;
     } else {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       result.append("SELECT ");
       for (int idx = 0; idx < columns.length; idx++) {
@@ -154,6 +159,7 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addColumn(Database model, Table table, Column newColumn) throws IOException {
     if (newColumn.isAutoIncrement()) {
       createAutoIncrementSequence(table, newColumn);
@@ -182,6 +188,7 @@ public class PostgreSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     boolean sizeChanged = ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn);
     boolean typeChanged = ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, targetColumn);

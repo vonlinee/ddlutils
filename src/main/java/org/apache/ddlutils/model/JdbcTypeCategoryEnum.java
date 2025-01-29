@@ -19,72 +19,40 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.enums.ValuedEnum;
-
 /**
  * Represents the different categories of jdbc types.
  *
  * @version $Revision: $
  */
-public class JdbcTypeCategoryEnum extends ValuedEnum {
-  /**
-   * The integer value for the enum value for numeric jdbc types.
-   */
-  public static final int VALUE_NUMERIC = 1;
-  /**
-   * The integer value for the enum value for date/time jdbc types.
-   */
-  public static final int VALUE_DATETIME = 2;
-  /**
-   * The integer value for the enum value for textual jdbc types.
-   */
-  public static final int VALUE_TEXTUAL = 3;
-  /**
-   * The integer value for the enum value for binary jdbc types.
-   */
-  public static final int VALUE_BINARY = 4;
-  /**
-   * The integer value for the enum value for special jdbc types.
-   */
-  public static final int VALUE_SPECIAL = 5;
-  /**
-   * The integer value for the enum value for all other jdbc types.
-   */
-  public static final int VALUE_OTHER = 6;
+public enum JdbcTypeCategoryEnum {
 
   /**
    * The enum value for numeric jdbc types.
    */
-  public static final JdbcTypeCategoryEnum NUMERIC = new JdbcTypeCategoryEnum("numeric", VALUE_NUMERIC);
+  NUMERIC("numeric", 1),
   /**
    * The enum value for date/time jdbc types.
    */
-  public static final JdbcTypeCategoryEnum DATETIME = new JdbcTypeCategoryEnum("datetime", VALUE_DATETIME);
+  DATETIME("datetime", 2),
   /**
    * The enum value for textual jdbc types.
    */
-  public static final JdbcTypeCategoryEnum TEXTUAL = new JdbcTypeCategoryEnum("textual", VALUE_TEXTUAL);
+  TEXTUAL("textual", 3),
   /**
    * The enum value for binary jdbc types.
    */
-  public static final JdbcTypeCategoryEnum BINARY = new JdbcTypeCategoryEnum("binary", VALUE_BINARY);
+  BINARY("binary", 4),
   /**
    * The enum value for special jdbc types.
    */
-  public static final JdbcTypeCategoryEnum SPECIAL = new JdbcTypeCategoryEnum("special", VALUE_SPECIAL);
+  SPECIAL("special", 5),
   /**
    * The enum value for other jdbc types.
    */
-  public static final JdbcTypeCategoryEnum OTHER = new JdbcTypeCategoryEnum("other", VALUE_OTHER);
+  OTHER("other", 6);
 
-  /**
-   * Version id for this class as relevant for serialization.
-   */
-  private static final long serialVersionUID = -2695615907467866410L;
+  final String defaultTextRep;
+  final int value;
 
   /**
    * Creates a new enum object.
@@ -92,56 +60,8 @@ public class JdbcTypeCategoryEnum extends ValuedEnum {
    * @param defaultTextRep The textual representation
    * @param value          The corresponding integer value
    */
-  private JdbcTypeCategoryEnum(String defaultTextRep, int value) {
-    super(defaultTextRep, value);
-  }
-
-  /**
-   * Returns the enum value that corresponds to the given textual
-   * representation.
-   *
-   * @param defaultTextRep The textual representation
-   * @return The enum value
-   */
-  public static JdbcTypeCategoryEnum getEnum(String defaultTextRep) {
-    return (JdbcTypeCategoryEnum) getEnum(JdbcTypeCategoryEnum.class, defaultTextRep);
-  }
-
-  /**
-   * Returns the enum value that corresponds to the given integer
-   * representation.
-   *
-   * @param intValue The integer value
-   * @return The enum value
-   */
-  public static JdbcTypeCategoryEnum getEnum(int intValue) {
-    return (JdbcTypeCategoryEnum) getEnum(JdbcTypeCategoryEnum.class, intValue);
-  }
-
-  /**
-   * Returns the map of enum values.
-   *
-   * @return The map of enum values
-   */
-  public static Map getEnumMap() {
-    return getEnumMap(JdbcTypeCategoryEnum.class);
-  }
-
-  /**
-   * Returns a list of all enum values.
-   *
-   * @return The list of enum values
-   */
-  public static List getEnumList() {
-    return getEnumList(JdbcTypeCategoryEnum.class);
-  }
-
-  /**
-   * Returns an iterator of all enum values.
-   *
-   * @return The iterator
-   */
-  public static Iterator iterator() {
-    return iterator(JdbcTypeCategoryEnum.class);
+  JdbcTypeCategoryEnum(String defaultTextRep, int value) {
+    this.defaultTextRep = defaultTextRep;
+    this.value = value;
   }
 }

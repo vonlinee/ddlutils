@@ -21,13 +21,13 @@ package org.apache.ddlutils.io;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.Base64Utils;
 import org.xml.sax.InputSource;
 
 import javax.xml.namespace.QName;
@@ -72,7 +72,7 @@ public class DataReader {
    */
   private final ConverterConfiguration _converterConf = new ConverterConfiguration();
   /**
-   * Whether to be case sensitive or not.
+   * Whether to be case-sensitive or not.
    */
   private boolean _caseSensitive = false;
 
@@ -280,8 +280,8 @@ public class DataReader {
   private void readBean(XMLStreamReader xmlReader) throws XMLStreamException, DdlUtilsXMLException {
     QName elemQName = xmlReader.getName();
     Location location = xmlReader.getLocation();
-    Map attributes = new HashMap();
-    String tableName = null;
+    Map<String, String> attributes = new HashMap<>();
+    String tableName;
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
@@ -292,7 +292,7 @@ public class DataReader {
     readColumnSubElements(xmlReader, attributes);
 
     if ("table".equals(elemQName.getLocalPart())) {
-      tableName = (String) attributes.get("table-name");
+      tableName = attributes.get("table-name");
     } else {
       tableName = elemQName.getLocalPart();
     }
@@ -307,7 +307,7 @@ public class DataReader {
 
       for (int idx = 0; idx < table.getColumnCount(); idx++) {
         Column column = table.getColumn(idx);
-        String value = (String) attributes.get(isCaseSensitive() ? column.getName() : column.getName().toLowerCase());
+        String value = attributes.get(isCaseSensitive() ? column.getName() : column.getName().toLowerCase());
 
         if (value != null) {
           setColumnValue(bean, table, column, value);
@@ -324,7 +324,7 @@ public class DataReader {
    * @param xmlReader The reader
    * @param data      Where to store the values
    */
-  private void readColumnSubElements(XMLStreamReader xmlReader, Map data) throws XMLStreamException, DdlUtilsXMLException {
+  private void readColumnSubElements(XMLStreamReader xmlReader, Map<String, String> data) throws XMLStreamException, DdlUtilsXMLException {
     int eventType = XMLStreamReader.START_ELEMENT;
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
@@ -341,9 +341,9 @@ public class DataReader {
    * @param xmlReader The reader
    * @param data      Where to store the values
    */
-  private void readColumnSubElement(XMLStreamReader xmlReader, Map data) throws XMLStreamException, DdlUtilsXMLException {
+  private void readColumnSubElement(XMLStreamReader xmlReader, Map<String, String> data) throws XMLStreamException, DdlUtilsXMLException {
     QName elemQName = xmlReader.getName();
-    Map attributes = new HashMap();
+    Map<String, String> attributes = new HashMap<>();
     boolean usesBase64 = false;
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -360,7 +360,7 @@ public class DataReader {
     }
 
     int eventType = XMLStreamReader.START_ELEMENT;
-    StringBuffer content = new StringBuffer();
+    StringBuilder content = new StringBuilder();
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
       eventType = xmlReader.next();
@@ -377,7 +377,7 @@ public class DataReader {
     String value = content.toString().trim();
 
     if (usesBase64) {
-      value = new String(Base64.decodeBase64(value.getBytes()));
+      value = Base64Utils.decodeToString(value.getBytes());
     }
 
     String name = elemQName.getLocalPart();
@@ -386,10 +386,10 @@ public class DataReader {
       data.put("table-name", value);
     } else {
       if ("column".equals(name)) {
-        name = (String) attributes.get("column-name");
+        name = attributes.get("column-name");
       }
       if (attributes.containsKey("column-value")) {
-        value = (String) attributes.get("column-value");
+        value = attributes.get("column-value");
       }
       data.put(name, value);
     }
@@ -403,7 +403,7 @@ public class DataReader {
    * @param xmlReader The reader
    * @param data      Where to store the values
    */
-  private void readColumnDataSubElement(XMLStreamReader xmlReader, Map data) throws XMLStreamException, DdlUtilsXMLException {
+  private void readColumnDataSubElement(XMLStreamReader xmlReader, Map<String, String> data) throws XMLStreamException, DdlUtilsXMLException {
     QName elemQName = xmlReader.getName();
     boolean usesBase64 = false;
 
@@ -425,7 +425,7 @@ public class DataReader {
       value = value.trim();
 
       if (usesBase64) {
-        value = new String(Base64.decodeBase64(value.getBytes()));
+        value = Base64Utils.decodeToString(value.getBytes());
       }
     }
 
@@ -455,9 +455,7 @@ public class DataReader {
       PropertyUtils.setProperty(bean, column.getName(), propValue);
     } catch (NoSuchMethodException ex) {
       throw new DdlUtilsXMLException("Undefined column " + column.getName());
-    } catch (IllegalAccessException ex) {
-      throw new DdlUtilsXMLException("Could not set bean property for column " + column.getName(), ex);
-    } catch (InvocationTargetException ex) {
+    } catch (IllegalAccessException | InvocationTargetException ex) {
       throw new DdlUtilsXMLException("Could not set bean property for column " + column.getName(), ex);
     }
   }

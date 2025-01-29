@@ -45,7 +45,7 @@ public class Parameter {
   /**
    * The platforms for which this parameter is applicable.
    */
-  private final Set _platforms = new HashSet();
+  private final Set<String> _platforms = new HashSet<>();
 
   /**
    * Returns the name.

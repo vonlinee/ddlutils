@@ -47,8 +47,9 @@ public class SqlDynaBean extends BasicDynaBean {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     DynaClass type = getDynaClass();
     DynaProperty[] props = type.getDynaProperties();
 
@@ -68,6 +69,7 @@ public class SqlDynaBean extends BasicDynaBean {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return toString().hashCode();
   }
@@ -75,16 +77,18 @@ public class SqlDynaBean extends BasicDynaBean {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (obj instanceof SqlDynaBean other) {
+    if (obj instanceof SqlDynaBean) {
+      SqlDynaBean other = (SqlDynaBean) obj;
       DynaClass dynaClass = getDynaClass();
 
       if (dynaClass.equals(other.getDynaClass())) {
         DynaProperty[] props = dynaClass.getDynaProperties();
 
-        for (int idx = 0; idx < props.length; idx++) {
-          Object value = get(props[idx].getName());
-          Object otherValue = other.get(props[idx].getName());
+        for (DynaProperty prop : props) {
+          Object value = get(prop.getName());
+          Object otherValue = other.get(prop.getName());
 
           if (value == null) {
             if (otherValue != null) {

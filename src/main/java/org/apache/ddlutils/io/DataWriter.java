@@ -82,6 +82,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void throwException(Exception baseEx) throws DdlUtilsXMLException {
     throw new DataWriterException(baseEx);
   }
@@ -99,6 +100,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    * Writes the start of the XML document, including the start of the outermost
    * XML element (<code>data</code>).
    */
+  @Override
   public void writeDocumentStart() throws DdlUtilsXMLException {
     super.writeDocumentStart();
     writeElementStart(null, "data");
@@ -109,6 +111,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    * Writes the end of the XML document, including the end of the outermost
    * XML element (<code>data</code>).
    */
+  @Override
   public void writeDocumentEnd() throws DdlUtilsXMLException {
     writeElementEnd();
     printlnIfPrettyPrinting();
@@ -124,7 +127,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
     SqlDynaClass dynaClass = (SqlDynaClass) bean.getDynaClass();
     Table table = dynaClass.getTable();
     TableXmlWriter tableWriter = new TableXmlWriter(table);
-    List columnWriters = new ArrayList();
+    List<ColumnXmlWriter> columnWriters = new ArrayList<>();
 
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       Column column = table.getColumn(idx);
@@ -152,9 +155,9 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans iterator
    */
-  public void write(Iterator beans) throws DataWriterException {
+  public void write(Iterator<DynaBean> beans) throws DataWriterException {
     while (beans.hasNext()) {
-      DynaBean bean = (DynaBean) beans.next();
+      DynaBean bean = beans.next();
 
       if (bean instanceof SqlDynaBean) {
         write((SqlDynaBean) bean);
@@ -169,7 +172,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans
    */
-  public void write(Collection beans) throws DataWriterException {
+  public void write(Collection<DynaBean> beans) throws DataWriterException {
     write(beans.iterator());
   }
 }

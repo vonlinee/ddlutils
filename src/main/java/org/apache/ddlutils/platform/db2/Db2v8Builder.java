@@ -46,6 +46,7 @@ public class Db2v8Builder extends Db2Builder {
    * @param table  The table where to drop the column from
    * @param column The column to drop
    */
+  @Override
   public void dropColumn(Table table, Column column) throws IOException {
     super.dropColumn(table, column);
     print("CALL ADMIN_CMD('REORG TABLE ");

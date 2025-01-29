@@ -92,6 +92,7 @@ public abstract class DatabaseCommand extends Command {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return true;
   }

@@ -97,6 +97,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -104,6 +105,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void shutdownDatabase(Connection connection) {
     Statement stmt = null;
 
@@ -120,8 +122,10 @@ public class HsqlDbPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if (change instanceof RemoveColumnChange) {
           Column column = intermediateTable.findColumn(((RemoveColumnChange) change).getChangedColumn(),
@@ -129,8 +133,8 @@ public class HsqlDbPlatform extends PlatformImplBase {
 
           // HsqlDb can only drop columns that are not part of a primary key
           return !column.isPrimaryKey();
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           // adding IDENTITY columns is not supported without a table rebuild because they have to
           // be PK columns, but we add them to the PK later
           return addColumnChange.isAtEnd() &&
@@ -149,6 +153,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
+  @Override
   public void processChange(Database currentModel,
                             CreationParameters params,
                             AddColumnChange change) throws IOException {

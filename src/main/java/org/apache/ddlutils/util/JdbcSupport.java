@@ -57,7 +57,7 @@ public abstract class JdbcSupport {
   /**
    * The names of the currently borrowed connections (for debugging).
    */
-  private final HashSet _openConnectionNames = new HashSet();
+  private final HashSet<String> _openConnectionNames = new HashSet<>();
 
   // Properties
   //-------------------------------------------------------------------------
@@ -159,7 +159,7 @@ public abstract class JdbcSupport {
 
           _openConnectionNames.remove(connName);
 
-          StringBuffer logMsg = new StringBuffer();
+          StringBuilder logMsg = new StringBuilder();
 
           logMsg.append("Returning connection ");
           logMsg.append(connName);
@@ -167,9 +167,9 @@ public abstract class JdbcSupport {
           if (_openConnectionNames.isEmpty()) {
             logMsg.append(" None");
           } else {
-            for (Iterator it = _openConnectionNames.iterator(); it.hasNext(); ) {
+            for (String openConnectionName : _openConnectionNames) {
               logMsg.append("\n    ");
-              logMsg.append(it.next().toString());
+              logMsg.append(openConnectionName);
             }
           }
           _log.debug(logMsg.toString());

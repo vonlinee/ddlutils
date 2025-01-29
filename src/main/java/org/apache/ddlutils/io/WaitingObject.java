@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.collections.set.ListOrderedSet;
+import org.apache.ddlutils.util.ListOrderedSet;
 
 import java.util.Iterator;
 
@@ -43,7 +43,7 @@ public class WaitingObject {
   /**
    * The identities of the waited-for objects.
    */
-  private final ListOrderedSet _waitedForIdentites = new ListOrderedSet();
+  private final ListOrderedSet<Identity> _waitedForIdentities = new ListOrderedSet<>();
 
   /**
    * Creates a new <code>WaitingObject</code> instance for the given object.
@@ -71,7 +71,7 @@ public class WaitingObject {
    * @param fkIdentity The identity of the waited-for object
    */
   public void addPendingFK(Identity fkIdentity) {
-    _waitedForIdentites.add(fkIdentity);
+    _waitedForIdentities.add(fkIdentity);
   }
 
   /**
@@ -79,8 +79,8 @@ public class WaitingObject {
    *
    * @return The identities
    */
-  public Iterator getPendingFKs() {
-    return _waitedForIdentites.iterator();
+  public Iterator<Identity> getPendingFKs() {
+    return _waitedForIdentities.iterator();
   }
 
   /**
@@ -91,11 +91,11 @@ public class WaitingObject {
    */
   public Identity removePendingFK(Identity fkIdentity) {
     Identity result = null;
-    int idx = _waitedForIdentites.indexOf(fkIdentity);
+    int idx = _waitedForIdentities.indexOf(fkIdentity);
 
     if (idx >= 0) {
-      result = (Identity) _waitedForIdentites.get(idx);
-      _waitedForIdentites.remove(idx);
+      result = _waitedForIdentities.get(idx);
+      _waitedForIdentities.remove(idx);
     }
     return result;
   }
@@ -107,17 +107,17 @@ public class WaitingObject {
    * @return <code>true</code> if identities of waited-for objects are registered
    */
   public boolean hasPendingFKs() {
-    return !_waitedForIdentites.isEmpty();
+    return !_waitedForIdentities.isEmpty();
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
 
-    String result = _objIdentity +
+    return _objIdentity +
       " waiting for " +
-      _waitedForIdentites.toString();
-    return result;
+      _waitedForIdentities;
   }
 }

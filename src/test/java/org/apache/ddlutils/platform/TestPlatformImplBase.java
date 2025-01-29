@@ -19,8 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import java.util.Map;
-
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestBase;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
@@ -29,39 +27,39 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 
+import java.util.Map;
+
 /**
  * Tests the {@link org.apache.ddlutils.PlatformImplBase} (abstract) class.
- * 
+ *
  * @version $Revision: 279421 $
  */
-public class TestPlatformImplBase extends TestBase 
-{
-    /**
-     * Test the toColumnValues method.
-     */
-    public void testToColumnValues()
-    {
-        final String schema =
-            "<?xml version='1.0' encoding='ISO-8859-1'?>\n"+
-            "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n"+
-            "  <table name='TestTable'>\n"+
-            "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n"+
-            "    <column name='name' type='VARCHAR' size='15'/>\n"+
-            "  </table>\n"+
-            "</database>";
+public class TestPlatformImplBase extends TestBase {
+  /**
+   * Test the toColumnValues method.
+   */
+  public void testToColumnValues() {
+    final String schema =
+      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+        "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
+        "  <table name='TestTable'>\n" +
+        "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n" +
+        "    <column name='name' type='VARCHAR' size='15'/>\n" +
+        "  </table>\n" +
+        "</database>";
 
-        Database         database = parseDatabaseFromString(schema);
-        PlatformImplBase platform = new TestPlatform();
-        Table            table    = database.getTable(0);
-        SqlDynaClass     clz      = SqlDynaClass.newInstance(table);
-        DynaBean         db       = new SqlDynaBean(SqlDynaClass.newInstance(table));
+    Database database = parseDatabaseFromString(schema);
+    PlatformImplBase platform = new TestPlatform();
+    Table table = database.getTable(0);
+    SqlDynaClass clz = SqlDynaClass.newInstance(table);
+    DynaBean db = new SqlDynaBean(SqlDynaClass.newInstance(table));
 
-        db.set("name", "name");
+    db.set("name", "name");
 
-        Map map = platform.toColumnValues(clz.getSqlDynaProperties(), db);
+    Map<String, Object> map = platform.toColumnValues(clz.getSqlDynaProperties(), db);
 
-        assertEquals("name",
-                     map.get("name"));
-        assertTrue(map.containsKey("id"));
-    }
+    assertEquals("name",
+      map.get("name"));
+    assertTrue(map.containsKey("id"));
+  }
 }

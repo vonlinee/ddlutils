@@ -154,8 +154,8 @@ public class IndexColumn implements Serializable {
    * {@inheritDoc}
    */
   public boolean equals(Object obj) {
-    if (obj instanceof IndexColumn other) {
-
+    if (obj instanceof IndexColumn) {
+      IndexColumn other = (IndexColumn) obj;
       return new EqualsBuilder().append(_name, other._name)
         .append(_size, other._size)
         .isEquals();

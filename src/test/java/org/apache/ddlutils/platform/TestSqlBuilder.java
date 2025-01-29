@@ -19,81 +19,78 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.ddlutils.TestBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Test the base SqlBuilder class.
- * 
+ *
  * @version $Revision: $
  */
-public class TestSqlBuilder extends TestBase
-{
-    /**
-     * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, boolean)} method.
-     */
-    public void testUpdateSql1()
-    {
-        final String modelXml =
-            "<?xml version='1.0' encoding='ISO-8859-1'?>\n"+
-            "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n"+
-            "  <table name='TestTable'>\n"+
-            "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n"+
-            "    <column name='name' type='VARCHAR' size='15'/>\n"+
-            "  </table>\n"+
-            "</database>";
+public class TestSqlBuilder extends TestBase {
+  /**
+   * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, boolean)} method.
+   */
+  public void testUpdateSql1() {
+    final String modelXml =
+      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+        "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
+        "  <table name='TestTable'>\n" +
+        "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n" +
+        "    <column name='name' type='VARCHAR' size='15'/>\n" +
+        "  </table>\n" +
+        "</database>";
 
-        TestPlatform platform   = new TestPlatform();
-        SqlBuilder   sqlBuilder = platform.getSqlBuilder();
-        Database     database   = parseDatabaseFromString(modelXml);
-        Map          map        = new HashMap();
+    TestPlatform platform = new TestPlatform();
+    SqlBuilder sqlBuilder = platform.getSqlBuilder();
+    Database database = parseDatabaseFromString(modelXml);
+    Map<String, Object> map = new HashMap<>();
 
-        map.put("name", "ddlutils");
-        map.put("id", new Integer(0));
+    map.put("name", "ddlutils");
+    map.put("id", 0);
 
-        platform.setDelimitedIdentifierModeOn(true);
-        
-        String sql = sqlBuilder.getUpdateSql(database.getTable(0), map, false);
+    platform.setDelimitedIdentifierModeOn(true);
 
-        assertEquals("UPDATE \"TestTable\" SET \"name\" = 'ddlutils' WHERE \"id\" = '0'",
-                     sql);
-    }
+    String sql = sqlBuilder.getUpdateSql(database.getTable(0), map, false);
 
-    /**
-     * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, Map, boolean)} method.
-     */
-    public void testUpdateSql2()
-    {
-        final String modelXml =
-            "<?xml version='1.0' encoding='ISO-8859-1'?>\n"+
-            "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n"+
-            "  <table name='TestTable'>\n"+
-            "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n"+
-            "    <column name='name' type='VARCHAR' size='15'/>\n"+
-            "  </table>\n"+
-            "</database>";
+    assertEquals("UPDATE \"TestTable\" SET \"name\" = 'ddlutils' WHERE \"id\" = '0'",
+      sql);
+  }
 
-        TestPlatform platform   = new TestPlatform();
-        SqlBuilder   sqlBuilder = platform.getSqlBuilder();
-        Database     database   = parseDatabaseFromString(modelXml);
-        Map          oldMap     = new HashMap();
-        Map          newMap     = new HashMap();
+  /**
+   * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, Map, boolean)} method.
+   */
+  public void testUpdateSql2() {
+    final String modelXml =
+      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+        "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
+        "  <table name='TestTable'>\n" +
+        "    <column name='id' autoIncrement='true' type='INTEGER' primaryKey='true'/>\n" +
+        "    <column name='name' type='VARCHAR' size='15'/>\n" +
+        "  </table>\n" +
+        "</database>";
 
-        oldMap.put("id", new Integer(0));
+    TestPlatform platform = new TestPlatform();
+    SqlBuilder sqlBuilder = platform.getSqlBuilder();
+    Database database = parseDatabaseFromString(modelXml);
+    Map<String, Object> oldMap = new HashMap<>();
+    Map<String, Object> newMap = new HashMap<>();
 
-        newMap.put("name", "ddlutils");
-        newMap.put("id", new Integer(1));
+    oldMap.put("id", 0);
 
-        platform.setDelimitedIdentifierModeOn(true);
-        
-        String sql = sqlBuilder.getUpdateSql(database.getTable(0), oldMap, newMap, false);
+    newMap.put("name", "ddlutils");
+    newMap.put("id", 1);
 
-        assertEquals("UPDATE \"TestTable\" SET \"id\" = '1', \"name\" = 'ddlutils' WHERE \"id\" = '0'",
-                     sql);
-    }
+    platform.setDelimitedIdentifierModeOn(true);
+
+    String sql = sqlBuilder.getUpdateSql(database.getTable(0), oldMap, newMap, false);
+
+    assertEquals("UPDATE \"TestTable\" SET \"id\" = '1', \"name\" = 'ddlutils' WHERE \"id\" = '0'",
+      sql);
+  }
 }

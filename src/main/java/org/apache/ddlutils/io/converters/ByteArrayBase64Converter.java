@@ -19,7 +19,7 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import org.apache.commons.codec.binary.Base64;
+import org.apache.ddlutils.util.Base64Utils;
 
 /**
  * Converts between a byte array and its Base64 encoded string representation (e.g. for use in XML).
@@ -30,9 +30,10 @@ public class ByteArrayBase64Converter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     try {
-      return textRep == null ? null : Base64.decodeBase64(textRep.getBytes());
+      return Base64Utils.decodeBase64(textRep);
     } catch (Exception ex) {
       throw new ConversionException(ex);
     }
@@ -41,9 +42,10 @@ public class ByteArrayBase64Converter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String convertToString(Object obj, int sqlTypeCode) throws ConversionException {
     try {
-      return obj == null ? null : new String(Base64.encodeBase64((byte[]) obj));
+      return obj == null ? null : new String(Base64Utils.encodeBase64((byte[]) obj));
     } catch (Exception ex) {
       throw new ConversionException(ex);
     }

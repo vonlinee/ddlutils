@@ -51,6 +51,7 @@ public class MySql50Platform extends MySqlPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }

@@ -61,6 +61,7 @@ public class DateConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     if (sqlTypeCode != Types.DATE) {
       return textRep;

@@ -55,7 +55,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
   /**
    * The input files.
    */
-  private final ArrayList _fileSets = new ArrayList();
+  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
   /**
    * Whether explicit values for identity columns will be used.
    */
@@ -105,7 +105,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * @ant.not-required The default value is 1.
    */
   public void setBatchSize(int batchSize) {
-    getDataIO().setBatchSize(Integer.valueOf(batchSize));
+    getDataIO().setBatchSize(batchSize);
   }
 
   /**
@@ -140,6 +140,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     if ((_singleDataFile != null) && !_fileSets.isEmpty()) {
       throw new BuildException("Please use either the datafile attribute or the sub fileset element, but not both");
@@ -155,8 +156,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
       if (_singleDataFile != null) {
         readSingleDataFile(task, dataReader, _singleDataFile);
       } else {
-        for (Iterator it = _fileSets.iterator(); it.hasNext(); ) {
-          FileSet fileSet = (FileSet) it.next();
+        for (FileSet fileSet : _fileSets) {
           File fileSetDir = fileSet.getDir(task.getProject());
           DirectoryScanner scanner = fileSet.getDirectoryScanner(task.getProject());
           String[] files = scanner.getIncludedFiles();

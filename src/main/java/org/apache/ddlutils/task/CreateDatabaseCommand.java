@@ -30,9 +30,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The sub task for creating the target database. Note that this is only supported on some database
+ * The sub-task for creating the target database. Note that this is only supported on some database
  * platforms. See the database support documentation for details on which platforms support this.<br/>
- * This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
+ * This sub-task does not require schema files. Therefore, the <code>fileset</code> subelement and
  * the <code>schemaFile</code> attribute of the enclosing task can be omitted.
  *
  * @version $Revision: 231306 $
@@ -42,7 +42,7 @@ public class CreateDatabaseCommand extends DatabaseCommand {
   /**
    * The additional creation parameters.
    */
-  private final ArrayList _parameters = new ArrayList();
+  private final ArrayList<Parameter> _parameters = new ArrayList<>();
 
   /**
    * Adds a parameter which is a name-value pair.
@@ -56,6 +56,7 @@ public class CreateDatabaseCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return false;
   }
@@ -63,6 +64,7 @@ public class CreateDatabaseCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     BasicDataSource dataSource = getDataSource();
 
@@ -95,12 +97,10 @@ public class CreateDatabaseCommand extends DatabaseCommand {
    * @param platformName The name of the platform
    * @return The filtered parameters
    */
-  private Map getFilteredParameters(String platformName) {
-    LinkedHashMap parameters = new LinkedHashMap();
+  private Map<String, String> getFilteredParameters(String platformName) {
+    LinkedHashMap<String, String> parameters = new LinkedHashMap<>();
 
-    for (Iterator it = _parameters.iterator(); it.hasNext(); ) {
-      Parameter param = (Parameter) it.next();
-
+    for (Parameter param : _parameters) {
       if (param.isForPlatform(platformName)) {
         parameters.put(param.getName(), param.getValue());
       }

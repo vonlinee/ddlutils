@@ -125,6 +125,7 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -132,6 +133,7 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     return new MySqlModelComparator(getPlatformInfo(), getTableDefinitionChangesPredicate(), isDelimitedIdentifierModeOn());
   }
@@ -139,14 +141,17 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
-        if (change instanceof AddColumnChange addColumnChange) {
-
+        if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           return !addColumnChange.getNewColumn().isAutoIncrement() &&
             (!addColumnChange.getNewColumn().isRequired() || (addColumnChange.getNewColumn().getDefaultValue() != null));
-        } else if (change instanceof ColumnDefinitionChange colDefChange) {
+        } else if (change instanceof ColumnDefinitionChange) {
+          ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
           Column sourceColumn = intermediateTable.findColumn(colDefChange.getChangedColumn(), isDelimitedIdentifierModeOn());
 
           return !ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn()) &&
@@ -169,6 +174,7 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
+  @Override
   public void processChange(Database currentModel,
                             CreationParameters params,
                             AddColumnChange change) throws IOException {

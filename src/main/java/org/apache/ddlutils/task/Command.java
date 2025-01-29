@@ -55,7 +55,7 @@ public abstract class Command {
    * Specifies whether the execution shall stop if an error has occurred during the task runs.
    *
    * @param failOnError <code>true</code> if the execution shall stop in case of an error
-   * @ant.not-required By default execution will be stopped when an error is encountered.
+   * @ant.not-required By default, execution will be stopped when an error is encountered.
    */
   public void setFailOnError(boolean failOnError) {
     _failOnError = failOnError;

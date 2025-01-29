@@ -125,6 +125,7 @@ public class Oracle8Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -132,21 +133,24 @@ public class Oracle8Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     // While Oracle has an ALTER TABLE MODIFY statement, it is somewhat limited
     // esp. if there is data in the table, so we don't use it
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof AddPrimaryKeyChange) ||
           (change instanceof RemovePrimaryKeyChange)) {
           return true;
-        } else if (change instanceof RemoveColumnChange removeColumnChange) {
+        } else if (change instanceof RemoveColumnChange) {
+          RemoveColumnChange removeColumnChange = (RemoveColumnChange) change;
           // TODO: for now we trigger recreating the table, but ideally we should simply add the necessary pk changes
           Column column = intermediateTable.findColumn(removeColumnChange.getChangedColumn(), isDelimitedIdentifierModeOn());
 
           return !column.isPrimaryKey();
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           // Oracle can only add not insert columns
           // Also, we cannot add NOT NULL columns unless they have a default value
           return addColumnChange.isAtEnd() &&

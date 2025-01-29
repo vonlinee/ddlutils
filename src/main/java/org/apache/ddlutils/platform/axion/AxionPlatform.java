@@ -76,6 +76,7 @@ public class AxionPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -83,7 +84,8 @@ public class AxionPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException {
+  @Override
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object>  parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // Axion will create the database automatically when connecting for the first time
     if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
       Connection connection = null;
@@ -99,7 +101,7 @@ public class AxionPlatform extends PlatformImplBase {
         if (connection != null) {
           try {
             connection.close();
-          } catch (SQLException ex) {
+          } catch (SQLException ignored) {
           }
         }
       }
@@ -111,20 +113,17 @@ public class AxionPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Object extractColumnValue(ResultSet resultSet, String columnName, int columnIdx, int jdbcType) throws SQLException {
     boolean useIdx = (columnName == null);
     Object value = null;
 
-    switch (jdbcType) {
-      case Types.BIGINT:
-        // The Axion JDBC driver does not support reading BIGINT values directly
-        String strValue = useIdx ? resultSet.getString(columnIdx) : resultSet.getString(columnName);
+    if (jdbcType == Types.BIGINT) {// The Axion JDBC driver does not support reading BIGINT values directly
+      String strValue = useIdx ? resultSet.getString(columnIdx) : resultSet.getString(columnName);
 
-        value = resultSet.wasNull() ? null : Long.valueOf(strValue);
-        break;
-      default:
-        value = super.extractColumnValue(resultSet, columnName, columnIdx, jdbcType);
-        break;
+      value = resultSet.wasNull() ? null : Long.valueOf(strValue);
+    } else {
+      value = super.extractColumnValue(resultSet, columnName, columnIdx, jdbcType);
     }
     return value;
   }

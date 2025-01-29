@@ -47,6 +47,7 @@ public class MaxDbPlatform extends SapDbPlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }

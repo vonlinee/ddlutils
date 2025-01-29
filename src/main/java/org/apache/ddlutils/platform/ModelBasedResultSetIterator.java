@@ -24,13 +24,13 @@ import org.apache.commons.beanutils.BasicDynaClass;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.ListOrderedMap;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -50,7 +50,7 @@ import java.util.NoSuchElementException;
  *
  * @version $Revision: 289996 $
  */
-public class ModelBasedResultSetIterator implements Iterator {
+public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   /**
    * The platform.
    */
@@ -70,11 +70,11 @@ public class ModelBasedResultSetIterator implements Iterator {
   /**
    * Maps column names to table objects as given by the query hints.
    */
-  private Map _preparedQueryHints;
+  private Map<String, Table> _preparedQueryHints;
   /**
    * Maps column names to properties.
    */
-  private final Map _columnsToProperties = new ListOrderedMap();
+  private final ListOrderedMap<String, String> _columnsToProperties = new ListOrderedMap<>();
   /**
    * Whether the next call to hasNext or next needs advancement.
    */
@@ -133,18 +133,18 @@ public class ModelBasedResultSetIterator implements Iterator {
       String tableOfColumn = metaData.getTableName(idx);
       Table table = null;
 
-      if ((tableOfColumn != null) && (tableOfColumn.length() > 0)) {
+      if ((tableOfColumn != null) && (!tableOfColumn.isEmpty())) {
         // jConnect might return a table name enclosed in quotes
         if (tableOfColumn.startsWith("\"") && tableOfColumn.endsWith("\"") && (tableOfColumn.length() > 1)) {
           tableOfColumn = tableOfColumn.substring(1, tableOfColumn.length() - 1);
         }
-        // the JDBC driver gave us enough meta data info
+        // the JDBC driver gave us enough metadata info
         table = model.findTable(tableOfColumn, _caseSensitive);
       }
       if (table == null) {
-        // not enough info in the meta data of the result set, lets try the
+        // not enough info in the metadata of the result set, lets try the
         // user-supplied query hints
-        table = (Table) _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
+        table = _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
         tableOfColumn = (table == null ? null : table.getName());
       }
       if (tableName == null) {
@@ -170,8 +170,8 @@ public class ModelBasedResultSetIterator implements Iterator {
       DynaProperty[] props = new DynaProperty[_columnsToProperties.size()];
       int idx = 0;
 
-      for (Iterator it = _columnsToProperties.values().iterator(); it.hasNext(); idx++) {
-        props[idx] = new DynaProperty((String) it.next());
+      for (Iterator<String> it = _columnsToProperties.values().iterator(); it.hasNext(); idx++) {
+        props[idx] = new DynaProperty(it.next());
       }
       _dynaClass = new BasicDynaClass("result", BasicDynaBean.class, props);
     }
@@ -184,8 +184,8 @@ public class ModelBasedResultSetIterator implements Iterator {
    * @param queryHints The query hints
    * @return The column name -> table map
    */
-  private Map prepareQueryHints(Table[] queryHints) {
-    Map result = new HashMap();
+  private Map<String, Table> prepareQueryHints(Table[] queryHints) {
+    Map<String, Table> result = new HashMap<>();
 
     for (int tableIdx = 0; (queryHints != null) && (tableIdx < queryHints.length); tableIdx++) {
       for (int columnIdx = 0; columnIdx < queryHints[tableIdx].getColumnCount(); columnIdx++) {
@@ -205,6 +205,7 @@ public class ModelBasedResultSetIterator implements Iterator {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean hasNext() throws DatabaseOperationException {
     advanceIfNecessary();
     return !_isAtEnd;
@@ -213,7 +214,8 @@ public class ModelBasedResultSetIterator implements Iterator {
   /**
    * {@inheritDoc}
    */
-  public Object next() throws DatabaseOperationException {
+  @Override
+  public DynaBean next() throws DatabaseOperationException {
     advanceIfNecessary();
     if (_isAtEnd) {
       throw new NoSuchElementException("No more elements in the resultset");
@@ -228,14 +230,13 @@ public class ModelBasedResultSetIterator implements Iterator {
           table = dynaClass.getTable();
         }
 
-        for (Iterator it = _columnsToProperties.entrySet().iterator(); it.hasNext(); ) {
-          Map.Entry entry = (Map.Entry) it.next();
-          String columnName = (String) entry.getKey();
-          String propName = (String) entry.getValue();
+        for (Map.Entry<String, String> entry : _columnsToProperties.entrySet()) {
+          String columnName = entry.getKey();
+          String propName = entry.getValue();
           Table curTable = table;
 
           if (curTable == null) {
-            curTable = (Table) _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
+            curTable = _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
           }
 
           Object value = _platform.getObjectFromResultSet(_resultSet, columnName, curTable);
@@ -285,6 +286,7 @@ public class ModelBasedResultSetIterator implements Iterator {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void remove() throws DatabaseOperationException {
     try {
       _resultSet.deleteRow();
@@ -318,7 +320,8 @@ public class ModelBasedResultSetIterator implements Iterator {
   /**
    * {@inheritDoc}
    */
-  protected void finalize() throws Throwable {
+  @Override
+  protected void finalize() {
     cleanUp();
   }
 

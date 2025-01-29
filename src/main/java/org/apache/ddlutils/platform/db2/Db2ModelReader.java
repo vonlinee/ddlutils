@@ -78,11 +78,12 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
-    for (int idx = 0; idx < KNOWN_SYSTEM_TABLES.length; idx++) {
-      if (KNOWN_SYSTEM_TABLES[idx].equals(tableName)) {
+    for (String knownSystemTable : KNOWN_SYSTEM_TABLES) {
+      if (knownSystemTable.equals(tableName)) {
         return null;
       }
     }
@@ -99,7 +100,7 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getDefaultValue() != null) {
@@ -127,7 +128,7 @@ public class Db2ModelReader extends JdbcModelReader {
 
         // Db2 returns "YYYY-MM-DD-HH24.MI.SS.FF"
         if (matcher.matches()) {
-          StringBuffer newDefault = new StringBuffer();
+          StringBuilder newDefault = new StringBuilder();
 
           newDefault.append("'");
           // group 1 is the date which has the correct format
@@ -188,6 +189,7 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) throws SQLException {
     // Db2 uses the form "SQL060205225246220" if the primary key was defined during table creation
     // When the ALTER TABLE way was used however, the index has the name of the primary key
@@ -203,14 +205,14 @@ public class Db2ModelReader extends JdbcModelReader {
       // we'll compare the index name to the names of all primary keys
       // TODO: Once primary key names are supported, this can be done easier via the table object
       ResultSet pkData = null;
-      HashSet pkNames = new HashSet();
+      HashSet<String> pkNames = new HashSet<>();
 
       try {
         pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(table.getName()));
         while (pkData.next()) {
-          Map values = readColumns(pkData, getColumnsForPK());
+          Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
-          pkNames.add(values.get("PK_NAME"));
+          pkNames.add((String) values.get("PK_NAME"));
         }
       } finally {
         closeResultSet(pkData);

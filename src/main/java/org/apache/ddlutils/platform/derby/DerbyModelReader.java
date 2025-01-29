@@ -49,7 +49,8 @@ public class DerbyModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
     String defaultValue = column.getDefaultValue();
 
@@ -70,6 +71,7 @@ public class DerbyModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) {
     return isInternalIndex(index);
   }
@@ -77,6 +79,7 @@ public class DerbyModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     return isInternalIndex(index);
   }

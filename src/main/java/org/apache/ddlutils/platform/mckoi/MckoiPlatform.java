@@ -95,6 +95,7 @@ public class MckoiPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -102,10 +103,11 @@ public class MckoiPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException {
+  @Override
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // For McKoi, you create databases by simply appending "?create=true" to the connection url
     if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
-      StringBuffer creationUrl = new StringBuffer();
+      StringBuilder creationUrl = new StringBuilder();
       Connection connection = null;
 
       creationUrl.append(connectionUrl);
@@ -113,16 +115,15 @@ public class MckoiPlatform extends PlatformImplBase {
       //       (in which case e'd have to use '&' instead)
       creationUrl.append("?create=true");
       if ((parameters != null) && !parameters.isEmpty()) {
-        for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-          Map.Entry entry = (Map.Entry) it.next();
+        for (Map.Entry<String, Object> stringObjectEntry : parameters.entrySet()) {
 
           // no need to specify create twice (and create=false wouldn't help anyway)
-          if (!"create".equalsIgnoreCase(entry.getKey().toString())) {
+          if (!"create".equalsIgnoreCase(stringObjectEntry.getKey())) {
             creationUrl.append("&");
-            creationUrl.append(entry.getKey().toString());
+            creationUrl.append(stringObjectEntry.getKey());
             creationUrl.append("=");
-            if (entry.getValue() != null) {
-              creationUrl.append(entry.getValue());
+            if (stringObjectEntry.getValue() != null) {
+              creationUrl.append(stringObjectEntry.getValue());
             }
           }
         }
@@ -141,7 +142,7 @@ public class MckoiPlatform extends PlatformImplBase {
         if (connection != null) {
           try {
             connection.close();
-          } catch (SQLException ex) {
+          } catch (SQLException ignored) {
           }
         }
       }
@@ -153,9 +154,11 @@ public class MckoiPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
-      public boolean areSupported(Table intermediateTable, List changes) {
+      @Override
+      public boolean areSupported(Table intermediateTable, List<TableChange> changes) {
         // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
         // Thus, we reject all table level changes and instead redefine the handling of the
         // RecreateTableChange
@@ -166,7 +169,7 @@ public class MckoiPlatform extends PlatformImplBase {
 
   /**
    * {@inheritDoc}
-   */
+   */  @Override
   public void processChange(Database currentModel, CreationParameters params, RecreateTableChange change) throws IOException {
     // McKoi has this nice ALTER CREATE TABLE statement which saves us a lot of work
     // We only have to handle auto-increment changes manually
@@ -176,15 +179,16 @@ public class MckoiPlatform extends PlatformImplBase {
     for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
       TableChange tableChange = (TableChange) it.next();
 
-      if (tableChange instanceof ColumnDefinitionChange colChange) {
+      if (tableChange instanceof ColumnDefinitionChange) {
+        ColumnDefinitionChange colChange = (ColumnDefinitionChange) tableChange;
         Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
         Column newColumn = colChange.getNewColumn();
 
         if (!origColumn.isAutoIncrement() && newColumn.isAutoIncrement()) {
           sqlBuilder.createAutoIncrementSequence(changedTable, origColumn);
         }
-      } else if (tableChange instanceof AddColumnChange addColumnChange) {
-
+      } else if (tableChange instanceof AddColumnChange) {
+        AddColumnChange addColumnChange = (AddColumnChange) tableChange;
         if (addColumnChange.getNewColumn().isAutoIncrement()) {
           sqlBuilder.createAutoIncrementSequence(changedTable, addColumnChange.getNewColumn());
         }
@@ -199,14 +203,16 @@ public class MckoiPlatform extends PlatformImplBase {
     for (Iterator it = change.getOriginalChanges().iterator(); it.hasNext(); ) {
       TableChange tableChange = (TableChange) it.next();
 
-      if (tableChange instanceof ColumnDefinitionChange colChange) {
+      if (tableChange instanceof ColumnDefinitionChange) {
+        ColumnDefinitionChange colChange = (ColumnDefinitionChange) tableChange;
         Column origColumn = changedTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
         Column newColumn = colChange.getNewColumn();
 
         if (origColumn.isAutoIncrement() && !newColumn.isAutoIncrement()) {
           sqlBuilder.dropAutoIncrementSequence(changedTable, origColumn);
         }
-      } else if (tableChange instanceof RemoveColumnChange removeColumnChange) {
+      } else if (tableChange instanceof RemoveColumnChange) {
+        RemoveColumnChange removeColumnChange = (RemoveColumnChange) tableChange;
         Column removedColumn = changedTable.findColumn(removeColumnChange.getChangedColumn(), isDelimitedIdentifierModeOn());
 
         if (removedColumn.isAutoIncrement()) {

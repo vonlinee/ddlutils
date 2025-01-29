@@ -76,30 +76,32 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     // lets create any sequences
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      createAutoIncrementSequence(table, columns[idx]);
+    for (Column value : columns) {
+      createAutoIncrementSequence(table, value);
     }
 
     super.createTable(database, table, parameters);
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      createAutoIncrementTrigger(table, columns[idx]);
+    for (Column column : columns) {
+      createAutoIncrementTrigger(table, column);
     }
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      dropAutoIncrementTrigger(table, columns[idx]);
-      dropAutoIncrementSequence(table, columns[idx]);
+    for (Column column : columns) {
+      dropAutoIncrementTrigger(table, column);
+      dropAutoIncrementSequence(table, column);
     }
 
     print("DROP TABLE ");
@@ -207,13 +209,15 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  protected void createTemporaryTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  protected void createTemporaryTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     createTable(database, table, parameters);
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void dropTemporaryTable(Database database, Table table) throws IOException {
     dropTable(table);
   }
@@ -221,6 +225,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKeys(Table table) throws IOException {
     // no need to as we drop the table with CASCASE CONSTRAINTS
   }
@@ -228,6 +233,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropIndex(Table table, Index index) throws IOException {
     // Index names in Oracle are unique to a schema and hence Oracle does not
     // use the ON <tablename> clause
@@ -239,6 +245,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void printDefaultValue(Object defaultValue, int typeCode) throws IOException {
     if (defaultValue != null) {
       String defaultValueStr = defaultValue.toString();
@@ -258,6 +265,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getNativeDefaultValue(Column column) {
     if ((column.getTypeCode() == Types.BIT) || (column.getTypeCode() == Types.BOOLEAN)) {
       return getDefaultValueHelper().convert(column.getDefaultValue(), column.getTypeCode(), Types.SMALLINT);
@@ -284,6 +292,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     // we're using sequences instead
   }
@@ -291,11 +300,12 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     Column[] columns = table.getAutoIncrementColumns();
 
     if (columns.length > 0) {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       result.append("SELECT ");
       for (int idx = 0; idx < columns.length; idx++) {
@@ -315,6 +325,7 @@ public class Oracle8Builder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addColumn(Database model, Table table, Column newColumn) throws IOException {
     print("ALTER TABLE ");
     printlnIdentifier(getTableName(table));

@@ -78,7 +78,7 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * The queued objects for batch insertion.
    */
-  private final ArrayList _batchQueue = new ArrayList();
+  private final ArrayList<DynaBean> _batchQueue = new ArrayList<>();
   /**
    * The number of beans to insert in one batch.
    */
@@ -86,23 +86,23 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * Stores the tables that are target of a foreign key.
    */
-  private final HashSet _fkTables = new HashSet();
+  private final HashSet<Table> _fkTables = new HashSet<>();
   /**
    * Contains the tables that have a self-referencing foreign key to a (partially) identity primary key.
    */
-  private final HashSet _tablesWithSelfIdentityReference = new HashSet();
+  private final HashSet<Table> _tablesWithSelfIdentityReference = new HashSet<>();
   /**
    * Contains the tables that have a self-referencing foreign key that is required.
    */
-  private final HashSet _tablesWithRequiredSelfReference = new HashSet();
+  private final HashSet<Table> _tablesWithRequiredSelfReference = new HashSet<>();
   /**
    * Maps original to processed identities.
    */
-  private final HashMap _identityMap = new HashMap();
+  private final HashMap<Identity, Identity> _identityMap = new HashMap<>();
   /**
    * Stores the objects that are waiting for other objects to be inserted.
    */
-  private final ArrayList _waitingObjects = new ArrayList();
+  private final ArrayList<WaitingObject> _waitingObjects = new ArrayList<>();
 
   /**
    * Creates a new sink instance.
@@ -120,8 +120,8 @@ public class DataToDatabaseSink implements DataSink {
       if (selfRefFk != null) {
         Column[] pkColumns = table.getPrimaryKeyColumns();
 
-        for (int idx = 0; idx < pkColumns.length; idx++) {
-          if (pkColumns[idx].isAutoIncrement()) {
+        for (Column pkColumn : pkColumns) {
+          if (pkColumn.isAutoIncrement()) {
             _tablesWithSelfIdentityReference.add(table);
             break;
           }
@@ -219,6 +219,7 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void end() throws DataSinkException {
     purgeBatchQueue();
     if (_connection != null) {
@@ -230,14 +231,13 @@ public class DataToDatabaseSink implements DataSink {
     }
     if (!_waitingObjects.isEmpty()) {
       if (_log.isDebugEnabled()) {
-        for (Iterator it = _waitingObjects.iterator(); it.hasNext(); ) {
-          WaitingObject obj = (WaitingObject) it.next();
+        for (WaitingObject obj : _waitingObjects) {
           Table table = _model.getDynaClassFor(obj.getObject()).getTable();
           Identity objId = buildIdentityFromPKs(table, obj.getObject());
 
           _log.debug("Row " + objId + " is still not written because it depends on these yet unwritten rows");
-          for (Iterator fkIt = obj.getPendingFKs(); fkIt.hasNext(); ) {
-            Identity pendingFkId = (Identity) fkIt.next();
+          for (Iterator<Identity> fkIt = obj.getPendingFKs(); fkIt.hasNext(); ) {
+            Identity pendingFkId = fkIt.next();
 
             _log.debug("  " + pendingFkId);
           }
@@ -255,6 +255,7 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void start() throws DataSinkException {
     _fkTables.clear();
     _waitingObjects.clear();
@@ -279,6 +280,7 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addBean(DynaBean bean) throws DataSinkException {
     Table table = _model.getDynaClassFor(bean).getTable();
     Identity origIdentity = buildIdentityFromPKs(table, bean);
@@ -291,7 +293,7 @@ public class DataToDatabaseSink implements DataSink {
         Identity fkIdentity = buildIdentityFromFK(table, fk, bean);
 
         if ((fkIdentity != null) && !fkIdentity.equals(origIdentity)) {
-          Identity processedIdentity = (Identity) _identityMap.get(fkIdentity);
+          Identity processedIdentity = _identityMap.get(fkIdentity);
 
           if (processedIdentity != null) {
             updateFKColumns(bean, fkIdentity.getForeignKeyName(), processedIdentity);
@@ -302,12 +304,12 @@ public class DataToDatabaseSink implements DataSink {
       }
       if (waitingObj.hasPendingFKs()) {
         if (_log.isDebugEnabled()) {
-          StringBuffer msg = new StringBuffer();
+          StringBuilder msg = new StringBuilder();
 
-          msg.append("Defering insertion of row ");
+          msg.append("Deferring insertion of row ");
           msg.append(buildIdentityFromPKs(table, bean));
           msg.append(" because it is waiting for:");
-          for (Iterator it = waitingObj.getPendingFKs(); it.hasNext(); ) {
+          for (Iterator<Identity> it = waitingObj.getPendingFKs(); it.hasNext(); ) {
             msg.append("\n  ");
             msg.append(it.next().toString());
           }
@@ -326,23 +328,23 @@ public class DataToDatabaseSink implements DataSink {
 
     if (_ensureFkOrder && _fkTables.contains(table)) {
       Identity newIdentity = buildIdentityFromPKs(table, bean);
-      ArrayList finishedObjs = new ArrayList();
+      ArrayList<DynaBean> finishedObjs = new ArrayList<>();
 
       _identityMap.put(origIdentity, newIdentity);
 
-      // we're doing multiple passes so that we can insert as much objects in
+      // we're doing multiple passes so that we can insert as many objects in
       // one go as possible
-      ArrayList identitiesToCheck = new ArrayList();
+      ArrayList<Identity> identitiesToCheck = new ArrayList<>();
 
       identitiesToCheck.add(origIdentity);
       while (!identitiesToCheck.isEmpty() && !_waitingObjects.isEmpty()) {
-        Identity curIdentity = (Identity) identitiesToCheck.get(0);
-        Identity curNewIdentity = (Identity) _identityMap.get(curIdentity);
+        Identity curIdentity = identitiesToCheck.get(0);
+        Identity curNewIdentity = _identityMap.get(curIdentity);
 
         identitiesToCheck.remove(0);
         finishedObjs.clear();
-        for (Iterator waitingObjIt = _waitingObjects.iterator(); waitingObjIt.hasNext(); ) {
-          WaitingObject waitingObj = (WaitingObject) waitingObjIt.next();
+        for (Iterator<WaitingObject> waitingObjIt = _waitingObjects.iterator(); waitingObjIt.hasNext(); ) {
+          WaitingObject waitingObj = waitingObjIt.next();
           Identity fkIdentity = waitingObj.removePendingFK(curIdentity);
 
           if (fkIdentity != null) {
@@ -354,8 +356,7 @@ public class DataToDatabaseSink implements DataSink {
             finishedObjs.add(waitingObj.getObject());
           }
         }
-        for (Iterator finishedObjIt = finishedObjs.iterator(); finishedObjIt.hasNext(); ) {
-          DynaBean finishedObj = (DynaBean) finishedObjIt.next();
+        for (DynaBean finishedObj : finishedObjs) {
           Table tableForObj = _model.getDynaClassFor(finishedObj).getTable();
           Identity objIdentity = buildIdentityFromPKs(tableForObj, finishedObj);
 
@@ -448,7 +449,7 @@ public class DataToDatabaseSink implements DataSink {
       if (needTwoStepInsert) {
         // we first insert the bean without the fk, then in the second step we update the bean
         // with the row with the identity pk values
-        ArrayList fkValues = new ArrayList();
+        ArrayList<Object> fkValues = new ArrayList<>();
 
         for (int idx = 0; idx < selfRefFk.getReferenceCount(); idx++) {
           String columnName = selfRefFk.getReference(idx).getLocalColumnName();
@@ -486,10 +487,10 @@ public class DataToDatabaseSink implements DataSink {
    * @return The name
    */
   private String getFKName(Table owningTable, ForeignKey fk) {
-    if ((fk.getName() != null) && (fk.getName().length() > 0)) {
+    if ((fk.getName() != null) && (!fk.getName().isEmpty())) {
       return fk.getName();
     } else {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       result.append(owningTable.getName());
       result.append("[");
@@ -525,8 +526,8 @@ public class DataToDatabaseSink implements DataSink {
     Identity identity = new Identity(table);
     Column[] pkColumns = table.getPrimaryKeyColumns();
 
-    for (int idx = 0; idx < pkColumns.length; idx++) {
-      identity.setColumnValue(pkColumns[idx].getName(), bean.get(pkColumns[idx].getName()));
+    for (Column pkColumn : pkColumns) {
+      identity.setColumnValue(pkColumn.getName(), bean.get(pkColumn.getName()));
     }
     return identity;
   }

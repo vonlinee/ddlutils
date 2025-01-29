@@ -33,11 +33,12 @@ public class NumberConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     if (textRep == null) {
       return null;
     } else {
-      Class targetClass = null;
+      Class<?> targetClass = null;
 
       switch (sqlTypeCode) {
         case Types.BIGINT:
@@ -73,11 +74,12 @@ public class NumberConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String convertToString(Object obj, int sqlTypeCode) throws ConversionException {
     if (obj == null) {
       return null;
     } else if (sqlTypeCode == Types.BIT) {
-      return ((Boolean) obj).booleanValue() ? "1" : "0";
+      return (Boolean) obj ? "1" : "0";
     } else {
       return obj.toString();
     }

@@ -19,6 +19,7 @@ package org.apache.ddlutils.platform.sybase;
  * under the License.
  */
 
+import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
@@ -26,6 +27,7 @@ import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
 import org.apache.ddlutils.alteration.AddPrimaryKeyChange;
 import org.apache.ddlutils.alteration.ColumnDefinitionChange;
+import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.alteration.ModelComparator;
 import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.RemovePrimaryKeyChange;
@@ -131,6 +133,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -160,6 +163,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Object extractColumnValue(ResultSet resultSet, String columnName, int columnIdx, int jdbcType) throws DatabaseOperationException, SQLException {
     boolean useIdx = (columnName == null);
 
@@ -200,12 +204,13 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setStatementParameterValue(PreparedStatement statement, int sqlIndex, int typeCode, Object value) throws SQLException {
     if ((typeCode == Types.BLOB) || (typeCode == Types.LONGVARBINARY)) {
       // jConnect doesn't like the BLOB type, but works without problems with LONGVARBINARY
       // even when using the Blob class
-      if (value instanceof byte[] data) {
-
+      if (value instanceof byte[]) {
+        byte[] data = (byte[]) value;
         statement.setBinaryStream(sqlIndex, new ByteArrayInputStream(data), data.length);
       } else {
         // Sybase doesn't like the BLOB type, but works without problems with LONGVARBINARY
@@ -223,7 +228,8 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public List fetch(Database model, String sql, Collection parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException {
+  @Override
+  public List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.fetch(model, sql, parameters, queryHints, start, end);
   }
@@ -231,7 +237,8 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public List fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException {
+  @Override
+  public List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.fetch(model, sql, queryHints, start, end);
   }
@@ -239,7 +246,8 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public Iterator query(Database model, String sql, Collection parameters, Table[] queryHints) throws DatabaseOperationException {
+  @Override
+  public Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.query(model, sql, parameters, queryHints);
   }
@@ -247,7 +255,8 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public Iterator query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException {
+  @Override
+  public Iterator<DynaBean> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.query(model, sql, queryHints);
   }
@@ -268,6 +277,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       SybaseBuilder builder = (SybaseBuilder) getSqlBuilder();
@@ -275,7 +285,7 @@ public class SybasePlatform extends PlatformImplBase {
       String identityInsertOn = builder.getEnableIdentityOverrideSql(table);
       Statement stmt = connection.createStatement();
 
-      if (quotationOn.length() > 0) {
+      if (!quotationOn.isEmpty()) {
         stmt.execute(quotationOn);
       }
       stmt.execute(identityInsertOn);
@@ -286,6 +296,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       SybaseBuilder builder = (SybaseBuilder) getSqlBuilder();
@@ -293,7 +304,7 @@ public class SybasePlatform extends PlatformImplBase {
       String identityInsertOff = builder.getDisableIdentityOverrideSql(table);
       Statement stmt = connection.createStatement();
 
-      if (quotationOn.length() > 0) {
+      if (!quotationOn.isEmpty()) {
         stmt.execute(quotationOn);
       }
       stmt.execute(identityInsertOff);
@@ -304,6 +315,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeUpdate(Connection connection, Table table) throws SQLException {
     beforeInsert(connection, table);
   }
@@ -311,6 +323,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterUpdate(Connection connection, Table table) throws SQLException {
     afterInsert(connection, table);
   }
@@ -318,6 +331,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     ModelComparator comparator = super.getModelComparator();
 
@@ -329,22 +343,25 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof RemoveColumnChange) ||
           (change instanceof AddPrimaryKeyChange) ||
           (change instanceof RemovePrimaryKeyChange)) {
           return true;
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           // Sybase can only add not insert columns, and they cannot be IDENTITY columns
           // We also have to force recreation of the table if a required column is added
           // that is neither IDENTITY nor has a default value
           return (addColumnChange.getNextColumn() == null) &&
             !addColumnChange.getNewColumn().isAutoIncrement() &&
             (!addColumnChange.getNewColumn().isRequired() || !StringUtils.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
-        } else if (change instanceof ColumnDefinitionChange columnChange) {
+        } else if (change instanceof ColumnDefinitionChange) {
+          ColumnDefinitionChange columnChange = (ColumnDefinitionChange) change;
           Column oldColumn = intermediateTable.findColumn(columnChange.getChangedColumn(), isDelimitedIdentifierModeOn());
 
           // Sybase cannot change the IDENTITY state of a column via ALTER TABLE MODIFY
@@ -359,7 +376,8 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  protected Database processChanges(Database model, Collection changes, CreationParameters params) throws IOException, DdlUtilsException {
+  @Override
+  protected Database processChanges(Database model, Collection<ModelChange> changes, CreationParameters params) throws IOException, DdlUtilsException {
     if (!changes.isEmpty()) {
       ((SybaseBuilder) getSqlBuilder()).turnOnQuotation();
     }

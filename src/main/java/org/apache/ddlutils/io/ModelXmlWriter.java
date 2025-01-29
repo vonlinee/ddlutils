@@ -19,7 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,17 +30,16 @@ public abstract class ModelXmlWriter {
       writer.writeAttribute(null, "base64", "true");
       writer.writeCharacters(value);
     } else {
-      List cutPoints = XMLUtils.findCDataCutPoints(value);
+      List<Integer> cutPoints = XMLUtils.findCDataCutPoints(value);
 
       // if the content contains special characters, we have to apply base64 encoding to it
+      assert cutPoints != null;
       if (cutPoints.isEmpty()) {
         writer.writeCharacters(value);
       } else {
         int lastPos = 0;
 
-        for (Iterator cutPointIt = cutPoints.iterator(); cutPointIt.hasNext(); ) {
-          int curPos = ((Integer) cutPointIt.next()).intValue();
-
+        for (Integer curPos : cutPoints) {
           writer.writeCData(value.substring(lastPos, curPos));
           lastPos = curPos;
         }

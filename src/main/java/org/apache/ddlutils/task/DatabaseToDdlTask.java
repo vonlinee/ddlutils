@@ -84,7 +84,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Specifies the name of the model that is read from the database. This is mostly useful
-   * for the the <code>writeSchemaToFile</code> sub-task as it ensures that the generated
+   * for the <code>writeSchemaToFile</code> sub-task as it ensures that the generated
    * XML defines a valid model.
    *
    * @param modelName The model name. Use <code>null</code> or an empty string for the default name
@@ -113,7 +113,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Sets the regular expression matching the names of the tables that shall be read.
-   * For case insensitive matching, an uppercase name can be assumed.
+   * For case-insensitive matching, an uppercase name can be assumed.
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
    *                        for details
@@ -143,7 +143,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Sets the regular expression matching the names of the tables that shall be ignored.
-   * For case insensitive matching, an uppercase name can be assumed.
+   * For case-insensitive matching, an uppercase name can be assumed.
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
    *                        for details
@@ -215,26 +215,26 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * @return The table types
    */
   private String[] getTableTypes() {
-    if ((_tableTypes == null) || (_tableTypes.length() == 0)) {
+    if ((_tableTypes == null) || (_tableTypes.isEmpty())) {
       return new String[0];
     }
 
     StringTokenizer tokenizer = new StringTokenizer(_tableTypes, ",");
-    ArrayList result = new ArrayList();
+    ArrayList<String> result = new ArrayList<>();
 
     while (tokenizer.hasMoreTokens()) {
       String token = tokenizer.nextToken().trim();
 
-      if (token.length() > 0) {
+      if (!token.isEmpty()) {
         result.add(token);
       }
     }
-    return (String[]) result.toArray(new String[result.size()]);
+    return result.toArray(new String[0]);
   }
 
   /**
    * Specifies the table types to be processed. More precisely, all tables that are of a
-   * type not in this list, will be ignored by the task and its sub tasks. For details and
+   * type not in this list, will be ignored by the task and its sub-tasks. For details and
    * typical table types see
    * <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/sql/DatabaseMetaData.html#getTables(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.String[])">java.sql.DatabaseMetaData#getTables</a>.
    *
@@ -248,6 +248,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Database readModel() {
     if (getDataSource() == null) {
       throw new BuildException("No database specified.");

@@ -72,7 +72,7 @@ public class MySqlModelComparator extends ModelComparator {
     // Handling for http://bugs.mysql.com/bug.php?id=21395: we need to drop and then recreate FKs that reference columns
     // included in indexes that will be dropped
     List changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
-    Set columnNames = new HashSet();
+    Set columnNames = new HashSet<>();
 
     for (Iterator it = changes.iterator(); it.hasNext(); ) {
       RemoveIndexChange change = (RemoveIndexChange) it.next();
@@ -99,12 +99,13 @@ public class MySqlModelComparator extends ModelComparator {
                                Database targetModel, Table targetTable) {
     // we need to drop and recreate foreign keys that reference columns whose data type will be changed (but not size)
     List changes = super.compareTables(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
-    Set columnNames = new HashSet();
+    Set columnNames = new HashSet<>();
 
     for (Iterator it = changes.iterator(); it.hasNext(); ) {
       Object change = it.next();
 
-      if (change instanceof ColumnDefinitionChange colDefChange) {
+      if (change instanceof ColumnDefinitionChange) {
+        ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
         Column sourceColumn = sourceTable.findColumn(colDefChange.getChangedColumn(), isCaseSensitive());
 
         if (ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn())) {

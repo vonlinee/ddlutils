@@ -63,6 +63,7 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     print("DROP TABLE IF EXISTS ");
     printIdentifier(getTableName(table));
@@ -72,6 +73,7 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     print("AUTO_INCREMENT");
   }
@@ -79,6 +81,7 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean shouldGeneratePrimaryKeys(Column[] primaryKeyColumns) {
     // mySQL requires primary key indication for autoincrement key columns
     // I'm not sure why the default skips the pk statement if all are identity
@@ -91,6 +94,7 @@ public class MySqlBuilder extends SqlBuilder {
    * Since ddlutils expects the real column name of the field that is autoincrementing, the
    * column has an alias of that column name.
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     String autoIncrementKeyName = "";
     if (table.getAutoIncrementColumns().length > 0) {
@@ -102,15 +106,16 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  protected void writeTableCreationStmtEnding(Table table, Map parameters) throws IOException {
+  @Override
+  protected void writeTableCreationStmtEnding(Table table, Map<String, Object> parameters) throws IOException {
     if (parameters != null) {
       print(" ");
       // MySql supports additional table creation options which are appended
       // at the end of the CREATE TABLE statement
-      for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry entry = (Map.Entry) it.next();
+      for (Iterator<Map.Entry<String, Object>> it = parameters.entrySet().iterator(); it.hasNext(); ) {
+        Map.Entry<String, Object> entry = it.next();
 
-        print(entry.getKey().toString());
+        print(entry.getKey());
         if (entry.getValue() != null) {
           print("=");
           print(entry.getValue().toString());
@@ -126,6 +131,7 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKey(Table table, ForeignKey foreignKey) throws IOException {
     writeTableAlterStmt(table);
     print("DROP FOREIGN KEY ");
@@ -210,6 +216,7 @@ public class MySqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     boolean sizeChanged = ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn);
     boolean typeChanged = ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, targetColumn);

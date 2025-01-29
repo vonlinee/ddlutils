@@ -70,7 +70,7 @@ public class SqlDynaClass extends BasicDynaClass {
    * @return The dyna class for the table
    */
   public static SqlDynaClass newInstance(Table table) {
-    List properties = new ArrayList();
+    List<SqlDynaProperty> properties = new ArrayList<>();
 
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       properties.add(new SqlDynaProperty(table.getColumn(idx)));
@@ -152,16 +152,16 @@ public class SqlDynaClass extends BasicDynaClass {
   //-------------------------------------------------------------------------
 
   /**
-   * Initializes the primary key and non primary key property arrays.
+   * Initializes the primary key and non-primary key property arrays.
    */
   protected void initPrimaryKeys() {
-    List pkProps = new ArrayList();
-    List nonPkProps = new ArrayList();
+    List<SqlDynaProperty> pkProps = new ArrayList<>();
+    List<SqlDynaProperty> nonPkProps = new ArrayList<>();
     DynaProperty[] properties = getDynaProperties();
 
-    for (int idx = 0; idx < properties.length; idx++) {
-      if (properties[idx] instanceof SqlDynaProperty sqlProperty) {
-
+    for (DynaProperty property : properties) {
+      if (property instanceof SqlDynaProperty) {
+        SqlDynaProperty sqlProperty = (SqlDynaProperty) property;
         if (sqlProperty.isPrimaryKey()) {
           pkProps.add(sqlProperty);
         } else {
@@ -169,7 +169,7 @@ public class SqlDynaClass extends BasicDynaClass {
         }
       }
     }
-    _primaryKeyProperties = (SqlDynaProperty[]) pkProps.toArray(new SqlDynaProperty[pkProps.size()]);
-    _nonPrimaryKeyProperties = (SqlDynaProperty[]) nonPkProps.toArray(new SqlDynaProperty[nonPkProps.size()]);
+    _primaryKeyProperties = pkProps.toArray(new SqlDynaProperty[0]);
+    _nonPrimaryKeyProperties = nonPkProps.toArray(new SqlDynaProperty[0]);
   }
 }

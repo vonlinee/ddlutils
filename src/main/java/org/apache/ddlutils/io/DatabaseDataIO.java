@@ -19,12 +19,12 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.ListOrderedMap;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class DatabaseDataIO {
   /**
    * The converters to use for converting between data and its XML representation.
    */
-  private final ArrayList _converters = new ArrayList();
+  private final ArrayList<DataConverterRegistration> _converters = new ArrayList<>();
   /**
    * Whether we should continue when an error was detected.
    */
@@ -190,9 +190,7 @@ public class DatabaseDataIO {
    * @param converterConf The converter configuration
    */
   private void registerConverters(ConverterConfiguration converterConf) throws DdlUtilsException {
-    for (Iterator it = _converters.iterator(); it.hasNext(); ) {
-      DataConverterRegistration registrationInfo = (DataConverterRegistration) it.next();
-
+    for (DataConverterRegistration registrationInfo : _converters) {
       if (registrationInfo.getTypeCode() != Integer.MIN_VALUE) {
         converterConf.registerConverter(registrationInfo.getTypeCode(),
           registrationInfo.getConverter());
@@ -216,8 +214,8 @@ public class DatabaseDataIO {
    * @return The writer
    */
   public DataWriter getConfiguredDataWriter(String path, String xmlEncoding) throws DdlUtilsException {
-    try {
-      DataWriter writer = new DataWriter(new FileOutputStream(path), xmlEncoding);
+    try (FileOutputStream fos = new FileOutputStream(path)) {
+      DataWriter writer = new DataWriter(fos, xmlEncoding);
 
       registerConverters(writer.getConverterConfiguration());
       return writer;
@@ -355,11 +353,11 @@ public class DatabaseDataIO {
 
     // TODO: An advanced algorithm could be employed here that writes individual
     //       objects related by foreign keys, in the correct order
-    List tables = sortTables(model.getTables());
+    List<Table> tables = sortTables(model.getTables());
 
     writer.writeDocumentStart();
-    for (Iterator it = tables.iterator(); it.hasNext(); ) {
-      writeDataForTableToXML(platform, model, (Table) it.next(), writer);
+    for (Table table : tables) {
+      writeDataForTableToXML(platform, model, table, writer);
     }
     writer.writeDocumentEnd();
   }
@@ -370,19 +368,17 @@ public class DatabaseDataIO {
    * @param tables The tables
    * @return The sorted tables
    */
-  private List sortTables(Table[] tables) {
-    ArrayList result = new ArrayList();
-    HashSet processed = new HashSet();
-    ListOrderedMap pending = new ListOrderedMap();
+  private List<Table> sortTables(Table[] tables) {
+    ArrayList<Table> result = new ArrayList<>();
+    HashSet<Table> processed = new HashSet<>();
+    ListOrderedMap<Table, HashSet<Table>> pending = new ListOrderedMap<>();
 
-    for (int idx = 0; idx < tables.length; idx++) {
-      Table table = tables[idx];
-
+    for (Table table : tables) {
       if (table.getForeignKeyCount() == 0) {
         result.add(table);
         processed.add(table);
       } else {
-        HashSet waitedFor = new HashSet();
+        HashSet<Table> waitedFor = new HashSet<>();
 
         for (int fkIdx = 0; fkIdx < table.getForeignKeyCount(); fkIdx++) {
           Table waitedForTable = table.getForeignKey(fkIdx).getForeignTable();
@@ -395,14 +391,13 @@ public class DatabaseDataIO {
       }
     }
 
-    HashSet newProcessed = new HashSet();
+    HashSet<Table> newProcessed = new HashSet<>();
 
     while (!processed.isEmpty() && !pending.isEmpty()) {
-      newProcessed.clear();
-      for (Iterator it = pending.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry entry = (Map.Entry) it.next();
-        Table table = (Table) entry.getKey();
-        HashSet waitedFor = (HashSet) entry.getValue();
+      for (Iterator<Map.Entry<Table, HashSet<Table>>> it = pending.entrySet().iterator(); it.hasNext(); ) {
+        Map.Entry<Table, HashSet<Table>> entry = it.next();
+        Table table = entry.getKey();
+        HashSet<Table> waitedFor = entry.getValue();
 
         waitedFor.removeAll(processed);
         if (waitedFor.isEmpty()) {
@@ -413,15 +408,13 @@ public class DatabaseDataIO {
       }
       processed.clear();
 
-      HashSet tmp = processed;
+      HashSet<Table> tmp = processed;
 
       processed = newProcessed;
       newProcessed = tmp;
     }
     // the remaining are within circular dependencies
-    for (Iterator it = pending.keySet().iterator(); it.hasNext(); ) {
-      result.add(it.next());
-    }
+    result.addAll(pending.keySet());
     return result;
   }
 
@@ -435,7 +428,7 @@ public class DatabaseDataIO {
    */
   private void writeDataForTableToXML(Platform platform, Database model, Table table, DataWriter writer) {
     Table[] tables = {table};
-    StringBuffer query = new StringBuffer();
+    StringBuilder query = new StringBuilder();
 
     query.append("SELECT ");
 
@@ -506,7 +499,7 @@ public class DatabaseDataIO {
     sink.setEnsureForeignKeyOrder(_ensureFKOrder);
     sink.setUseBatchMode(_useBatchMode);
     if (_batchSize != null) {
-      sink.setBatchSize(_batchSize.intValue());
+      sink.setBatchSize(_batchSize);
     }
 
     reader.setModel(model);

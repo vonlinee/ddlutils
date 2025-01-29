@@ -143,16 +143,16 @@ public class SapDbPlatform extends PlatformImplBase {
           (change instanceof PrimaryKeyChange) ||
           (change instanceof RemovePrimaryKeyChange)) {
           return true;
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           // SapDB can only add not insert columns, and required columns have to have
           // a default value or be IDENTITY
           return (addColumnChange.getNextColumn() == null) &&
             (!addColumnChange.getNewColumn().isRequired() ||
               !StringUtilsExt.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
-        } else if (change instanceof ColumnDefinitionChange colChange) {
-
-          // SapDB has a ALTER TABLE MODIFY COLUMN but it is limited regarding the type conversions
+        } else if (change instanceof ColumnDefinitionChange) {
+          ColumnDefinitionChange colChange = (ColumnDefinitionChange) change;
+          // SapDB has a ALTER TABLE MODIFY COLUMN, but it is limited regarding the type conversions
           // it can perform, so we don't use it here but rather rebuild the table
           Column curColumn = intermediateTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
           Column newColumn = colChange.getNewColumn();

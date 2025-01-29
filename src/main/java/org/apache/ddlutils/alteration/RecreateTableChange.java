@@ -41,7 +41,7 @@ public class RecreateTableChange extends TableChangeImplBase {
   /**
    * The original table changes, one of which is unsupported by the current platform.
    */
-  private final List _originalChanges;
+  private final List<TableChange> _originalChanges;
 
   /**
    * Creates a new change object for recreating a table. This change is used to specify that a table needs
@@ -54,7 +54,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    *                        change object
    * @param originalChanges The original changes that this change object replaces
    */
-  public RecreateTableChange(String tableName, Table targetTable, List originalChanges) {
+  public RecreateTableChange(String tableName, Table targetTable, List<TableChange> originalChanges) {
     super(tableName);
     _targetTable = targetTable;
     _originalChanges = originalChanges;
@@ -65,7 +65,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    *
    * @return The table changes
    */
-  public List getOriginalChanges() {
+  public List<TableChange> getOriginalChanges() {
     return _originalChanges;
   }
 

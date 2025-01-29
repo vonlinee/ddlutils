@@ -19,8 +19,8 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.ListOrderedMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +36,7 @@ public class CreationParameters {
   /**
    * The parameter maps keyed by the tables.
    */
-  private final Map _parametersPerTable = new HashMap();
+  private final Map<String, Map<String, Object>> _parametersPerTable = new HashMap<>();
 
   /**
    * Returns the parameters for the given table.
@@ -44,10 +44,10 @@ public class CreationParameters {
    * @param table The table
    * @return The parameters
    */
-  public Map getParametersFor(Table table) {
-    ListOrderedMap result = new ListOrderedMap();
-    Map globalParams = (Map) _parametersPerTable.get(null);
-    Map tableParams = (Map) _parametersPerTable.get(table.getName());
+  public ListOrderedMap<String, Object> getParametersFor(Table table) {
+    ListOrderedMap<String, Object> result = new ListOrderedMap<>();
+    Map<String, Object> globalParams = _parametersPerTable.get(null);
+    Map<String, Object> tableParams = _parametersPerTable.get(table.getName());
 
     if (globalParams != null) {
       result.putAll(globalParams);
@@ -67,11 +67,11 @@ public class CreationParameters {
    */
   public void addParameter(Table table, String paramName, String paramValue) {
     String key = (table == null ? null : table.getName());
-    Map params = (Map) _parametersPerTable.get(key);
+    Map<String, Object> params = _parametersPerTable.get(key);
 
     if (params == null) {
-      // we're using a list orderered map to retain the order
-      params = new ListOrderedMap();
+      // we're using a list ordered map to retain the order
+      params = new ListOrderedMap<>();
       _parametersPerTable.put(key, params);
     }
     params.put(paramName, paramValue);

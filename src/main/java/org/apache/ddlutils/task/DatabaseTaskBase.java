@@ -54,9 +54,9 @@ public abstract class DatabaseTaskBase extends Task {
    */
   private final PlatformConfiguration _platformConf = new PlatformConfiguration();
   /**
-   * The sub tasks to execute.
+   * The sub-tasks to execute.
    */
-  private final ArrayList _commands = new ArrayList();
+  private final ArrayList<Command> _commands = new ArrayList<>();
   /**
    * Whether to use simple logging (that the Ant task configures itself via the {@link #_verbosity} setting.
    */
@@ -68,7 +68,7 @@ public abstract class DatabaseTaskBase extends Task {
 
   /**
    * Specifies whether simple logging (configured by the task via the <code>verbosity</code>
-   * setting) shall be used, or whether logging is configured outside of the task
+   * setting) shall be used, or whether logging is configured outside the task
    * (e.g. via a log4j properties file).
    *
    * @param simpleLogging Whether to use simple logging or not
@@ -109,7 +109,7 @@ public abstract class DatabaseTaskBase extends Task {
    * @ant.not-required Per default, DdlUtils tries to determine the database type via JDBC.
    */
   public void setDatabaseType(String type) {
-    if ((type != null) && (type.length() > 0)) {
+    if ((type != null) && (!type.isEmpty())) {
       _platformConf.setDatabaseType(type);
     }
   }
@@ -141,7 +141,7 @@ public abstract class DatabaseTaskBase extends Task {
    * @ant.not-required Per default no specific catalog is used.
    */
   public void setCatalogPattern(String catalogPattern) {
-    if ((catalogPattern != null) && (catalogPattern.length() > 0)) {
+    if ((catalogPattern != null) && (!catalogPattern.isEmpty())) {
       _platformConf.setCatalogPattern(catalogPattern);
     }
   }
@@ -155,7 +155,7 @@ public abstract class DatabaseTaskBase extends Task {
    * @ant.not-required Per default no specific schema is used.
    */
   public void setSchemaPattern(String schemaPattern) {
-    if ((schemaPattern != null) && (schemaPattern.length() > 0)) {
+    if ((schemaPattern != null) && (!schemaPattern.isEmpty())) {
       _platformConf.setSchemaPattern(schemaPattern);
     }
   }
@@ -200,7 +200,7 @@ public abstract class DatabaseTaskBase extends Task {
   /**
    * Specifies whether DdlUtils shall sort the foreign keys of a table read from a live database or
    * leave them in the order in which they are returned by the database/JDBC driver. Note that
-   * the sort is case sensitive only if delimited identifier mode is on
+   * the sort is case-sensitive only if delimited identifier mode is on
    * (<code>useDelimitedSqlIdentifiers</code> is set to <code>true</code>).
    *
    * @param sortForeignKeys <code>true</code> if the foreign keys shall be sorted
@@ -253,7 +253,7 @@ public abstract class DatabaseTaskBase extends Task {
    *
    * @return The commands
    */
-  protected Iterator getCommands() {
+  protected Iterator<Command> getCommands() {
     return _commands.iterator();
   }
 
@@ -310,8 +310,8 @@ public abstract class DatabaseTaskBase extends Task {
    * @param model The database model
    */
   protected void executeCommands(Database model) throws BuildException {
-    for (Iterator it = getCommands(); it.hasNext(); ) {
-      Command cmd = (Command) it.next();
+    for (Iterator<Command> it = getCommands(); it.hasNext(); ) {
+      Command cmd = it.next();
 
       if (cmd.isRequiringModel() && (model == null)) {
         throw new BuildException("No database model specified");
@@ -326,6 +326,7 @@ public abstract class DatabaseTaskBase extends Task {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute() throws BuildException {
     initLogging();
 
@@ -334,8 +335,9 @@ public abstract class DatabaseTaskBase extends Task {
       return;
     }
 
-    ClassLoader sysClassLoader = (ClassLoader) AccessController.doPrivileged(new PrivilegedAction() {
-      public Object run() {
+    ClassLoader sysClassLoader = AccessController.doPrivileged(new PrivilegedAction<ClassLoader>() {
+      @Override
+      public ClassLoader run() {
         try {
           ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
           AntClassLoader newClassLoader = new AntClassLoader(getClass().getClassLoader(), true);

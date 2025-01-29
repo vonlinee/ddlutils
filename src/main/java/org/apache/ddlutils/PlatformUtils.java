@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -195,18 +194,18 @@ public class PlatformUtils {
   /**
    * Maps the sub-protocl part of a jdbc connection url to a OJB platform name.
    */
-  private final HashMap jdbcSubProtocolToPlatform = new HashMap();
+  private final HashMap<String, String> jdbcSubProtocolToPlatform = new HashMap<>();
   /**
    * Maps the jdbc driver name to a OJB platform name.
    */
-  private final HashMap jdbcDriverToPlatform = new HashMap();
+  private final HashMap<String, String> jdbcDriverToPlatform = new HashMap<>();
 
   /**
    * Creates a new instance.
    */
   public PlatformUtils() {
     // Note that currently Sapdb and MaxDB have equal subprotocols and
-    // drivers so we have no means to distinguish them
+    // drivers, so we have no means to distinguish them
     jdbcSubProtocolToPlatform.put(AxionPlatform.JDBC_SUBPROTOCOL, AxionPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(CloudscapePlatform.JDBC_SUBPROTOCOL_1, CloudscapePlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(CloudscapePlatform.JDBC_SUBPROTOCOL_2, CloudscapePlatform.DATABASENAME);
@@ -302,7 +301,7 @@ public class PlatformUtils {
    * a connection to the database.
    *
    * @param dataSource The data source
-   * @param username   The user name to use for connecting to the database
+   * @param username   The username to use for connecting to the database
    * @param password   The password to use for connecting to the database
    * @return The database type or <code>null</code> if the database type couldn't be determined
    */
@@ -341,17 +340,16 @@ public class PlatformUtils {
    */
   public String determineDatabaseType(String driverName, String jdbcConnectionUrl) {
     if (jdbcDriverToPlatform.containsKey(driverName)) {
-      return (String) jdbcDriverToPlatform.get(driverName);
+      return jdbcDriverToPlatform.get(driverName);
     }
     if (jdbcConnectionUrl == null) {
       return null;
     }
-    for (Iterator it = jdbcSubProtocolToPlatform.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
-      String curSubProtocol = "jdbc:" + entry.getKey() + ":";
+    for (Map.Entry<String, String> stringStringEntry : jdbcSubProtocolToPlatform.entrySet()) {
+      String curSubProtocol = "jdbc:" + stringStringEntry.getKey() + ":";
 
       if (jdbcConnectionUrl.startsWith(curSubProtocol)) {
-        return (String) entry.getValue();
+        return stringStringEntry.getValue();
       }
     }
     return null;

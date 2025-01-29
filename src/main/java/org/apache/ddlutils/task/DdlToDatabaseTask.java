@@ -27,10 +27,9 @@ import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
- * Task for performing operations on a live database. Sub tasks e.g. create the
+ * Task for performing operations on a live database. Sub-tasks e.g. create the
  * schema in the database, drop database schemas, insert data into the database,
  * create DTDs for data files, or write the SQL for creating a schema to a file.
  * <br/>
@@ -71,7 +70,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
   /**
    * The input files.
    */
-  private final ArrayList _fileSets = new ArrayList();
+  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
   /**
    * Whether XML input files are validated against the internal or an external DTD.
    */
@@ -83,7 +82,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
 
   /**
    * Specifies whether DdlUtils shall use the embedded DTD for validating the schema XML (if
-   * it matches <code>http://db.apache.org/torque/dtd/database.dtd</code>). This is
+   * it matches <code><a href="http://db.apache.org/torque/dtd/database.dtd">...</a></code>). This is
    * especially useful in environments where no web access is possible or desired.
    *
    * @param useInternalDtd <code>true</code> if input files are to be validated against the internal DTD
@@ -189,6 +188,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Database readModel() {
     DatabaseIO reader = new DatabaseIO();
     Database model = null;
@@ -201,8 +201,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
     if (_singleSchemaFile != null) {
       model = readSingleSchemaFile(reader, _singleSchemaFile);
     } else {
-      for (Iterator it = _fileSets.iterator(); it.hasNext(); ) {
-        FileSet fileSet = (FileSet) it.next();
+      for (FileSet fileSet : _fileSets) {
         File fileSetDir = fileSet.getDir(getProject());
         DirectoryScanner scanner = fileSet.getDirectoryScanner(getProject());
         String[] files = scanner.getIncludedFiles();

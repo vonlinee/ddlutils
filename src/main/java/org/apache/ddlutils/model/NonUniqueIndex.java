@@ -19,10 +19,10 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import java.util.ArrayList;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.util.ArrayList;
 
 /**
  * Represents an index definition for a table.
@@ -38,6 +38,7 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isUnique() {
     return false;
   }
@@ -45,11 +46,13 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
+  @SuppressWarnings("unchecked")
   public Index getClone() throws ModelException {
     NonUniqueIndex result = new NonUniqueIndex();
 
     result._name = _name;
-    result._columns = (ArrayList) _columns.clone();
+    result._columns = (ArrayList<IndexColumn>) _columns.clone();
 
     return result;
   }
@@ -57,9 +60,10 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (obj instanceof NonUniqueIndex other) {
-
+    if (obj instanceof NonUniqueIndex) {
+      NonUniqueIndex other = (NonUniqueIndex) obj;
       return new EqualsBuilder().append(_name, other._name)
         .append(_columns, other._columns)
         .isEquals();
@@ -71,11 +75,12 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equalsIgnoreCase(Index other) {
-    if (other instanceof NonUniqueIndex otherIndex) {
-
-      boolean checkName = (_name != null) && (_name.length() > 0) &&
-        (otherIndex._name != null) && (otherIndex._name.length() > 0);
+    if (other instanceof NonUniqueIndex) {
+      NonUniqueIndex otherIndex = (NonUniqueIndex) other;
+      boolean checkName = (_name != null) && (!_name.isEmpty()) &&
+        (otherIndex._name != null) && (!otherIndex._name.isEmpty());
 
       if ((!checkName || _name.equalsIgnoreCase(otherIndex._name)) &&
         (getColumnCount() == otherIndex.getColumnCount())) {
@@ -93,6 +98,7 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_name)
       .append(_columns)
@@ -102,22 +108,22 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
 
-    String result = "Index [name=" +
+    return "Index [name=" +
       getName() +
       "; " +
       getColumnCount() +
       " columns]";
-
-    return result;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("Index [");
     result.append(getName());

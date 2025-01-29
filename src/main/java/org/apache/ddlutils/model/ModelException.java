@@ -27,10 +27,6 @@ import org.apache.ddlutils.DdlUtilsException;
  * @version $Revision: 289996 $
  */
 public class ModelException extends DdlUtilsException {
-  /**
-   * Constant for serializing instances of this class.
-   */
-  private static final long serialVersionUID = -694578915559780711L;
 
   /**
    * Creates a new empty exception object.

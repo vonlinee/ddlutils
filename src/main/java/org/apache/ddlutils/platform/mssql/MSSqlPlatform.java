@@ -25,6 +25,7 @@ import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
 import org.apache.ddlutils.alteration.AddPrimaryKeyChange;
 import org.apache.ddlutils.alteration.ColumnDefinitionChange;
+import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.alteration.ModelComparator;
 import org.apache.ddlutils.alteration.PrimaryKeyChange;
 import org.apache.ddlutils.alteration.RemoveColumnChange;
@@ -125,6 +126,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -144,6 +146,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       MSSqlBuilder builder = (MSSqlBuilder) getSqlBuilder();
@@ -155,6 +158,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       MSSqlBuilder builder = (MSSqlBuilder) getSqlBuilder();
@@ -166,6 +170,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeUpdate(Connection connection, Table table) throws SQLException {
     beforeInsert(connection, table);
   }
@@ -173,6 +178,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterUpdate(Connection connection, Table table) throws SQLException {
     afterInsert(connection, table);
   }
@@ -180,6 +186,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     return new MSSqlModelComparator(getPlatformInfo(), getTableDefinitionChangesPredicate(), isDelimitedIdentifierModeOn());
   }
@@ -187,23 +194,26 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof RemoveColumnChange) ||
           (change instanceof AddPrimaryKeyChange) ||
           (change instanceof PrimaryKeyChange) ||
           (change instanceof RemovePrimaryKeyChange)) {
           return true;
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
-          // Sql Server can only add not insert columns, and the cannot be requird unless also
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
+          // Sql Server can only add not insert columns, and they cannot be required unless also
           // auto increment or with a DEFAULT value
           return (addColumnChange.getNextColumn() == null) &&
             (!addColumnChange.getNewColumn().isRequired() ||
               addColumnChange.getNewColumn().isAutoIncrement() ||
               !StringUtils.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
-        } else if (change instanceof ColumnDefinitionChange colDefChange) {
+        } else if (change instanceof ColumnDefinitionChange) {
+          ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
           Column curColumn = intermediateTable.findColumn(colDefChange.getChangedColumn(), isDelimitedIdentifierModeOn());
           Column newColumn = colDefChange.getNewColumn();
 
@@ -222,7 +232,8 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  protected Database processChanges(Database model, Collection changes, CreationParameters params) throws IOException, DdlUtilsException {
+  @Override
+  protected Database processChanges(Database model, Collection<ModelChange> changes, CreationParameters params) throws IOException, DdlUtilsException {
     if (!changes.isEmpty()) {
       ((MSSqlBuilder) getSqlBuilder()).turnOnQuotation();
     }

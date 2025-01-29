@@ -38,7 +38,7 @@ public class DynaClassCache {
   /**
    * A cache of the SqlDynaClasses per table name.
    */
-  private final Map _dynaClassCache = new HashMap();
+  private final Map<String, DynaClass> _dynaClassCache = new HashMap<>();
 
   /**
    * Creates a new dyna bean instance for the given table.
@@ -49,9 +49,7 @@ public class DynaClassCache {
   public DynaBean createNewInstance(Table table) throws SqlDynaException {
     try {
       return getDynaClass(table).newInstance();
-    } catch (InstantiationException ex) {
-      throw new SqlDynaException("Could not create a new dyna bean for table " + table.getName(), ex);
-    } catch (IllegalAccessException ex) {
+    } catch (InstantiationException | IllegalAccessException ex) {
       throw new SqlDynaException("Could not create a new dyna bean for table " + table.getName(), ex);
     }
   }
@@ -66,7 +64,7 @@ public class DynaClassCache {
    *
    * @param table  The table to create the dyna bean for
    * @param source Either a bean, a {@link java.util.Map} or a dyna bean that will be used
-   *               to populate the resultint dyna bean
+   *               to populate the result int dyna bean
    * @return A new dyna bean bound to the given table and containing all the properties from
    * the source object
    */
@@ -76,9 +74,7 @@ public class DynaClassCache {
     try {
       // copy all the properties from the source
       BeanUtils.copyProperties(answer, source);
-    } catch (InvocationTargetException ex) {
-      throw new SqlDynaException("Could not populate the bean", ex);
-    } catch (IllegalAccessException ex) {
+    } catch (InvocationTargetException | IllegalAccessException ex) {
       throw new SqlDynaException("Could not populate the bean", ex);
     }
 
@@ -86,7 +82,7 @@ public class DynaClassCache {
   }
 
   /**
-   * Returns the {@link SqlDynaClass} for the given table. If the it does not
+   * Returns the {@link SqlDynaClass} for the given table. If it does not
    * exist yet, a new one will be created based on the Table definition.
    *
    * @param table The table

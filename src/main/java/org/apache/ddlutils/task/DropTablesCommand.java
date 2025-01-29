@@ -59,7 +59,7 @@ public class DropTablesCommand extends DatabaseCommand {
 
   /**
    * Sets the regular expression matching the names of the tables to be removed.
-   * For case insensitive matching, an uppercase name can be assumed. If no
+   * For case-insensitive matching, an uppercase name can be assumed. If no
    * regular expressionis specified
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
@@ -73,6 +73,7 @@ public class DropTablesCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return true;
   }
@@ -80,6 +81,7 @@ public class DropTablesCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     BasicDataSource dataSource = getDataSource();
 

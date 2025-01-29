@@ -59,6 +59,7 @@ public class AddIndexChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 

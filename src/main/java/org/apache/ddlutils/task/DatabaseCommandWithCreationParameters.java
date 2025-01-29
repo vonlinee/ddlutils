@@ -36,7 +36,7 @@ public abstract class DatabaseCommandWithCreationParameters extends DatabaseComm
   /**
    * The additional creation parameters.
    */
-  private final ArrayList _parameters = new ArrayList();
+  private final ArrayList<Parameter> _parameters = new ArrayList<>();
 
   /**
    * Adds a parameter which is a name-value pair.
@@ -58,8 +58,8 @@ public abstract class DatabaseCommandWithCreationParameters extends DatabaseComm
   protected CreationParameters getFilteredParameters(Database model, String platformName, boolean isCaseSensitive) {
     CreationParameters parameters = new CreationParameters();
 
-    for (Iterator it = _parameters.iterator(); it.hasNext(); ) {
-      TableSpecificParameter param = (TableSpecificParameter) it.next();
+    for (Parameter parameter : _parameters) {
+      TableSpecificParameter param = (TableSpecificParameter) parameter;
 
       if (param.isForPlatform(platformName)) {
         for (int idx = 0; idx < model.getTableCount(); idx++) {

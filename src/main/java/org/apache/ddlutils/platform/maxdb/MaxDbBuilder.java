@@ -36,7 +36,7 @@ public class MaxDbBuilder extends SapDbBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public MaxDbBuilder(Platform platform) {
     super(platform);
@@ -45,6 +45,7 @@ public class MaxDbBuilder extends SapDbBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void createPrimaryKey(Table table, Column[] primaryKeyColumns) throws IOException {
     if ((primaryKeyColumns.length > 0) && shouldGeneratePrimaryKeys(primaryKeyColumns)) {
       print("ALTER TABLE ");
@@ -61,6 +62,7 @@ public class MaxDbBuilder extends SapDbBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKey(Table table, ForeignKey foreignKey) throws IOException {
     writeTableAlterStmt(table);
     print("DROP CONSTRAINT ");

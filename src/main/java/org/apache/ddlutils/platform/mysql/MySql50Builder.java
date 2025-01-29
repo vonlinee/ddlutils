@@ -42,6 +42,7 @@ public class MySql50Builder extends MySqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
     print("SET sql_mode=''");
     printEndOfStatement();

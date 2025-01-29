@@ -58,7 +58,7 @@ public class Column implements Serializable {
    */
   private boolean _primaryKey;
   /**
-   * Whether the column is required, ie. it must not contain <code>NULL</code>.
+   * Whether the column is required, i.e. it must not contain <code>NULL</code>.
    */
   private boolean _required;
   /**
@@ -165,7 +165,7 @@ public class Column implements Serializable {
   }
 
   /**
-   * Determines whether this column is a required column, ie. that it is not allowed
+   * Determines whether this column is a required column, i.e. that it is not allowed
    * to contain <code>NULL</code> values.
    *
    * @return <code>true</code> if this column is a required column
@@ -175,7 +175,7 @@ public class Column implements Serializable {
   }
 
   /**
-   * Specifies whether this column is a required column, ie. that it is not allowed
+   * Specifies whether this column is a required column, i.e. that it is not allowed
    * to contain <code>NULL</code> values.
    *
    * @param required <code>true</code> if this column is a required column
@@ -246,7 +246,7 @@ public class Column implements Serializable {
     if (typeCode == null) {
       throw new ModelException("Unknown JDBC type " + type);
     } else {
-      _typeCode = typeCode.intValue();
+      _typeCode = typeCode;
       // we get the corresponding string value from the TypeMap in order
       // to detect extension types which we don't want in the model
       _type = TypeMap.getJdbcTypeName(_typeCode);
@@ -330,7 +330,7 @@ public class Column implements Serializable {
    * @return The size as an integer
    */
   public int getSizeAsInt() {
-    return _sizeAsInt == null ? 0 : _sizeAsInt.intValue();
+    return _sizeAsInt == null ? 0 : _sizeAsInt;
   }
 
   /**
@@ -358,7 +358,7 @@ public class Column implements Serializable {
    * @param scale The scale
    */
   public void setSizeAndScale(int size, int scale) {
-    _sizeAsInt = Integer.valueOf(size);
+    _sizeAsInt = size;
     _scale = scale;
     _size = String.valueOf(size);
     if (scale > 0) {
@@ -381,7 +381,7 @@ public class Column implements Serializable {
    * @param precisionRadix The precision radix
    */
   public void setPrecisionRadix(int precisionRadix) {
-    _sizeAsInt = Integer.valueOf(precisionRadix);
+    _sizeAsInt = precisionRadix;
     _size = String.valueOf(precisionRadix);
   }
 
@@ -413,7 +413,7 @@ public class Column implements Serializable {
    * @return The parsed default value
    */
   public Object getParsedDefaultValue() {
-    if ((_defaultValue != null) && (_defaultValue.length() > 0)) {
+    if ((_defaultValue != null) && (!_defaultValue.isEmpty())) {
       try {
         switch (_typeCode) {
           case Types.TINYINT:
@@ -441,8 +441,6 @@ public class Column implements Serializable {
           case Types.BOOLEAN:
             return ConvertUtils.convert(_defaultValue, Boolean.class);
         }
-      } catch (NumberFormatException ex) {
-        return null;
       } catch (IllegalArgumentException ex) {
         return null;
       }
@@ -453,11 +451,12 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (obj instanceof Column other) {
+    if (obj instanceof Column) {
       EqualsBuilder comparator = new EqualsBuilder();
-
-      // Note that this compares case sensitive
+      Column other = (Column) obj;
+      // Note that this compares case-sensitive
       comparator.append(_name, other._name);
       comparator.append(_primaryKey, other._primaryKey);
       comparator.append(_required, other._required);
@@ -483,6 +482,7 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder(17, 37);
 
@@ -504,15 +504,14 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
 
-    String result = "Column [name=" +
+    return "Column [name=" +
       getName() +
       "; type=" +
       getType() +
       "]";
-
-    return result;
   }
 
   /**
@@ -522,7 +521,7 @@ public class Column implements Serializable {
    */
   public String toVerboseString() {
 
-    String result = "Column [name=" +
+    return "Column [name=" +
       getName() +
       "; javaName=" +
       getJavaName() +
@@ -545,7 +544,5 @@ public class Column implements Serializable {
       "; scale=" +
       getScale() +
       "]";
-
-    return result;
   }
 }

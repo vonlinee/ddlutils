@@ -39,6 +39,7 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isUnique() {
     return true;
   }
@@ -46,11 +47,13 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
+  @SuppressWarnings("unchecked")
   public Index getClone() throws ModelException {
     UniqueIndex result = new UniqueIndex();
 
     result._name = _name;
-    result._columns = (ArrayList) _columns.clone();
+    result._columns = (ArrayList<IndexColumn>) _columns.clone();
 
     return result;
   }
@@ -58,9 +61,10 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (obj instanceof UniqueIndex other) {
-
+    if (obj instanceof UniqueIndex) {
+      UniqueIndex other = (UniqueIndex) obj;
       return new EqualsBuilder().append(_name, other._name)
         .append(_columns, other._columns)
         .isEquals();
@@ -72,11 +76,12 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equalsIgnoreCase(Index other) {
-    if (other instanceof UniqueIndex otherIndex) {
-
-      boolean checkName = (_name != null) && (_name.length() > 0) &&
-        (otherIndex._name != null) && (otherIndex._name.length() > 0);
+    if (other instanceof UniqueIndex) {
+      UniqueIndex otherIndex = (UniqueIndex) other;
+      boolean checkName = (_name != null) && (!_name.isEmpty()) &&
+        (otherIndex._name != null) && (!otherIndex._name.isEmpty());
 
       if ((!checkName || _name.equalsIgnoreCase(otherIndex._name)) &&
         (getColumnCount() == otherIndex.getColumnCount())) {
@@ -94,6 +99,7 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return _columns.hashCode();
   }
@@ -101,22 +107,22 @@ public class UniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
 
-    String result = "Unique index [name=" +
+    return "Unique index [name=" +
       getName() +
       "; " +
       getColumnCount() +
       " columns]";
-
-    return result;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("Unique index [");
     result.append(getName());

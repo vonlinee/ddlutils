@@ -178,9 +178,10 @@ public class Reference implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
-    if (obj instanceof Reference other) {
-
+    if (obj instanceof Reference) {
+      Reference other = (Reference) obj;
       return new EqualsBuilder().append(_localColumnName, other._localColumnName)
         .append(_foreignColumnName, other._foreignColumnName)
         .isEquals();
@@ -204,6 +205,7 @@ public class Reference implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_localColumnName)
       .append(_foreignColumnName)
@@ -213,12 +215,11 @@ public class Reference implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
 
-    String result = getLocalColumnName() +
+    return getLocalColumnName() +
       " -> " +
       getForeignColumnName();
-
-    return result;
   }
 }

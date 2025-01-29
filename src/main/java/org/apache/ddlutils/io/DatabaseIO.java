@@ -260,9 +260,7 @@ public class DatabaseIO {
     try {
       reader = new FileReader(file);
       return read(getXMLInputFactory().createXMLStreamReader(reader));
-    } catch (XMLStreamException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (IOException ex) {
+    } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
     } finally {
       if (reader != null) {
@@ -285,7 +283,7 @@ public class DatabaseIO {
   public Database read(Reader reader) throws DdlUtilsXMLException {
     try {
       if (_validateXml) {
-        StringBuffer tmpXml = new StringBuffer();
+        StringBuilder tmpXml = new StringBuilder();
         char[] buf = new char[4096];
         int len;
 
@@ -297,9 +295,7 @@ public class DatabaseIO {
       } else {
         return read(getXMLInputFactory().createXMLStreamReader(reader));
       }
-    } catch (XMLStreamException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (IOException ex) {
+    } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
     }
   }
@@ -345,9 +341,7 @@ public class DatabaseIO {
       if (isSameAs(xmlReader.getName(), QNAME_ELEMENT_DATABASE)) {
         model = readDatabaseElement(xmlReader);
       }
-    } catch (IOException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (XMLStreamException ex) {
+    } catch (IOException | XMLStreamException ex) {
       throw new DdlUtilsXMLException(ex);
     }
     if (model != null) {
@@ -587,7 +581,7 @@ public class DatabaseIO {
   }
 
   /**
-   * Reads an unique index element from the XML stream reader.
+   * Reads a unique index element from the XML stream reader.
    *
    * @param xmlReader The reader
    * @return The unique index object
@@ -789,17 +783,11 @@ public class DatabaseIO {
    */
   public void write(Database model, String filename) throws DdlUtilsXMLException {
     try {
-      BufferedWriter writer = null;
 
-      try {
-        writer = new BufferedWriter(new FileWriter(filename));
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
 
         write(model, writer);
         writer.flush();
-      } finally {
-        if (writer != null) {
-          writer.close();
-        }
       }
     } catch (Exception ex) {
       throw new DdlUtilsXMLException(ex);
@@ -919,10 +907,10 @@ public class DatabaseIO {
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_FOREIGN_TABLE, foreignKey.getForeignTableName());
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_NAME, foreignKey.getName());
     if (foreignKey.getOnUpdate() != CascadeActionEnum.NONE) {
-      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_UPDATE, foreignKey.getOnUpdate().getName());
+      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_UPDATE, foreignKey.getOnUpdate().name());
     }
     if (foreignKey.getOnDelete() != CascadeActionEnum.NONE) {
-      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_DELETE, foreignKey.getOnDelete().getName());
+      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_DELETE, foreignKey.getOnDelete().name());
     }
     if (foreignKey.getReferenceCount() > 0) {
       xmlWriter.printlnIfPrettyPrinting();

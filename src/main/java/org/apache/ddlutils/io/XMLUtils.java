@@ -19,9 +19,8 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.codec.binary.Base64;
+import org.apache.ddlutils.util.Base64Utils;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -202,21 +201,21 @@ public class XMLUtils {
       };
 
     // set name start characters
-    for (int idx = 0; idx < nameStartChar.length; idx++) {
-      CHARS[nameStartChar[idx]] |= MASK_NAME_START | MASK_NAME;
+    for (int j : nameStartChar) {
+      CHARS[j] |= MASK_NAME_START | MASK_NAME;
     }
     for (int idx1 = 0; idx1 < letterRange.length; idx1 += 2) {
       for (int idx2 = letterRange[idx1]; idx2 <= letterRange[idx1 + 1]; idx2++) {
         CHARS[idx2] |= MASK_NAME_START | MASK_NAME;
       }
     }
-    for (int idx = 0; idx < letterChar.length; idx++) {
-      CHARS[letterChar[idx]] |= MASK_NAME_START | MASK_NAME;
+    for (int i : letterChar) {
+      CHARS[i] |= MASK_NAME_START | MASK_NAME;
     }
 
     // set name characters
-    for (int idx = 0; idx < nameChar.length; idx++) {
-      CHARS[nameChar[idx]] |= MASK_NAME;
+    for (int i : nameChar) {
+      CHARS[i] |= MASK_NAME;
     }
     for (int idx1 = 0; idx1 < digitRange.length; idx1 += 2) {
       for (int idx2 = digitRange[idx1]; idx2 <= digitRange[idx1 + 1]; idx2++) {
@@ -228,8 +227,8 @@ public class XMLUtils {
         CHARS[idx2] |= MASK_NAME;
       }
     }
-    for (int idx = 0; idx < combiningCharChar.length; idx++) {
-      CHARS[combiningCharChar[idx]] |= MASK_NAME;
+    for (int i : combiningCharChar) {
+      CHARS[i] |= MASK_NAME;
     }
     for (int idx1 = 0; idx1 < extenderRange.length; idx1 += 2) {
       for (int idx2 = extenderRange[idx1]; idx2 <= extenderRange[idx1 + 1]; idx2++) {
@@ -251,12 +250,12 @@ public class XMLUtils {
    * in <a href='http://xerces.apache.org/xerces2-j/index.html'>Apache Xerces</a>.
    * The authors of this class are credited at the top of this class.</p>
    *
-   * @param name The string to be checked for use as an xml attribute or element name.
+   * @param name The string to be checked for use as a xml attribute or element name.
    *             Returns <code>false</code> if <code>name</code> is null
    * @return Whether this string would be a well-formed name
    */
   public static boolean isWellFormedXMLName(String name) {
-    if ((name == null) || (name.length() == 0)) {
+    if ((name == null) || (name.isEmpty())) {
       return false;
     }
 
@@ -323,7 +322,7 @@ public class XMLUtils {
    * @return The encoded value
    */
   public static String base64Encode(String value) {
-    return value == null ? null : new String(Base64.encodeBase64(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+    return value == null ? null : Base64Utils.encode(value, StandardCharsets.UTF_8, StandardCharsets.UTF_8);
   }
 
   /**
@@ -332,10 +331,10 @@ public class XMLUtils {
    * when writing it in a CDATA section.
    *
    * @param text The text
-   * @return <code>null</code> if the text contains special characters, or the list of cut points otherwise
+   * @return empty if the text contains special characters, or the list of cut points otherwise
    */
-  public static List findCDataCutPoints(String text) {
-    List cutPoints = new ArrayList();
+  public static List<Integer> findCDataCutPoints(String text) {
+    List<Integer> cutPoints = new ArrayList<>();
     int numChars = text.length();
     int numFoundCDataEndChars = 0;
 
@@ -349,7 +348,7 @@ public class XMLUtils {
           numFoundCDataEndChars++;
         } else if ((c == '>') && (numFoundCDataEndChars == 2)) {
           // we have to split the CDATA right here before the '>' (see DDLUTILS-174)
-          cutPoints.add(Integer.valueOf(charPos));
+          cutPoints.add(charPos);
           numFoundCDataEndChars = 0;
         } else {
           numFoundCDataEndChars = 0;

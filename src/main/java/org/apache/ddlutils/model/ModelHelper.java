@@ -21,7 +21,6 @@ package org.apache.ddlutils.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -31,15 +30,15 @@ import java.util.List;
  */
 public class ModelHelper {
   /**
-   * Determines whether one of the tables in the list has a foreign key to a table outside of the list,
-   * or a table outside of the list has a foreign key to one of the tables in the list.
+   * Determines whether one of the tables in the list has a foreign key to a table outside the list,
+   * or a table outside the list has a foreign key to one of the tables in the list.
    *
    * @param model  The database model
    * @param tables The tables
    * @throws ModelException If such a foreign key exists
    */
   public void checkForForeignKeysToAndFromTables(Database model, Table[] tables) throws ModelException {
-    List tableList = Arrays.asList(tables);
+    List<Table> tableList = Arrays.asList(tables);
 
     for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
       Table curTable = model.getTable(tableIdx);
@@ -56,19 +55,19 @@ public class ModelHelper {
   }
 
   /**
-   * Removes all foreign keys from the tables in the list to tables outside of the list,
-   * or from tables outside of the list to tables in the list.
+   * Removes all foreign keys from the tables in the list to tables outside the list,
+   * or from tables outside the list to tables in the list.
    *
    * @param model  The database model
    * @param tables The tables
    */
   public void removeForeignKeysToAndFromTables(Database model, Table[] tables) {
-    List tableList = Arrays.asList(tables);
+    List<Table> tableList = Arrays.asList(tables);
 
     for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
       Table curTable = model.getTable(tableIdx);
       boolean curTableIsInList = tableList.contains(curTable);
-      ArrayList fksToRemove = new ArrayList();
+      ArrayList<ForeignKey> fksToRemove = new ArrayList<>();
 
       for (int fkIdx = 0; fkIdx < curTable.getForeignKeyCount(); fkIdx++) {
         ForeignKey curFk = curTable.getForeignKey(fkIdx);
@@ -76,8 +75,8 @@ public class ModelHelper {
         if (curTableIsInList != tableList.contains(curFk.getForeignTable())) {
           fksToRemove.add(curFk);
         }
-        for (Iterator fkIt = fksToRemove.iterator(); fkIt.hasNext(); ) {
-          curTable.removeForeignKey((ForeignKey) fkIt.next());
+        for (ForeignKey foreignKey : fksToRemove) {
+          curTable.removeForeignKey(foreignKey);
         }
       }
     }

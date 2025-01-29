@@ -30,7 +30,8 @@ public interface DataSink {
   /**
    * Notifies the sink that beans will be added.
    */
-  void start() throws DataSinkException;
+  default void start() throws DataSinkException {
+  }
 
   /**
    * Adds a dyna bean.
@@ -42,5 +43,7 @@ public interface DataSink {
   /**
    * Notifies the sink that all beans have been added.
    */
-  void end() throws DataSinkException;
+  default void end() throws DataSinkException {
+
+  }
 }

@@ -49,7 +49,8 @@ public class MaxDbModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getDefaultValue() != null) {

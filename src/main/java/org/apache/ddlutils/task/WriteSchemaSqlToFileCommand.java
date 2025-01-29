@@ -108,6 +108,7 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     if (_outputFile == null) {
       throw new BuildException("No output file specified");

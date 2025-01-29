@@ -81,11 +81,12 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
-    for (int idx = 0; idx < KNOWN_SYSTEM_TABLES.length; idx++) {
-      if (KNOWN_SYSTEM_TABLES[idx].equals(tableName)) {
+    for (String knownSystemTable : KNOWN_SYSTEM_TABLES) {
+      if (knownSystemTable.equals(tableName)) {
         return null;
       }
     }
@@ -152,7 +153,8 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
     String defaultValue = column.getDefaultValue();
 

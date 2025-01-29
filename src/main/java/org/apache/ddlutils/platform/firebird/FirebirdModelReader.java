@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform.firebird;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.ForeignKey;
@@ -28,6 +27,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 import org.apache.ddlutils.platform.JdbcModelReader;
+import org.apache.ddlutils.util.ListOrderedMap;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -62,7 +62,8 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Table table = super.readTable(metaData, values);
 
     if (table != null) {
@@ -75,11 +76,12 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readColumns(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  @Override
+  protected Collection<Column> readColumns(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     ResultSet columnData = null;
 
     try {
-      List columns = new ArrayList();
+      List<Column> columns = new ArrayList<>();
 
       if (getPlatform().isDelimitedIdentifierModeOn()) {
         // Jaybird has a problem when delimited identifiers are used as
@@ -88,7 +90,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         columnData = metaData.getColumns(getDefaultTablePattern(), getDefaultColumnPattern());
 
         while (columnData.next()) {
-          Map values = readColumns(columnData, getColumnsForColumn());
+          Map<String, Object> values = readColumns(columnData, getColumnsForColumn());
 
           if (tableName.equals(values.get("TABLE_NAME"))) {
             columns.add(readColumn(metaData, values));
@@ -98,7 +100,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
 
         while (columnData.next()) {
-          Map values = readColumns(columnData, getColumnsForColumn());
+          Map<String, Object> values = readColumns(columnData, getColumnsForColumn());
 
           columns.add(readColumn(metaData, values));
         }
@@ -113,7 +115,8 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getTypeCode() == Types.FLOAT) {
@@ -136,15 +139,15 @@ public class FirebirdModelReader extends JdbcModelReader {
 
     FirebirdBuilder builder = (FirebirdBuilder) getPlatform().getSqlBuilder();
     Column[] columns = table.getColumns();
-    HashMap names = new HashMap();
+    HashMap<String, Column> names = new HashMap<>();
     String name;
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      name = builder.getGeneratorName(table, columns[idx]);
+    for (Column value : columns) {
+      name = builder.getGeneratorName(table, value);
       if (!getPlatform().isDelimitedIdentifierModeOn()) {
         name = name.toUpperCase();
       }
-      names.put(name, columns[idx]);
+      names.put(name, value);
     }
 
     Statement stmt = null;
@@ -156,7 +159,7 @@ public class FirebirdModelReader extends JdbcModelReader {
 
       while (rs.next()) {
         String generatorName = rs.getString(1).trim();
-        Column column = (Column) names.get(generatorName);
+        Column column = names.get(generatorName);
 
         if (column != null) {
           column.setAutoIncrement(true);
@@ -170,8 +173,9 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    List pks = new ArrayList();
+  @Override
+  protected Collection<String> readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    List<String> pks = new ArrayList<>();
     ResultSet pkData = null;
 
     try {
@@ -181,7 +185,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         // So we have to filter manually below
         pkData = metaData.getPrimaryKeys(getDefaultTablePattern());
         while (pkData.next()) {
-          Map values = readColumns(pkData, getColumnsForPK());
+          Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
           if (tableName.equals(values.get("TABLE_NAME"))) {
             pks.add(readPrimaryKeyName(metaData, values));
@@ -190,7 +194,7 @@ public class FirebirdModelReader extends JdbcModelReader {
       } else {
         pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(tableName));
         while (pkData.next()) {
-          Map values = readColumns(pkData, getColumnsForPK());
+          Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
           pks.add(readPrimaryKeyName(metaData, values));
         }
@@ -204,8 +208,9 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map fks = new ListOrderedMap();
+  @Override
+  protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    Map<String, ForeignKey> fks = new ListOrderedMap<>();
     ResultSet fkData = null;
 
     try {
@@ -215,7 +220,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         // So we have to filter manually below
         fkData = metaData.getForeignKeys(getDefaultTablePattern());
         while (fkData.next()) {
-          Map values = readColumns(fkData, getColumnsForFK());
+          Map<String, Object> values = readColumns(fkData, getColumnsForFK());
 
           if (tableName.equals(values.get("FKTABLE_NAME"))) {
             readForeignKey(metaData, values, fks);
@@ -224,7 +229,7 @@ public class FirebirdModelReader extends JdbcModelReader {
       } else {
         fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
         while (fkData.next()) {
-          Map values = readColumns(fkData, getColumnsForFK());
+          Map<String, Object> values = readColumns(fkData, getColumnsForFK());
 
           readForeignKey(metaData, values, fks);
         }
@@ -238,7 +243,8 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  @Override
+  protected Collection<Index> readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     // Jaybird is not able to read indices when delimited identifiers are turned on,
     // so we gather the data manually using Firebird's system tables
     final String query =
@@ -246,7 +252,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         "a.RDB$FIELD_POSITION ORDINAL_POSITION, a.RDB$FIELD_NAME COLUMN_NAME, 3 INDEX_TYPE " +
         "FROM RDB$INDEX_SEGMENTS a, RDB$INDICES b WHERE a.RDB$INDEX_NAME=b.RDB$INDEX_NAME AND b.RDB$RELATION_NAME = ?";
 
-    Map indices = new ListOrderedMap();
+    Map<String, Index> indices = new ListOrderedMap<>();
     PreparedStatement stmt = null;
 
     try {
@@ -257,7 +263,7 @@ public class FirebirdModelReader extends JdbcModelReader {
       ResultSet indexData = stmt.executeQuery();
 
       while (indexData.next()) {
-        Map values = readColumns(indexData, getColumnsForIndex());
+        Map<String, Object> values = readColumns(indexData, getColumnsForIndex());
 
         // we have to reverse the meaning of the unique flag; also, null means false
         values.put("NON_UNIQUE", (values.get("NON_UNIQUE") == null) || Boolean.FALSE.equals(values.get("NON_UNIQUE")) ? Boolean.TRUE : Boolean.FALSE);
@@ -276,6 +282,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) throws SQLException {
     final String query =
       "SELECT RDB$CONSTRAINT_NAME FROM RDB$RELATION_CONSTRAINTS " +
@@ -302,6 +309,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) throws SQLException {
     final String query =
       "SELECT RDB$CONSTRAINT_NAME FROM RDB$RELATION_CONSTRAINTS " +
@@ -330,6 +338,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String determineSchemaOf(Connection connection, String schemaPattern, Table table) throws SQLException {
     ResultSet tableData = null;
     ResultSet columnData = null;
@@ -354,10 +363,10 @@ public class FirebirdModelReader extends JdbcModelReader {
       String schema = null;
 
       while (!found && tableData.next()) {
-        Map values = readColumns(tableData, getColumnsForTable());
+        Map<String, Object> values = readColumns(tableData, getColumnsForTable());
         String tableName = (String) values.get("TABLE_NAME");
 
-        if ((tableName != null) && (tableName.length() > 0)) {
+        if ((tableName != null) && (!tableName.isEmpty())) {
           schema = (String) values.get("TABLE_SCHEM");
           found = true;
 

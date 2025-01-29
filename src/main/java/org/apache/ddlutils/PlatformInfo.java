@@ -221,32 +221,32 @@ public class PlatformInfo {
   /**
    * Contains non-default mappings from jdbc to native types.
    */
-  private final HashMap _nativeTypes = new HashMap();
+  private final HashMap<Integer, String> _nativeTypes = new HashMap<>();
 
   /**
    * Contains the jdbc types corresponding to the native types for non-default mappings.
    */
-  private final HashMap _targetJdbcTypes = new HashMap();
+  private final HashMap<Integer, Integer> _targetJdbcTypes = new HashMap<>();
 
   /**
    * Contains those JDBC types whose corresponding native types have a null value as the default value.
    */
-  private final HashSet _typesWithNullDefault = new HashSet();
+  private final HashSet<Integer> _typesWithNullDefault = new HashSet<>();
 
   /**
    * Contains those JDBC types whose corresponding native types are types that have a size on this platform.
    */
-  private final HashSet _typesWithSize = new HashSet();
+  private final HashSet<Integer> _typesWithSize = new HashSet<>();
 
   /**
    * Contains the default sizes for those JDBC types whose corresponding native types require a size.
    */
-  private final HashMap _typesDefaultSizes = new HashMap();
+  private final HashMap<Integer, Integer> _typesDefaultSizes = new HashMap<>();
 
   /**
    * Contains those JDBC types whose corresponding native types are types that have precision and scale on this platform.
    */
-  private final HashSet _typesWithPrecisionAndScale = new HashSet();
+  private final HashSet<Integer> _typesWithPrecisionAndScale = new HashSet<>();
 
   /**
    * The default ON UPDATE action.
@@ -261,43 +261,43 @@ public class PlatformInfo {
   /**
    * Contains the supported ON UPDATE actions.
    */
-  private final HashSet _supportedOnUpdateActions = new HashSet();
+  private final HashSet _supportedOnUpdateActions = new HashSet<>();
 
   /**
    * Contains the supported ON DELETE actions.
    */
-  private final HashSet _supportedOnDeleteActions = new HashSet();
+  private final HashSet _supportedOnDeleteActions = new HashSet<>();
 
   /**
    * Contains for each ON UPDATE action the list of equivalent actions.
    */
-  private final HashMap _equivalentOnUpdateActions = new HashMap();
+  private final HashMap _equivalentOnUpdateActions = new HashMap<>();
 
   /**
    * Contains for each ON DELETE action the list of equivalent actions.
    */
-  private final HashMap _equivalentOnDeleteActions = new HashMap();
+  private final HashMap _equivalentOnDeleteActions = new HashMap<>();
 
   /**
    * Creates a new platform info object.
    */
   public PlatformInfo() {
-    _typesWithNullDefault.add(Integer.valueOf(Types.CHAR));
-    _typesWithNullDefault.add(Integer.valueOf(Types.VARCHAR));
-    _typesWithNullDefault.add(Integer.valueOf(Types.LONGVARCHAR));
-    _typesWithNullDefault.add(Integer.valueOf(Types.CLOB));
-    _typesWithNullDefault.add(Integer.valueOf(Types.BINARY));
-    _typesWithNullDefault.add(Integer.valueOf(Types.VARBINARY));
-    _typesWithNullDefault.add(Integer.valueOf(Types.LONGVARBINARY));
-    _typesWithNullDefault.add(Integer.valueOf(Types.BLOB));
+    _typesWithNullDefault.add(Types.CHAR);
+    _typesWithNullDefault.add(Types.VARCHAR);
+    _typesWithNullDefault.add(Types.LONGVARCHAR);
+    _typesWithNullDefault.add(Types.CLOB);
+    _typesWithNullDefault.add(Types.BINARY);
+    _typesWithNullDefault.add(Types.VARBINARY);
+    _typesWithNullDefault.add(Types.LONGVARBINARY);
+    _typesWithNullDefault.add(Types.BLOB);
 
-    _typesWithSize.add(Integer.valueOf(Types.CHAR));
-    _typesWithSize.add(Integer.valueOf(Types.VARCHAR));
-    _typesWithSize.add(Integer.valueOf(Types.BINARY));
-    _typesWithSize.add(Integer.valueOf(Types.VARBINARY));
+    _typesWithSize.add(Types.CHAR);
+    _typesWithSize.add(Types.VARCHAR);
+    _typesWithSize.add(Types.BINARY);
+    _typesWithSize.add(Types.VARBINARY);
 
-    _typesWithPrecisionAndScale.add(Integer.valueOf(Types.DECIMAL));
-    _typesWithPrecisionAndScale.add(Integer.valueOf(Types.NUMERIC));
+    _typesWithPrecisionAndScale.add(Types.DECIMAL);
+    _typesWithPrecisionAndScale.add(Types.NUMERIC);
 
     _supportedOnUpdateActions.addAll(CascadeActionEnum.getEnumList());
     _supportedOnDeleteActions.addAll(CascadeActionEnum.getEnumList());
@@ -347,7 +347,7 @@ public class PlatformInfo {
   // properties influencing the specification of table constraints
 
   /**
-   * Determines whether primary key constraints are embedded in the create
+   * Determines whether primary key constraints are embedded in the creation
    * table clause or as seperate alter table statements. The default is
    * embedded pks.
    *
@@ -358,7 +358,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Specifies whether the primary key constraints are embedded in the create
+   * Specifies whether the primary key constraints are embedded in the creation
    * table clause or as seperate alter table statements.
    *
    * @param primaryKeyEmbedded Whether pk constraints are embedded
@@ -975,7 +975,7 @@ public class PlatformInfo {
    * @return The native type or <code>null</code> if there isn't one defined
    */
   public String getNativeType(int typeCode) {
-    return (String) _nativeTypes.get(Integer.valueOf(typeCode));
+    return (String) _nativeTypes.get(typeCode);
   }
 
   /**
@@ -989,9 +989,9 @@ public class PlatformInfo {
    * @return The target jdbc type
    */
   public int getTargetJdbcType(int typeCode) {
-    Integer targetJdbcType = (Integer) _targetJdbcTypes.get(Integer.valueOf(typeCode));
+    Integer targetJdbcType = (Integer) _targetJdbcTypes.get(typeCode);
 
-    return targetJdbcType == null ? typeCode : targetJdbcType.intValue();
+    return targetJdbcType == null ? typeCode : targetJdbcType;
   }
 
   /**
@@ -1001,7 +1001,7 @@ public class PlatformInfo {
    * @param nativeType   The native type
    */
   public void addNativeTypeMapping(int jdbcTypeCode, String nativeType) {
-    _nativeTypes.put(Integer.valueOf(jdbcTypeCode), nativeType);
+    _nativeTypes.put(jdbcTypeCode, nativeType);
   }
 
   /**
@@ -1014,7 +1014,7 @@ public class PlatformInfo {
    */
   public void addNativeTypeMapping(int jdbcTypeCode, String nativeType, int targetJdbcTypeCode) {
     addNativeTypeMapping(jdbcTypeCode, nativeType);
-    _targetJdbcTypes.put(Integer.valueOf(jdbcTypeCode), Integer.valueOf(targetJdbcTypeCode));
+    _targetJdbcTypes.put(jdbcTypeCode, targetJdbcTypeCode);
   }
 
   /**
@@ -1076,7 +1076,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has a null default value
    */
   public boolean hasNullDefault(int sqlTypeCode) {
-    return _typesWithNullDefault.contains(Integer.valueOf(sqlTypeCode));
+    return _typesWithNullDefault.contains(sqlTypeCode);
   }
 
   /**
@@ -1088,9 +1088,9 @@ public class PlatformInfo {
    */
   public void setHasNullDefault(int sqlTypeCode, boolean hasNullDefault) {
     if (hasNullDefault) {
-      _typesWithNullDefault.add(Integer.valueOf(sqlTypeCode));
+      _typesWithNullDefault.add(sqlTypeCode);
     } else {
-      _typesWithNullDefault.remove(Integer.valueOf(sqlTypeCode));
+      _typesWithNullDefault.remove(sqlTypeCode);
     }
   }
 
@@ -1102,7 +1102,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has a size specification
    */
   public boolean hasSize(int sqlTypeCode) {
-    return _typesWithSize.contains(Integer.valueOf(sqlTypeCode));
+    return _typesWithSize.contains(sqlTypeCode);
   }
 
   /**
@@ -1114,9 +1114,9 @@ public class PlatformInfo {
    */
   public void setHasSize(int sqlTypeCode, boolean hasSize) {
     if (hasSize) {
-      _typesWithSize.add(Integer.valueOf(sqlTypeCode));
+      _typesWithSize.add(sqlTypeCode);
     } else {
-      _typesWithSize.remove(Integer.valueOf(sqlTypeCode));
+      _typesWithSize.remove(sqlTypeCode);
     }
   }
 
@@ -1127,7 +1127,7 @@ public class PlatformInfo {
    * @return The default size or <code>null</code> if none is defined
    */
   public Integer getDefaultSize(int jdbcTypeCode) {
-    return (Integer) _typesDefaultSizes.get(Integer.valueOf(jdbcTypeCode));
+    return (Integer) _typesDefaultSizes.get(jdbcTypeCode);
   }
 
   /**
@@ -1137,7 +1137,7 @@ public class PlatformInfo {
    * @param defaultSize  The default size
    */
   public void setDefaultSize(int jdbcTypeCode, int defaultSize) {
-    _typesDefaultSizes.put(Integer.valueOf(jdbcTypeCode), Integer.valueOf(defaultSize));
+    _typesDefaultSizes.put(jdbcTypeCode, defaultSize);
   }
 
   /**
@@ -1168,7 +1168,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has precision and scale specifications
    */
   public boolean hasPrecisionAndScale(int sqlTypeCode) {
-    return _typesWithPrecisionAndScale.contains(Integer.valueOf(sqlTypeCode));
+    return _typesWithPrecisionAndScale.contains(sqlTypeCode);
   }
 
   /**
@@ -1181,9 +1181,9 @@ public class PlatformInfo {
    */
   public void setHasPrecisionAndScale(int sqlTypeCode, boolean hasPrecisionAndScale) {
     if (hasPrecisionAndScale) {
-      _typesWithPrecisionAndScale.add(Integer.valueOf(sqlTypeCode));
+      _typesWithPrecisionAndScale.add(sqlTypeCode);
     } else {
-      _typesWithPrecisionAndScale.remove(Integer.valueOf(sqlTypeCode));
+      _typesWithPrecisionAndScale.remove(sqlTypeCode);
     }
   }
 
@@ -1276,11 +1276,11 @@ public class PlatformInfo {
       Set actionsEquivalentToActionB = (Set) _equivalentOnUpdateActions.get(actionB);
 
       if (actionsEquivalentToActionA == null) {
-        actionsEquivalentToActionA = new HashSet();
+        actionsEquivalentToActionA = new HashSet<>();
         _equivalentOnUpdateActions.put(actionA, actionsEquivalentToActionA);
       }
       if (actionsEquivalentToActionB == null) {
-        actionsEquivalentToActionB = new HashSet();
+        actionsEquivalentToActionB = new HashSet<>();
         _equivalentOnUpdateActions.put(actionB, actionsEquivalentToActionB);
       }
       actionsEquivalentToActionA.add(actionB);
@@ -1315,11 +1315,11 @@ public class PlatformInfo {
       Set actionsEquivalentToActionB = (Set) _equivalentOnDeleteActions.get(actionB);
 
       if (actionsEquivalentToActionA == null) {
-        actionsEquivalentToActionA = new HashSet();
+        actionsEquivalentToActionA = new HashSet<>();
         _equivalentOnDeleteActions.put(actionA, actionsEquivalentToActionA);
       }
       if (actionsEquivalentToActionB == null) {
-        actionsEquivalentToActionB = new HashSet();
+        actionsEquivalentToActionB = new HashSet<>();
         _equivalentOnDeleteActions.put(actionB, actionsEquivalentToActionB);
       }
       actionsEquivalentToActionA.add(actionB);

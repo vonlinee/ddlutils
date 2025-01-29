@@ -45,6 +45,7 @@ public abstract class TableChangeImplBase implements TableChange {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getChangedTable() {
     return _tableName;
   }
@@ -52,6 +53,7 @@ public abstract class TableChangeImplBase implements TableChange {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Table findChangedTable(Database model, boolean caseSensitive) {
     return model.findTable(_tableName, caseSensitive);
   }

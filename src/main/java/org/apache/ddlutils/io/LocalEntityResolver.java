@@ -26,6 +26,8 @@ import org.xml.sax.SAXException;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * An entity resolver that matches the specific database dtds to the one that comes
@@ -42,6 +44,7 @@ public class LocalEntityResolver implements EntityResolver {
   /**
    * {@inheritDoc}
    */
+  @Override
   public InputSource resolveEntity(String publicId, String systemId) throws SAXException {
     InputSource result = null;
 
@@ -61,7 +64,7 @@ public class LocalEntityResolver implements EntityResolver {
           if (path.startsWith("//")) {
             path = path.substring(2);
           }
-          result = new InputSource(new FileInputStream(path));
+          result = new InputSource(Files.newInputStream(Paths.get(path)));
         } else {
           result = new InputSource(url.openStream());
         }

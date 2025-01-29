@@ -51,12 +51,13 @@ public class HsqlDbModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Table table = super.readTable(metaData, values);
 
     if (table != null) {
       // For at least version 1.7.2 we have to determine the auto-increment columns
-      // from a result set meta data because the database does not put this info
+      // from a result set metadata because the database does not put this info
       // into the database metadata
       // Since Hsqldb only allows IDENTITY for primary key columns, we restrict
       // our search to those columns
@@ -69,7 +70,8 @@ public class HsqlDbModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (TypeMap.isTextType(column.getTypeCode()) &&
@@ -82,6 +84,7 @@ public class HsqlDbModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) {
     String name = index.getName();
 
@@ -91,6 +94,7 @@ public class HsqlDbModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     String name = index.getName();
 

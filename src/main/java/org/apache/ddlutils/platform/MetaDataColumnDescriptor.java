@@ -102,18 +102,18 @@ public class MetaDataColumnDescriptor {
    * @return The column value or the default value if the column is not present in the result set
    */
   public Object readColumn(ResultSet resultSet) throws SQLException {
-    Object result = null;
+    Object result;
 
     try {
       switch (_jdbcType) {
         case Types.BIT:
-          result = Boolean.valueOf(resultSet.getBoolean(_columnName));
+          result = resultSet.getBoolean(_columnName);
           break;
         case Types.INTEGER:
-          result = Integer.valueOf(resultSet.getInt(_columnName));
+          result = resultSet.getInt(_columnName);
           break;
         case Types.TINYINT:
-          result = Short.valueOf(resultSet.getShort(_columnName));
+          result = resultSet.getShort(_columnName);
           break;
         default:
           result = resultSet.getString(_columnName);

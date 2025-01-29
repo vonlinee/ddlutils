@@ -123,6 +123,7 @@ public class Db2Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -130,6 +131,7 @@ public class Db2Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     ModelComparator comparator = super.getModelComparator();
 
@@ -141,15 +143,17 @@ public class Db2Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof RemoveColumnChange) ||
           (change instanceof PrimaryKeyChange) ||
           (change instanceof RemovePrimaryKeyChange)) {
           return true;
-        } else if (change instanceof AddColumnChange addColumnChange) {
-
+        } else if (change instanceof AddColumnChange) {
+          AddColumnChange addColumnChange = (AddColumnChange) change;
           // DB2 cannot add IDENTITY columns, and required columns need a default value
           return (addColumnChange.getNextColumn() == null) &&
             !addColumnChange.getNewColumn().isAutoIncrement() &&

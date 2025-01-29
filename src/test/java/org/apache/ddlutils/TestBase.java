@@ -19,109 +19,97 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import java.io.StringReader;
-
 import junit.framework.TestCase;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 
+import java.io.StringReader;
+
 /**
  * Base class for DdlUtils tests.
- * 
+ *
  * @version $Revision: $
  */
-public abstract class TestBase extends TestCase
-{
-    /** The log for the tests. */
-    private final Log _log = LogFactory.getLog(getClass());
+public abstract class TestBase extends TestCase {
+  /**
+   * The log for the tests.
+   */
+  private final Log _log = LogFactory.getLog(getClass());
 
-    /**
-     * Returns the log.
-     * 
-     * @return The log
-     */
-    protected Log getLog()
-    {
-        return _log;
-    }
+  /**
+   * Returns the log.
+   *
+   * @return The log
+   */
+  protected Log getLog() {
+    return _log;
+  }
 
-    /**
-     * Parses the database defined in the given XML definition.
-     * 
-     * @param dbDef The database XML definition
-     * @return The database model
-     */
-    protected Database parseDatabaseFromString(String dbDef)
-    {
-        DatabaseIO dbIO = new DatabaseIO();
-        
-        dbIO.setUseInternalDtd(true);
-        dbIO.setValidateXml(true);
-        return dbIO.read(new StringReader(dbDef));
-    }
+  /**
+   * Parses the database defined in the given XML definition.
+   *
+   * @param dbDef The database XML definition
+   * @return The database model
+   */
+  protected Database parseDatabaseFromString(String dbDef) {
+    DatabaseIO dbIO = new DatabaseIO();
 
-    /**
-     * Compares the two strings but ignores any whitespace differences. It also
-     * recognizes special delimiter chars.
-     * 
-     * @param expected The expected string
-     * @param actual   The actual string
-     */
-    protected void assertEqualsIgnoringWhitespaces(String expected, String actual)
-    {
-        String processedExpected = compressWhitespaces(expected);
-        String processedActual   = compressWhitespaces(actual);
+    dbIO.setUseInternalDtd(true);
+    dbIO.setValidateXml(true);
+    return dbIO.read(new StringReader(dbDef));
+  }
 
-        assertEquals(processedExpected, processedActual);
-    }
+  /**
+   * Compares the two strings but ignores any whitespace differences. It also
+   * recognizes special delimiter chars.
+   *
+   * @param expected The expected string
+   * @param actual   The actual string
+   */
+  protected void assertEqualsIgnoringWhitespaces(String expected, String actual) {
+    String processedExpected = compressWhitespaces(expected);
+    String processedActual = compressWhitespaces(actual);
 
-    /**
-     * Compresses the whitespaces in the given string to a single space. Also
-     * recognizes special delimiter chars and removes whitespaces before them.
-     * 
-     * @param original The original string
-     * @return The resulting string
-     */
-    private String compressWhitespaces(String original)
-    {
-        StringBuffer result  = new StringBuffer();
-        char         oldChar = ' ';
-        char         curChar;
+    assertEquals(processedExpected, processedActual);
+  }
 
-        for (int idx = 0; idx < original.length(); idx++)
-        {
-            curChar = original.charAt(idx);
-            if (Character.isWhitespace(curChar))
-            {
-                if (oldChar != ' ')
-                {
-                    oldChar = ' ';
-                    result.append(oldChar);
-                }
-            }
-            else
-            {
-                if ((curChar == ',') || (curChar == ';') ||
-                    (curChar == '(') || (curChar == ')'))
-                {
-                    if ((oldChar == ' ') && (result.length() > 0))
-                    {
-                        // we're removing whitespaces before commas/semicolons
-                        result.setLength(result.length() - 1);
-                    }
-                }
-                if ((oldChar == ',') || (oldChar == ';'))
-                {
-                    // we're adding a space after commas/semicolons if necessary
-                    result.append(' ');
-                }
-                result.append(curChar);
-                oldChar = curChar;
-            }
+  /**
+   * Compresses the whitespaces in the given string to a single space. Also
+   * recognizes special delimiter chars and removes whitespaces before them.
+   *
+   * @param original The original string
+   * @return The resulting string
+   */
+  private String compressWhitespaces(String original) {
+    StringBuffer result = new StringBuffer();
+    char oldChar = ' ';
+    char curChar;
+
+    for (int idx = 0; idx < original.length(); idx++) {
+      curChar = original.charAt(idx);
+      if (Character.isWhitespace(curChar)) {
+        if (oldChar != ' ') {
+          oldChar = ' ';
+          result.append(oldChar);
         }
-        return result.toString();
+      } else {
+        if ((curChar == ',') || (curChar == ';') ||
+          (curChar == '(') || (curChar == ')')) {
+          if ((oldChar == ' ') && (result.length() > 0)) {
+            // we're removing whitespaces before commas/semicolons
+            result.setLength(result.length() - 1);
+          }
+        }
+        if ((oldChar == ',') || (oldChar == ';')) {
+          // we're adding a space after commas/semicolons if necessary
+          result.append(' ');
+        }
+        result.append(curChar);
+        oldChar = curChar;
+      }
     }
+    return result.toString();
+  }
 }

@@ -45,8 +45,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A factory of {@link org.apache.ddlutils.Platform} instances based on a case
- * insensitive database name. Note that this is a convenience class as the platforms
+ * A factory of {@link org.apache.ddlutils.Platform} instances based on a case-insensitive
+ * database name. Note that this is a convenience class as the platforms
  * can also simply be created via their constructors.
  *
  * @version $Revision: 209952 $
@@ -55,34 +55,34 @@ public class PlatformFactory {
   /**
    * The database name -> platform map.
    */
-  private static Map _platforms = null;
+  private static Map<String, Class<? extends Platform>> _platforms = null;
 
   /**
    * Returns the platform map.
    *
    * @return The platform list
    */
-  private static synchronized Map getPlatforms() {
+  private static synchronized Map<String, Class<? extends Platform>> getPlatforms() {
     if (_platforms == null) {
       // lazy initialization
-      _platforms = new HashMap();
+      _platforms = new HashMap<>();
       registerPlatforms();
     }
     return _platforms;
   }
 
   /**
-   * Creates a new platform for the given (case insensitive) database name
+   * Creates a new platform for the given (case-insensitive) database name
    * or returns null if the database is not recognized.
    *
    * @param databaseName The name of the database (case is not important)
    * @return The platform or <code>null</code> if the database is not supported
    */
   public static synchronized Platform createNewPlatformInstance(String databaseName) throws DdlUtilsException {
-    Class platformClass = (Class) getPlatforms().get(databaseName.toLowerCase());
+    Class<? extends Platform> platformClass = getPlatforms().get(databaseName.toLowerCase());
 
     try {
-      return platformClass != null ? (Platform) platformClass.newInstance() : null;
+      return platformClass != null ? platformClass.newInstance() : null;
     } catch (Exception ex) {
       throw new DdlUtilsException("Could not create platform for database " + databaseName, ex);
     }
@@ -125,7 +125,7 @@ public class PlatformFactory {
    * at the returned platform instance (method {@link Platform#setDataSource(DataSource)}).
    *
    * @param dataSource The data source for the database
-   * @param username   The user name to use for connecting to the database
+   * @param username   The username to use for connecting to the database
    * @param password   The password to use for connecting to the database
    * @return The platform or <code>null</code> if the database is not supported
    */
@@ -144,7 +144,7 @@ public class PlatformFactory {
    * @return The names of the currently registered platforms
    */
   public static synchronized String[] getSupportedPlatforms() {
-    return (String[]) getPlatforms().keySet().toArray(new String[0]);
+    return getPlatforms().keySet().toArray(new String[0]);
   }
 
   /**
@@ -163,7 +163,7 @@ public class PlatformFactory {
    * @param platformName  The platform name
    * @param platformClass The platform class which must implement the {@link Platform} interface
    */
-  public static synchronized void registerPlatform(String platformName, Class platformClass) {
+  public static synchronized void registerPlatform(String platformName, Class<? extends Platform> platformClass) {
     addPlatform(getPlatforms(), platformName, platformClass);
   }
 
@@ -200,7 +200,7 @@ public class PlatformFactory {
    * @param platformName  The platform name
    * @param platformClass The platform class which must implement the {@link Platform} interface
    */
-  private static synchronized void addPlatform(Map platformMap, String platformName, Class platformClass) {
+  private static synchronized void addPlatform(Map<String, Class<? extends Platform>> platformMap, String platformName, Class<? extends Platform> platformClass) {
     if (!Platform.class.isAssignableFrom(platformClass)) {
       throw new IllegalArgumentException("Cannot register class " + platformClass.getName() + " because it does not implement the " + Platform.class.getName() + " interface");
     }
