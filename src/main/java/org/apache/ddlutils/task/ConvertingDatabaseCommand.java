@@ -22,6 +22,8 @@ package org.apache.ddlutils.task;
 import org.apache.ddlutils.io.DataConverterRegistration;
 import org.apache.ddlutils.io.DatabaseDataIO;
 
+import java.util.Properties;
+
 /**
  * Base type for database commands that use converters.
  *
@@ -33,6 +35,10 @@ public abstract class ConvertingDatabaseCommand extends DatabaseCommand {
    * The database data io object.
    */
   private final DatabaseDataIO _dataIO = new DatabaseDataIO();
+
+  public ConvertingDatabaseCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Returns the database data io object.

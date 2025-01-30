@@ -34,7 +34,7 @@ public class TaskHelper {
    * @param stringList The comma-separated list of strings
    * @return The strings as an array
    */
-  public String[] parseCommaSeparatedStringList(String stringList) {
+  public static String[] parseCommaSeparatedStringList(String stringList) {
     String[] tokens = stringList.split(",");
     ArrayList<String> values = new ArrayList<>();
     StringBuilder last = null;

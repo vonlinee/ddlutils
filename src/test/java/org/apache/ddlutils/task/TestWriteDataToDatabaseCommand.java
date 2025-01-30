@@ -52,13 +52,9 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
    * @param ensureFkOrder Whether to ensure foreign key order
    */
   private void runTask(DatabaseToDdlTask task, String dataXml, boolean useBatchMode, boolean ensureFkOrder) throws IOException {
-    WriteDataToDatabaseCommand subTask = new WriteDataToDatabaseCommand();
+    WriteDataToDatabaseCommand subTask = new WriteDataToDatabaseCommand(task.getProperties());
     File tmpFile = File.createTempFile("schema", ".xml");
-    FileWriter writer = null;
-
-    try {
-      writer = new FileWriter(tmpFile);
-
+    try (FileWriter writer = new FileWriter(tmpFile)) {
       writer.write(dataXml);
       writer.close();
 
@@ -71,13 +67,6 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
       task.setModelName("roundtriptest");
       task.execute();
     } finally {
-      if (writer != null) {
-        try {
-          writer.close();
-        } catch (IOException ex) {
-          getLog().error("Could not close the writer for the temporary file " + tmpFile.getAbsolutePath(), ex);
-        }
-      }
       if (!tmpFile.delete()) {
         getLog().warn("Could not delete temporary file " + tmpFile.getAbsolutePath());
       }

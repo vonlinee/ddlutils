@@ -19,14 +19,12 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * The sub-task for creating the target database. Note that this is only supported on some database
@@ -38,10 +36,10 @@ import java.util.Map;
  * @ant.task name="createDatabase"
  */
 public class CreateDatabaseCommand extends DatabaseCommand {
-  /**
-   * The additional creation parameters.
-   */
-  private final ArrayList<Parameter> _parameters = new ArrayList<>();
+
+  public CreateDatabaseCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Adds a parameter which is a name-value pair.
@@ -65,21 +63,15 @@ public class CreateDatabaseCommand extends DatabaseCommand {
    */
   @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
-    BasicDataSource dataSource = getDataSource();
+    DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
       throw new BuildException("No database specified.");
     }
 
     Platform platform = getPlatform();
-
     try {
-      platform.createDatabase(dataSource.getDriverClassName(),
-        dataSource.getUrl(),
-        dataSource.getUsername(),
-        dataSource.getPassword(),
-        getFilteredParameters(platform.getName()));
-
+      createPlatformDatabase(platform);
       _log.info("Created database");
     } catch (UnsupportedOperationException ex) {
       _log.error("Database platform " + platform.getName() + " does not support database creation " +
@@ -88,22 +80,5 @@ public class CreateDatabaseCommand extends DatabaseCommand {
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());
     }
-  }
-
-  /**
-   * Filters the parameters for the indicated platform.
-   *
-   * @param platformName The name of the platform
-   * @return The filtered parameters
-   */
-  private Map<String, Object> getFilteredParameters(String platformName) {
-    LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
-
-    for (Parameter param : _parameters) {
-      if (param.isForPlatform(platformName)) {
-        parameters.put(param.getName(), param.getValue());
-      }
-    }
-    return parameters;
   }
 }

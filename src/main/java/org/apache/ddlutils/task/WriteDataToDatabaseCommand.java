@@ -29,6 +29,7 @@ import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Inserts the data defined by the data XML file(s) into the database. This requires the schema
@@ -59,6 +60,10 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * Whether explicit values for identity columns will be used.
    */
   private boolean _useExplicitIdentityValues;
+
+  public WriteDataToDatabaseCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Defines whether values for identity columns in the data XML shall be used instead of

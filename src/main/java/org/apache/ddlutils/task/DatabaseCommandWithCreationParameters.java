@@ -23,7 +23,7 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 
-import java.util.ArrayList;
+import java.util.Properties;
 
 /**
  * Base type for database commands that use creation parameters.
@@ -32,10 +32,10 @@ import java.util.ArrayList;
  * @ant.type ignore="true"
  */
 public abstract class DatabaseCommandWithCreationParameters extends DatabaseCommand {
-  /**
-   * The additional creation parameters.
-   */
-  private final ArrayList<Parameter> _parameters = new ArrayList<>();
+
+  public DatabaseCommandWithCreationParameters(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Adds a parameter which is a name-value pair.

@@ -29,6 +29,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Parses the schema XML files specified in the enclosing task, and writes the SQL statements
@@ -53,6 +54,10 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
    * Whether to drop tables and the associated constraints if necessary.
    */
   private boolean _doDrops = true;
+
+  public WriteSchemaSqlToFileCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Specifies the name of the file to write the SQL commands to.

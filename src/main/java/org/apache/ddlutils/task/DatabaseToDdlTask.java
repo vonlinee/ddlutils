@@ -108,7 +108,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * specifed
    */
   public void setIncludeTables(String tableNameList) {
-    _includeTableNames = new TaskHelper().parseCommaSeparatedStringList(tableNameList);
+    _includeTableNames = TaskHelper.parseCommaSeparatedStringList(tableNameList);
   }
 
   /**
@@ -138,7 +138,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * specifed
    */
   public void setExcludeTables(String tableNameList) {
-    _excludeTableNames = new TaskHelper().parseCommaSeparatedStringList(tableNameList);
+    _excludeTableNames = TaskHelper.parseCommaSeparatedStringList(tableNameList);
   }
 
   /**

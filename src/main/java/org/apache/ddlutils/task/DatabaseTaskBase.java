@@ -31,6 +31,7 @@ import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
+import javax.sql.DataSource;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public abstract class DatabaseTaskBase extends Task {
    * The log.
    */
   protected Log _log;
+
+  private Properties properties;
 
   /**
    * The platform configuration.
@@ -88,6 +91,14 @@ public abstract class DatabaseTaskBase extends Task {
     _verbosity = level;
   }
 
+  public Properties getProperties() {
+    return properties;
+  }
+
+  public void setProperties(Properties properties) {
+    this.properties = properties;
+  }
+
   /**
    * Returns the database type.
    *
@@ -119,7 +130,7 @@ public abstract class DatabaseTaskBase extends Task {
    *
    * @return The data source
    */
-  public BasicDataSource getDataSource() {
+  public DataSource getDataSource() {
     return _platformConf.getDataSource();
   }
 

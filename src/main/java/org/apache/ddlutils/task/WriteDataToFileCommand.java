@@ -24,6 +24,7 @@ import org.apache.tools.ant.BuildException;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.util.Properties;
 
 /**
  * Reads the data currently in the table in the live database (as specified by the
@@ -46,6 +47,10 @@ public class WriteDataToFileCommand extends ConvertingDatabaseCommand {
    * Whether DdlUtils should search for the schema of the tables. @deprecated
    */
   private boolean _determineSchema;
+
+  public WriteDataToFileCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Specifies the file to write the data XML to.

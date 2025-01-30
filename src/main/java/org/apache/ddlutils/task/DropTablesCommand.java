@@ -19,13 +19,14 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.CloneHelper;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ModelHelper;
 import org.apache.ddlutils.model.Table;
 import org.apache.tools.ant.BuildException;
+
+import javax.sql.DataSource;
 
 /**
  * Sub task for dropping tables.
@@ -54,7 +55,7 @@ public class DropTablesCommand extends DatabaseCommand {
    * @ant.not-required If no table filter is specified, then all tables will be dropped.
    */
   public void setTables(String tableNameList) {
-    _tableNames = new TaskHelper().parseCommaSeparatedStringList(tableNameList);
+    _tableNames = TaskHelper.parseCommaSeparatedStringList(tableNameList);
   }
 
   /**
@@ -83,7 +84,7 @@ public class DropTablesCommand extends DatabaseCommand {
    */
   @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
-    BasicDataSource dataSource = getDataSource();
+    DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
       throw new BuildException("No database specified.");

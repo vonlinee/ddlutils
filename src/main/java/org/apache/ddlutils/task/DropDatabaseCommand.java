@@ -19,10 +19,12 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
+
+import javax.sql.DataSource;
+import java.util.Properties;
 
 /**
  * Sub-task for dropping the target database. Note that this is only supported on some database
@@ -34,6 +36,11 @@ import org.apache.tools.ant.BuildException;
  * @ant.task name="dropDatabase"
  */
 public class DropDatabaseCommand extends DatabaseCommand {
+
+  public DropDatabaseCommand(Properties properties) {
+    super(properties);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -47,7 +54,7 @@ public class DropDatabaseCommand extends DatabaseCommand {
    */
   @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
-    BasicDataSource dataSource = getDataSource();
+    DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
       throw new BuildException("No database specified.");
@@ -56,10 +63,7 @@ public class DropDatabaseCommand extends DatabaseCommand {
     Platform platform = getPlatform();
 
     try {
-      platform.dropDatabase(dataSource.getDriverClassName(),
-        dataSource.getUrl(),
-        dataSource.getUsername(),
-        dataSource.getPassword());
+      createPlatformDatabase(platform);
 
       _log.info("Dropped database");
     } catch (UnsupportedOperationException ex) {

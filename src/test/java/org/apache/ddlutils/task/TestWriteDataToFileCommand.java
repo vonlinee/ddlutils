@@ -54,7 +54,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
    * @param expectedData A map table name -> list of dyna beans sorted by the pk value that is expected
    */
   private void runTask(DatabaseToDdlTask task, Map<String, List<DynaBean>> expectedData) throws IOException {
-    WriteDataToFileCommand subTask = new WriteDataToFileCommand();
+    WriteDataToFileCommand subTask = new WriteDataToFileCommand(task.getProperties());
     File tmpFile = File.createTempFile("data", ".xml");
 
     try {

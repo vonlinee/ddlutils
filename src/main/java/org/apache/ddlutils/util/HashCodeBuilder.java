@@ -85,7 +85,7 @@ public class HashCodeBuilder {
     /**
      * Running total of the hashCode.
      */
-    private int iTotal = 0;
+    private int iTotal;
 
     /**
      * <p>Uses two hard coded choices for the constants
@@ -273,13 +273,13 @@ public class HashCodeBuilder {
         int multiplierNonZeroOddNumber,
         Object object,
         boolean testTransients,
-        Class reflectUpToClass) {
+        Class<?> reflectUpToClass) {
 
         if (object == null) {
             throw new IllegalArgumentException("The object to build a hash code for must not be null");
         }
         HashCodeBuilder builder = new HashCodeBuilder(initialNonZeroOddNumber, multiplierNonZeroOddNumber);
-        Class clazz = object.getClass();
+        Class<?> clazz = object.getClass();
         reflectionAppend(object, clazz, builder, testTransients);
         while (clazz.getSuperclass() != null && clazz != reflectUpToClass) {
             clazz = clazz.getSuperclass();
@@ -297,23 +297,22 @@ public class HashCodeBuilder {
      * @param builder  the builder to append to
      * @param useTransients  whether to use transient fields
      */
-    private static void reflectionAppend(Object object, Class clazz, HashCodeBuilder builder, boolean useTransients) {
+    private static void reflectionAppend(Object object, Class<?> clazz, HashCodeBuilder builder, boolean useTransients) {
         Field[] fields = clazz.getDeclaredFields();
         AccessibleObject.setAccessible(fields, true);
-        for (int i = 0; i < fields.length; i++) {
-            Field f = fields[i];
-            if ((f.getName().indexOf('$') == -1)
-                && (useTransients || !Modifier.isTransient(f.getModifiers()))
-                && (!Modifier.isStatic(f.getModifiers()))) {
-                try {
-                    builder.append(f.get(object));
-                } catch (IllegalAccessException e) {
-                    //this can't happen. Would get a Security exception instead
-                    //throw a runtime exception in case the impossible happens.
-                    throw new InternalError("Unexpected IllegalAccessException");
-                }
-            }
+      for (Field f : fields) {
+        if ((f.getName().indexOf('$') == -1)
+          && (useTransients || !Modifier.isTransient(f.getModifiers()))
+          && (!Modifier.isStatic(f.getModifiers()))) {
+          try {
+            builder.append(f.get(object));
+          } catch (IllegalAccessException e) {
+            //this can't happen. Would get a Security exception instead
+            //throw a runtime exception in case the impossible happens.
+            throw new InternalError("Unexpected IllegalAccessException");
+          }
         }
+      }
     }
 
     //-------------------------------------------------------------------------
@@ -343,13 +342,13 @@ public class HashCodeBuilder {
             iTotal = iTotal * iConstant;
 
         } else {
-            if (object.getClass().isArray() == false) {
+            if (!object.getClass().isArray()) {
                 //the simple case, not an array, just the element
                 iTotal = iTotal * iConstant + object.hashCode();
 
             } else {
                 //'Switch' on type of array, to dispatch to the correct handler
-                // This handles multi dimensional arrays
+                // This handles multidimensional arrays
                 if (object instanceof long[]) {
                     append((long[]) object);
                 } else if (object instanceof int[]) {
@@ -475,9 +474,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (Object object : array) {
+            append(object);
+          }
         }
         return this;
     }
@@ -492,9 +491,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (long l : array) {
+            append(l);
+          }
         }
         return this;
     }
@@ -509,9 +508,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (int j : array) {
+            append(j);
+          }
         }
         return this;
     }
@@ -526,9 +525,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (short value : array) {
+            append(value);
+          }
         }
         return this;
     }
@@ -543,9 +542,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (char c : array) {
+            append(c);
+          }
         }
         return this;
     }
@@ -560,9 +559,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (byte b : array) {
+            append(b);
+          }
         }
         return this;
     }
@@ -577,9 +576,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (double v : array) {
+            append(v);
+          }
         }
         return this;
     }
@@ -594,9 +593,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (float v : array) {
+            append(v);
+          }
         }
         return this;
     }
@@ -611,9 +610,9 @@ public class HashCodeBuilder {
         if (array == null) {
             iTotal = iTotal * iConstant;
         } else {
-            for (int i = 0; i < array.length; i++) {
-                append(array[i]);
-            }
+          for (boolean b : array) {
+            append(b);
+          }
         }
         return this;
     }

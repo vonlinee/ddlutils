@@ -420,9 +420,8 @@ public class SybasePlatform extends PlatformImplBase {
     change.apply(currentModel, isDelimitedIdentifierModeOn());
   }
 
-
   /**
-   * Processes the change of a column definition..
+   * Processes the change of a column definition.
    *
    * @param currentModel The current database schema
    * @param params       The parameters used in the creation of new tables. Note that for existing

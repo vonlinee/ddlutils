@@ -24,6 +24,8 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.tools.ant.BuildException;
 
+import java.util.Properties;
+
 /**
  * Parses the schema XML files specified for the enclosing task, and creates the corresponding
  * schema in the database.
@@ -40,6 +42,10 @@ public class WriteSchemaToDatabaseCommand extends DatabaseCommandWithCreationPar
    * Whether to drop tables and the associated constraints if necessary.
    */
   private boolean _doDrops = true;
+
+  public WriteSchemaToDatabaseCommand(Properties properties) {
+    super(properties);
+  }
 
   /**
    * Determines whether to alter the database if it already exists, or re-set it.

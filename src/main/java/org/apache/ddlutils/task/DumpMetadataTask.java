@@ -1129,7 +1129,7 @@ public class DumpMetadataTask extends Task {
    * @param columns    The columns in the result set
    * @param columnName The name of the column in the result set
    */
-  private void addStringAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set columns, String columnName) throws SQLException {
+  private void addStringAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set<String> columns, String columnName) throws SQLException {
     if (columns.contains(columnName)) {
       try {
         xmlWriter.writeAttribute(null, attrName, result.getString(columnName));
@@ -1148,7 +1148,7 @@ public class DumpMetadataTask extends Task {
    * @param columns    The columns in the result set
    * @param columnName The name of the column in the result set
    */
-  private void addIntAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set columns, String columnName) throws SQLException {
+  private void addIntAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set<String> columns, String columnName) throws SQLException {
     if (columns.contains(columnName)) {
       try {
         xmlWriter.writeAttribute(null, attrName, String.valueOf(result.getInt(columnName)));
@@ -1177,7 +1177,7 @@ public class DumpMetadataTask extends Task {
    * @param columns    The columns in the result set
    * @param columnName The name of the column in the result set
    */
-  private void addShortAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set columns, String columnName) throws SQLException {
+  private void addShortAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set<String> columns, String columnName) throws SQLException {
     if (columns.contains(columnName)) {
       try {
         xmlWriter.writeAttribute(null, attrName, String.valueOf(result.getShort(columnName)));
@@ -1206,7 +1206,7 @@ public class DumpMetadataTask extends Task {
    * @param columns    The columns in the result set
    * @param columnName The name of the column in the result set
    */
-  private void addBooleanAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set columns, String columnName) throws SQLException {
+  private void addBooleanAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set<String> columns, String columnName) throws SQLException {
     if (columns.contains(columnName)) {
       try {
         xmlWriter.writeAttribute(null, attrName, String.valueOf(result.getBoolean(columnName)));

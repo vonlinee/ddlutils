@@ -19,9 +19,14 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.tools.ant.BuildException;
+
+import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Base type for commands that have the database info embedded.
@@ -30,6 +35,34 @@ import org.apache.tools.ant.BuildException;
  * @ant.type ignore="true"
  */
 public abstract class DatabaseCommand extends Command {
+
+  /**
+   * The additional creation parameters.
+   */
+  protected final ArrayList<Parameter> _parameters = new ArrayList<>();
+
+  private final Properties properties;
+
+  public DatabaseCommand() {
+    this.properties = new Properties();
+  }
+
+  public DatabaseCommand(Properties properties) {
+    this.properties = properties;
+  }
+
+  protected void createPlatformDatabase(Platform platform) {
+    String driverClassName = properties.getProperty("driverClassName");
+    String url = properties.getProperty("url");
+    String username = properties.getProperty("username");
+    String password = properties.getProperty("password");
+    platform.createDatabase(driverClassName,
+      url,
+      username,
+      password,
+      getFilteredParameters(platform.getName()));
+  }
+
   /**
    * The platform configuration.
    */
@@ -49,7 +82,7 @@ public abstract class DatabaseCommand extends Command {
    *
    * @return The data source
    */
-  protected BasicDataSource getDataSource() {
+  protected DataSource getDataSource() {
     return _platformConf.getDataSource();
   }
 
@@ -95,5 +128,22 @@ public abstract class DatabaseCommand extends Command {
   @Override
   public boolean isRequiringModel() {
     return true;
+  }
+
+  /**
+   * Filters the parameters for the indicated platform.
+   *
+   * @param platformName The name of the platform
+   * @return The filtered parameters
+   */
+  protected Map<String, Object> getFilteredParameters(String platformName) {
+    LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
+
+    for (Parameter param : _parameters) {
+      if (param.isForPlatform(platformName)) {
+        parameters.put(param.getName(), param.getValue());
+      }
+    }
+    return parameters;
   }
 }

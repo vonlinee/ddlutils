@@ -25,6 +25,8 @@ import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.PlatformUtils;
 import org.apache.tools.ant.BuildException;
 
+import javax.sql.DataSource;
+
 /**
  * Encloses the platform configuration for the Ant tasks.
  *
@@ -56,6 +58,12 @@ public class PlatformConfiguration {
    * The catalog pattern.
    */
   private String _catalogPattern;
+
+  /**
+   * the driver class name
+   */
+  private String driverClassName;
+
   /**
    * The schema pattern.
    */
@@ -88,7 +96,7 @@ public class PlatformConfiguration {
    *
    * @return The data source
    */
-  public BasicDataSource getDataSource() {
+  public DataSource getDataSource() {
     return _dataSource;
   }
 
@@ -182,6 +190,14 @@ public class PlatformConfiguration {
    */
   public boolean isShutdownDatabase() {
     return _shutdownDatabase;
+  }
+
+  public String getDriverClassName() {
+    return driverClassName;
+  }
+
+  public void setDriverClassName(String driverClassName) {
+    this.driverClassName = driverClassName;
   }
 
   /**

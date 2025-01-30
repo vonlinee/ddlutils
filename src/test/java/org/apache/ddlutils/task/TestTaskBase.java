@@ -41,6 +41,7 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
   protected DatabaseToDdlTask getDatabaseToDdlTaskInstance() {
     DatabaseToDdlTask task = new DatabaseToDdlTask();
     Properties props = getTestProperties();
+    task.setProperties(props);
     String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
     DataSource dataSource = getDataSource();
