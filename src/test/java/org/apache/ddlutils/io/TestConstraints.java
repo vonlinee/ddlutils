@@ -20,8 +20,8 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.Test;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.CascadeActionEnum;
@@ -48,7 +48,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a nullable column. Basically we're creating the test database
    * and then read it back and compare the original with the read one.
-   * In addition we can also check that DdlUtils does not try to alter the new
+   * In addition, we can also check that DdlUtils does not try to alter the new
    * database when using the <code>alterTables</code>/<code>getAlterTablesSql</code>
    * methods of the {@link org.apache.ddlutils.Platform} with the read-back model.
    *

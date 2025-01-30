@@ -907,10 +907,10 @@ public class DatabaseIO {
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_FOREIGN_TABLE, foreignKey.getForeignTableName());
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_NAME, foreignKey.getName());
     if (foreignKey.getOnUpdate() != CascadeActionEnum.NONE) {
-      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_UPDATE, foreignKey.getOnUpdate().name());
+      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_UPDATE, foreignKey.getOnUpdate().getName());
     }
     if (foreignKey.getOnDelete() != CascadeActionEnum.NONE) {
-      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_DELETE, foreignKey.getOnDelete().name());
+      writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_DELETE, foreignKey.getOnDelete().getName());
     }
     if (foreignKey.getReferenceCount() > 0) {
       xmlWriter.printlnIfPrettyPrinting();

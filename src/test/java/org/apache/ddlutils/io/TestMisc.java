@@ -170,7 +170,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc1");
+    List<DynaBean> beans = getRows("misc1");
 
     if (isSybase) {
       assertEquals(new BigDecimal(10), beans.get(0), "pk");
@@ -309,7 +309,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc1");
+    List<DynaBean> beans = getRows("misc1");
 
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
@@ -429,7 +429,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc");
+    List<DynaBean> beans = getRows("misc");
 
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
@@ -544,7 +544,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc");
+    List<DynaBean> beans = getRows("misc");
 
     if (isSybase) {
       assertEquals(new BigDecimal(10), beans.get(0), "pk");
@@ -632,7 +632,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc", "id");
+    List<DynaBean> beans = getRows("misc", "id");
 
     if (isSybase) {
       assertEquals(12, beans.size());
@@ -757,7 +757,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List beans = getRows("misc", "id");
+    List<DynaBean> beans = getRows("misc", "id");
 
     assertEquals(6, beans.size());
     if (isSybase) {
@@ -1160,7 +1160,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     insertRow("Roundtrip", new Object[]{new Integer(1), "foo"});
 
-    List beans = getRows("Roundtrip");
+    List<DynaBean> beans = getRows("Roundtrip");
 
     assertEquals(1, beans.size());
     assertEquals(new Integer(1), beans.get(0), "Pk");

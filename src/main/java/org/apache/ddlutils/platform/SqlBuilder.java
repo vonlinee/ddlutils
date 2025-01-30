@@ -1340,7 +1340,7 @@ public abstract class SqlBuilder {
 
     for (Map.Entry<String, String> stringStringEntry : _charSequencesToEscape.entrySet()) {
 
-      result = org.apache.commons.lang.StringUtils.replace(result, stringStringEntry.getKey(), stringStringEntry.getValue());
+      result = StringUtils.replace(result, stringStringEntry.getKey(), stringStringEntry.getValue());
     }
     return result;
   }

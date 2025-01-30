@@ -19,6 +19,9 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 
 /**
@@ -100,5 +103,30 @@ public class NonUniqueIndex extends IndexImplBase {
     }
 
     return result.toString();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof NonUniqueIndex) {
+      NonUniqueIndex other = (NonUniqueIndex) obj;
+      return new EqualsBuilder().append(_name, other._name)
+        .append(_columns, other._columns)
+        .isEquals();
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(_name)
+      .append(_columns)
+      .toHashCode();
   }
 }

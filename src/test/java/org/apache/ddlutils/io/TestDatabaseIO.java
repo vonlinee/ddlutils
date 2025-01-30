@@ -1157,6 +1157,7 @@ public class TestDatabaseIO extends TestCase {
 
       assertEquals("foreignkey " + enumValue.getName(), CascadeActionEnum.NONE, enumValue, someTable, 1, fk);
       assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
+      idx++;
     }
 
     modelXml.setLength(0);

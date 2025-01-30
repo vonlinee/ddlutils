@@ -19,10 +19,10 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.ddlutils.util.StringUtils;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * Represents a column of an index in the database model.
@@ -87,7 +87,7 @@ public class IndexColumn implements Serializable {
 
   /**
    * Sets the position within the owning index. Please note that you should not
-   * change the value once the column has been added to a index.
+   * change the value once the column has been added to an index.
    *
    * @param position The position
    */
@@ -157,26 +157,31 @@ public class IndexColumn implements Serializable {
    * @return <code>true</code> if this index column is equal (ignoring case) to the given one
    */
   public boolean equalsIgnoreCase(IndexColumn other) {
-    if (StringUtils.equals(this._name, other._name, false)) {
-      return true;
-    }
-    return Objects.equals(this._size, other._size);
+    return new EqualsBuilder().append(_name.toUpperCase(), other._name.toUpperCase())
+      .append(_size, other._size)
+      .isEquals();
   }
 
+  /**
+   * {@inheritDoc}
+   */
   @Override
-  public boolean equals(Object object) {
-    if (this == object) return true;
-    if (!(object instanceof IndexColumn)) return false;
-    IndexColumn that = (IndexColumn) object;
-    return _ordinalPosition == that._ordinalPosition
-      && Objects.equals(_name, that._name)
-      && Objects.equals(_size, that._size)
-      && Objects.equals(_column, that._column);
+  public boolean equals(Object obj) {
+    if (obj instanceof IndexColumn) {
+      IndexColumn other = (IndexColumn) obj;
+      return new EqualsBuilder().append(_name, other._name)
+        .append(_size, other._size)
+        .isEquals();
+    } else {
+      return false;
+    }
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(_name, _size, _ordinalPosition, _column);
+    return new HashCodeBuilder(17, 37).append(_name)
+      .append(_size)
+      .toHashCode();
   }
 
   /**

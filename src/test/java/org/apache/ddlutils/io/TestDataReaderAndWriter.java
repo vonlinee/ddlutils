@@ -20,24 +20,24 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaBean;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +87,8 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param dataXml The raw xml data
    * @return The read dyna beans
    */
-  private List readBeans(Database model, byte[] dataXml) {
-    ArrayList beans = new ArrayList();
+  private List<DynaBean> readBeans(Database model, byte[] dataXml) {
+    ArrayList<DynaBean> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setModel(model);
@@ -104,8 +104,8 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param dataXml The xml data
    * @return The read dyna beans
    */
-  private List readBeans(Database model, String dataXml) {
-    ArrayList beans = new ArrayList();
+  private List<DynaBean> readBeans(Database model, String dataXml) {
+    ArrayList<DynaBean> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setModel(model);
@@ -127,7 +127,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(expectedDataXml, new String(xmlData, encoding));
 
-    List beans = readBeans(model, xmlData);
+    List<DynaBean> beans = readBeans(model, xmlData);
 
     assertEquals(1, beans.size());
     assertEquals(bean, beans.get(0));
@@ -159,7 +159,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    </index>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<data>\n" +
         "  <author author_id='1' name='Ernest Hemingway'/>\n" +
@@ -183,11 +183,11 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(5, beans.size());
 
-    DynaBean obj1 = (DynaBean) beans.get(0);
-    DynaBean obj2 = (DynaBean) beans.get(1);
-    DynaBean obj3 = (DynaBean) beans.get(2);
-    DynaBean obj4 = (DynaBean) beans.get(3);
-    DynaBean obj5 = (DynaBean) beans.get(4);
+    DynaBean obj1 = beans.get(0);
+    DynaBean obj2 = beans.get(1);
+    DynaBean obj3 = beans.get(2);
+    DynaBean obj4 = beans.get(3);
+    DynaBean obj5 = beans.get(4);
 
     assertEquals("author",
       obj1.getDynaClass().getName());
@@ -264,7 +264,7 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList beans = new ArrayList();
+      ArrayList<DynaBean> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
@@ -273,7 +273,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = (DynaBean) beans.get(0);
+      DynaBean obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -311,7 +311,7 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList beans = new ArrayList();
+      ArrayList<DynaBean> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
@@ -320,7 +320,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = (DynaBean) beans.get(0);
+      DynaBean obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -358,16 +358,16 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList beans = new ArrayList();
+      ArrayList<DynaBean> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
       dataReader.setSink(new TestDataSink(beans));
-      dataReader.read(new FileInputStream(tmpFile));
+      dataReader.read(Files.newInputStream(tmpFile.toPath()));
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = (DynaBean) beans.get(0);
+      DynaBean obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -392,7 +392,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1'>\n" +
@@ -407,7 +407,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(3, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -416,7 +416,7 @@ public class TestDataReaderAndWriter extends TestCase {
     assertEquals("foo",
       obj.get("value").toString());
 
-    obj = (DynaBean) beans.get(1);
+    obj = beans.get(1);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -425,7 +425,7 @@ public class TestDataReaderAndWriter extends TestCase {
     assertEquals("bar",
       obj.get("value").toString());
 
-    obj = (DynaBean) beans.get(2);
+    obj = beans.get(2);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -447,7 +447,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<someRandomName>\n" +
         "  <test id='1' value='foo'/>\n" +
@@ -455,7 +455,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -477,7 +477,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1' value='foo'/>\n" +
@@ -487,7 +487,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(2, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -496,7 +496,7 @@ public class TestDataReaderAndWriter extends TestCase {
     assertEquals("foo",
       obj.get("value").toString());
 
-    obj = (DynaBean) beans.get(1);
+    obj = beans.get(1);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -518,7 +518,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1' value1='foo'/>\n" +
@@ -526,7 +526,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -547,7 +547,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List beans = readBeans(
+    List<DynaBean> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1'>\n" +
@@ -557,7 +557,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -584,7 +584,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "  <Test Id='2' value='baz'/>\n" +
         "</data>";
 
-    ArrayList beans = new ArrayList();
+    ArrayList<DynaBean> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setCaseSensitive(true);
@@ -594,7 +594,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -622,7 +622,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "  <Test id='3' Value='baz'/>\n" +
         "</data>";
 
-    ArrayList beans = new ArrayList();
+    ArrayList<DynaBean> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setCaseSensitive(false);
@@ -632,7 +632,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(3, beans.size());
 
-    DynaBean obj = (DynaBean) beans.get(0);
+    DynaBean obj = beans.get(0);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -641,7 +641,7 @@ public class TestDataReaderAndWriter extends TestCase {
     assertEquals("foo",
       obj.get("Value").toString());
 
-    obj = (DynaBean) beans.get(1);
+    obj = beans.get(1);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -650,7 +650,7 @@ public class TestDataReaderAndWriter extends TestCase {
     assertEquals("bar",
       obj.get("Value").toString());
 
-    obj = (DynaBean) beans.get(2);
+    obj = beans.get(2);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -676,7 +676,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "ISO-8859-1",
@@ -704,7 +704,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "ISO-8859-1",
@@ -740,7 +740,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value1", testedValue1);
     bean.set("value2", testedValue2);
     bean.set("value3", testedValue3);
@@ -748,7 +748,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value5", testedValue5);
 
     byte[] xmlData = writeBean(model, bean, "UTF-8");
-    List beans = readBeans(model, xmlData);
+    List<DynaBean> beans = readBeans(model, xmlData);
 
     assertEquals(1, beans.size());
     assertEquals(bean, beans.get(0));
@@ -771,7 +771,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -799,7 +799,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -826,7 +826,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -864,7 +864,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -900,7 +900,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -936,7 +936,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -972,7 +972,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1004,7 +1004,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1031,7 +1031,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1058,7 +1058,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1086,7 +1086,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1115,7 +1115,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1145,7 +1145,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1178,7 +1178,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1211,7 +1211,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1243,7 +1243,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1273,7 +1273,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1315,7 +1315,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = StringUtils.repeat("the\u0000value", 40);
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1346,7 +1346,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1384,7 +1384,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1425,7 +1425,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1463,7 +1463,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1501,7 +1501,7 @@ public class TestDataReaderAndWriter extends TestCase {
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1529,7 +1529,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("column", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1555,7 +1555,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("column-name", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1581,7 +1581,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set("table-name", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1609,7 +1609,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
 
-    bean.set("id", new Integer(1));
+    bean.set("id", 1);
     bean.set(DatabaseIO.BASE64_ATTR_NAME, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
@@ -1622,40 +1622,29 @@ public class TestDataReaderAndWriter extends TestCase {
   }
 
   /**
-   * A test data sink. There is no need to call start/end as the don't do anything anyways in this class.
+   * A test data sink. There is no need to call start/end as they don't do anything anyway in this class.
    */
   private static class TestDataSink implements DataSink {
     /**
      * Stores the read objects.
      */
-    private final ArrayList readObjects;
+    private final ArrayList<DynaBean> readObjects;
 
     /**
      * Creates a new test data sink using the given list as the backing store.
      *
      * @param readObjects The list to store the read object
      */
-    private TestDataSink(ArrayList readObjects) {
+    private TestDataSink(ArrayList<DynaBean> readObjects) {
       this.readObjects = readObjects;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void start() throws DataSinkException {
-    }
-
-    /**
-     * {@inheritDoc}
-     */
+    @Override
     public void addBean(DynaBean bean) throws DataSinkException {
       readObjects.add(bean);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void end() throws DataSinkException {
     }
   }
 }

@@ -107,7 +107,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     runTask(getDatabaseToDdlTaskInstance(), dataXml, false, false);
 
-    List beans = getRows("roundtrip", "pk");
+    List<DynaBean> beans = getRows("roundtrip", "pk");
 
     assertEquals(3, beans.size());
     assertEquals((Object) "val1", beans.get(0), "pk");
@@ -148,7 +148,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     runTask(getDatabaseToDdlTaskInstance(), dataXml.toString(), true, false);
 
-    List beans = getRows("roundtrip", "avalue");
+    List<DynaBean> beans = getRows("roundtrip", "avalue");
 
     assertEquals(numObjs, beans.size());
     for (int idx = 0; idx < numObjs; idx++) {

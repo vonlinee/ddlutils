@@ -142,17 +142,4 @@ abstract class IndexImplBase implements Index {
   public void removeColumn(int idx) {
     _columns.remove(idx);
   }
-
-  @Override
-  public boolean equals(Object object) {
-    if (this == object) return true;
-    if (!(object instanceof IndexImplBase)) return false;
-    IndexImplBase that = (IndexImplBase) object;
-    return Objects.equals(_name, that._name) && Objects.equals(_columns, that._columns);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(_name, _columns);
-  }
 }

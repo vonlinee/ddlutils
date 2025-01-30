@@ -99,7 +99,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
     insertRow("roundtrip", new Object[]{new Integer(1), inserted1});
     insertRow("roundtrip", new Object[]{new Integer(2), inserted2});
 
-    List beans = getRows("roundtrip");
+    List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(expected1, beans.get(0), "avalue");
     assertEquals(expected2, beans.get(1), "avalue");
