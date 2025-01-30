@@ -20,6 +20,7 @@ package org.apache.ddlutils.task;
  */
 
 import junit.framework.Test;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.io.DatabaseIO;
 
 import java.io.File;
@@ -28,7 +29,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Tests the writeDataToDatabase sub task.
+ * Tests the writeDataToDatabase sub-task.
  *
  * @version $Revision: $
  */
@@ -111,11 +112,11 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     assertEquals(3, beans.size());
     assertEquals((Object) "val1", beans.get(0), "pk");
-    assertEquals(new Integer(1), beans.get(0), "avalue");
+    assertEquals(1, beans.get(0), "avalue");
     assertEquals((Object) "val2", beans.get(1), "pk");
-    assertEquals(new Integer(2), beans.get(1), "avalue");
+    assertEquals(2, beans.get(1), "avalue");
     assertEquals((Object) "val3", beans.get(2), "pk");
-    assertEquals(new Integer(3), beans.get(2), "avalue");
+    assertEquals(3, beans.get(2), "avalue");
   }
 
   /**
@@ -131,7 +132,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
         "  </table>\n" +
         "</database>";
 
-    StringBuffer dataXml = new StringBuffer();
+    StringBuilder dataXml = new StringBuilder();
     final int numObjs = 2000;
 
     dataXml.append("<?xml version='1.0' encoding='ISO-8859-1'?>\n<data>");
@@ -153,7 +154,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
     assertEquals(numObjs, beans.size());
     for (int idx = 0; idx < numObjs; idx++) {
       assertEquals((Object) ("val" + idx), beans.get(idx), "pk");
-      assertEquals(new Integer(idx), beans.get(idx), "avalue");
+      assertEquals(idx, beans.get(idx), "avalue");
     }
   }
 }

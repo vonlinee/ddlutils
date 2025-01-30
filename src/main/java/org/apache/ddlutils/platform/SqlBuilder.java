@@ -1473,7 +1473,7 @@ public abstract class SqlBuilder {
     // desired type, in order to avoid repeated altering of a perfectly valid column
     return (getPlatformInfo().getTargetJdbcType(desiredColumn.getTypeCode()) != currentColumn.getTypeCode()) ||
       (desiredColumn.isRequired() != currentColumn.isRequired()) ||
-      (sizeMatters && !org.apache.commons.lang.StringUtils.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
+      (sizeMatters && !StringUtils.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
       !defaultsEqual;
   }
 

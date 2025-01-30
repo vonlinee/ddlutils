@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform.sybase;
  */
 
 import org.apache.ddlutils.data.DynaBean;
-import org.apache.commons.lang.StringUtils;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.PlatformInfo;
@@ -40,6 +39,7 @@ import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

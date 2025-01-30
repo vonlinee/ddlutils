@@ -20,8 +20,8 @@ package org.apache.ddlutils.model;
  */
 
 import org.apache.ddlutils.data.DynaBean;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.ddlutils.util.EqualsBuilder;
+import org.apache.ddlutils.util.HashCodeBuilder;
 import org.apache.ddlutils.data.DynaClassCache;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.data.SqlDynaException;

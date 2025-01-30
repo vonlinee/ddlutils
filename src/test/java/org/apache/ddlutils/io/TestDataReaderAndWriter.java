@@ -20,12 +20,12 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaBean;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.Base64Utils;
 import org.apache.ddlutils.util.StringUtils;
 
 import java.io.BufferedWriter;
@@ -683,7 +683,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
-        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1) + "</value>\n" +
+        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1) + "</value>\n" +
         "  </test>\n" +
         "</data>\n");
   }
@@ -711,7 +711,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
-        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
+        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
         "  </test>\n" +
         "</data>\n");
   }
@@ -979,7 +979,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
         "<data>\n" +
         "  <table id=\"1\" value=\"" + testedValue + "\">\n" +
-        "    <table-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(tableName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</table-name>\n" +
+        "    <table-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(tableName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</table-name>\n" +
         "  </table>\n" +
         "</data>\n");
   }
@@ -1250,7 +1250,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
-        "    <column column-name=\"the value\" " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column>\n" +
+        "    <column column-name=\"the value\" " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column>\n" +
         "  </test>\n" +
         "</data>\n");
   }
@@ -1282,7 +1282,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "  <test id=\"1\">\n" +
         "    <column>\n" +
         "      <column-name>" + columnName + "</column-name>\n" +
-        "      <column-value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-value>\n" +
+        "      <column-value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-value>\n" +
         "    </column>\n" +
         "  </test>\n" +
         "</data>\n");
@@ -1323,8 +1323,8 @@ public class TestDataReaderAndWriter extends TestCase {
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
-        "      <column-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(columnName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-name>\n" +
-        "      <column-value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-value>\n" +
+        "      <column-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(columnName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-name>\n" +
+        "      <column-value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-value>\n" +
         "    </column>\n" +
         "  </test>\n" +
         "</data>\n");
@@ -1353,7 +1353,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
-        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
+        "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
         "  </test>\n" +
         "</data>\n");
   }
@@ -1392,7 +1392,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
-        "      <column-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64.encodeBase64(columnName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-name>\n" +
+        "      <column-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(columnName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column-name>\n" +
         "      <column-value>" + testedValue + "</column-value>\n" +
         "    </column>\n" +
         "  </test>\n" +

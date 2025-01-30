@@ -19,14 +19,12 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.commons.lang.exception.NestableRuntimeException;
-
 /**
  * Base class for DdlUtils exceptions.
  *
  * @version $Revision: 289996 $
  */
-public class DdlUtilsException extends NestableRuntimeException {
+public class DdlUtilsException extends RuntimeException {
   /**
    * Constant for serializing instances of this class.
    */

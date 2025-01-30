@@ -1936,8 +1936,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals((Object) "text", beans1.get(0), "pk");
     assertEquals(new Integer(1), beans2.get(0), "pk");
@@ -1987,8 +1987,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk");
     assertEquals(new Integer(2), beans2.get(0), "pk");
@@ -2034,8 +2034,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new BigDecimal(1), beans1.get(0), "pk");
     assertTrue(beans2.isEmpty());
@@ -2080,8 +2080,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Double(1), beans1.get(0), "pk");
     assertEquals(new Integer(2), beans2.get(0), "pk");
@@ -2131,8 +2131,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk");
     assertEquals(new Integer(2), beans2.get(0), "pk");
@@ -2178,8 +2178,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
     Object pk1 = ((DynaBean) beans1.get(0)).get("pk");
     Object avalue = ((DynaBean) beans2.get(0)).get("avalue");
 
@@ -2242,8 +2242,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk1");
     assertEquals(new Double(2), beans1.get(0), "pk2");
@@ -2330,8 +2330,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk");
     assertEquals(new Integer(2), beans1.get(0), "avalue");
@@ -2380,8 +2380,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Double(1), beans1.get(0), "pk");
     assertEquals(new Integer(2), beans1.get(0), "avalue");
@@ -2526,8 +2526,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk1");
     assertEquals(new Integer(1), beans1.get(0), "pk2");
@@ -2627,8 +2627,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     alterDatabase(model2Xml);
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk1");
     assertEquals(new Double(2), beans1.get(0), "pk2");
@@ -2687,8 +2687,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new Integer(1), beans1.get(0), "pk1");
     assertEquals(new Integer(1), beans1.get(0), "pk2");
@@ -2740,8 +2740,8 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     alterDatabase(model2Xml);
 
-    List beans1 = getRows("roundtrip1");
-    List beans2 = getRows("roundtrip2");
+    List<DynaBean> beans1 = getRows("roundtrip1");
+    List<DynaBean> beans2 = getRows("roundtrip2");
     Object pk2 = ((DynaBean) beans1.get(0)).get("pk2");
     Object avalue2 = ((DynaBean) beans2.get(0)).get("avalue2");
 

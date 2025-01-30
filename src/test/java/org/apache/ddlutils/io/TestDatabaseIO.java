@@ -20,7 +20,6 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.commons.lang.StringUtils;
 import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -31,6 +30,7 @@ import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -262,7 +262,7 @@ public class TestDatabaseIO extends TestCase {
           "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -404,7 +404,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests a database model columns of all possible datatypes.
    */
   public void testColumnTypes() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+    StringBuilder modelXml = new StringBuilder();
     int[] types = TypeMap.getSuportedJdbcTypes();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
@@ -1971,7 +1971,7 @@ public class TestDatabaseIO extends TestCase {
   }
 
   /**
-   * Tests a database model with an unique index with a name.
+   * Tests a database model with a unique index with a name.
    */
   public void testUniqueIndexWithName() throws Exception {
     Database model = readModel(

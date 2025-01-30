@@ -19,7 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.CascadeActionEnum;
@@ -32,6 +31,7 @@ import org.apache.ddlutils.model.NonUniqueIndex;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.UniqueIndex;
+import org.apache.ddlutils.util.StringUtils;
 import org.xml.sax.InputSource;
 
 import javax.xml.namespace.QName;

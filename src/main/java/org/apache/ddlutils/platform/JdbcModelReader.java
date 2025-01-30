@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
@@ -35,6 +34,7 @@ import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.UniqueIndex;
 import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.StringUtils;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;

@@ -1110,8 +1110,8 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     insertRow("roundtrip2", new Object[]{"foo", new Integer(1)});
     insertRow("roundtrip2", new Object[]{"bar", new Integer(2)});
 
-    List beans1 = getRows("roundtrip1", "pk1");
-    List beans2 = getRows("roundtrip2", "pk1");
+    List<DynaBean> beans1 = getRows("roundtrip1", "pk1");
+    List<DynaBean> beans2 = getRows("roundtrip2", "pk1");
 
     assertEquals(2, beans1.size());
     assertEquals(2, beans2.size());

@@ -20,8 +20,8 @@ package org.apache.ddlutils.model;
  */
 
 import org.apache.ddlutils.data.ConvertUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.ddlutils.util.EqualsBuilder;
+import org.apache.ddlutils.util.HashCodeBuilder;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

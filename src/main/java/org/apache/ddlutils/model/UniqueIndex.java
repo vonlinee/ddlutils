@@ -19,7 +19,7 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.ddlutils.util.EqualsBuilder;
 
 import java.util.ArrayList;
 
