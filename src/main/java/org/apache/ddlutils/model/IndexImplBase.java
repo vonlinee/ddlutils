@@ -22,7 +22,6 @@ package org.apache.ddlutils.model;
 import org.apache.ddlutils.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Base class for indexes.

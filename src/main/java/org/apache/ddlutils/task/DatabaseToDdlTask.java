@@ -22,6 +22,12 @@ package org.apache.ddlutils.task;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ModelHelper;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.task.command.DropTablesCommand;
+import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
+import org.apache.ddlutils.task.command.WriteDataToFileCommand;
+import org.apache.ddlutils.task.command.WriteDtdToFileCommand;
+import org.apache.ddlutils.task.command.WriteSchemaSqlToFileCommand;
+import org.apache.ddlutils.task.command.WriteSchemaToFileCommand;
 import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;

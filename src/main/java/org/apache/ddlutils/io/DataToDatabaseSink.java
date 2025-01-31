@@ -40,7 +40,7 @@ import java.util.Iterator;
 
 /**
  * Data sink that directly inserts the beans into the database. If configured, it will make
- * sure that the beans are inserted in the correct order according to the foreignkeys. Note
+ * sure that the beans are inserted in the correct order according to the foreign keys. Note
  * that this will only work if there are no circles.
  *
  * @version $Revision: 289996 $
@@ -68,7 +68,7 @@ public class DataToDatabaseSink implements DataSink {
    */
   private boolean _haltOnErrors = true;
   /**
-   * Whether to delay the insertion of beans so that the beans referenced by it via foreignkeys, are already inserted into the database.
+   * Whether to delay the insertion of beans so that the beans referenced by it via foreign keys, are already inserted into the database.
    */
   private boolean _ensureFkOrder = true;
   /**
@@ -158,9 +158,9 @@ public class DataToDatabaseSink implements DataSink {
 
   /**
    * Determines whether the sink delays the insertion of beans so that the beans referenced by it
-   * via foreignkeys are already inserted into the database.
+   * via foreign keys are already inserted into the database.
    *
-   * @return <code>true</code> if beans are inserted after its foreignkey-references
+   * @return <code>true</code> if beans are inserted after its foreign key-references
    */
   public boolean isEnsureFkOrder() {
     return _ensureFkOrder;
@@ -168,12 +168,12 @@ public class DataToDatabaseSink implements DataSink {
 
   /**
    * Specifies whether the sink shall delay the insertion of beans so that the beans referenced by it
-   * via foreignkeys are already inserted into the database.<br/>
+   * via foreign keys are already inserted into the database.<br/>
    * Note that you should careful with setting <code>haltOnErrors</code> to false as this might
    * result in beans not inserted at all. The sink will then throw an appropriate exception at the end
    * of the insertion process (method {@link #end()}).
    *
-   * @param ensureFkOrder <code>true</code> if beans shall be inserted after its foreignkey-references
+   * @param ensureFkOrder <code>true</code> if beans shall be inserted after its foreign key-references
    */
   public void setEnsureForeignKeyOrder(boolean ensureFkOrder) {
     _ensureFkOrder = ensureFkOrder;
@@ -533,7 +533,7 @@ public class DataToDatabaseSink implements DataSink {
   }
 
   /**
-   * Builds an identity object for the specified foreign key using the foreignkey column values
+   * Builds an identity object for the specified foreign key using the foreign key column values
    * of the supplied bean.
    *
    * @param owningTable The table owning the foreign key

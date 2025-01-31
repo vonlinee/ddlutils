@@ -24,6 +24,7 @@ import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DatabaseIO;
+import org.apache.ddlutils.task.command.WriteDataToFileCommand;
 
 import java.io.File;
 import java.io.IOException;

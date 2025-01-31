@@ -22,6 +22,7 @@ package org.apache.ddlutils.task;
 import junit.framework.Test;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.io.DatabaseIO;
+import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
 
 import java.io.File;
 import java.io.FileWriter;

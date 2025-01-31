@@ -55,7 +55,7 @@ public class ModelComparator {
   /**
    * The predicate that defines which changes are supported by the platform.
    */
-  private final TableDefinitionChangesPredicate _tableDefCangePredicate;
+  private final TableDefinitionChangesPredicate _tableDefChangePredicate;
   /**
    * The object clone helper.
    */
@@ -87,7 +87,7 @@ public class ModelComparator {
                          boolean caseSensitive) {
     _platformInfo = platformInfo;
     _caseSensitive = caseSensitive;
-    _tableDefCangePredicate = tableDefChangePredicate;
+    _tableDefChangePredicate = tableDefChangePredicate;
   }
 
   /**
@@ -107,7 +107,7 @@ public class ModelComparator {
    * comparator will create additional primary key changes.
    * The default value is <code>true</code>.
    *
-   * @param canDropPrimaryKeyColumns Whether {@link RemoveColumnChange} objecs for primary
+   * @param canDropPrimaryKeyColumns Whether {@link RemoveColumnChange} objects for primary
    *                                 key columns are ok
    */
   public void setCanDropPrimaryKeyColumns(boolean canDropPrimaryKeyColumns) {
@@ -356,9 +356,9 @@ public class ModelComparator {
     tableDefinitionChanges.addAll(checkForAddedColumns(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable));
     tableDefinitionChanges.addAll(checkForPrimaryKeyChanges(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable));
 
-    // TOOD: check for foreign key changes (on delete/on update)
+    // TODO: check for foreign key changes (on delete/on update)
     if (!tableDefinitionChanges.isEmpty()) {
-      if ((_tableDefCangePredicate == null) || _tableDefCangePredicate.areSupported(tmpTable, tableDefinitionChanges)) {
+      if ((_tableDefChangePredicate == null) || _tableDefChangePredicate.areSupported(tmpTable, tableDefinitionChanges)) {
         changes.addAll(tableDefinitionChanges);
       } else {
         // we need to recreate the table; for this to work we need to remove foreign keys to and from the table

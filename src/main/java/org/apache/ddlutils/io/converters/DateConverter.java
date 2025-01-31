@@ -49,7 +49,7 @@ public class DateConverter implements SqlTypeConverter {
    */
   public DateConverter() {
     try {
-      _datePattern = Pattern.compile("(\\d{2,4})(?:\\-(\\d{2}))?(?:\\-(\\d{2}))?.*");
+      _datePattern = Pattern.compile("(\\d{2,4})(?:-(\\d{2}))?(?:-(\\d{2}))?.*");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }

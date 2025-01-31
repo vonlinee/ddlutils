@@ -235,8 +235,8 @@ public class XMLUtils {
         CHARS[idx2] |= MASK_NAME;
       }
     }
-    for (int idx = 0; idx < extenderChar.length; idx++) {
-      CHARS[extenderChar[idx]] |= MASK_NAME;
+    for (int i : extenderChar) {
+      CHARS[i] |= MASK_NAME;
     }
 
   }

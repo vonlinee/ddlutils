@@ -142,9 +142,9 @@ public class DatabaseDataIO {
 
   /**
    * Determines whether the sink delays the insertion of beans so that the beans referenced by it
-   * via foreignkeys are already inserted into the database.
+   * via foreign keys are already inserted into the database.
    *
-   * @return <code>true</code> if beans are inserted after its foreignkey-references
+   * @return <code>true</code> if beans are inserted after its foreign key-references
    */
   public boolean isEnsureFKOrder() {
     return _ensureFKOrder;
@@ -152,12 +152,12 @@ public class DatabaseDataIO {
 
   /**
    * Specifies whether the sink shall delay the insertion of beans so that the beans referenced by it
-   * via foreignkeys are already inserted into the database.<br/>
+   * via foreign keys are already inserted into the database.<br/>
    * Note that you should careful with setting <code>haltOnErrors</code> to false as this might
    * result in beans not inserted at all. The sink will then throw an appropriate exception at the end
    * of the insertion process (method {@link DataSink#end()}).
    *
-   * @param ensureFKOrder <code>true</code> if beans shall be inserted after its foreignkey-references
+   * @param ensureFKOrder <code>true</code> if beans shall be inserted after its foreign key-references
    */
   public void setEnsureFKOrder(boolean ensureFKOrder) {
     _ensureFKOrder = ensureFKOrder;
@@ -309,7 +309,7 @@ public class DatabaseDataIO {
    * to the given output writer (which won't be closed by this method).
    *
    * @param platform    The platform; needs to be connected to a live database
-   * @param output      The output writer (which needs to be openend with the specified encoding)
+   * @param output      The output writer (which needs to be opened with the specified encoding)
    * @param xmlEncoding The encoding to use for the XML
    */
   public void writeDataToXML(Platform platform, Writer output, String xmlEncoding) {
@@ -322,7 +322,7 @@ public class DatabaseDataIO {
    *
    * @param platform    The platform; needs to be connected to a live database
    * @param model       The model for which to retrieve and write the data
-   * @param output      The output writer (which needs to be openend with the specified encoding)
+   * @param output      The output writer (which needs to be opened with the specified encoding)
    * @param xmlEncoding The encoding to use for the XML
    */
   public void writeDataToXML(Platform platform, Database model, Writer output, String xmlEncoding) {

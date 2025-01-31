@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.ddlutils.task;
+package org.apache.ddlutils.task.command;
 
 /**
  * Signals an error condition during a build

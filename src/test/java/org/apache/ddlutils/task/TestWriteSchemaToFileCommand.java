@@ -22,6 +22,7 @@ package org.apache.ddlutils.task;
 import junit.framework.Test;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.task.command.WriteSchemaToFileCommand;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;

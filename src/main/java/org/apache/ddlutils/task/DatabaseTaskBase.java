@@ -24,8 +24,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.task.ant.VerbosityLevel;
+import org.apache.ddlutils.task.command.Command;
+import org.apache.ddlutils.task.command.DatabaseCommand;
 import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.BuildException;
@@ -309,7 +311,6 @@ public abstract class DatabaseTaskBase extends Task {
       // we don't want debug logging from Digester
       props.setProperty("log4j.logger.org.apache.commons", "WARN");
 
-      LogManager.resetConfiguration();
       PropertyConfigurator.configure(props);
     }
     _log = LogFactory.getLog(getClass());

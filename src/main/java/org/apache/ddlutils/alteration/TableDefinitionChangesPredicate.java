@@ -38,7 +38,7 @@ public interface TableDefinitionChangesPredicate {
    *                          list of changes in the result of
    *                          {@link ModelComparator#compare(org.apache.ddlutils.model.Database, org.apache.ddlutils.model.Database)}
    * @param changes           The non-empty list of changes
-   * @return <code>true</code> if the current plaform supports them
+   * @return <code>true</code> if the current platform supports them
    */
   boolean areSupported(Table intermediateTable, List<TableChange> changes);
 }

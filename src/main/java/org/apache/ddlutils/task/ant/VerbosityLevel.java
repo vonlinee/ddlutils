@@ -1,4 +1,4 @@
-package org.apache.ddlutils.task;
+package org.apache.ddlutils.task.ant;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one

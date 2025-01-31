@@ -21,6 +21,13 @@ package org.apache.ddlutils.task;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.task.command.CreateDatabaseCommand;
+import org.apache.ddlutils.task.command.DropDatabaseCommand;
+import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
+import org.apache.ddlutils.task.command.WriteDataToFileCommand;
+import org.apache.ddlutils.task.command.WriteDtdToFileCommand;
+import org.apache.ddlutils.task.command.WriteSchemaSqlToFileCommand;
+import org.apache.ddlutils.task.command.WriteSchemaToDatabaseCommand;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.types.FileSet;
@@ -195,8 +202,8 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
 
     reader.setValidateXml(_validateXml);
     reader.setUseInternalDtd(_useInternalDtd);
-    if ((_singleSchemaFile != null) && !_fileSets.isEmpty()) {
-      throw new BuildException("Please use either the schemafile attribute or the sub fileset element, but not both");
+    if (_singleSchemaFile != null && !_fileSets.isEmpty()) {
+      throw new BuildException("Please use either the schema file attribute or the sub fileset element, but not both");
     }
     if (_singleSchemaFile != null) {
       model = readSingleSchemaFile(reader, _singleSchemaFile);

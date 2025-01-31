@@ -1088,7 +1088,6 @@ public class JdbcModelReader {
    * @param table         The table to search for
    * @return The schema name or <code>null</code> if the schema of the table
    * could not be found
-   * @deprecated Will be removed once full schema support is in place
    */
   public String determineSchemaOf(Connection connection, String schemaPattern, Table table) throws SQLException {
     ResultSet tableData = null;

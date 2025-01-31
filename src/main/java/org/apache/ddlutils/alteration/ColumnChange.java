@@ -39,7 +39,7 @@ public interface ColumnChange extends TableChange {
    * Finds the column object corresponding to the changed column in the given database model.
    *
    * @param model         The database model
-   * @param caseSensitive Whether identifiers are case sensitive
+   * @param caseSensitive Whether identifiers are case-sensitive
    * @return The column object or <code>null</code> if it could not be found
    */
   Column findChangedColumn(Database model, boolean caseSensitive);

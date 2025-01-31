@@ -75,9 +75,9 @@ public class Oracle8ModelReader extends JdbcModelReader {
     setDefaultTablePattern("%");
 
     try {
-      _oracleIsoDatePattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'YYYY\\-MM\\-DD'\\)");
-      _oracleIsoTimePattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'HH24:MI:SS'\\)");
-      _oracleIsoTimestampPattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'YYYY\\-MM\\-DD HH24:MI:SS'\\)");
+      _oracleIsoDatePattern = Pattern.compile("TO_DATE\\('([^']*)', 'YYYY-MM-DD'\\)");
+      _oracleIsoTimePattern = Pattern.compile("TO_DATE\\('([^']*)', 'HH24:MI:SS'\\)");
+      _oracleIsoTimestampPattern = Pattern.compile("TO_DATE\\('([^']*)', 'YYYY-MM-DD HH24:MI:SS'\\)");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
