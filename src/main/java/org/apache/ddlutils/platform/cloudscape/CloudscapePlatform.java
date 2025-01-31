@@ -31,10 +31,6 @@ import java.sql.Types;
  * @version $Revision: 231306 $
  */
 public class CloudscapePlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Cloudscape";
 
   /**
    * Creates a new platform instance.

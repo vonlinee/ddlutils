@@ -29,6 +29,7 @@ public enum BuiltinDriverType implements DriverType {
    * The sub-protocol used by the standard DB2 driver.
    */
   Db2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2"),
+  DB2v8("DB2v8", "com.ibm.db2.jcc.DB2Driver", "db2"),
 
   /**
    * Older name for the jdbc driver.
@@ -69,6 +70,7 @@ public enum BuiltinDriverType implements DriverType {
    * The standard Sybase jdbc driver.
    */
   SYBASE("Sybase", "com.sybase.jdbc2.jdbc.SybDriver", "sybase:Tds"),
+  SybaseASE15("SybaseASE15", "com.sybase.jdbc2.jdbc.SybDriver", "sybase:Tds"),
 
   /**
    * The old Sybase jdbc driver.
@@ -226,7 +228,7 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The subprotocol internally returned by the newer SQL Server 2005 driver.
    */
-  SQLServer2005_NEW("MsSql", "interbase.interclient.Driver", "sqljdbc"),
+  SQLServer2005_NEW("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqljdbc"),
 
   /**
    * The subprotocol recommended for the newer SQL Server 2005 driver.
@@ -244,9 +246,43 @@ public enum BuiltinDriverType implements DriverType {
   MySql("MySQL", "com.mysql.jdbc.Driver", "mysql"),
 
   /**
+   * The standard MySQL jdbc driver above mysql 5.0.
+   */
+  MySql50("MySQL5", "com.mysql.jdbc.Driver", "mysql"),
+
+  /**
    * The old MySQL jdbc driver.
    */
   MySql_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql"),
+
+  /**
+   * The standard sub-protocol used by the standard Oracle driver.
+   */
+  Oracle("Oracle", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
+
+  /**
+   * The thin sub-protocol used by the standard Oracle driver.
+   */
+  Oracle8("Oracle8", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
+
+  /**
+   * The old thin sub-protocol used by the standard Oracle driver.
+   */
+  Oracle8_THIN_OLD("Oracle", "oracle.jdbc.dnlddriver.OracleDriver", "oracle:dnldthin"),
+
+  /**
+   * The thin sub-protocol used by the standard Oracle driver.
+   */
+  Oracle8_OCI8("Oracle", "", "oracle:oci8"),
+  Oracle9("Oracle9", "", ""),
+  Oracle10("Oracle10", "", ""),
+  McKoi("McKoi", "com.mckoi.JDBCDriver", "mckoi"),
+
+  /**
+   * The sub-protocol used by the standard PostgreSQL driver.
+   */
+  PostgreSql("PostgreSql", "org.postgresql.Driver", "postgresql"),
+  MaxDB("MaxDB", "", ""),
 
   ;
 

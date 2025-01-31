@@ -413,7 +413,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       // Mckoi uses null to initialize the new pk column
       assertEquals((Object) null, beans.get(0), "pk");
       assertEquals(1, beans.get(0), "avalue");
@@ -511,7 +511,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals((Object) null, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals(2.0, beans.get(0), "pk3");
@@ -554,7 +554,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals((Object) null, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals(2.0, beans.get(0), "pk3");
@@ -601,7 +601,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
@@ -644,7 +644,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals(2, beans.get(0), "avalue");
@@ -747,7 +747,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
@@ -795,7 +795,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
@@ -843,7 +843,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) "text", beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
@@ -2328,8 +2328,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
    */
   public void testAddFKAndLocalRequiredColumn() {
     // TODO
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName())) {
       // MySql does not allow adding a required column to a fk without a default value
       return;
     }
@@ -2527,8 +2527,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
    */
   public void testAddFKAndMultipleLocalColumns() {
     // TODO
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName())) {
       // MySql does not allow adding a required column to a fk without a default value
       return;
     }

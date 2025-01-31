@@ -1045,8 +1045,8 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-      MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       return;
     }
@@ -1113,8 +1113,8 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-      MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       return;
     }
@@ -1706,7 +1706,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
       // McKoi can actually handle this, though interestingly it will result in a null value for the pk
       assertEquals((Object) null, beans.get(0), "pk");
       assertEquals((Object) "test", beans.get(0), "avalue");

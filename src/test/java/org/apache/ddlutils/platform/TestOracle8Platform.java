@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.oracle.Oracle8Platform;
 
 /**
  * Tests the Oracle 8 platform.
@@ -33,7 +32,7 @@ public class TestOracle8Platform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return Oracle8Platform.DATABASENAME;
+    return BuiltinDriverType.Oracle8.getName();
   }
 
   /**

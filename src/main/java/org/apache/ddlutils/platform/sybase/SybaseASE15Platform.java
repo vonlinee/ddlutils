@@ -19,16 +19,14 @@ package org.apache.ddlutils.platform.sybase;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDriverType;
+
 /**
  * The platform implementation for Sybase ASE 15 and above.
  *
  * @version $Revision:  $
  */
 public class SybaseASE15Platform extends SybasePlatform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "SybaseASE15";
 
   /**
    * Creates a new platform instance.
@@ -42,6 +40,6 @@ public class SybaseASE15Platform extends SybasePlatform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.SybaseASE15.getName();
   }
 }

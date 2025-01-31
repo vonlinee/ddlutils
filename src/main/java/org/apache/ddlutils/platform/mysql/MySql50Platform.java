@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform.mysql;
  */
 
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 
 /**
  * The platform implementation for MySQL 5 and above.
@@ -27,10 +28,6 @@ import org.apache.ddlutils.PlatformInfo;
  * @version $Revision: 231306 $
  */
 public class MySql50Platform extends MySqlPlatform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "MySQL5";
 
   /**
    * Creates a new platform instance.
@@ -53,6 +50,6 @@ public class MySql50Platform extends MySqlPlatform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.MySql50.getName();
   }
 }

@@ -21,12 +21,6 @@ package org.apache.ddlutils.platform;
 
 import junit.framework.TestCase;
 import org.apache.ddlutils.PlatformUtils;
-import org.apache.ddlutils.platform.derby.DerbyPlatform;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
-import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.oracle.Oracle8Platform;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 
 /**
  * Tests the {@link org.apache.ddlutils.PlatformUtils} class.
@@ -123,9 +117,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Derby platform via its JDBC drivers.
    */
   public void testDerbyDriver() {
-    assertEquals(DerbyPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Derby.getName(),
       _platformUtils.determineDatabaseType("org.apache.derby.jdbc.ClientDriver", null));
-    assertEquals(DerbyPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Derby.getName(),
       _platformUtils.determineDatabaseType("org.apache.derby.jdbc.EmbeddedDriver", null));
   }
 
@@ -133,7 +127,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Derby platform via JDBC connection urls.
    */
   public void testDerbyUrl() {
-    assertEquals(DerbyPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Derby.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:derby:sample"));
   }
 
@@ -163,7 +157,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the HsqlDb platform via its JDBC driver.
    */
   public void testHsqldbDriver() {
-    assertEquals(HsqlDbPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.HSQL.getName(),
       _platformUtils.determineDatabaseType("org.hsqldb.jdbcDriver", null));
   }
 
@@ -171,7 +165,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the HsqlDb platform via JDBC connection urls.
    */
   public void testHsqldbUrl() {
-    assertEquals(HsqlDbPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.HSQL.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:hsqldb:/opt/db/testdb"));
   }
 
@@ -195,7 +189,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the McKoi platform via its JDBC driver.
    */
   public void testMckoiDriver() {
-    assertEquals(MckoiPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.McKoi.getName(),
       _platformUtils.determineDatabaseType("com.mckoi.JDBCDriver", null));
   }
 
@@ -203,9 +197,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the McKoi platform via JDBC connection urls.
    */
   public void testMckoiUrl() {
-    assertEquals(MckoiPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.McKoi.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mckoi:local://./db.conf"));
-    assertEquals(MckoiPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.McKoi.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mckoi://db.myhost.org/"));
   }
 
@@ -272,9 +266,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the MySql platform via its JDBC drivers.
    */
   public void testMySqlDriver() {
-    assertEquals(MySqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.MySql.getName(),
       _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
-    assertEquals(MySqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.MySql.getName(),
       _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
   }
 
@@ -282,7 +276,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the MySql platform via JDBC connection urls.
    */
   public void testMySqlUrl() {
-    assertEquals(MySqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.MySql.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
   }
 
@@ -290,15 +284,15 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Oracle 8 platform via its JDBC drivers.
    */
   public void testOracleDriver() {
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8.getName(),
       _platformUtils.determineDatabaseType("oracle.jdbc.driver.OracleDriver", null));
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType("oracle.jdbc.dnlddriver.OracleDriver", null));
     // DataDirect Connect
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.DATADIRECT_ORACLE.getName(),
       _platformUtils.determineDatabaseType("com.ddtek.jdbc.oracle.OracleDriver", null));
     // i-net
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.INET_ORACLE.getName(),
       _platformUtils.determineDatabaseType("com.inet.ora.OraDriver", null));
   }
 
@@ -306,19 +300,19 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Oracle 8 platform via JDBC connection urls.
    */
   public void testOracleUrl() {
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:thin:@myhost:1521:orcl"));
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:oci8:@(description=(address=(host=myhost)(protocol=tcp)(port=1521))(connect_data=(sid=orcl)))"));
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
     // DataDirect Connect
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:oracle://server3:1521;ServiceName=ORCL;User=test;Password=secret"));
     // i-net
-    assertEquals(Oracle8Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetora:www.inetsoftware.de:1521:orcl?traceLevel=2"));
   }
 
@@ -326,7 +320,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the PostgreSql platform via its JDBC driver.
    */
   public void testPostgreSqlDriver() {
-    assertEquals(PostgreSqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.PostgreSql.getName(),
       _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
   }
 
@@ -334,9 +328,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the PostgreSql platform via JDBC connection urls.
    */
   public void testPostgreSqlUrl() {
-    assertEquals(PostgreSqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.PostgreSql.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
-    assertEquals(PostgreSqlPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.PostgreSql.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
   }
 

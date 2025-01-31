@@ -21,7 +21,6 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 
 /**
  * Tests the PostgreSQL platform.
@@ -34,7 +33,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return PostgreSqlPlatform.DATABASENAME;
+    return BuiltinDriverType.PostgreSql.getName();
   }
 
   /**

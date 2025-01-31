@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.derby.DerbyPlatform;
 
 /**
  * Tests the Derby platform.
@@ -33,7 +32,7 @@ public class TestDerbyPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return DerbyPlatform.DATABASENAME;
+    return BuiltinDriverType.Derby.getName();
   }
 
   /**

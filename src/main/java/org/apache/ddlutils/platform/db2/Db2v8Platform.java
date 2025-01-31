@@ -25,10 +25,6 @@ package org.apache.ddlutils.platform.db2;
  * @version $Revision: $
  */
 public class Db2v8Platform extends Db2Platform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "DB2v8";
 
   /**
    * Creates a new platform instance.

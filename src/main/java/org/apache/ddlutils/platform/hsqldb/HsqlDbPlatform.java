@@ -29,6 +29,7 @@ import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -49,14 +50,6 @@ public class HsqlDbPlatform extends PlatformImplBase {
    * Database name of this platform.
    */
   public static final String DATABASENAME = "HsqlDb";
-  /**
-   * The standard Hsqldb jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
-  /**
-   * The sub protocol used by the standard Hsqldb driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "hsqldb";
 
   /**
    * Creates a new instance of the Hsqldb platform.
@@ -99,7 +92,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.HSQL.getName();
   }
 
   /**

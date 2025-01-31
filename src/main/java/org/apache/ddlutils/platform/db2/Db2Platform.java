@@ -46,10 +46,6 @@ import java.sql.Types;
  * @version $Revision: 231306 $
  */
 public class Db2Platform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "DB2";
 
   /**
    * Creates a new platform instance.

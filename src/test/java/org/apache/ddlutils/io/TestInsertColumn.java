@@ -20,14 +20,10 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.Test;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
-import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
-import org.apache.ddlutils.platform.mysql.MySql50Platform;
 import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -310,10 +306,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     // it directly (in which case it might still be NULL)
     Object avalue = beans.get(0).get("avalue");
 
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", avalue);
     } else {
@@ -864,10 +860,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", avalue);
     } else {
@@ -1160,10 +1156,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", avalue);
     } else {
@@ -1497,10 +1493,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", avalue2);
     } else {
@@ -1840,10 +1836,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", avalue2);
     } else {
@@ -2185,10 +2181,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     Object avalue = beans2.get(0).get("avalue");
 
     assertEquals(1, beans2.get(0), "pk");
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", pk1);
       assertEquals("text", avalue);
@@ -2749,10 +2745,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(1, beans1.get(0), "pk1");
     assertEquals(2, beans2.get(0), "pk");
     assertEquals(1, beans2.get(0), "avalue1");
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MaxDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MaxDB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
       assertEquals("text", pk2);
       assertEquals("text", avalue2);

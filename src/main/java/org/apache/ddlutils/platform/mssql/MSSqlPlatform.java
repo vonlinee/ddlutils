@@ -55,11 +55,6 @@ import java.util.Collection;
 public class MSSqlPlatform extends PlatformImplBase {
 
   /**
-   * The new SQLServer 2005 jdbc driver which can also be used for SQL Server 2000.
-   */
-  public static final String JDBC_DRIVER_NEW = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-
-  /**
    * Creates a new platform instance.
    */
   public MSSqlPlatform() {

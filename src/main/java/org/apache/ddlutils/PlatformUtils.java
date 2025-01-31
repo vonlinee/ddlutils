@@ -20,11 +20,6 @@ package org.apache.ddlutils;
  */
 
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
-import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.oracle.Oracle8Platform;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.util.JdbcUtils;
 
 import javax.sql.DataSource;
@@ -70,7 +65,7 @@ public class PlatformUtils {
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.HSQL.getSubProtocol(), BuiltinDriverType.HSQL.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.Interbase.getSubProtocol(), BuiltinDriverType.Interbase.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.Sapdb.getSubProtocol(), BuiltinDriverType.Sapdb.getName());
-    jdbcSubProtocolToPlatform.put(MckoiPlatform.JDBC_SUBPROTOCOL, MckoiPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.McKoi.getSubProtocol(), BuiltinDriverType.McKoi.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.SQLServer.getSubProtocol(), BuiltinDriverType.SQLServer.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.SQLServer2005_NEW1.getSubProtocol(), BuiltinDriverType.SQLServer.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.SQLServer2005_NEW.getSubProtocol(), BuiltinDriverType.SQLServer.getName());
@@ -91,12 +86,12 @@ public class PlatformUtils {
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.JSQLCONNECT_SQLSERVER.getSubProtocol(), BuiltinDriverType.SQLServer.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.JTDS_SQLSERVER.getSubProtocol(), BuiltinDriverType.SQLServer.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.MySql.getSubProtocol(), BuiltinDriverType.MySql.getName());
-    jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_THIN, Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_OCI8, Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_THIN_OLD, Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(BuiltinDriverType.DATADIRECT_ORACLE.getSubProtocol(), Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(BuiltinDriverType.INET_ORACLE.getSubProtocol(), Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PostgreSqlPlatform.JDBC_SUBPROTOCOL, PostgreSqlPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Oracle8.getSubProtocol(), BuiltinDriverType.Oracle8.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Oracle8_OCI8.getSubProtocol(), BuiltinDriverType.Oracle8_OCI8.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Oracle8_THIN_OLD.getSubProtocol(), BuiltinDriverType.Oracle8_THIN_OLD.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.DATADIRECT_ORACLE.getSubProtocol(), BuiltinDriverType.DATADIRECT_ORACLE.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.INET_ORACLE.getSubProtocol(), BuiltinDriverType.INET_ORACLE.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.PostgreSql.getSubProtocol(), BuiltinDriverType.PostgreSql.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.SYBASE.getSubProtocol(), BuiltinDriverType.SYBASE.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.DATADIRECT_SYBASE.getSubProtocol(), BuiltinDriverType.SYBASE.getName());
     jdbcSubProtocolToPlatform.put(BuiltinDriverType.INET_SYBASE.getSubProtocol(), BuiltinDriverType.SYBASE.getName());
@@ -117,19 +112,19 @@ public class PlatformUtils {
     jdbcDriverToPlatform.put(BuiltinDriverType.HSQL.getDriverClassName(), BuiltinDriverType.HSQL.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.Interbase.getDriverClassName(), BuiltinDriverType.Interbase.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.Sapdb.getDriverClassName(), BuiltinDriverType.Sapdb.getName());
-    jdbcDriverToPlatform.put(MckoiPlatform.JDBC_DRIVER, MckoiPlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDriverType.McKoi.getDriverClassName(), BuiltinDriverType.McKoi.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.SQLServer.getDriverClassName(), BuiltinDriverType.SQLServer.getName());
-    jdbcDriverToPlatform.put(MSSqlPlatform.JDBC_DRIVER_NEW, BuiltinDriverType.SQLServer.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.SQLServer2005_NEW.getDriverClassName(), BuiltinDriverType.SQLServer2005_NEW.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.DATADIRECT_SQLSERVER.getDriverClassName(), BuiltinDriverType.SQLServer.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.INET_SQLSERVER.getDriverClassName(), BuiltinDriverType.SQLServer.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.JSQLCONNECT_SQLSERVER.getDriverClassName(), BuiltinDriverType.SQLServer.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.MySql.getDriverClassName(), BuiltinDriverType.MySql.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.MySql_OLD.getDriverClassName(), BuiltinDriverType.MySql_OLD.getName());
-    jdbcDriverToPlatform.put(Oracle8Platform.JDBC_DRIVER, Oracle8Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(Oracle8Platform.JDBC_DRIVER_OLD, Oracle8Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(BuiltinDriverType.DATADIRECT_ORACLE.getDriverClassName(), Oracle8Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(BuiltinDriverType.INET_ORACLE.getDriverClassName(), Oracle8Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(PostgreSqlPlatform.JDBC_DRIVER, PostgreSqlPlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDriverType.Oracle8.getDriverClassName(), BuiltinDriverType.Oracle8.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.Oracle8_THIN_OLD.getDriverClassName(), BuiltinDriverType.Oracle8_THIN_OLD.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.DATADIRECT_ORACLE.getDriverClassName(), BuiltinDriverType.DATADIRECT_ORACLE.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.INET_ORACLE.getDriverClassName(), BuiltinDriverType.INET_ORACLE.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.PostgreSql.getDriverClassName(), BuiltinDriverType.PostgreSql.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.SYBASE.getDriverClassName(), BuiltinDriverType.SYBASE.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.SYBASE_OLD.getDriverClassName(), BuiltinDriverType.SYBASE.getName());
     jdbcDriverToPlatform.put(BuiltinDriverType.DATADIRECT_SYBASE.getDriverClassName(), BuiltinDriverType.SYBASE.getName());

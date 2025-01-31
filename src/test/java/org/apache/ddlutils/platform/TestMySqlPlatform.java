@@ -35,7 +35,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return MySqlPlatform.DATABASENAME;
+    return BuiltinDriverType.MySql.getName();
   }
 
   /**

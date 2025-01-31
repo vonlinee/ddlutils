@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.oracle.Oracle9Platform;
 
 /**
  * Tests the Oracle 9 platform.
@@ -33,7 +32,7 @@ public class TestOracle9Platform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return Oracle9Platform.DATABASENAME;
+    return BuiltinDriverType.Oracle9.getName();
   }
 
   /**

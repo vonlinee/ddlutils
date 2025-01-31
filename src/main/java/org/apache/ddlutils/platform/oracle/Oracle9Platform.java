@@ -19,6 +19,8 @@ package org.apache.ddlutils.platform.oracle;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDriverType;
+
 import java.sql.Types;
 
 /**
@@ -27,10 +29,6 @@ import java.sql.Types;
  * @version $Revision: 231306 $
  */
 public class Oracle9Platform extends Oracle8Platform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Oracle9";
 
   /**
    * Creates a new platform instance.
@@ -45,6 +43,6 @@ public class Oracle9Platform extends Oracle8Platform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Oracle9.getName();
   }
 }

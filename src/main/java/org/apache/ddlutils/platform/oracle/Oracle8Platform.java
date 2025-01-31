@@ -31,6 +31,7 @@ import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -48,30 +49,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class Oracle8Platform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Oracle";
-  /**
-   * The standard Oracle jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "oracle.jdbc.driver.OracleDriver";
-  /**
-   * The old Oracle jdbc driver.
-   */
-  public static final String JDBC_DRIVER_OLD = "oracle.jdbc.dnlddriver.OracleDriver";
-  /**
-   * The thin subprotocol used by the standard Oracle driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_THIN = "oracle:thin";
-  /**
-   * The thin subprotocol used by the standard Oracle driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_OCI8 = "oracle:oci8";
-  /**
-   * The old thin subprotocol used by the standard Oracle driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_THIN_OLD = "oracle:dnldthin";
 
   /**
    * Creates a new platform instance.
@@ -127,7 +104,7 @@ public class Oracle8Platform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Oracle8.getName();
   }
 
   /**

@@ -30,6 +30,7 @@ import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -48,18 +49,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class MckoiPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "McKoi";
-  /**
-   * The standard McKoi jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "com.mckoi.JDBCDriver";
-  /**
-   * The sub protocol used by the standard McKoi driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "mckoi";
 
   /**
    * Creates a new platform instance.
@@ -96,7 +85,7 @@ public class MckoiPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.McKoi.getName();
   }
 
   /**
@@ -105,12 +94,12 @@ public class MckoiPlatform extends PlatformImplBase {
   @Override
   public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // For McKoi, you create databases by simply appending "?create=true" to the connection url
-    if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.McKoi.getDriverClassName().equals(jdbcDriverClassName)) {
       StringBuilder creationUrl = new StringBuilder();
       Connection connection = null;
 
       creationUrl.append(connectionUrl);
-      // TODO: It might be safer to parse the URN and check whethere there is already a parameter there
+      // TODO: It might be safer to parse the URN and check whether there is already a parameter there
       //       (in which case e'd have to use '&' instead)
       creationUrl.append("?create=true");
       if ((parameters != null) && !parameters.isEmpty()) {

@@ -115,6 +115,7 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     // Sql Server generates an index "PK__[table name]__[hex number]"
 

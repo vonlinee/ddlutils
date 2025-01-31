@@ -175,23 +175,23 @@ public class PlatformFactory {
     addPlatform(_platforms, BuiltinDriverType.Axion.getName(), AxionPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.Cloudscape1.getName(), CloudscapePlatform.class);
     addPlatform(_platforms, BuiltinDriverType.Db2.getName(), Db2Platform.class);
-    addPlatform(_platforms, Db2v8Platform.DATABASENAME, Db2v8Platform.class);
-    addPlatform(_platforms, DerbyPlatform.DATABASENAME, DerbyPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.DB2v8.getName(), Db2v8Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.Derby.getName(), DerbyPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.Firebird.getName(), FirebirdPlatform.class);
-    addPlatform(_platforms, HsqlDbPlatform.DATABASENAME, HsqlDbPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.HSQL.getName(), HsqlDbPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.Interbase.getName(), InterbasePlatform.class);
-    addPlatform(_platforms, MaxDbPlatform.DATABASENAME, MaxDbPlatform.class);
-    addPlatform(_platforms, MckoiPlatform.DATABASENAME, MckoiPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.MaxDB.getName(), MaxDbPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.McKoi.getName(), MckoiPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.SQLServer.getName(), MSSqlPlatform.class);
-    addPlatform(_platforms, MySqlPlatform.DATABASENAME, MySqlPlatform.class);
-    addPlatform(_platforms, MySql50Platform.DATABASENAME, MySql50Platform.class);
-    addPlatform(_platforms, Oracle8Platform.DATABASENAME, Oracle8Platform.class);
-    addPlatform(_platforms, Oracle9Platform.DATABASENAME, Oracle9Platform.class);
-    addPlatform(_platforms, Oracle10Platform.DATABASENAME, Oracle10Platform.class);
-    addPlatform(_platforms, PostgreSqlPlatform.DATABASENAME, PostgreSqlPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.MySql.getName(), MySqlPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.MySql50.getName(), MySql50Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.Oracle8.getName(), Oracle8Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.Oracle9.getName(), Oracle9Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.Oracle10.getName(), Oracle10Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.PostgreSql.getName(), PostgreSqlPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.Sapdb.getName(), SapDbPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.SYBASE.getName(), SybasePlatform.class);
-    addPlatform(_platforms, SybaseASE15Platform.DATABASENAME, SybaseASE15Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.SybaseASE15.getName(), SybaseASE15Platform.class);
   }
 
   /**

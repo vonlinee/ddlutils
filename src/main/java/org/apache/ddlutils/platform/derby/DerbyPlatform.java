@@ -42,10 +42,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class DerbyPlatform extends CloudscapePlatform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Derby";
 
   /**
    * Creates a new Derby platform instance.
@@ -73,7 +69,7 @@ public class DerbyPlatform extends CloudscapePlatform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Derby.getName();
   }
 
   /**

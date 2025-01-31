@@ -19,16 +19,14 @@ package org.apache.ddlutils.platform.oracle;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDriverType;
+
 /**
  * The platform for Oracle 10.
  *
  * @version $Revision: 231306 $
  */
 public class Oracle10Platform extends Oracle9Platform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Oracle10";
 
   /**
    * Creates a new platform instance.
@@ -44,6 +42,6 @@ public class Oracle10Platform extends Oracle9Platform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Oracle10.getName();
   }
 }

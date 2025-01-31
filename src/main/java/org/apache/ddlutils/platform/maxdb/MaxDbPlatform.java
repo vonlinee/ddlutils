@@ -19,6 +19,7 @@ package org.apache.ddlutils.platform.maxdb;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 
 /**
@@ -30,10 +31,6 @@ import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
  * @version $Revision: 231306 $
  */
 public class MaxDbPlatform extends SapDbPlatform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "MaxDB";
 
   /**
    * Creates a new platform instance.
@@ -49,6 +46,6 @@ public class MaxDbPlatform extends SapDbPlatform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.MaxDB.getName();
   }
 }

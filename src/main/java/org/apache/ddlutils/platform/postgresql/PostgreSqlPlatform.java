@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform.postgresql;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
@@ -27,10 +26,12 @@ import org.apache.ddlutils.alteration.ModelComparator;
 import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaProperty;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -50,18 +51,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class PostgreSqlPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "PostgreSql";
-  /**
-   * The standard PostgreSQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "org.postgresql.Driver";
-  /**
-   * The subprotocol used by the standard PostgreSQL driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "postgresql";
 
   /**
    * Creates a new platform instance.
@@ -112,7 +101,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.PostgreSql.getName();
   }
 
   /**
@@ -126,7 +115,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * @param createDb            Whether to create or drop the database
    */
   private void createOrDropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters, boolean createDb) throws DatabaseOperationException, UnsupportedOperationException {
-    if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.PostgreSql.getDriverClassName().equals(jdbcDriverClassName)) {
       int slashPos = connectionUrl.lastIndexOf('/');
 
       if (slashPos < 0) {

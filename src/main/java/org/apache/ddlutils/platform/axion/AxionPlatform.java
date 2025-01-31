@@ -105,7 +105,7 @@ public class AxionPlatform extends PlatformImplBase {
   @Override
   protected Object extractColumnValue(ResultSet resultSet, String columnName, int columnIdx, int jdbcType) throws SQLException {
     boolean useIdx = (columnName == null);
-    Object value = null;
+    Object value;
 
     if (jdbcType == Types.BIGINT) {// The Axion JDBC driver does not support reading BIGINT values directly
       String strValue = useIdx ? resultSet.getString(columnIdx) : resultSet.getString(columnName);

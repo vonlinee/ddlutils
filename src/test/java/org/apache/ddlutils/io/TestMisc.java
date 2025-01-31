@@ -20,16 +20,11 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.Test;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.derby.DerbyPlatform;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
-import org.apache.ddlutils.platform.mysql.MySql50Platform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
@@ -343,7 +338,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    */
   public void testSelfReferenceIdentityOverrideOff() throws Exception {
     // Hsqldb does not allow rows to reference themselves
-    if (HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.HSQL.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1179,10 +1174,10 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
     query.append(")");
     // Some JDBC drivers do not allow us to perform the query without an explicit alias
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      PostgreSqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      DerbyPlatform.DATABASENAME.equals(getPlatform().getName()) ||
+    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.Derby.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.PostgreSql.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.SQLServer.getName().equals(getPlatform().getName())) {
       query.append(" AS ");
       if (getPlatform().isDelimitedIdentifierModeOn()) {
