@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform.axion;
 
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.PlatformImplBase;
 
 import java.sql.Connection;
@@ -36,18 +37,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class AxionPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Axion";
-  /**
-   * The axion jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "org.axiondb.jdbc.AxionDriver";
-  /**
-   * The subprotocol used by the axion driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "axiondb";
 
   /**
    * Creates a new axion platform instance.
@@ -78,16 +67,16 @@ public class AxionPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Axion.getName();
   }
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object>  parameters) throws DatabaseOperationException, UnsupportedOperationException {
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // Axion will create the database automatically when connecting for the first time
-    if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.Axion.getDriverClassName().equals(jdbcDriverClassName)) {
       Connection connection = null;
 
       try {

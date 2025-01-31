@@ -23,6 +23,7 @@ import junit.framework.Test;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
@@ -105,7 +106,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     final String model1Xml;
     final String model2Xml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       model1Xml =
         "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
           "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -182,7 +183,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     final String model1Xml;
     final String model2Xml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       model1Xml =
         "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
           "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -289,7 +290,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml;
     final String model2Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1489,7 +1490,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     final String model2Xml;
 
     // Sybase does not like INTEGER auto-increment columns
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       model2Xml =
         "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
           "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -1618,7 +1619,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
         "</database>";
 
     // Sybase does not like INTEGER auto-increment columns
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       model1Xml =
         "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
           "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +

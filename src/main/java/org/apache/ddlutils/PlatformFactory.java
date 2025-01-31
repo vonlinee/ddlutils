@@ -19,6 +19,7 @@ package org.apache.ddlutils;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.axion.AxionPlatform;
 import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 import org.apache.ddlutils.platform.db2.Db2Platform;
@@ -171,9 +172,9 @@ public class PlatformFactory {
    * Registers the known platforms.
    */
   private static void registerPlatforms() {
-    addPlatform(_platforms, AxionPlatform.DATABASENAME, AxionPlatform.class);
-    addPlatform(_platforms, CloudscapePlatform.DATABASENAME, CloudscapePlatform.class);
-    addPlatform(_platforms, Db2Platform.DATABASENAME, Db2Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.Axion.getName(), AxionPlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.Cloudscape1.getName(), CloudscapePlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.Db2.getName(), Db2Platform.class);
     addPlatform(_platforms, Db2v8Platform.DATABASENAME, Db2v8Platform.class);
     addPlatform(_platforms, DerbyPlatform.DATABASENAME, DerbyPlatform.class);
     addPlatform(_platforms, FirebirdPlatform.DATABASENAME, FirebirdPlatform.class);
@@ -189,7 +190,7 @@ public class PlatformFactory {
     addPlatform(_platforms, Oracle10Platform.DATABASENAME, Oracle10Platform.class);
     addPlatform(_platforms, PostgreSqlPlatform.DATABASENAME, PostgreSqlPlatform.class);
     addPlatform(_platforms, SapDbPlatform.DATABASENAME, SapDbPlatform.class);
-    addPlatform(_platforms, SybasePlatform.DATABASENAME, SybasePlatform.class);
+    addPlatform(_platforms, BuiltinDriverType.SYBASE.getName(), SybasePlatform.class);
     addPlatform(_platforms, SybaseASE15Platform.DATABASENAME, SybaseASE15Platform.class);
   }
 

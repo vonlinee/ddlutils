@@ -19,9 +19,7 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.ddlutils.platform.axion.AxionPlatform;
-import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
-import org.apache.ddlutils.platform.db2.Db2Platform;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
@@ -32,7 +30,7 @@ import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.oracle.Oracle8Platform;
 import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -50,10 +48,6 @@ public class PlatformUtils {
   // Extended drivers that support more than one database
 
   /**
-   * The DataDirect Connect DB2 jdbc driver.
-   */
-  public static final String JDBC_DRIVER_DATADIRECT_DB2 = "com.ddtek.jdbc.db2.DB2Driver";
-  /**
    * The DataDirect Connect SQLServer jdbc driver.
    */
   public static final String JDBC_DRIVER_DATADIRECT_SQLSERVER = "com.ddtek.jdbc.sqlserver.SQLServerDriver";
@@ -65,10 +59,7 @@ public class PlatformUtils {
    * The DataDirect Connect Sybase jdbc driver.
    */
   public static final String JDBC_DRIVER_DATADIRECT_SYBASE = "com.ddtek.jdbc.sybase.SybaseDriver";
-  /**
-   * The i-net DB2 jdbc driver.
-   */
-  public static final String JDBC_DRIVER_INET_DB2 = "com.inet.drda.DRDADriver";
+
   /**
    * The i-net Oracle jdbc driver.
    */
@@ -110,10 +101,7 @@ public class PlatformUtils {
    * The subprotocol used by the DataDirect Sybase driver.
    */
   public static final String JDBC_SUBPROTOCOL_DATADIRECT_SYBASE = "datadirect:sybase";
-  /**
-   * The subprotocol used by the i-net DB2 driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_INET_DB2 = "inetdb2";
+
   /**
    * The subprotocol used by the i-net Oracle driver.
    */
@@ -186,9 +174,7 @@ public class PlatformUtils {
    * The subprotocol used by the jTDS SQLServer driver.
    */
   public static final String JDBC_SUBPROTOCOL_JTDS_SQLSERVER = "jtds:sqlserver";
-  /**
-   * The subprotocol used by the jTDS Sybase driver.
-   */
+
   public static final String JDBC_SUBPROTOCOL_JTDS_SYBASE = "jtds:sybase";
 
   /**
@@ -204,20 +190,20 @@ public class PlatformUtils {
    * Creates a new instance.
    */
   public PlatformUtils() {
-    // Note that currently Sapdb and MaxDB have equal subprotocols and
+    // Note that currently Sapdb and MaxDB have equal sub protocols and
     // drivers, so we have no means to distinguish them
-    jdbcSubProtocolToPlatform.put(AxionPlatform.JDBC_SUBPROTOCOL, AxionPlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(CloudscapePlatform.JDBC_SUBPROTOCOL_1, CloudscapePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(CloudscapePlatform.JDBC_SUBPROTOCOL_2, CloudscapePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Db2Platform.JDBC_SUBPROTOCOL, Db2Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Db2Platform.JDBC_SUBPROTOCOL_OS390_1, Db2Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Db2Platform.JDBC_SUBPROTOCOL_OS390_2, Db2Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(Db2Platform.JDBC_SUBPROTOCOL_JTOPEN, Db2Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_DB2, Db2Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_DB2, Db2Platform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Axion.getSubProtocol(), BuiltinDriverType.Axion.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Cloudscape1.getSubProtocol(), BuiltinDriverType.Cloudscape1.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Cloudscape2.getSubProtocol(), BuiltinDriverType.Cloudscape1.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Db2.getSubProtocol(), BuiltinDriverType.Db2.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Db2_OS390_1.getSubProtocol(), BuiltinDriverType.Db2.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Db2_OS390_2.getSubProtocol(), BuiltinDriverType.Db2.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.Db2_JTOPEN.getSubProtocol(), BuiltinDriverType.Db2.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.DATADIRECT_DB2.getSubProtocol(), BuiltinDriverType.Db2.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.INET_DB2.getSubProtocol(), BuiltinDriverType.Db2.getName());
     jdbcSubProtocolToPlatform.put(DerbyPlatform.JDBC_SUBPROTOCOL, DerbyPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(FirebirdPlatform.JDBC_SUBPROTOCOL, FirebirdPlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(HsqlDbPlatform.JDBC_SUBPROTOCOL, HsqlDbPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.HSQL.getSubProtocol(), BuiltinDriverType.HSQL.getName());
     jdbcSubProtocolToPlatform.put(InterbasePlatform.JDBC_SUBPROTOCOL, InterbasePlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(SapDbPlatform.JDBC_SUBPROTOCOL, SapDbPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(MckoiPlatform.JDBC_SUBPROTOCOL, MckoiPlatform.DATABASENAME);
@@ -246,20 +232,20 @@ public class PlatformUtils {
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PostgreSqlPlatform.JDBC_SUBPROTOCOL, PostgreSqlPlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(SybasePlatform.JDBC_SUBPROTOCOL, SybasePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_SYBASE, SybasePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE, SybasePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE_POOLED_1, SybasePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE_POOLED_2, SybasePlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_JTDS_SYBASE, SybasePlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.SYBASE.getSubProtocol(), BuiltinDriverType.SYBASE.getName());
+    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_SYBASE, BuiltinDriverType.SYBASE.getName());
+    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE, BuiltinDriverType.SYBASE.getName());
+    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE_POOLED_1, BuiltinDriverType.SYBASE.getName());
+    jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE_POOLED_2, BuiltinDriverType.SYBASE.getName());
+    jdbcSubProtocolToPlatform.put(BuiltinDriverType.JTDS_SYBASE.getSubProtocol(), BuiltinDriverType.SYBASE.getName());
 
-    jdbcDriverToPlatform.put(AxionPlatform.JDBC_DRIVER, AxionPlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(Db2Platform.JDBC_DRIVER, Db2Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(Db2Platform.JDBC_DRIVER_OLD1, Db2Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(Db2Platform.JDBC_DRIVER_OLD2, Db2Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(Db2Platform.JDBC_DRIVER_JTOPEN, Db2Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_DB2, Db2Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_DB2, Db2Platform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDriverType.Axion.getDriverClassName(), BuiltinDriverType.Axion.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.Db2.getDriverClassName(), BuiltinDriverType.Db2.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.Db2_OLD1.getDriverClassName(), BuiltinDriverType.Db2.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.Db2_OLD2.getDriverClassName(), BuiltinDriverType.Db2.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.Db2_JTOPEN.getDriverClassName(), BuiltinDriverType.Db2_JTOPEN.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.DATADIRECT_DB2.getDriverClassName(), BuiltinDriverType.Db2.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.INET_DB2.getDriverClassName(), BuiltinDriverType.Db2.getName());
     jdbcDriverToPlatform.put(DerbyPlatform.JDBC_DRIVER_EMBEDDED, DerbyPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(DerbyPlatform.JDBC_DRIVER, DerbyPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(FirebirdPlatform.JDBC_DRIVER, FirebirdPlatform.DATABASENAME);
@@ -279,10 +265,10 @@ public class PlatformUtils {
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcDriverToPlatform.put(PostgreSqlPlatform.JDBC_DRIVER, PostgreSqlPlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(SybasePlatform.JDBC_DRIVER, SybasePlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(SybasePlatform.JDBC_DRIVER_OLD, SybasePlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_SYBASE, SybasePlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_SYBASE, SybasePlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDriverType.SYBASE.getDriverClassName(), BuiltinDriverType.SYBASE.getName());
+    jdbcDriverToPlatform.put(BuiltinDriverType.SYBASE_OLD.getDriverClassName(), BuiltinDriverType.SYBASE.getName());
+    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_SYBASE, BuiltinDriverType.SYBASE.getName());
+    jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_SYBASE, BuiltinDriverType.SYBASE.getName());
   }
 
   /**
@@ -307,27 +293,18 @@ public class PlatformUtils {
    */
   public String determineDatabaseType(DataSource dataSource, String username, String password) throws DatabaseOperationException {
     Connection connection = null;
-
     try {
       if (username != null) {
         connection = dataSource.getConnection(username, password);
       } else {
         connection = dataSource.getConnection();
       }
-
       DatabaseMetaData metaData = connection.getMetaData();
-
       return determineDatabaseType(metaData.getDriverName(), metaData.getURL());
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while reading the database metadata: " + ex.getMessage(), ex);
     } finally {
-      if (connection != null) {
-        try {
-          connection.close();
-        } catch (SQLException ex) {
-          // we ignore this one
-        }
-      }
+      JdbcUtils.closeSilently(connection);
     }
   }
 

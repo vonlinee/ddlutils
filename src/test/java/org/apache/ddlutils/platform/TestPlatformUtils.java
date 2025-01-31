@@ -21,8 +21,6 @@ package org.apache.ddlutils.platform;
 
 import junit.framework.TestCase;
 import org.apache.ddlutils.PlatformUtils;
-import org.apache.ddlutils.platform.axion.AxionPlatform;
-import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 import org.apache.ddlutils.platform.db2.Db2Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
@@ -67,7 +65,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Axion platform via its JDBC driver.
    */
   public void testAxionDriver() {
-    assertEquals(AxionPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Axion.getName(),
       _platformUtils.determineDatabaseType("org.axiondb.jdbc.AxionDriver", null));
   }
 
@@ -75,9 +73,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Axion platform via JDBC connection urls.
    */
   public void testAxionUrl() {
-    assertEquals(AxionPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Axion.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb"));
-    assertEquals(AxionPlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Axion.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb:/tmp/testdbdir"));
   }
 
@@ -85,17 +83,17 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Db2 platform via its JDBC drivers.
    */
   public void testDb2Driver() {
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType("com.ibm.db2.jcc.DB2Driver", null));
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType("COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", null));
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType("COM.ibm.db2.jdbc.app.DB2Driver", null));
     // DataDirect Connect
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType("com.ddtek.jdbc.db2.DB2Driver", null));
     // i-net
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType("com.inet.drda.DRDADriver", null));
   }
 
@@ -103,17 +101,17 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Db2 platform via JDBC connection urls.
    */
   public void testDb2Url() {
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2://sysmvs1.stl.ibm.com:5021/san_jose"));
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2os390://sysmvs1.stl.ibm.com:5021/san_jose"));
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2os390sqlj://sysmvs1.stl.ibm.com:5021/san_jose"));
     // DataDirect Connect
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:db2://server1:50000;DatabaseName=jdbc;User=test;Password=secret"));
     // i-net
-    assertEquals(Db2Platform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Db2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdb2://server1:50000"));
   }
 
@@ -121,9 +119,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Cloudscape platform via JDBC connection urls.
    */
   public void testCloudscapeUrl() {
-    assertEquals(CloudscapePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Cloudscape1.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2j:net:database"));
-    assertEquals(CloudscapePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.Cloudscape1.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:cloudscape:net:database"));
   }
 
@@ -368,15 +366,15 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Sybase platform via its JDBC drivers.
    */
   public void testSybaseDriver() {
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType("com.sybase.jdbc.SybDriver", null));
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType("com.sybase.jdbc2.jdbc.SybDriver", null));
     // DataDirect Connect
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType("com.ddtek.jdbc.sybase.SybaseDriver", null));
     // i-net
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType("com.inet.syb.SybDriver", null));
   }
 
@@ -384,20 +382,20 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Sybase platform via JDBC connection urls.
    */
   public void testSybaseUrl() {
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:sybase:Tds:xyz:3767orjdbc:sybase:Tds:130.214.90.27:3767"));
     // DataDirect Connect
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sybase://server2:5000;User=test;Password=secret"));
     // i-net
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetsyb:www.inetsoftware.de:3333"));
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetsyb:www.inetsoftware.de:3333"));
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetsyb:www.inetsoftware.de:3333"));
     // jTDS
-    assertEquals(SybasePlatform.DATABASENAME,
+    assertEquals(BuiltinDriverType.SYBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:jtds:sybase://localhost:8080/test"));
   }
 }

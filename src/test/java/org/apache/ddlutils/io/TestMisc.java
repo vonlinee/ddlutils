@@ -24,6 +24,7 @@ import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
@@ -72,7 +73,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {
@@ -209,7 +210,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {
@@ -348,7 +349,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {
@@ -463,7 +464,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {
@@ -577,7 +578,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {
@@ -700,7 +701,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
 
     // Sybase does not like INTEGER auto-increment columns
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String modelXml;
 
     if (isSybase) {

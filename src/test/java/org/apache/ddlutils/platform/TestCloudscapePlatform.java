@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 
 /**
  * Tests the Cloudscape platform.
@@ -31,8 +30,9 @@ public class TestCloudscapePlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
-    return CloudscapePlatform.DATABASENAME;
+    return BuiltinDriverType.Cloudscape1.getName();
   }
 
   /**

@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform.cloudscape;
  */
 
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.PlatformImplBase;
 
 import java.sql.Types;
@@ -34,14 +35,6 @@ public class CloudscapePlatform extends PlatformImplBase {
    * Database name of this platform.
    */
   public static final String DATABASENAME = "Cloudscape";
-  /**
-   * A subprotocol used by the DB2 network driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_1 = "db2j:net";
-  /**
-   * A subprotocol used by the DB2 network driver.
-   */
-  public static final String JDBC_SUBPROTOCOL_2 = "cloudscape:net";
 
   /**
    * Creates a new platform instance.
@@ -87,6 +80,6 @@ public class CloudscapePlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Cloudscape1.getName();
   }
 }

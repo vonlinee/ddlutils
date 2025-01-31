@@ -4,7 +4,7 @@ public interface DriverType {
 
   String getName();
 
-  String driverClassName();
+  String getDriverClassName();
 
   String getSubProtocol();
 }

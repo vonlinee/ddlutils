@@ -64,18 +64,6 @@ public class SybasePlatform extends PlatformImplBase {
    * Database name of this platform.
    */
   public static final String DATABASENAME = "Sybase";
-  /**
-   * The standard Sybase jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "com.sybase.jdbc2.jdbc.SybDriver";
-  /**
-   * The old Sybase jdbc driver.
-   */
-  public static final String JDBC_DRIVER_OLD = "com.sybase.jdbc.SybDriver";
-  /**
-   * The sub protocol used by the standard Sybase driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "sybase:Tds";
 
   /**
    * The maximum size that text and binary columns can have.

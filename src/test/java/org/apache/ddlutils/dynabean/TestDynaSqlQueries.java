@@ -27,6 +27,7 @@ import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.io.TestAlteration;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.ModelBasedResultSetIterator;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
@@ -177,7 +178,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       modelXml = "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
         "  <table name='TestTable'>\n" +

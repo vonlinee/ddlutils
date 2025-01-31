@@ -22,6 +22,7 @@ package org.apache.ddlutils.io;
 import junit.framework.Test;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import java.math.BigDecimal;
@@ -2523,7 +2524,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2570,7 +2571,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2612,7 +2613,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * Tests making a primary column auto increment.
    */
   public void testPKColumnMakeAutoIncrement() {
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2652,7 +2653,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * Tests making a primary column no longer auto increment.
    */
   public void testPKColumnUnmakeAutoIncrement() {
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2698,7 +2699,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2764,7 +2765,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2830,7 +2831,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2896,7 +2897,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -2965,7 +2966,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -3028,7 +3029,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -3086,7 +3087,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -3145,7 +3146,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       return;
     }
 
-    boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
+    boolean isSybase = BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName());
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +

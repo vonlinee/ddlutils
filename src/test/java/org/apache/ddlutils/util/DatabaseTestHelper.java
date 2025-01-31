@@ -19,7 +19,6 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
-import junit.framework.Assert;
 import junit.framework.AssertionFailedError;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.logging.Log;
@@ -33,11 +32,11 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Class that provides utility stuff for cpmaring data in databases.
+ * Class that provides utility stuff for comparing data in databases.
  *
  * @version $Revision: 264616 $
  */
-public class DatabaseTestHelper extends Assert {
+public class DatabaseTestHelper {
   /**
    * The log for this class.
    */

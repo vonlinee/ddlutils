@@ -25,6 +25,7 @@ import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.apache.ddlutils.util.StringUtils;
 
@@ -207,7 +208,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       modelXml = "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
         "  <table name='roundtrip'>\n" +
@@ -236,7 +237,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       modelXml = "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
         "  <table name='roundtrip'>\n" +
@@ -263,7 +264,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
 
-    if (SybasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.SYBASE.getName().equals(getPlatform().getName())) {
       modelXml = "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
         "  <table name='roundtrip'>\n" +

@@ -33,7 +33,7 @@ public class TestSybasePlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return SybasePlatform.DATABASENAME;
+    return BuiltinDriverType.SYBASE.getName();
   }
 
   /**

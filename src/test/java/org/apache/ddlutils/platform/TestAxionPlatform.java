@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.axion.AxionPlatform;
 
 /**
  * Tests the Axion platform.
@@ -31,8 +30,9 @@ public class TestAxionPlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
-    return AxionPlatform.DATABASENAME;
+    return BuiltinDriverType.Axion.getName();
   }
 
   /**
