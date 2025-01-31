@@ -216,9 +216,9 @@ public class SapDbPlatform extends PlatformImplBase {
     for (int colIdx = 0; colIdx < newPKColumnNames.length; colIdx++) {
       newPKColumns[colIdx] = changedTable.findColumn(newPKColumnNames[colIdx], isDelimitedIdentifierModeOn());
     }
-
-    ((SapDbBuilder) getSqlBuilder()).dropPrimaryKey(changedTable);
-    getSqlBuilder().createPrimaryKey(changedTable, newPKColumns);
+    SapDbBuilder sqlBuilder = (SapDbBuilder) getSqlBuilder();
+    sqlBuilder.dropPrimaryKey(changedTable);
+    sqlBuilder.createPrimaryKey(changedTable, newPKColumns);
     change.apply(currentModel, isDelimitedIdentifierModeOn());
   }
 
@@ -235,16 +235,12 @@ public class SapDbPlatform extends PlatformImplBase {
                             ColumnDefinitionChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
     Column changedColumn = changedTable.findColumn(change.getChangedColumn(), isDelimitedIdentifierModeOn());
-
+    SapDbBuilder sqlBuilder = (SapDbBuilder) getSqlBuilder();
     if (!Objects.equals(changedColumn.getDefaultValue(), change.getNewColumn().getDefaultValue())) {
-      ((SapDbBuilder) getSqlBuilder()).changeColumnDefaultValue(changedTable,
-        changedColumn,
-        change.getNewColumn().getDefaultValue());
+      sqlBuilder.changeColumnDefaultValue(changedTable, changedColumn, change.getNewColumn().getDefaultValue());
     }
     if (changedColumn.isRequired() != change.getNewColumn().isRequired()) {
-      ((SapDbBuilder) getSqlBuilder()).changeColumnRequiredStatus(changedTable,
-        changedColumn,
-        change.getNewColumn().isRequired());
+      sqlBuilder.changeColumnRequiredStatus(changedTable, changedColumn, change.getNewColumn().isRequired());
     }
     change.apply(currentModel, isDelimitedIdentifierModeOn());
   }

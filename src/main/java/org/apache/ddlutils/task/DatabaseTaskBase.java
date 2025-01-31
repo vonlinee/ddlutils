@@ -276,7 +276,7 @@ public abstract class DatabaseTaskBase extends Task {
    *
    * @return The platform configuration
    */
-  protected PlatformConfiguration getPlatformConfiguration() {
+  public PlatformConfiguration getPlatformConfiguration() {
     return _platformConf;
   }
 
@@ -285,7 +285,7 @@ public abstract class DatabaseTaskBase extends Task {
    *
    * @return The platform
    */
-  protected Platform getPlatform() {
+  public Platform getPlatform() {
     return _platformConf.getPlatform();
   }
 

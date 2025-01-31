@@ -31,7 +31,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Conatains information about the database platform such as supported features and native type mappings.
+ * Contains information about the database platform such as supported features and native type mappings.
  *
  * @version $Revision: 289996 $
  */
@@ -56,7 +56,7 @@ public class PlatformInfo {
   // properties influencing the specification of table constraints
 
   /**
-   * Whether primary key constraints are embedded inside the create table statement.
+   * Whether primary key constraints are embedded inside the creation table statement.
    */
   private boolean _primaryKeyEmbedded = true;
 
@@ -71,7 +71,7 @@ public class PlatformInfo {
   private boolean _mixingIdentityAndNormalPrimaryKeyColumnsSupported = true;
 
   /**
-   * Whether foreign key constraints are embedded inside the create table statement.
+   * Whether foreign key constraints are embedded inside the creation table statement.
    */
   private boolean _foreignKeysEmbedded = false;
 
@@ -86,7 +86,7 @@ public class PlatformInfo {
   private boolean _indicesSupported = true;
 
   /**
-   * Whether indices are embedded inside the create table statement.
+   * Whether indices are embedded inside the creation table statement.
    */
   private boolean _indicesEmbedded = false;
 
@@ -194,7 +194,7 @@ public class PlatformInfo {
   private int _maxForeignKeyNameLength = -1;
 
   /**
-   * The string used for delimiting SQL identifiers, eg. table names, column names etc.
+   * The string used for delimiting SQL identifiers, e.g. table names, column names etc.
    */
   private String _delimiterToken = "\"";
 
@@ -348,7 +348,7 @@ public class PlatformInfo {
 
   /**
    * Determines whether primary key constraints are embedded in the creation
-   * table clause or as seperate alter table statements. The default is
+   * table clause or as separate alter table statements. The default is
    * embedded pks.
    *
    * @return <code>true</code> if pk constraints are embedded
@@ -359,7 +359,7 @@ public class PlatformInfo {
 
   /**
    * Specifies whether the primary key constraints are embedded in the creation
-   * table clause or as seperate alter table statements.
+   * table clause or as separate alter table statements.
    *
    * @param primaryKeyEmbedded Whether pk constraints are embedded
    */
@@ -388,7 +388,7 @@ public class PlatformInfo {
   /**
    * Determines whether primary key can contain identity and non-identity columns at the same time.
    *
-   * @return <code>true</code> if idenity and non-identity columns can be mixed in the pk
+   * @return <code>true</code> if identity and non-identity columns can be mixed in the pk
    */
   public boolean isMixingIdentityAndNormalPrimaryKeyColumnsSupported() {
     return _mixingIdentityAndNormalPrimaryKeyColumnsSupported;
@@ -397,7 +397,7 @@ public class PlatformInfo {
   /**
    * Specifies whether primary key can contain identity and non-identity columns at the same time.
    *
-   * @param mixingIdentityAndNormalPrimaryKeyColumnsSupported Whether idenity and non-identity columns
+   * @param mixingIdentityAndNormalPrimaryKeyColumnsSupported Whether identity and non-identity columns
    *                                                          can be mixed in the pk
    */
   public void setMixingIdentityAndNormalPrimaryKeyColumnsSupported(boolean mixingIdentityAndNormalPrimaryKeyColumnsSupported) {
@@ -405,8 +405,8 @@ public class PlatformInfo {
   }
 
   /**
-   * Determines whether foreign key constraints are embedded in the create
-   * table clause or as seperate alter table statements. Per default,
+   * Determines whether foreign key constraints are embedded in the creation
+   * table clause or as separate alter table statements. Per default,
    * foreign keys are external.
    *
    * @return <code>true</code> if fk constraints are embedded
@@ -416,8 +416,8 @@ public class PlatformInfo {
   }
 
   /**
-   * Specifies whether foreign key constraints are embedded in the create
-   * table clause or as seperate alter table statements.
+   * Specifies whether foreign key constraints are embedded in the creation
+   * table clause or as separate alter table statements.
    *
    * @param foreignKeysEmbedded Whether fk constraints are embedded
    */
@@ -462,8 +462,8 @@ public class PlatformInfo {
   }
 
   /**
-   * Determines whether the indices are embedded in the create table clause
-   * or as seperate statements. Per default, indices are external.
+   * Determines whether the indices are embedded in the creation table clause
+   * or as separate statements. Per default, indices are external.
    *
    * @return <code>true</code> if indices are embedded
    */
@@ -472,8 +472,8 @@ public class PlatformInfo {
   }
 
   /**
-   * Specifies whether indices are embedded in the create table clause or
-   * as seperate alter table statements.
+   * Specifies whether indices are embedded in the creation table clause or
+   * as separate alter table statements.
    *
    * @param indicesEmbedded Whether indices are embedded
    */
@@ -562,7 +562,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Determines whether the database will make an idenity column automatically required.
+   * Determines whether the database will make an identity column automatically required.
    *
    * @return <code>true</code> if identity columns are automatically required
    */
@@ -726,7 +726,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Determines whether the platform is allows the explicit specification of values for
+   * Determines whether the platform is allowing the explicit specification of values for
    * identity columns in INSERT/UPDATE statements.
    *
    * @return <code>true</code> if values for identity columns can be specified
@@ -736,7 +736,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Specifies whether the platform is allows the explicit specification of values for
+   * Specifies whether the platform is allowing the explicit specification of values for
    * identity columns in INSERT/UPDATE statements.
    *
    * @param identityOverrideAllowed <code>true</code> if values for identity columns can be specified
@@ -874,7 +874,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Returns the text that is used to delimit identifiers (eg. table names).
+   * Returns the text that is used to delimit identifiers (e.g. table names).
    * Per default, this is a double quotation character (").
    *
    * @return The delimiter text
@@ -884,7 +884,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Sets the text that is used to delimit identifiers (eg. table names).
+   * Sets the text that is used to delimit identifiers (e.g. table names).
    *
    * @param delimiterToken The delimiter text
    */
@@ -893,7 +893,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Returns the text that is used for for quoting values (e.g. text) when
+   * Returns the text that is used for quoting values (e.g. text) when
    * printing default values and in generates insert/update/delete statements.
    * Per default, this is a single quotation character (').
    *
@@ -975,7 +975,7 @@ public class PlatformInfo {
    * @return The native type or <code>null</code> if there isn't one defined
    */
   public String getNativeType(int typeCode) {
-    return (String) _nativeTypes.get(typeCode);
+    return _nativeTypes.get(typeCode);
   }
 
   /**
@@ -989,7 +989,7 @@ public class PlatformInfo {
    * @return The target jdbc type
    */
   public int getTargetJdbcType(int typeCode) {
-    Integer targetJdbcType = (Integer) _targetJdbcTypes.get(typeCode);
+    Integer targetJdbcType = _targetJdbcTypes.get(typeCode);
 
     return targetJdbcType == null ? typeCode : targetJdbcType;
   }
@@ -1057,9 +1057,7 @@ public class PlatformInfo {
       Field sourceType = Types.class.getField(jdbcTypeName);
       Field targetType = Types.class.getField(targetJdbcTypeName);
 
-      if ((sourceType != null) && (targetType != null)) {
-        addNativeTypeMapping(sourceType.getInt(null), nativeType, targetType.getInt(null));
-      }
+      addNativeTypeMapping(sourceType.getInt(null), nativeType, targetType.getInt(null));
     } catch (Exception ex) {
       // ignore -> won't be defined
       _log.warn("Cannot add native type mapping for undefined jdbc type " + jdbcTypeName + ", target jdbc type " + targetJdbcTypeName, ex);
@@ -1125,7 +1123,7 @@ public class PlatformInfo {
    * @return The default size or <code>null</code> if none is defined
    */
   public Integer getDefaultSize(int jdbcTypeCode) {
-    return (Integer) _typesDefaultSizes.get(jdbcTypeCode);
+    return _typesDefaultSizes.get(jdbcTypeCode);
   }
 
   /**
@@ -1285,7 +1283,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Determiones whether the two ON UPDATE actions are equivalent. Equivalent actions will not
+   * Determines whether the two ON UPDATE actions are equivalent. Equivalent actions will not
    * cause a foreign key to be changed/recreated when altering a database.
    *
    * @param actionA The first action
@@ -1324,7 +1322,7 @@ public class PlatformInfo {
   }
 
   /**
-   * Determiones whether the two ON DELETE actions are equivalent. Equivalent actions will not
+   * Determines whether the two ON DELETE actions are equivalent. Equivalent actions will not
    * cause a foreign key to be changed/recreated when altering a database.
    *
    * @param actionA The first action

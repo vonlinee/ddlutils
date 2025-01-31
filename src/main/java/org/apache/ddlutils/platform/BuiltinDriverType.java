@@ -16,7 +16,7 @@ public enum BuiltinDriverType implements DriverType {
   Axion("Axion", "org.axiondb.jdbc.AxionDriver", "axiondb"),
 
   /**
-   * A subprotocol used by the DB2 network driver.
+   * A sub-protocol used by the DB2 network driver.
    */
   Cloudscape1("Cloudscape", "org.hsqldb.jdbcDriver", "db2j:net"),
 
@@ -125,7 +125,7 @@ public enum BuiltinDriverType implements DriverType {
   JTDS_SQLSERVER("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "jtds:sqlserver"),
 
   /**
-   * The subprotocol used by the JNetDirect SQLServer driver.
+   * The sub-protocol used by the JNetDirect SQLServer driver.
    */
   JSQLCONNECT_SQLSERVER("MsSql", "com.jnetdirect.jsql.JSQLDriver", "JSQLConnect"),
 
@@ -135,22 +135,22 @@ public enum BuiltinDriverType implements DriverType {
   INET_SQLSERVER7_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER7_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER7A_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7a"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER7A_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7a"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER6_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae6"),
 
@@ -160,12 +160,12 @@ public enum BuiltinDriverType implements DriverType {
   INET_SQLSERVER6_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae6"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae"),
 
   /**
-   * A subprotocol used by the pooled i-net SQLServer driver.
+   * A sub-protocol used by the pooled i-net SQLServer driver.
    */
   INET_SQLSERVER_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae"),
 
@@ -226,12 +226,12 @@ public enum BuiltinDriverType implements DriverType {
   Interbase("Interbase", "interbase.interclient.Driver", "interbase"),
 
   /**
-   * The subprotocol internally returned by the newer SQL Server 2005 driver.
+   * The sub-protocol internally returned by the newer SQL Server 2005 driver.
    */
   SQLServer2005_NEW("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqljdbc"),
 
   /**
-   * The subprotocol recommended for the newer SQL Server 2005 driver.
+   * The sub-protocol recommended for the newer SQL Server 2005 driver.
    */
   SQLServer2005_NEW1("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqlserver"),
 
