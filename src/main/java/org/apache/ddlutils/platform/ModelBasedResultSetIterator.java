@@ -119,7 +119,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   }
 
   /**
-   * Initializes this iterator from the resultset metadata.
+   * Initializes this iterator from the result set metadata.
    *
    * @param model The database model
    */
@@ -218,7 +218,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   public DynaBean next() throws DatabaseOperationException {
     advanceIfNecessary();
     if (_isAtEnd) {
-      throw new NoSuchElementException("No more elements in the resultset");
+      throw new NoSuchElementException("No more elements in the result set");
     } else {
       try {
         DynaBean bean = _dynaClass.newInstance();
@@ -247,7 +247,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
         return bean;
       } catch (Exception ex) {
         cleanUp();
-        throw new DatabaseOperationException("Exception while reading the row from the resultset", ex);
+        throw new DatabaseOperationException("Exception while reading the row from the result set", ex);
       }
     }
   }
@@ -259,7 +259,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   public void advance() {
     advanceIfNecessary();
     if (_isAtEnd) {
-      throw new NoSuchElementException("No more elements in the resultset");
+      throw new NoSuchElementException("No more elements in the result set");
     } else {
       _needsAdvancing = true;
     }
@@ -297,7 +297,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   }
 
   /**
-   * Closes the resources (connection, statement, resultset).
+   * Closes the resources (connection, statement, result set).
    */
   public void cleanUp() {
     if (_cleanUpAfterFinish && (_resultSet != null)) {

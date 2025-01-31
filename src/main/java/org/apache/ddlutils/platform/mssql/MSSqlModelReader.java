@@ -70,7 +70,7 @@ public class MSSqlModelReader extends JdbcModelReader {
     setDefaultTablePattern("%");
 
     try {
-      _isoDatePattern = Pattern.compile("'(\\d{4}\\-\\d{2}\\-\\d{2})'");
+      _isoDatePattern = Pattern.compile("'(\\d{4}-\\d{2}-\\d{2})'");
       _isoTimePattern = Pattern.compile("'(\\d{2}:\\d{2}:\\d{2})'");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);

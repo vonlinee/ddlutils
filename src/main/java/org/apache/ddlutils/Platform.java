@@ -36,7 +36,7 @@ import java.util.Map;
 
 /**
  * A platform encapsulates the database-related functionality such as performing queries
- * and manipulations. It also contains an sql builder that is specific to this platform.
+ * and manipulations. It also contains a sql builder that is specific to this platform.
  *
  * @version $Revision: 231110 $
  */

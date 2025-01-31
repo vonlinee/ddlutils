@@ -118,7 +118,7 @@ public class JdbcModelReader {
   /**
    * Creates a new model reader instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public JdbcModelReader(Platform platform) {
     _platform = platform;
@@ -462,8 +462,8 @@ public class JdbcModelReader {
    * @param connection The connection
    * @param name       The name of the resulting database; <code>null</code> when the default name (the catalog)
    *                   is desired which might be <code>null</code> itself though
-   * @param catalog    The catalog to acess in the database; use <code>null</code> for the default value
-   * @param schema     The schema to acess in the database; use <code>null</code> for the default value
+   * @param catalog    The catalog to access in the database; use <code>null</code> for the default value
+   * @param schema     The schema to access in the database; use <code>null</code> for the default value
    * @param tableTypes The table types to process; use <code>null</code> or an empty list for the default ones
    * @return The database model
    */
@@ -500,8 +500,8 @@ public class JdbcModelReader {
   /**
    * Reads the tables from the database metadata.
    *
-   * @param catalog       The catalog to acess in the database; use <code>null</code> for the default value
-   * @param schemaPattern The schema(s) to acess in the database; use <code>null</code> for the default value
+   * @param catalog       The catalog to access in the database; use <code>null</code> for the default value
+   * @param schemaPattern The schema(s) to access in the database; use <code>null</code> for the default value
    * @param tableTypes    The table types to process; use <code>null</code> or an empty list for the default ones
    * @return The tables
    */

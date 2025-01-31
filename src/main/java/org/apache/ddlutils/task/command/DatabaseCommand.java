@@ -75,7 +75,7 @@ public abstract class DatabaseCommand extends Command {
    *
    * @return The database type
    */
-  protected String getDatabaseType() {
+  public String getDatabaseType() {
     return _platformConf.getDatabaseType();
   }
 
@@ -84,7 +84,7 @@ public abstract class DatabaseCommand extends Command {
    *
    * @return The data source
    */
-  protected DataSource getDataSource() {
+  public DataSource getDataSource() {
     return _platformConf.getDataSource();
   }
 
@@ -111,7 +111,7 @@ public abstract class DatabaseCommand extends Command {
    *
    * @param platformConf The platform configuration
    */
-  protected void setPlatformConfiguration(PlatformConfiguration platformConf) {
+  public void setPlatformConfiguration(PlatformConfiguration platformConf) {
     _platformConf = platformConf;
   }
 
@@ -120,7 +120,7 @@ public abstract class DatabaseCommand extends Command {
    *
    * @return The platform
    */
-  protected Platform getPlatform() throws BuildException {
+  public Platform getPlatform() throws BuildException {
     return _platformConf.getPlatform();
   }
 
@@ -138,7 +138,7 @@ public abstract class DatabaseCommand extends Command {
    * @param platformName The name of the platform
    * @return The filtered parameters
    */
-  protected Map<String, Object> getFilteredParameters(String platformName) {
+  public Map<String, Object> getFilteredParameters(String platformName) {
     LinkedHashMap<String, Object> parameters = new LinkedHashMap<>();
 
     for (Parameter param : _parameters) {

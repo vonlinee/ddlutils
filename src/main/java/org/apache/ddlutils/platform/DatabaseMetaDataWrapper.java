@@ -38,11 +38,11 @@ public class DatabaseMetaDataWrapper {
    */
   private DatabaseMetaData _metaData;
   /**
-   * The catalog to acess in the database.
+   * The catalog to access in the database.
    */
   private String _catalog;
   /**
-   * The schema(s) to acess in the database.
+   * The schema(s) to access in the database.
    */
   private String _schemaPattern;
   /**

@@ -69,7 +69,7 @@ public class Db2ModelReader extends JdbcModelReader {
 
     try {
       _db2TimePattern = Pattern.compile("'(\\d{2}).(\\d{2}).(\\d{2})'");
-      _db2TimestampPattern = Pattern.compile("'(\\d{4}\\-\\d{2}\\-\\d{2})\\-(\\d{2}).(\\d{2}).(\\d{2})(\\.\\d{1,8})?'");
+      _db2TimestampPattern = Pattern.compile("'(\\d{4}-\\d{2}-\\d{2})-(\\d{2}).(\\d{2}).(\\d{2})(\\.\\d{1,8})?'");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }

@@ -57,7 +57,7 @@ public class MckoiPlatform extends PlatformImplBase {
    */
   public static final String JDBC_DRIVER = "com.mckoi.JDBCDriver";
   /**
-   * The subprotocol used by the standard McKoi driver.
+   * The sub protocol used by the standard McKoi driver.
    */
   public static final String JDBC_SUBPROTOCOL = "mckoi";
 

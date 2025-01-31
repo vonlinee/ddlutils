@@ -57,7 +57,7 @@ public class SapDbPlatform extends PlatformImplBase {
    */
   public static final String JDBC_DRIVER = "com.sap.dbtech.jdbc.DriverSapDB";
   /**
-   * The subprotocol used by the standard SapDB/MaxDB driver.
+   * The sub protocol used by the standard SapDB/MaxDB driver.
    */
   public static final String JDBC_SUBPROTOCOL = "sapdb";
 

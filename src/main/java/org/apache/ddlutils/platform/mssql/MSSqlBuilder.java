@@ -54,7 +54,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public MSSqlBuilder(Platform platform) {
     super(platform);

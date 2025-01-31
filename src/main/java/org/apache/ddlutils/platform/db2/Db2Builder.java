@@ -39,7 +39,7 @@ public class Db2Builder extends SqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public Db2Builder(Platform platform) {
     super(platform);
@@ -108,7 +108,7 @@ public class Db2Builder extends SqlBuilder {
   @Override
   public void dropIndex(Table table, Index index) throws IOException {
     // Index names in DB2 are unique to a schema and hence Derby does not
-    // use the ON <tablename> clause
+    // use the ON <tableName> clause
     print("DROP INDEX ");
     printIdentifier(getIndexName(index));
     printEndOfStatement();

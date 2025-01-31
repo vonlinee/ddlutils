@@ -37,7 +37,8 @@ import javax.sql.DataSource;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -184,8 +185,8 @@ public abstract class DatabaseTaskBase extends Task {
 
   /**
    * Specifies whether DdlUtils shall use delimited (quoted) identifiers (such as table and column
-   * names). Most databases convert undelimited identifiers to uppercase and ignore the case of
-   * identifiers when performing any SQL command. Undelimited identifiers also cannot be reserved
+   * names). Most databases convert un-delimited identifiers to uppercase and ignore the case of
+   * identifiers when performing any SQL command. Un-delimited identifiers also cannot be reserved
    * words and can only contain alphanumerical characters and the underscore.<br/>
    * These limitations do not exist for delimited identifiers where identifiers have to be enclosed
    * in double quotes. Delimited identifiers can contain unicode characters, and even reserved
@@ -266,8 +267,8 @@ public abstract class DatabaseTaskBase extends Task {
    *
    * @return The commands
    */
-  protected Iterator<Command> getCommands() {
-    return _commands.iterator();
+  public List<Command> getCommands() {
+    return Collections.unmodifiableList(_commands);
   }
 
   /**
@@ -322,9 +323,7 @@ public abstract class DatabaseTaskBase extends Task {
    * @param model The database model
    */
   protected void executeCommands(Database model) throws BuildException {
-    for (Iterator<Command> it = getCommands(); it.hasNext(); ) {
-      Command cmd = it.next();
-
+    for (Command cmd : getCommands()) {
       if (cmd.isRequiringModel() && (model == null)) {
         throw new BuildException("No database model specified");
       }

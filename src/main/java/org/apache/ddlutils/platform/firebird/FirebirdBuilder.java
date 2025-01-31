@@ -41,7 +41,7 @@ public class FirebirdBuilder extends SqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public FirebirdBuilder(Platform platform) {
     super(platform);
@@ -190,7 +190,7 @@ public class FirebirdBuilder extends SqlBuilder {
   @Override
   public void dropIndex(Table table, Index index) throws IOException {
     // Index names in Firebird are unique to a schema and hence Firebird does not
-    // use the ON <tablename> clause
+    // use the ON <table name> clause
     print("DROP INDEX ");
     printIdentifier(getIndexName(index));
     printEndOfStatement();

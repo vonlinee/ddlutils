@@ -56,7 +56,7 @@ public class FirebirdPlatform extends PlatformImplBase {
    */
   public static final String JDBC_DRIVER = "org.firebirdsql.jdbc.FBDriver";
   /**
-   * The subprotocol used by the standard Firebird driver.
+   * The sub protocol used by the standard Firebird driver.
    */
   public static final String JDBC_SUBPROTOCOL = "firebirdsql";
 

@@ -26,7 +26,6 @@ import org.apache.ddlutils.model.ModelHelper;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.task.DatabaseTaskBase;
 import org.apache.ddlutils.task.TaskHelper;
-import org.apache.tools.ant.BuildException;
 
 import javax.sql.DataSource;
 
@@ -51,7 +50,7 @@ public class DropTablesCommand extends DatabaseCommand {
    * comma via '\,' if it is part of the table name. Please note that table names are
    * not trimmed which means that whitespace characters should only be present in
    * this string if they are actually part of the table name (i.e. in delimited
-   * identifer mode).
+   * identifier mode).
    *
    * @param tableNameList The comma-separated list of table names
    * @ant.not-required If no table filter is specified, then all tables will be dropped.
@@ -63,7 +62,7 @@ public class DropTablesCommand extends DatabaseCommand {
   /**
    * Sets the regular expression matching the names of the tables to be removed.
    * For case-insensitive matching, an uppercase name can be assumed. If no
-   * regular expressionis specified
+   * regular expressions specified
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
    *                        for details
@@ -77,19 +76,11 @@ public class DropTablesCommand extends DatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public boolean isRequiringModel() {
-    return true;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTaskBase task, Database model) throws CommandExecuteException {
     DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
-      throw new BuildException("No database specified.");
+      throw new CommandExecuteException("No database specified.");
     }
 
     Platform platform = getPlatform();

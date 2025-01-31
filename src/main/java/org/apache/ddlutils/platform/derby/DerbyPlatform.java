@@ -54,7 +54,7 @@ public class DerbyPlatform extends CloudscapePlatform {
    */
   public static final String JDBC_DRIVER_EMBEDDED = "org.apache.derby.jdbc.EmbeddedDriver";
   /**
-   * The subprotocol used by the derby drivers.
+   * The sub protocol used by the derby drivers.
    */
   public static final String JDBC_SUBPROTOCOL = "derby";
 
