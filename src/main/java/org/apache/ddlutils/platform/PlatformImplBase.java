@@ -1447,7 +1447,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     PreparedStatement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     Iterator<DynaBean> answer = null;
 
     try {
@@ -1511,7 +1511,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     Statement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     List<DynaBean> result = new ArrayList<>();
 
     try {
@@ -2565,7 +2565,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   protected Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
     Column column = (table == null ? null : table.findColumn(columnName, isDelimitedIdentifierModeOn()));
-    Object value = null;
+    Object value;
 
     if (column != null) {
       int originalJdbcType = column.getTypeCode();
@@ -2602,7 +2602,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     int originalJdbcType = column.getTypeCode();
     int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
     int jdbcType = originalJdbcType;
-    Object value = null;
+    Object value;
 
     // in general, we're trying to retrieve the value using the original type,
     // but sometimes we also need the target type:

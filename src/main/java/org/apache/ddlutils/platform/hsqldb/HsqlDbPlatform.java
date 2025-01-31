@@ -54,7 +54,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
    */
   public static final String JDBC_DRIVER = "org.hsqldb.jdbcDriver";
   /**
-   * The subprotocol used by the standard Hsqldb driver.
+   * The sub protocol used by the standard Hsqldb driver.
    */
   public static final String JDBC_SUBPROTOCOL = "hsqldb";
 

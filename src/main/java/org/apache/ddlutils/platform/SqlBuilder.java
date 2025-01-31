@@ -117,7 +117,7 @@ public abstract class SqlBuilder {
   /**
    * Creates a new sql builder.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public SqlBuilder(Platform platform) {
     _platform = platform;
@@ -605,7 +605,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates the external foreignkey creation statements for all tables in the database.
+   * Creates the external foreign key creation statements for all tables in the database.
    *
    * @param database The database
    */
@@ -616,7 +616,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates external foreignkey creation statements if necessary.
+   * Creates external foreign key creation statements if necessary.
    *
    * @param database The database model
    * @param table    The table
@@ -712,7 +712,7 @@ public abstract class SqlBuilder {
    * @param table    The table
    */
   public void dropTable(Database database, Table table) throws IOException {
-    // we're dropping the foreignkeys to the table first
+    // we're dropping the foreign key to the table first
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table otherTable = database.getTable(idx);
       ForeignKey[] fks = otherTable.getForeignKeys();
@@ -744,7 +744,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates external foreignkey drop statements.
+   * Creates external foreign key drop statements.
    *
    * @param table The table
    */
@@ -755,7 +755,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Generates the statement to drop a foreignkey constraint from the database using an
+   * Generates the statement to drop a foreign key constraint from the database using an
    * alter table statement.
    *
    * @param table      The table
@@ -1096,7 +1096,7 @@ public abstract class SqlBuilder {
     if (((startCut == 0) || (name.charAt(startCut - 1) != '_')) &&
       ((startCut + delta + 1 == originalLength) || (name.charAt(startCut + delta + 1) != '_'))) {
       // just to make sure that there isn't already a '_' right before or right
-      // after the cutting place (which would look odd with an aditional one)
+      // after the cutting place (which would look odd with an additional one)
       result.append("_");
     }
     result.append(name, startCut + delta + 1, originalLength);
@@ -1482,7 +1482,7 @@ public abstract class SqlBuilder {
    * specified name, this method determines a unique name for it. The name will also
    * be shortened to honor the maximum identifier length imposed by the platform.
    *
-   * @param table The table for whith the foreign key is defined
+   * @param table The table for which the foreign key is defined
    * @param fk    The foreign key
    * @return The name
    */
@@ -1721,7 +1721,7 @@ public abstract class SqlBuilder {
    * Writes the onDelete action for the given foreign key.
    *
    * @param table      The table
-   * @param foreignKey The foreignkey
+   * @param foreignKey The foreign key
    */
   protected void writeForeignKeyOnDeleteAction(Table table, ForeignKey foreignKey) throws IOException {
     CascadeActionEnum action = foreignKey.getOnDelete();
@@ -1764,7 +1764,7 @@ public abstract class SqlBuilder {
    * Writes the onDelete action for the given foreign key.
    *
    * @param table      The table
-   * @param foreignKey The foreignkey
+   * @param foreignKey The foreign key
    */
   protected void writeForeignKeyOnUpdateAction(Table table, ForeignKey foreignKey) throws IOException {
     CascadeActionEnum action = foreignKey.getOnUpdate();
@@ -1864,7 +1864,7 @@ public abstract class SqlBuilder {
    *
    * @param identifier The identifier
    * @return The delimited version of the identifier unless the platform is configured
-   * to use undelimited identifiers; in that case, the identifier is returned unchanged
+   * to use un-delimited identifiers; in that case, the identifier is returned unchanged
    */
   protected String getDelimitedIdentifier(String identifier) {
     if (getPlatform().isDelimitedIdentifierModeOn()) {
