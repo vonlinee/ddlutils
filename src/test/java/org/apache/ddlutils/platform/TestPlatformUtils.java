@@ -53,7 +53,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Axion platform via its JDBC driver.
    */
   public void testAxionDriver() {
-    assertEquals(BuiltinDriverType.Axion.getName(),
+    assertEquals(BuiltinDriverType.AXION.getName(),
       _platformUtils.determineDatabaseType("org.axiondb.jdbc.AxionDriver", null));
   }
 
@@ -61,9 +61,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Axion platform via JDBC connection urls.
    */
   public void testAxionUrl() {
-    assertEquals(BuiltinDriverType.Axion.getName(),
+    assertEquals(BuiltinDriverType.AXION.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb"));
-    assertEquals(BuiltinDriverType.Axion.getName(),
+    assertEquals(BuiltinDriverType.AXION.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb:/tmp/testdbdir"));
   }
 
@@ -71,17 +71,17 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Db2 platform via its JDBC drivers.
    */
   public void testDb2Driver() {
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType("com.ibm.db2.jcc.DB2Driver", null));
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType("COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", null));
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType("COM.ibm.db2.jdbc.app.DB2Driver", null));
     // DataDirect Connect
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType("com.ddtek.jdbc.db2.DB2Driver", null));
     // i-net
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType("com.inet.drda.DRDADriver", null));
   }
 
@@ -89,17 +89,17 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Db2 platform via JDBC connection urls.
    */
   public void testDb2Url() {
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2://sysmvs1.stl.ibm.com:5021/san_jose"));
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2os390://sysmvs1.stl.ibm.com:5021/san_jose"));
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2os390sqlj://sysmvs1.stl.ibm.com:5021/san_jose"));
     // DataDirect Connect
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:db2://server1:50000;DatabaseName=jdbc;User=test;Password=secret"));
     // i-net
-    assertEquals(BuiltinDriverType.Db2.getName(),
+    assertEquals(BuiltinDriverType.DB2.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdb2://server1:50000"));
   }
 
@@ -107,9 +107,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Cloudscape platform via JDBC connection urls.
    */
   public void testCloudscapeUrl() {
-    assertEquals(BuiltinDriverType.Cloudscape1.getName(),
+    assertEquals(BuiltinDriverType.CLOUDSCAPE1.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:db2j:net:database"));
-    assertEquals(BuiltinDriverType.Cloudscape1.getName(),
+    assertEquals(BuiltinDriverType.CLOUDSCAPE1.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:cloudscape:net:database"));
   }
 
@@ -117,9 +117,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Derby platform via its JDBC drivers.
    */
   public void testDerbyDriver() {
-    assertEquals(BuiltinDriverType.Derby.getName(),
+    assertEquals(BuiltinDriverType.DERBY.getName(),
       _platformUtils.determineDatabaseType("org.apache.derby.jdbc.ClientDriver", null));
-    assertEquals(BuiltinDriverType.Derby.getName(),
+    assertEquals(BuiltinDriverType.DERBY.getName(),
       _platformUtils.determineDatabaseType("org.apache.derby.jdbc.EmbeddedDriver", null));
   }
 
@@ -127,7 +127,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Derby platform via JDBC connection urls.
    */
   public void testDerbyUrl() {
-    assertEquals(BuiltinDriverType.Derby.getName(),
+    assertEquals(BuiltinDriverType.DERBY.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:derby:sample"));
   }
 
@@ -135,7 +135,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Firebird platform via its JDBC driver.
    */
   public void testFirebirdDriver() {
-    assertEquals(BuiltinDriverType.Firebird.getName(),
+    assertEquals(BuiltinDriverType.FIREBIRD.getName(),
       _platformUtils.determineDatabaseType("org.firebirdsql.jdbc.FBDriver", null));
   }
 
@@ -143,13 +143,13 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Firebird platform via JDBC connection urls.
    */
   public void testFirebirdUrl() {
-    assertEquals(BuiltinDriverType.Firebird.getName(),
+    assertEquals(BuiltinDriverType.FIREBIRD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql://localhost:8080/path/to/db.fdb"));
-    assertEquals(BuiltinDriverType.Firebird.getName(),
+    assertEquals(BuiltinDriverType.FIREBIRD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:native:localhost/8080:/path/to/db.fdb"));
-    assertEquals(BuiltinDriverType.Firebird.getName(),
+    assertEquals(BuiltinDriverType.FIREBIRD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:local://localhost:8080:/path/to/db.fdb"));
-    assertEquals(BuiltinDriverType.Firebird.getName(),
+    assertEquals(BuiltinDriverType.FIREBIRD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:embedded:localhost/8080:/path/to/db.fdb"));
   }
 
@@ -173,7 +173,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Interbase platform via its JDBC driver.
    */
   public void testInterbaseDriver() {
-    assertEquals(BuiltinDriverType.Interbase.getName(),
+    assertEquals(BuiltinDriverType.INTERBASE.getName(),
       _platformUtils.determineDatabaseType("interbase.interclient.Driver", null));
   }
 
@@ -181,7 +181,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Interbase platform via JDBC connection urls.
    */
   public void testInterbaseUrl() {
-    assertEquals(BuiltinDriverType.Interbase.getName(),
+    assertEquals(BuiltinDriverType.INTERBASE.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:interbase://localhost/e:/testbed/database/employee.gdb"));
   }
 
@@ -189,7 +189,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the McKoi platform via its JDBC driver.
    */
   public void testMckoiDriver() {
-    assertEquals(BuiltinDriverType.McKoi.getName(),
+    assertEquals(BuiltinDriverType.MCKOI.getName(),
       _platformUtils.determineDatabaseType("com.mckoi.JDBCDriver", null));
   }
 
@@ -197,9 +197,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the McKoi platform via JDBC connection urls.
    */
   public void testMckoiUrl() {
-    assertEquals(BuiltinDriverType.McKoi.getName(),
+    assertEquals(BuiltinDriverType.MCKOI.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mckoi:local://./db.conf"));
-    assertEquals(BuiltinDriverType.McKoi.getName(),
+    assertEquals(BuiltinDriverType.MCKOI.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mckoi://db.myhost.org/"));
   }
 
@@ -207,16 +207,16 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Microsoft Sql Server platform via its JDBC drivers.
    */
   public void testMsSqlDriver() {
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType("com.microsoft.jdbc.sqlserver.SQLServerDriver", null));
     // DataDirect Connect
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType("com.ddtek.jdbc.sqlserver.SQLServerDriver", null));
     // JNetDirect JSQLConnect
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType("com.jnetdirect.jsql.JSQLDriver", null));
     // i-net
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType("com.inet.tds.TdsDriver", null));
   }
 
@@ -224,41 +224,41 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Microsoft Sql Server platform via JDBC connection urls.
    */
   public void testMsSqlUrl() {
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:microsoft:sqlserver://localhost:1433"));
     // DataDirect Connect
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sqlserver://server1:1433;User=test;Password=secret"));
     // JNetDirect JSQLConnect
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:JSQLConnect://localhost/database=master/user=sa/sqlVersion=6"));
     // i-net
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdae:210.1.164.19:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdae7:localHost:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetdae7a://MyServer/pipe/sql/query"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae:210.1.164.19:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7:localHost:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7a://MyServer/pipe/sql/query"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae:210.1.164.19:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7:localHost:1433"));
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7a://MyServer/pipe/sql/query"));
     // jTDS
-    assertEquals(BuiltinDriverType.SQLServer.getName(),
+    assertEquals(BuiltinDriverType.SQLSERVER.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:jtds:sqlserver://localhost:8080/test"));
   }
 
@@ -266,9 +266,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the MySql platform via its JDBC drivers.
    */
   public void testMySqlDriver() {
-    assertEquals(BuiltinDriverType.MySql.getName(),
+    assertEquals(BuiltinDriverType.MYSQL.getName(),
       _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
-    assertEquals(BuiltinDriverType.MySql.getName(),
+    assertEquals(BuiltinDriverType.MYSQL.getName(),
       _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
   }
 
@@ -276,7 +276,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the MySql platform via JDBC connection urls.
    */
   public void testMySqlUrl() {
-    assertEquals(BuiltinDriverType.MySql.getName(),
+    assertEquals(BuiltinDriverType.MYSQL.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
   }
 
@@ -284,9 +284,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Oracle 8 platform via its JDBC drivers.
    */
   public void testOracleDriver() {
-    assertEquals(BuiltinDriverType.Oracle8.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8.getName(),
       _platformUtils.determineDatabaseType("oracle.jdbc.driver.OracleDriver", null));
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType("oracle.jdbc.dnlddriver.OracleDriver", null));
     // DataDirect Connect
     assertEquals(BuiltinDriverType.DATADIRECT_ORACLE.getName(),
@@ -300,19 +300,19 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the Oracle 8 platform via JDBC connection urls.
    */
   public void testOracleUrl() {
-    assertEquals(BuiltinDriverType.Oracle8.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:thin:@myhost:1521:orcl"));
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:oci8:@(description=(address=(host=myhost)(protocol=tcp)(port=1521))(connect_data=(sid=orcl)))"));
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
     // DataDirect Connect
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:datadirect:oracle://server3:1521;ServiceName=ORCL;User=test;Password=secret"));
     // i-net
-    assertEquals(BuiltinDriverType.Oracle8_THIN_OLD.getName(),
+    assertEquals(BuiltinDriverType.ORACLE8_THIN_OLD.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:inetora:www.inetsoftware.de:1521:orcl?traceLevel=2"));
   }
 
@@ -320,7 +320,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the PostgreSql platform via its JDBC driver.
    */
   public void testPostgreSqlDriver() {
-    assertEquals(BuiltinDriverType.PostgreSql.getName(),
+    assertEquals(BuiltinDriverType.POSTGRE_SQL.getName(),
       _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
   }
 
@@ -328,9 +328,9 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the PostgreSql platform via JDBC connection urls.
    */
   public void testPostgreSqlUrl() {
-    assertEquals(BuiltinDriverType.PostgreSql.getName(),
+    assertEquals(BuiltinDriverType.POSTGRE_SQL.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
-    assertEquals(BuiltinDriverType.PostgreSql.getName(),
+    assertEquals(BuiltinDriverType.POSTGRE_SQL.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
   }
 
@@ -338,7 +338,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the SapDb platform via its JDBC driver.
    */
   public void testSapDbDriver() {
-    assertEquals(BuiltinDriverType.Sapdb.getName(),
+    assertEquals(BuiltinDriverType.SAPDB.getName(),
       _platformUtils.determineDatabaseType("com.sap.dbtech.jdbc.DriverSapDB", null));
   }
 
@@ -346,7 +346,7 @@ public class TestPlatformUtils extends TestCase {
    * Tests the determination of the SapDb platform via JDBC connection urls.
    */
   public void testSapDbUrl() {
-    assertEquals(BuiltinDriverType.Sapdb.getName(),
+    assertEquals(BuiltinDriverType.SAPDB.getName(),
       _platformUtils.determineDatabaseType(null, "jdbc:sapdb://servermachine:9876/TST"));
   }
 

@@ -112,7 +112,7 @@ public class MySqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.MySql.getName();
+    return BuiltinDriverType.MYSQL.getName();
   }
 
   /**

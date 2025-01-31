@@ -33,7 +33,7 @@ public class TestOracle9Platform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Oracle9.getName();
+    return BuiltinDriverType.ORACLE9.getName();
   }
 
   /**

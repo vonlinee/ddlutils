@@ -107,7 +107,7 @@ public class SapDbPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Sapdb.getName();
+    return BuiltinDriverType.SAPDB.getName();
   }
 
   /**

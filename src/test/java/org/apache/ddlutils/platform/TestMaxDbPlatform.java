@@ -32,7 +32,7 @@ public class TestMaxDbPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.MaxDB.getName();
+    return BuiltinDriverType.MAX_DB.getName();
   }
 
   /**

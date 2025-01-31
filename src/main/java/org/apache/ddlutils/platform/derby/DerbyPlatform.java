@@ -69,7 +69,7 @@ public class DerbyPlatform extends CloudscapePlatform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Derby.getName();
+    return BuiltinDriverType.DERBY.getName();
   }
 
   /**
@@ -78,8 +78,8 @@ public class DerbyPlatform extends CloudscapePlatform {
   @Override
   public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // For Derby, you create databases by simply appending ";create=true" to the connection url
-    if (BuiltinDriverType.Derby.getDriverClassName().equals(jdbcDriverClassName) ||
-      BuiltinDriverType.Derby_EMBEDDED.getDriverClassName().equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.DERBY.getDriverClassName().equals(jdbcDriverClassName) ||
+      BuiltinDriverType.DERBY_EMBEDDED.getDriverClassName().equals(jdbcDriverClassName)) {
       StringBuilder creationUrl = new StringBuilder();
       Connection connection = null;
 

@@ -32,7 +32,7 @@ public class TestAxionPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Axion.getName();
+    return BuiltinDriverType.AXION.getName();
   }
 
   /**

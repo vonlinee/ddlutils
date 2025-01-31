@@ -24,9 +24,6 @@ import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
-import org.apache.ddlutils.platform.mysql.MySql50Platform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 
 import java.util.List;
 import java.util.Properties;
@@ -908,7 +905,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
    */
   public void testDropFKAndCorrespondingIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
-      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
+      BuiltinDriverType.FIREBIRD.getName().equals(getPlatform().getName())) {
       // Firebird does not allow an index and a foreign key in the same table to have the same name
       return;
     }
@@ -973,7 +970,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
    */
   public void testDropFKButNotCorrespondingIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
-      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
+      BuiltinDriverType.FIREBIRD.getName().equals(getPlatform().getName())) {
       // Firebird does not allow an index and a foreign key in the same table to have the same name
       return;
     }
@@ -1045,9 +1042,9 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-      BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
+      BuiltinDriverType.MYSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MYSQL5X.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.FIREBIRD.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1113,9 +1110,9 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-      BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
+      BuiltinDriverType.MYSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MYSQL5X.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.FIREBIRD.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1706,7 +1703,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    if (BuiltinDriverType.McKoi.getName().equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       // McKoi can actually handle this, though interestingly it will result in a null value for the pk
       assertEquals((Object) null, beans.get(0), "pk");
       assertEquals((Object) "test", beans.get(0), "avalue");

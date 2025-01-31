@@ -76,6 +76,6 @@ public class CloudscapePlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Cloudscape1.getName();
+    return BuiltinDriverType.CLOUDSCAPE1.getName();
   }
 }

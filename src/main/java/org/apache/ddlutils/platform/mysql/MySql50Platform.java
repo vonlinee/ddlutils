@@ -50,6 +50,6 @@ public class MySql50Platform extends MySqlPlatform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.MySql50.getName();
+    return BuiltinDriverType.MYSQL5X.getName();
   }
 }

@@ -33,7 +33,7 @@ public class TestDB2Platform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Db2.getName();
+    return BuiltinDriverType.DB2.getName();
   }
 
   /**

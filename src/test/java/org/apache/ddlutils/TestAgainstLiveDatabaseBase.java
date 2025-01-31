@@ -619,8 +619,8 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getLog().error("Could not clear database", ex);
       }
     }
-    if (BuiltinDriverType.Firebird.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
+    if (BuiltinDriverType.FIREBIRD.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.INTERBASE.getName().equals(getPlatform().getName())) {
       Connection connection = null;
 
       try {

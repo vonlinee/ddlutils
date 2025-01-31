@@ -32,7 +32,7 @@ public class TestDerbyPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Derby.getName();
+    return BuiltinDriverType.DERBY.getName();
   }
 
   /**

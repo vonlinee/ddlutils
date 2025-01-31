@@ -46,6 +46,6 @@ public class MaxDbPlatform extends SapDbPlatform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.MaxDB.getName();
+    return BuiltinDriverType.MAX_DB.getName();
   }
 }

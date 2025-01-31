@@ -35,7 +35,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.SQLServer.getName();
+    return BuiltinDriverType.SQLSERVER.getName();
   }
 
   /**

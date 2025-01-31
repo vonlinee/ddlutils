@@ -42,6 +42,6 @@ public class Oracle10Platform extends Oracle9Platform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Oracle10.getName();
+    return BuiltinDriverType.ORACLE10.getName();
   }
 }

@@ -256,7 +256,7 @@ public abstract class TestPlatformBase extends TestBase {
   /**
    * 读取指定类相同包名下的指定名称的文件文本内容
    *
-   * @param filename 指定名称，带扩展名
+   * @param filename specified filename
    * @return 文本内容
    */
   public final String readString(String filename) {

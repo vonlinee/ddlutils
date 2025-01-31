@@ -33,7 +33,7 @@ public class TestMcKoiPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.McKoi.getName();
+    return BuiltinDriverType.MCKOI.getName();
   }
 
   /**

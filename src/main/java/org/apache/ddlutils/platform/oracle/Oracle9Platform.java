@@ -43,6 +43,6 @@ public class Oracle9Platform extends Oracle8Platform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Oracle9.getName();
+    return BuiltinDriverType.ORACLE9.getName();
   }
 }

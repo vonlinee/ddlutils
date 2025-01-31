@@ -67,7 +67,7 @@ public class AxionPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Axion.getName();
+    return BuiltinDriverType.AXION.getName();
   }
 
   /**
@@ -76,7 +76,7 @@ public class AxionPlatform extends PlatformImplBase {
   @Override
   public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // Axion will create the database automatically when connecting for the first time
-    if (BuiltinDriverType.Axion.getDriverClassName().equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.AXION.getDriverClassName().equals(jdbcDriverClassName)) {
       Connection connection = null;
 
       try {

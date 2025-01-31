@@ -32,7 +32,7 @@ public class TestCloudscapePlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Cloudscape1.getName();
+    return BuiltinDriverType.CLOUDSCAPE1.getName();
   }
 
   /**

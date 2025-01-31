@@ -32,7 +32,7 @@ public class TestInterbasePlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Interbase.getName();
+    return BuiltinDriverType.INTERBASE.getName();
   }
 
   /**

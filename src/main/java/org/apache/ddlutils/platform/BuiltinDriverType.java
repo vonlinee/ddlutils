@@ -13,43 +13,43 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * Axion DB
    */
-  Axion("Axion", "org.axiondb.jdbc.AxionDriver", "axiondb"),
+  AXION("Axion", "org.axiondb.jdbc.AxionDriver", "axiondb"),
 
   /**
    * A sub-protocol used by the DB2 network driver.
    */
-  Cloudscape1("Cloudscape", "org.hsqldb.jdbcDriver", "db2j:net"),
+  CLOUDSCAPE1("Cloudscape", "org.hsqldb.jdbcDriver", "db2j:net"),
 
   /**
    * A sub-protocol used by the DB2 network driver.
    */
-  Cloudscape2("Cloudscape", "org.hsqldb.jdbcDriver", "cloudscape:net"),
+  CLOUDSCAPE2("Cloudscape", "org.hsqldb.jdbcDriver", "cloudscape:net"),
 
   /**
    * The sub-protocol used by the standard DB2 driver.
    */
-  Db2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2"),
-  DB2v8("DB2v8", "com.ibm.db2.jcc.DB2Driver", "db2"),
+  DB2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2"),
+  DB2V8("DB2v8", "com.ibm.db2.jcc.DB2Driver", "db2"),
 
   /**
    * Older name for the jdbc driver.
    */
-  Db2_OLD1("DB2", "COM.ibm.db2.jdbc.app.DB2Driver", "db2"),
+  DB2_OLD1("DB2", "COM.ibm.db2.jdbc.app.DB2Driver", "db2"),
 
   /**
    * Older name for the jdbc driver.
    */
-  Db2_OLD2("DB2", "COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", "db2"),
+  DB2_OLD2("DB2", "COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", "db2"),
 
   /**
    * An alternative sub protocol used by the standard DB2 driver on OS/390.
    */
-  Db2_OS390_1("DB2", "com.ibm.db2.jcc.DB2Driver", "db2os390"),
+  DB2_OS390_1("DB2", "com.ibm.db2.jcc.DB2Driver", "db2os390"),
 
   /**
    * An alternative sub protocol used by the standard DB2 driver on OS/390.
    */
-  Db2_OS390_2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2os390sqlj"),
+  DB2_OS390_2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2os390sqlj"),
 
   /**
    * The DataDirect Connect DB2 jdbc driver.
@@ -64,7 +64,7 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * An alternative sub protocol used by the JTOpen driver on OS/400.
    */
-  Db2_JTOPEN("DB2", "com.ibm.as400.access.AS400JDBCDriver", "as400"),
+  DB2_JTOPEN("DB2", "com.ibm.as400.access.AS400JDBCDriver", "as400"),
 
   /**
    * The standard Sybase jdbc driver.
@@ -105,17 +105,17 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The sub-protocol used by the derby drivers.
    */
-  Derby("Derby", "org.apache.derby.jdbc.ClientDriver", "derby"),
+  DERBY("Derby", "org.apache.derby.jdbc.ClientDriver", "derby"),
 
   /**
    * The sub protocol used by the derby embed drivers.
    */
-  Derby_EMBEDDED("Derby", "org.apache.derby.jdbc.EmbeddedDriver", "derby"),
+  DERBY_EMBEDDED("Derby", "org.apache.derby.jdbc.EmbeddedDriver", "derby"),
 
   /**
    * The sub protocol used by the standard SapDB/MaxDB driver.
    */
-  Sapdb("SapDB", "com.sap.dbtech.jdbc.DriverSapDB", "sapdb"),
+  SAPDB("SapDB", "com.sap.dbtech.jdbc.DriverSapDB", "sapdb"),
 
   // Sql Server
 
@@ -132,42 +132,42 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER7_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7"),
+  INET_SQLSERVER7_POOLED2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER7_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7"),
+  INET_SQLSERVER7_POOLED1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER7A_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7a"),
+  INET_SQLSERVER7A_POOLED2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7a"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER7A_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7a"),
+  INET_SQLSERVER7A_POOLED1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7a"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER6_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae6"),
+  INET_SQLSERVER6_POOLED2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae6"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER6_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae6"),
+  INET_SQLSERVER6_POOLED1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae6"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae"),
+  INET_SQLSERVER_POOLED2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae"),
 
   /**
    * A sub-protocol used by the pooled i-net SQLServer driver.
    */
-  INET_SQLSERVER_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae"),
+  INET_SQLSERVER_POOLED1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae"),
 
   /**
    * A sub-protocol used by the i-net SQLServer driver.
@@ -218,72 +218,76 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The standard Firebird jdbc driver.
    */
-  Firebird("Firebird", "org.firebirdsql.jdbc.FBDriver", "firebirdsql"),
+  FIREBIRD("Firebird", "org.firebirdsql.jdbc.FBDriver", "firebirdsql"),
 
   /**
    * The interbase jdbc driver.
    */
-  Interbase("Interbase", "interbase.interclient.Driver", "interbase"),
+  INTERBASE("Interbase", "interbase.interclient.Driver", "interbase"),
 
   /**
    * The sub-protocol internally returned by the newer SQL Server 2005 driver.
    */
-  SQLServer2005_NEW("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqljdbc"),
+  SQLSERVER2005_NEW("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqljdbc"),
 
   /**
    * The sub-protocol recommended for the newer SQL Server 2005 driver.
    */
-  SQLServer2005_NEW1("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqlserver"),
+  SQLSERVER2005_NEW1("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqlserver"),
 
   /**
    * The standard SQLServer jdbc driver.
    */
-  SQLServer("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "microsoft:sqlserver"),
+  SQLSERVER("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "microsoft:sqlserver"),
 
   /**
    * The standard MySQL jdbc driver.
    */
-  MySql("MySQL", "com.mysql.jdbc.Driver", "mysql"),
+  MYSQL("MySQL", "com.mysql.jdbc.Driver", "mysql"),
 
   /**
    * The standard MySQL jdbc driver above mysql 5.0.
    */
-  MySql50("MySQL5", "com.mysql.jdbc.Driver", "mysql"),
+  MYSQL5X("MySQL5", "com.mysql.jdbc.Driver", "mysql"),
+
+  /**
+   * The standard MySQL jdbc driver above mysql 8.x.
+   */
+  MYSQL8X("MySQL8", "com.mysql.cj.jdbc.Driver", "mysql"),
 
   /**
    * The old MySQL jdbc driver.
    */
-  MySql_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql"),
+  MYSQL_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql"),
 
   /**
    * The standard sub-protocol used by the standard Oracle driver.
    */
-  Oracle("Oracle", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
+  ORACLE("Oracle", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
 
   /**
    * The thin sub-protocol used by the standard Oracle driver.
    */
-  Oracle8("Oracle8", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
+  ORACLE8("Oracle8", "oracle.jdbc.driver.OracleDriver", "oracle:thin"),
 
   /**
    * The old thin sub-protocol used by the standard Oracle driver.
    */
-  Oracle8_THIN_OLD("Oracle", "oracle.jdbc.dnlddriver.OracleDriver", "oracle:dnldthin"),
+  ORACLE8_THIN_OLD("Oracle", "oracle.jdbc.dnlddriver.OracleDriver", "oracle:dnldthin"),
 
   /**
    * The thin sub-protocol used by the standard Oracle driver.
    */
-  Oracle8_OCI8("Oracle", "", "oracle:oci8"),
-  Oracle9("Oracle9", "", ""),
-  Oracle10("Oracle10", "", ""),
-  McKoi("McKoi", "com.mckoi.JDBCDriver", "mckoi"),
+  ORACLE8_OCI8("Oracle", "", "oracle:oci8"),
+  ORACLE9("Oracle9", "", ""),
+  ORACLE10("Oracle10", "", ""),
+  MCKOI("McKoi", "com.mckoi.JDBCDriver", "mckoi"),
 
   /**
    * The sub-protocol used by the standard PostgreSQL driver.
    */
-  PostgreSql("PostgreSql", "org.postgresql.Driver", "postgresql"),
-  MaxDB("MaxDB", "", ""),
-
+  POSTGRE_SQL("PostgreSql", "org.postgresql.Driver", "postgresql"),
+  MAX_DB("MaxDB", "", ""),
   ;
 
   final String name;

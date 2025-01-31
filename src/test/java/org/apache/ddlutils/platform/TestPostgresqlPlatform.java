@@ -33,7 +33,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.PostgreSql.getName();
+    return BuiltinDriverType.POSTGRE_SQL.getName();
   }
 
   /**

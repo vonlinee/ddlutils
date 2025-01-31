@@ -101,7 +101,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.PostgreSql.getName();
+    return BuiltinDriverType.POSTGRE_SQL.getName();
   }
 
   /**
@@ -115,7 +115,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * @param createDb            Whether to create or drop the database
    */
   private void createOrDropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters, boolean createDb) throws DatabaseOperationException, UnsupportedOperationException {
-    if (BuiltinDriverType.PostgreSql.getDriverClassName().equals(jdbcDriverClassName)) {
+    if (BuiltinDriverType.POSTGRE_SQL.getDriverClassName().equals(jdbcDriverClassName)) {
       int slashPos = connectionUrl.lastIndexOf('/');
 
       if (slashPos < 0) {

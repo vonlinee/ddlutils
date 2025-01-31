@@ -1174,11 +1174,11 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     }
     query.append(")");
     // Some JDBC drivers do not allow us to perform the query without an explicit alias
-    if (BuiltinDriverType.MySql.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.MySql50.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.Derby.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.PostgreSql.getName().equals(getPlatform().getName()) ||
-      BuiltinDriverType.SQLServer.getName().equals(getPlatform().getName())) {
+    if (BuiltinDriverType.MYSQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.MYSQL5X.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.DERBY.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.POSTGRE_SQL.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.SQLSERVER.getName().equals(getPlatform().getName())) {
       query.append(" AS ");
       if (getPlatform().isDelimitedIdentifierModeOn()) {
         query.append(getPlatformInfo().getDelimiterToken());

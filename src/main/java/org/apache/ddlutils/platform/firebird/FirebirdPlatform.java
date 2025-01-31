@@ -97,7 +97,7 @@ public class FirebirdPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Firebird.getName();
+    return BuiltinDriverType.FIREBIRD.getName();
   }
 
   /**

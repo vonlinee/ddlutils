@@ -104,7 +104,7 @@ public class Oracle8Platform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Oracle8.getName();
+    return BuiltinDriverType.ORACLE8.getName();
   }
 
   /**

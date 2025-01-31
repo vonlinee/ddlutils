@@ -32,7 +32,7 @@ public class TestSapDbPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return BuiltinDriverType.Sapdb.getName();
+    return BuiltinDriverType.SAPDB.getName();
   }
 
   /**

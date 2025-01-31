@@ -180,11 +180,11 @@ public class DatabaseTestHelper {
   }
 
   /**
-   * 读取指定类相同包名下的指定名称的文件文本内容
+   * read text from specified filename
    *
-   * @param clazz 指定类
-   * @param file  指定名称，带扩展名
-   * @return 文本内容
+   * @param clazz specified class
+   * @param file  specified filename
+   * @return text
    */
   public static String readString(Class<?> clazz, String file) {
     try (InputStream resourceAsStream = clazz.getResourceAsStream(file)) {

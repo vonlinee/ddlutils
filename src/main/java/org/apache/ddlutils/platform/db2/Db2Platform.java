@@ -90,7 +90,7 @@ public class Db2Platform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.Db2.getName();
+    return BuiltinDriverType.DB2.getName();
   }
 
   /**

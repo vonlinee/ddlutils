@@ -24,7 +24,6 @@ import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -675,7 +674,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
    */
   public void testLongVarCharWithDefault() {
     if (!getPlatformInfo().isDefaultValuesForLongTypesSupported() ||
-      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
+      BuiltinDriverType.INTERBASE.getName().equals(getPlatform().getName())) {
       // Some Interbase versions do not like default values for LOB objects
       return;
     }

@@ -105,7 +105,7 @@ public class MSSqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.SQLServer.getName();
+    return BuiltinDriverType.SQLSERVER.getName();
   }
 
   /**
