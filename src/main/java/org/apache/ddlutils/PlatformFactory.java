@@ -191,7 +191,7 @@ public class PlatformFactory {
     addPlatform(_platforms, BuiltinDriverType.POSTGRE_SQL.getName(), PostgreSqlPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.SAPDB.getName(), SapDbPlatform.class);
     addPlatform(_platforms, BuiltinDriverType.SYBASE.getName(), SybasePlatform.class);
-    addPlatform(_platforms, BuiltinDriverType.SybaseASE15.getName(), SybaseASE15Platform.class);
+    addPlatform(_platforms, BuiltinDriverType.SYBASE_ASE15.getName(), SybaseASE15Platform.class);
   }
 
   /**

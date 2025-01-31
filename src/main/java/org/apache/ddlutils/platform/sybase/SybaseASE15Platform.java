@@ -40,6 +40,6 @@ public class SybaseASE15Platform extends SybasePlatform {
    */
   @Override
   public String getName() {
-    return BuiltinDriverType.SybaseASE15.getName();
+    return BuiltinDriverType.SYBASE_ASE15.getName();
   }
 }

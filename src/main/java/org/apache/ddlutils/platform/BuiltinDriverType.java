@@ -1,5 +1,10 @@
 package org.apache.ddlutils.platform;
 
+import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
+import java.util.Properties;
+
 /**
  * builtin driver type enum.
  */
@@ -29,6 +34,10 @@ public enum BuiltinDriverType implements DriverType {
    * The sub-protocol used by the standard DB2 driver.
    */
   DB2("DB2", "com.ibm.db2.jcc.DB2Driver", "db2"),
+
+  /**
+   * DB2v8
+   */
   DB2V8("DB2v8", "com.ibm.db2.jcc.DB2Driver", "db2"),
 
   /**
@@ -70,7 +79,11 @@ public enum BuiltinDriverType implements DriverType {
    * The standard Sybase jdbc driver.
    */
   SYBASE("Sybase", "com.sybase.jdbc2.jdbc.SybDriver", "sybase:Tds"),
-  SybaseASE15("SybaseASE15", "com.sybase.jdbc2.jdbc.SybDriver", "sybase:Tds"),
+
+  /**
+   * SybaseASE15
+   */
+  SYBASE_ASE15("SybaseASE15", "com.sybase.jdbc2.jdbc.SybDriver", "sybase:Tds"),
 
   /**
    * The old Sybase jdbc driver.
@@ -116,8 +129,6 @@ public enum BuiltinDriverType implements DriverType {
    * The sub protocol used by the standard SapDB/MaxDB driver.
    */
   SAPDB("SapDB", "com.sap.dbtech.jdbc.DriverSapDB", "sapdb"),
-
-  // Sql Server
 
   /**
    * The sub-protocol used by the jTDS SQLServer driver.
@@ -241,24 +252,29 @@ public enum BuiltinDriverType implements DriverType {
   SQLSERVER("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "microsoft:sqlserver"),
 
   /**
+   * The standard MariaDB jdbc driver.
+   */
+  MARIADB("MariaDB", "org.mariadb.jdbc.Driver", "mariadb"),
+
+  /**
    * The standard MySQL jdbc driver.
    */
-  MYSQL("MySQL", "com.mysql.jdbc.Driver", "mysql"),
+  MYSQL("MySQL", "com.mysql.jdbc.Driver", "mysql", 3306),
 
   /**
    * The standard MySQL jdbc driver above mysql 5.0.
    */
-  MYSQL5X("MySQL5", "com.mysql.jdbc.Driver", "mysql"),
+  MYSQL5X("MySQL5", "com.mysql.jdbc.Driver", "mysql", MYSQL.defaultPort),
 
   /**
    * The standard MySQL jdbc driver above mysql 8.x.
    */
-  MYSQL8X("MySQL8", "com.mysql.cj.jdbc.Driver", "mysql"),
+  MYSQL8X("MySQL8", "com.mysql.cj.jdbc.Driver", "mysql", MYSQL.defaultPort),
 
   /**
    * The old MySQL jdbc driver.
    */
-  MYSQL_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql"),
+  MYSQL_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql", MYSQL.defaultPort),
 
   /**
    * The standard sub-protocol used by the standard Oracle driver.
@@ -278,26 +294,74 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The thin sub-protocol used by the standard Oracle driver.
    */
-  ORACLE8_OCI8("Oracle", "", "oracle:oci8"),
-  ORACLE9("Oracle9", "", ""),
-  ORACLE10("Oracle10", "", ""),
+  ORACLE8_OCI8("Oracle", ORACLE8_THIN_OLD.driverClassName, "oracle:oci8"),
+
+  /**
+   * Oracle 9
+   */
+  ORACLE9("Oracle9", ORACLE8_THIN_OLD.driverClassName, "oracle:thin"),
+
+  /**
+   * Oracle 10
+   */
+  ORACLE10("Oracle10", ORACLE8_THIN_OLD.driverClassName, "oracle:thin"),
+
+  /**
+   * McKoi DB
+   */
   MCKOI("McKoi", "com.mckoi.JDBCDriver", "mckoi"),
 
   /**
    * The sub-protocol used by the standard PostgreSQL driver.
    */
   POSTGRE_SQL("PostgreSql", "org.postgresql.Driver", "postgresql"),
+
+  /**
+   * Max/Sap DB
+   */
   MAX_DB("MaxDB", "", ""),
+
+  /**
+   * 人大金仓/电科金仓
+   * <a href="https://www.kingbase.com.cn/">...</a>
+   */
+  KINGBASE_ES("KingBase ES", "com.kingbase8.jdbc.Driver", "kingbase8"),
+
+  /**
+   * 南大Gbase8s
+   * <a href="https://www.gbase.cn/product/gbase-8s">...</a>
+   */
+  GBASE8S("南大Gbase 8s", "com.gbasedbt.jdbc.Driver", "gbasedbt-sqli", 9088) {
+    @Override
+    public String getConnectionUrl(String host, @Nullable Integer port, String database, String username, String password, Properties properties) {
+      // 数据库实例的名称
+      String instance = properties.getProperty("GBASEDBTSERVER", "");
+      return String.format("jdbc:gbasedbt-sqli://{%s}:%s/%s:GBASEDBTSERVER=%s", host, port, database, instance);
+    }
+  },
+
+  H2("H2", "org.h2.Driver", "h2"),
+  SQLITE("SQLite", "org.sqlite.JDBC", "sqlite"),
+  DM("达梦", "dm.jdbc.driver.DmDriver", "dm"),
+  GAUSSDB("GaussDB", "com.gaussdb.jdbc.Driver", "gaussdb"),
+  CLICK_HOUSE("ClickHouse", "com.clickhouse.jdbc.ClickHouseDriver", "clickhouse"),
+
   ;
 
   final String name;
   final String driverClassName;
   final String subProtocol;
+  final int defaultPort;
 
   BuiltinDriverType(String name, String driverClassName, String subProtocol) {
+    this(name, driverClassName, subProtocol, -1);
+  }
+
+  BuiltinDriverType(String name, String driverClassName, String subProtocol, int defaultPort) {
     this.name = name;
     this.driverClassName = driverClassName;
     this.subProtocol = subProtocol;
+    this.defaultPort = defaultPort;
   }
 
   @Override
@@ -313,5 +377,33 @@ public enum BuiltinDriverType implements DriverType {
   @Override
   public String getSubProtocol() {
     return subProtocol;
+  }
+
+  @Override
+  public int getDefaultPort() {
+    return defaultPort;
+  }
+
+  @Override
+  public String getConnectionUrl(String host, Integer port, String database, String username, String password, @Nullable Properties properties) {
+    throw new UnsupportedOperationException("TODO");
+  }
+
+  public static BuiltinDriverType findByDriverClassName(String driverClassName) {
+    for (BuiltinDriverType type : values()) {
+      if (type.driverClassName.equals(driverClassName)) {
+        return type;
+      }
+    }
+    return null;
+  }
+
+  public static Optional<BuiltinDriverType> findByName(String name) {
+    for (BuiltinDriverType type : values()) {
+      if (type.name().equalsIgnoreCase(name)) {
+        return Optional.of(type);
+      }
+    }
+    return Optional.empty();
   }
 }
