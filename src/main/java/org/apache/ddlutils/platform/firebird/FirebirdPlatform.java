@@ -31,6 +31,7 @@ import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -47,18 +48,6 @@ import java.util.List;
  * @version $Revision: 231306 $
  */
 public class FirebirdPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Firebird";
-  /**
-   * The standard Firebird jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "org.firebirdsql.jdbc.FBDriver";
-  /**
-   * The sub protocol used by the standard Firebird driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "firebirdsql";
 
   /**
    * Creates a new Firebird platform instance.
@@ -108,7 +97,7 @@ public class FirebirdPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Firebird.getName();
   }
 
   /**

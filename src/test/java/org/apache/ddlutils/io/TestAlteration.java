@@ -24,11 +24,9 @@ import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
 import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import java.util.List;
 import java.util.Properties;
@@ -568,7 +566,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the removal of an index that has column that are also used by foreign keys. This is a
-   * test esp. for the handling of http://bugs.mysql.com/bug.php?id=21395.
+   * test esp. for the handling of <a href="http://bugs.mysql.com/bug.php?id=21395">...</a>.
    */
   public void testDropIndexOverlappingWithForeignKeys() {
     final String model1Xml =
@@ -910,7 +908,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
    */
   public void testDropFKAndCorrespondingIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
-      FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       // Firebird does not allow an index and a foreign key in the same table to have the same name
       return;
     }
@@ -975,7 +973,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
    */
   public void testDropFKButNotCorrespondingIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
-      FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       // Firebird does not allow an index and a foreign key in the same table to have the same name
       return;
     }
@@ -1049,7 +1047,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     if (!getPlatformInfo().isIndicesSupported() ||
       MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
       MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1117,7 +1115,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     if (!getPlatformInfo().isIndicesSupported() ||
       MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
       MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
-      FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Firebird.getName().equals(getPlatform().getName())) {
       return;
     }
 

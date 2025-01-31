@@ -21,11 +21,11 @@ package org.apache.ddlutils;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestSuite;
+import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.data.BeanUtils;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.DynaProperty;
-import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.data.SqlDynaBean;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.data.SqlDynaProperty;
@@ -42,10 +42,9 @@ import org.apache.ddlutils.model.IndexColumn;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultValueHelper;
-import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
-import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtils;
 
 import javax.sql.DataSource;
@@ -620,8 +619,8 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getLog().error("Could not clear database", ex);
       }
     }
-    if (FirebirdPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-      InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDriverType.Firebird.getName().equals(getPlatform().getName()) ||
+      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
       Connection connection = null;
 
       try {

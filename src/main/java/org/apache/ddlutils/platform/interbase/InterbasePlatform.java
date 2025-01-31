@@ -31,6 +31,7 @@ import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -52,18 +53,6 @@ import java.util.List;
  * @version $Revision: 231306 $
  */
 public class InterbasePlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Interbase";
-  /**
-   * The interbase jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "interbase.interclient.Driver";
-  /**
-   * The subprotocol used by the interbase driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "interbase";
 
   /**
    * Creates a new platform instance.
@@ -116,7 +105,7 @@ public class InterbasePlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.Interbase.getName();
   }
 
   /**

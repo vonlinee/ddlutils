@@ -23,11 +23,9 @@ import junit.framework.Test;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
 import org.apache.ddlutils.platform.mysql.MySqlPlatform;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -69,7 +67,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -120,7 +118,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -132,7 +130,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "avalue");
     } else {
-      Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+      Object avalue = beans.get(0).get("avalue");
 
       assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
@@ -165,7 +163,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -173,8 +171,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue1 = ((DynaBean) beans.get(0)).get("avalue1");
-    Object avalue2 = ((DynaBean) beans.get(0)).get("avalue2");
+    Object avalue1 = beans.get(0).get("avalue1");
+    Object avalue2 = beans.get(0).get("avalue2");
 
     assertTrue((avalue1 == null) || new Integer(1).equals(avalue1));
     assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
@@ -202,7 +200,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -236,7 +234,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -244,7 +242,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
@@ -288,7 +286,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -300,7 +298,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "avalue");
     } else {
-      Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+      Object avalue = beans.get(0).get("avalue");
 
       assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
@@ -328,7 +326,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -336,7 +334,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || "sometext".equals(avalue));
   }
@@ -368,7 +366,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), "test", new Integer(3)});
+    insertRow("roundtrip", new Object[]{1, "test", 3});
 
     alterDatabase(model2Xml);
 
@@ -376,10 +374,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue3 = ((DynaBean) beans.get(0)).get("avalue3");
+    Object avalue3 = beans.get(0).get("avalue3");
 
     assertEquals((Object) "test", beans.get(0), "avalue1");
-    assertEquals(new Integer(3), beans.get(0), "avalue2");
+    assertEquals(3, beans.get(0), "avalue2");
     assertTrue((avalue3 == null) || new Double(1.0).equals(avalue3));
     assertEquals((Object) null, beans.get(0), "avalue4");
   }
@@ -406,7 +404,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -418,7 +416,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
       // Mckoi uses null to initialize the new pk column
       assertEquals((Object) null, beans.get(0), "pk");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -459,7 +457,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -468,11 +466,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(1), beans.get(0), "avalue");
+    assertEquals(1, beans.get(0), "avalue");
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
     } else {
-      assertEquals(new Integer(1), beans.get(0), "pk");
+      assertEquals(1, beans.get(0), "pk");
     }
   }
 
@@ -504,7 +502,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -516,8 +514,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
       assertEquals((Object) null, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals(new Double(2.0), beans.get(0), "pk3");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(2.0, beans.get(0), "pk3");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -547,7 +545,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -559,8 +557,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
       assertEquals((Object) null, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals(new Double(2.0), beans.get(0), "pk3");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(2.0, beans.get(0), "pk3");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -594,7 +592,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -604,10 +602,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
-      assertEquals(new Integer(1), beans.get(0), "pk1");
+      assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -637,7 +635,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -647,9 +645,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
-      assertEquals(new Integer(1), beans.get(0), "pk1");
+      assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals(new Integer(2), beans.get(0), "avalue");
+      assertEquals(2, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -697,7 +695,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(-1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{-1, 2});
 
     alterDatabase(model2Xml);
 
@@ -706,12 +704,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(-1), ((DynaBean) beans.get(0)).get("pk1"));
-    assertEquals(new Integer(2), ((DynaBean) beans.get(0)).get("avalue"));
+    assertEquals(-1, beans.get(0).get("pk1"));
+    assertEquals(2, beans.get(0).get("avalue"));
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk2");
     } else {
-      assertEquals(new Integer(1), beans.get(0), "pk2");
+      assertEquals(1, beans.get(0), "pk2");
     }
   }
 
@@ -740,7 +738,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -750,7 +748,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
-      assertEquals(new Integer(1), beans.get(0), "pk1");
+      assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
       assertEquals((Object) null, beans.get(0), "avalue");
@@ -788,7 +786,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{null, new Integer(1)});
+    insertRow("roundtrip", new Object[]{null, 1});
 
     alterDatabase(model2Xml);
 
@@ -798,10 +796,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
-      assertEquals(new Integer(1), beans.get(0), "pk1");
+      assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) null, beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -836,7 +834,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), "text"});
+    insertRow("roundtrip", new Object[]{1, "text"});
 
     alterDatabase(model2Xml);
 
@@ -846,10 +844,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (MckoiPlatform.DATABASENAME.equals(getPlatform().getName())) {
-      assertEquals(new Integer(1), beans.get(0), "pk1");
+      assertEquals(1, beans.get(0), "pk1");
       assertEquals((Object) "text", beans.get(0), "pk2");
       assertEquals((Object) null, beans.get(0), "pk3");
-      assertEquals(new Integer(1), beans.get(0), "avalue");
+      assertEquals(1, beans.get(0), "avalue");
     } else {
       assertTrue(beans.isEmpty());
     }
@@ -884,7 +882,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -926,7 +924,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -934,7 +932,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
@@ -968,7 +966,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1009,7 +1007,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1017,7 +1015,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
@@ -1052,7 +1050,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1061,8 +1059,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(1), beans.get(0), "pk");
-    assertEquals(new Integer(1), beans.get(0), "avalue");
+    assertEquals(1, beans.get(0), "pk");
+    assertEquals(1, beans.get(0), "avalue");
   }
 
   /**
@@ -1094,7 +1092,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1137,7 +1135,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1151,12 +1149,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
 
   /**
-   * Tests the addition of an unique index and a column.
+   * Tests the addition of a unique index and a column.
    */
   public void testAddUniqueIndexAndColumn() {
     // TODO
     if (!getPlatformInfo().isIndicesSupported() ||
-      InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1181,7 +1179,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1194,7 +1192,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of an unique index and an auto increment column.
+   * Tests the addition of a unique index and an auto increment column.
    */
   public void testAddUniqueIndexAndAutoIncrementColumn() {
     if (!getPlatformInfo().isIndicesSupported() ||
@@ -1223,7 +1221,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1231,13 +1229,13 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
 
   /**
-   * Tests the addition of an unique index and a required column.
+   * Tests the addition of a unique index and a required column.
    */
   public void testAddUniqueIndexAndRequiredColumn() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -1265,7 +1263,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1278,7 +1276,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of an unique index and a column with a default value.
+   * Tests the addition of a unique index and a column with a default value.
    */
   public void testAddUniqueIndexAndColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -1306,7 +1304,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1314,13 +1312,13 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue = ((DynaBean) beans.get(0)).get("avalue");
+    Object avalue = beans.get(0).get("avalue");
 
     assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
 
   /**
-   * Tests the addition of an unique index and a required auto increment column.
+   * Tests the addition of a unique index and a required auto increment column.
    */
   public void testAddUniqueIndexAndRequiredAutoIncrementColumn() {
     if (!getPlatformInfo().isIndicesSupported() ||
@@ -1349,7 +1347,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1358,12 +1356,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(1), beans.get(0), "pk");
-    assertEquals(new Integer(1), beans.get(0), "avalue");
+    assertEquals(1, beans.get(0), "pk");
+    assertEquals(1, beans.get(0), "avalue");
   }
 
   /**
-   * Tests the addition of an unique index and a required column with a default value.
+   * Tests the addition of a unique index and a required column with a default value.
    */
   public void testAddUniqueIndexAndRequiredColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -1391,7 +1389,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1404,12 +1402,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of an unique index and several columns.
+   * Tests the addition of a unique index and several columns.
    */
   public void testAddUniqueIndexAndMultipleColumns() {
     // TODO
     if (!getPlatformInfo().isIndicesSupported() ||
-      InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1436,7 +1434,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1449,7 +1447,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of an unique index and several required columns.
+   * Tests the addition of a unique index and several required columns.
    */
   public void testAddUniqueIndexAndMultipleRequiredColumns() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -1479,7 +1477,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1)});
+    insertRow("roundtrip", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -1526,7 +1524,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1535,7 +1533,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertEquals((Object) null, beans.get(0), "avalue2");
   }
 
@@ -1575,7 +1573,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1583,9 +1581,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue2 = ((DynaBean) beans.get(0)).get("avalue2");
+    Object avalue2 = beans.get(0).get("avalue2");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
@@ -1624,7 +1622,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1671,7 +1669,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1679,9 +1677,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue2 = ((DynaBean) beans.get(0)).get("avalue2");
+    Object avalue2 = beans.get(0).get("avalue2");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
@@ -1721,7 +1719,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1730,9 +1728,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(1), beans.get(0), "pk");
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
-    assertEquals(new Integer(1), beans.get(0), "avalue2");
+    assertEquals(1, beans.get(0), "pk");
+    assertEquals(2, beans.get(0), "avalue1");
+    assertEquals(1, beans.get(0), "avalue2");
   }
 
   /**
@@ -1770,7 +1768,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1779,7 +1777,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertEquals((Object) "sometext", beans.get(0), "avalue2");
   }
 
@@ -1820,7 +1818,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1833,12 +1831,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of a column into an unique index.
+   * Tests the addition of a column into a unique index.
    */
   public void testAddColumnIntoUniqueIndex() {
     // TODO
     if (!getPlatformInfo().isIndicesSupported() ||
-      InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -1869,7 +1867,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1878,12 +1876,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertEquals((Object) null, beans.get(0), "avalue2");
   }
 
   /**
-   * Tests the addition of an auto increment column into an unique index.
+   * Tests the addition of a auto increment column into a unique index.
    */
   public void testAddAutoIncrementColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
@@ -1918,7 +1916,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1926,14 +1924,14 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue2 = ((DynaBean) beans.get(0)).get("avalue2");
+    Object avalue2 = beans.get(0).get("avalue2");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
   /**
-   * Tests the addition of a required column into an unique index.
+   * Tests the addition of a required column into a unique index.
    */
   public void testAddRequiredColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -1967,7 +1965,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -1980,7 +1978,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of a column with a default value into an unique index.
+   * Tests the addition of a column with a default value into a unique index.
    */
   public void testAddColumnWithDefaultIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -2014,7 +2012,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -2022,14 +2020,14 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object avalue2 = ((DynaBean) beans.get(0)).get("avalue2");
+    Object avalue2 = beans.get(0).get("avalue2");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
   /**
-   * Tests the addition of a required auto increment column into an unique index.
+   * Tests the addition of a required auto increment column into a unique index.
    */
   public void testAddRequiredAutoIncrementColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported() ||
@@ -2064,7 +2062,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -2073,13 +2071,13 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(1), beans.get(0), "pk");
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
-    assertEquals(new Integer(1), beans.get(0), "avalue2");
+    assertEquals(1, beans.get(0), "pk");
+    assertEquals(2, beans.get(0), "avalue1");
+    assertEquals(1, beans.get(0), "avalue2");
   }
 
   /**
-   * Tests the addition of a required column with a default value into an unique index.
+   * Tests the addition of a required column with a default value into a unique index.
    */
   public void testAddRequiredColumnWithDefaultIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -2113,7 +2111,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -2122,17 +2120,17 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(new Integer(2), beans.get(0), "avalue1");
+    assertEquals(2, beans.get(0), "avalue1");
     assertEquals((Object) "sometext", beans.get(0), "avalue2");
   }
 
   /**
-   * Tests the addition of multiple columns into an unique index.
+   * Tests the addition of multiple columns into a unique index.
    */
   public void testAddMultipleColumnsIntoUniqueIndex() {
     // TODO
     if (!getPlatformInfo().isIndicesSupported() ||
-      InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
+      BuiltinDriverType.Interbase.getName().equals(getPlatform().getName())) {
       return;
     }
 
@@ -2165,7 +2163,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -2178,7 +2176,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   }
 
   /**
-   * Tests the addition of multiple required columns into an unique index.
+   * Tests the addition of multiple required columns into a unique index.
    */
   public void testAddMultipleRequiredColumnsIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
@@ -2214,7 +2212,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip", new Object[]{new Integer(1), new Integer(2)});
+    insertRow("roundtrip", new Object[]{1, 2});
 
     alterDatabase(model2Xml);
 
@@ -2258,7 +2256,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     createDatabase(model1Xml);
 
     insertRow("roundtrip1", new Object[]{"text"});
-    insertRow("roundtrip2", new Object[]{new Integer(1)});
+    insertRow("roundtrip2", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -2269,7 +2267,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals((Object) "text", beans1.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "pk");
     assertEquals((Object) null, beans2.get(0), "avalue");
   }
 
@@ -2308,8 +2306,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2});
 
     alterDatabase(model2Xml);
 
@@ -2318,10 +2316,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
-    Object avalue = ((DynaBean) beans2.get(0)).get("avalue");
+    Object avalue = beans2.get(0).get("avalue");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
+    assertEquals(1, beans1.get(0), "pk");
+    assertEquals(2, beans2.get(0), "pk");
     assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
 
@@ -2364,7 +2362,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     createDatabase(model1Xml);
 
     insertRow("roundtrip1", new Object[]{new BigDecimal(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2)});
+    insertRow("roundtrip2", new Object[]{2});
 
     alterDatabase(model2Xml);
 
@@ -2409,8 +2407,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Double(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2)});
+    insertRow("roundtrip1", new Object[]{1.0});
+    insertRow("roundtrip2", new Object[]{2});
 
     alterDatabase(model2Xml);
 
@@ -2419,10 +2417,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
-    Object avalue = ((DynaBean) beans2.get(0)).get("avalue");
+    Object avalue = beans2.get(0).get("avalue");
 
-    assertEquals(new Double(1), beans1.get(0), "pk");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
+    assertEquals(1.0, beans1.get(0), "pk");
+    assertEquals(2, beans2.get(0), "pk");
     assertTrue((avalue == null) || new Double(1).equals(avalue));
   }
 
@@ -2461,8 +2459,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2});
 
     alterDatabase(model2Xml);
 
@@ -2472,9 +2470,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue");
+    assertEquals(1, beans1.get(0), "pk");
+    assertEquals(2, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue");
   }
 
   /**
@@ -2509,7 +2507,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     createDatabase(model1Xml);
 
     insertRow("roundtrip1", new Object[]{"moretext"});
-    insertRow("roundtrip2", new Object[]{new Integer(1)});
+    insertRow("roundtrip2", new Object[]{1});
 
     alterDatabase(model2Xml);
 
@@ -2520,7 +2518,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals((Object) "moretext", beans1.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "pk");
     assertEquals((Object) "moretext", beans2.get(0), "avalue");
   }
 
@@ -2566,8 +2564,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1), new Double(2)});
-    insertRow("roundtrip2", new Object[]{new Integer(3)});
+    insertRow("roundtrip1", new Object[]{1, 2.0});
+    insertRow("roundtrip2", new Object[]{3});
 
     alterDatabase(model2Xml);
 
@@ -2577,8 +2575,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk1");
-    assertEquals(new Double(2), beans1.get(0), "pk2");
+    assertEquals(1, beans1.get(0), "pk1");
+    assertEquals(2.0, beans1.get(0), "pk2");
     assertTrue(beans2.isEmpty());
   }
 
@@ -2658,8 +2656,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(2)});
-    insertRow("roundtrip2", new Object[]{new Integer(1), new Integer(1)});
+    insertRow("roundtrip1", new Object[]{2});
+    insertRow("roundtrip2", new Object[]{1, 1});
 
     alterDatabase(model2Xml);
 
@@ -2669,10 +2667,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk");
-    assertEquals(new Integer(2), beans1.get(0), "avalue");
-    assertEquals(new Integer(1), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue");
+    assertEquals(1, beans1.get(0), "pk");
+    assertEquals(2, beans1.get(0), "avalue");
+    assertEquals(1, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue");
   }
 
   /**
@@ -2708,8 +2706,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(2)});
-    insertRow("roundtrip2", new Object[]{new Integer(1), new Double(1)});
+    insertRow("roundtrip1", new Object[]{2});
+    insertRow("roundtrip2", new Object[]{1, 1.0});
 
     alterDatabase(model2Xml);
 
@@ -2719,10 +2717,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Double(1), beans1.get(0), "pk");
-    assertEquals(new Integer(2), beans1.get(0), "avalue");
-    assertEquals(new Integer(1), beans2.get(0), "pk");
-    assertEquals(new Double(1), beans2.get(0), "avalue");
+    assertEquals(1.0, beans1.get(0), "pk");
+    assertEquals(2, beans1.get(0), "avalue");
+    assertEquals(1, beans2.get(0), "pk");
+    assertEquals(1.0, beans2.get(0), "avalue");
   }
 
   /**
@@ -2854,8 +2852,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2), new Integer(1)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2, 1});
 
     alterDatabase(model2Xml);
 
@@ -2864,12 +2862,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
-    Object avalue2 = ((DynaBean) beans2.get(0)).get("avalue2");
+    Object avalue2 = beans2.get(0).get("avalue2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk1");
-    assertEquals(new Integer(1), beans1.get(0), "pk2");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue1");
+    assertEquals(1, beans1.get(0), "pk1");
+    assertEquals(1, beans1.get(0), "pk2");
+    assertEquals(2, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
@@ -2955,19 +2953,19 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2), new Integer(1)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2, 1});
 
     alterDatabase(model2Xml);
 
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
-    Object avalue2 = ((DynaBean) beans2.get(0)).get("avalue2");
+    Object avalue2 = beans2.get(0).get("avalue2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk1");
-    assertEquals(new Double(2), beans1.get(0), "pk2");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue1");
+    assertEquals(1, beans1.get(0), "pk1");
+    assertEquals(2.0, beans1.get(0), "pk2");
+    assertEquals(2, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue1");
     assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
@@ -3013,8 +3011,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2), new Integer(1)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2, 1});
 
     alterDatabase(model2Xml);
 
@@ -3024,11 +3022,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk1");
-    assertEquals(new Integer(1), beans1.get(0), "pk2");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue1");
-    assertEquals(new Integer(1), beans2.get(0), "avalue2");
+    assertEquals(1, beans1.get(0), "pk1");
+    assertEquals(1, beans1.get(0), "pk2");
+    assertEquals(2, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue1");
+    assertEquals(1, beans2.get(0), "avalue2");
   }
 
   /**
@@ -3069,18 +3067,18 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    insertRow("roundtrip1", new Object[]{new Integer(1)});
-    insertRow("roundtrip2", new Object[]{new Integer(2), new Integer(1)});
+    insertRow("roundtrip1", new Object[]{1});
+    insertRow("roundtrip2", new Object[]{2, 1});
 
     alterDatabase(model2Xml);
 
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals(new Integer(1), beans1.get(0), "pk1");
+    assertEquals(1, beans1.get(0), "pk1");
     assertEquals((Object) "sometext", beans1.get(0), "pk2");
-    assertEquals(new Integer(2), beans2.get(0), "pk");
-    assertEquals(new Integer(1), beans2.get(0), "avalue1");
+    assertEquals(2, beans2.get(0), "pk");
+    assertEquals(1, beans2.get(0), "avalue1");
     assertEquals((Object) "sometext", beans2.get(0), "avalue2");
   }
 

@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform.sybase;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.PlatformInfo;
@@ -32,10 +31,12 @@ import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.RemovePrimaryKeyChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -60,10 +61,6 @@ import java.util.List;
  * @version $Revision: 231306 $
  */
 public class SybasePlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "Sybase";
 
   /**
    * The maximum size that text and binary columns can have.
@@ -123,7 +120,7 @@ public class SybasePlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDriverType.SYBASE.getName();
   }
 
   /**

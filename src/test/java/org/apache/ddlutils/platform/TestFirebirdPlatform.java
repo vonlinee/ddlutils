@@ -33,7 +33,7 @@ public class TestFirebirdPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return FirebirdPlatform.DATABASENAME;
+    return BuiltinDriverType.Firebird.getName();
   }
 
   /**

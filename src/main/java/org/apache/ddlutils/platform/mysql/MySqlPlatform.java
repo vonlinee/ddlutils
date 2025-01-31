@@ -50,18 +50,6 @@ public class MySqlPlatform extends PlatformImplBase {
    * Database name of this platform.
    */
   public static final String DATABASENAME = "MySQL";
-  /**
-   * The standard MySQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  /**
-   * The old MySQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER_OLD = "org.gjt.mm.mysql.Driver";
-  /**
-   * The subprotocol used by the standard MySQL driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "mysql";
 
   /**
    * Creates a new platform instance.

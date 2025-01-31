@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 
 /**
  * Tests the Interbase platform.
@@ -31,8 +30,9 @@ public class TestInterbasePlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
-    return InterbasePlatform.DATABASENAME;
+    return BuiltinDriverType.Interbase.getName();
   }
 
   /**

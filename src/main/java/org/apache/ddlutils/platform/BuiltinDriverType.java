@@ -78,7 +78,175 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The sub protocol used by the jTDS Sybase driver.
    */
-  JTDS_SYBASE("Sybase", "org.hsqldb.jdbcDriver", "jtds:sybase"),
+  JTDS_SYBASE("Sybase", "net.sourceforge.jtds.jdbc.Driver", "jtds:sybase"),
+
+  /**
+   * The i-net Sybase jdbc driver.
+   */
+  INET_SYBASE("Sybase", "com.inet.syb.SybDriver", "inetsyb"),
+
+  /**
+   * The sub-protocol used by the pooled i-net Sybase driver.
+   */
+  INET_SYBASE_POOLED_1("Sybase", "com.inet.syb.SybDriver", "inetpool:inetsyb"),
+
+  /**
+   * The sub-protocol used by the pooled i-net Sybase driver.
+   */
+  INET_SYBASE_POOLED_2("Sybase", "com.inet.syb.SybDriver", "inetpool:jdbc:inetsyb"),
+
+  /**
+   * The sub-protocol used by the DataDirect Sybase driver.
+   */
+  DATADIRECT_SYBASE("Sybase", "com.ddtek.jdbc.sybase.SybaseDriver", "datadirect:sybase"),
+
+  /**
+   * The sub-protocol used by the derby drivers.
+   */
+  Derby("Derby", "org.apache.derby.jdbc.ClientDriver", "derby"),
+
+  /**
+   * The sub protocol used by the derby embed drivers.
+   */
+  Derby_EMBEDDED("Derby", "org.apache.derby.jdbc.EmbeddedDriver", "derby"),
+
+  /**
+   * The sub protocol used by the standard SapDB/MaxDB driver.
+   */
+  Sapdb("SapDB", "com.sap.dbtech.jdbc.DriverSapDB", "sapdb"),
+
+  // Sql Server
+
+  /**
+   * The sub-protocol used by the jTDS SQLServer driver.
+   */
+  JTDS_SQLSERVER("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "jtds:sqlserver"),
+
+  /**
+   * The subprotocol used by the JNetDirect SQLServer driver.
+   */
+  JSQLCONNECT_SQLSERVER("MsSql", "com.jnetdirect.jsql.JSQLDriver", "JSQLConnect"),
+
+  /**
+   * A sub-protocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER7_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER7_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER7A_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae7a"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER7A_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae7a"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER6_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae6"),
+
+  /**
+   * A sub-protocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER6_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae6"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER_POOLED_2("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:jdbc:inetdae"),
+
+  /**
+   * A subprotocol used by the pooled i-net SQLServer driver.
+   */
+  INET_SQLSERVER_POOLED_1("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetpool:inetdae"),
+
+  /**
+   * A sub-protocol used by the i-net SQLServer driver.
+   */
+  INET_SQLSERVER7A("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetdae7a"),
+
+  /**
+   * A sub-protocol used by the i-net SQLServer driver.
+   */
+  INET_SQLSERVER7("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetdae7"),
+
+  /**
+   * A sub-protocol used by the i-net SQLServer driver.
+   */
+  INET_SQLSERVER6("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "inetdae6"),
+
+  /**
+   * The sub-protocol used by the DataDirect SQLServer driver.
+   */
+  DATADIRECT_SQLSERVER("MsSql", "com.ddtek.jdbc.sqlserver.SQLServerDriver", "datadirect:sqlserver"),
+
+  /**
+   * A sub-protocol used by the i-net SQLServer driver.
+   */
+  INET_SQLSERVER("MsSql", "com.inet.tds.TdsDriver", "inetdae"),
+
+  /**
+   * The sub-protocol used by the i-net Oracle driver.
+   */
+  INET_ORACLE("Oracle", "com.inet.ora.OraDriver", "inetora"),
+
+  /**
+   * The sub-protocol used by the DataDirect Oracle driver.
+   * The DataDirect Connect Oracle jdbc driver.
+   */
+  DATADIRECT_ORACLE("Oracle", "com.ddtek.jdbc.oracle.OracleDriver", "datadirect:oracle"),
+
+  /**
+   * The jTDS jdbc driver for SQLServer and Sybase.
+   */
+  JTDS("", "net.sourceforge.jtds.jdbc.Driver", ""),
+
+  /**
+   * The i-net pooled jdbc driver for SQLServer and Sybase.
+   */
+  INET_POOLED("", "com.inet.pool.PoolDriver", ""),
+
+  /**
+   * The standard Firebird jdbc driver.
+   */
+  Firebird("Firebird", "org.firebirdsql.jdbc.FBDriver", "firebirdsql"),
+
+  /**
+   * The interbase jdbc driver.
+   */
+  Interbase("Interbase", "interbase.interclient.Driver", "interbase"),
+
+  /**
+   * The subprotocol internally returned by the newer SQL Server 2005 driver.
+   */
+  SQLServer2005_NEW("MsSql", "interbase.interclient.Driver", "sqljdbc"),
+
+  /**
+   * The subprotocol recommended for the newer SQL Server 2005 driver.
+   */
+  SQLServer2005_NEW1("MsSql", "com.microsoft.sqlserver.jdbc.SQLServerDriver", "sqlserver"),
+
+  /**
+   * The standard SQLServer jdbc driver.
+   */
+  SQLServer("MsSql", "com.microsoft.jdbc.sqlserver.SQLServerDriver", "microsoft:sqlserver"),
+
+  /**
+   * The standard MySQL jdbc driver.
+   */
+  MySql("MySQL", "com.mysql.jdbc.Driver", "mysql"),
+
+  /**
+   * The old MySQL jdbc driver.
+   */
+  MySql_OLD("MySQL", "org.gjt.mm.mysql.Driver", "mysql"),
 
   ;
 

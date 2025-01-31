@@ -29,7 +29,6 @@ import org.apache.ddlutils.io.TestAlteration;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.ModelBasedResultSetIterator;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import java.util.ArrayList;
 import java.util.List;
