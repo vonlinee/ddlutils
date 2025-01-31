@@ -126,7 +126,7 @@ public abstract class JdbcSupport {
    */
   public Connection borrowConnection() throws DatabaseOperationException {
     try {
-      Connection connection = null;
+      Connection connection;
 
       if (_username == null) {
         connection = getDataSource().getConnection();
@@ -146,7 +146,7 @@ public abstract class JdbcSupport {
   }
 
   /**
-   * Closes the given JDBC connection (returns it back to the pool if the datasource is poolable).
+   * Closes the given JDBC connection (returns it back to the pool if the datasource is pooled).
    *
    * @param connection The connection
    */

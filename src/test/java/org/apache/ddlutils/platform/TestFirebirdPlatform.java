@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 
 /**
  * Tests the Firebird platform.

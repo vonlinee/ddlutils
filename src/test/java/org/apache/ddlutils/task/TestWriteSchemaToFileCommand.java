@@ -29,7 +29,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Tests the writeSchemaToFile sub task.
+ * Tests the writeSchemaToFile sub-task.
  *
  * @version $Revision: $
  */

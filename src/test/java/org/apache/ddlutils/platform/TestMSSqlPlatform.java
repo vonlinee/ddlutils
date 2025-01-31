@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
-import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

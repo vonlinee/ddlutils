@@ -171,6 +171,12 @@
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>24.0.0</version>
+      <scope>compile</scope>
+    </dependency>
     <!--
         <dependency>
           <groupId>axion</groupId>
@@ -219,6 +225,16 @@
         <directory>src/main/java</directory>
         <includes>
           <include>**/*.properties</include>
+        </includes>
+      </resource>
+
+      <resource>
+        <directory>src/main/resources</directory>
+        <includes>
+          <include>**/*.xsd</include>
+          <include>**/*.dtd</include>
+          <include>**/*.properties</include>
+          <include>**/*.xml</include>
         </includes>
       </resource>
     </resources>

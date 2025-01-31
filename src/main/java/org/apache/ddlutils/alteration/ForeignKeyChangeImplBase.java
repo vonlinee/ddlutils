@@ -23,6 +23,7 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ForeignKey;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;

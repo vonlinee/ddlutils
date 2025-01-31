@@ -379,7 +379,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           }
         } catch (SQLException ex) {
           if (continueOnError) {
-            // Since the user deciced to ignore this error, we log the error
+            // Since the user decided to ignore this error, we log the error
             // on level warn, and the exception itself on level debug
             _log.warn("SQL Command " + command + " failed with: " + ex.getMessage());
             if (_log.isDebugEnabled()) {
@@ -1455,8 +1455,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
       int paramIdx = 1;
 
-      for (Iterator<Object> iter = parameters.iterator(); iter.hasNext(); paramIdx++) {
-        Object arg = iter.next();
+      for (Iterator<Object> iterator = parameters.iterator(); iterator.hasNext(); paramIdx++) {
+        Object arg = iterator.next();
 
         if (arg instanceof BigDecimal) {
           // to avoid scale problems because setObject assumes a scale of 0
@@ -1577,8 +1577,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
       int paramIdx = 1;
 
-      for (Iterator<Object> iter = parameters.iterator(); iter.hasNext(); paramIdx++) {
-        Object arg = iter.next();
+      for (Iterator<Object> iterator = parameters.iterator(); iterator.hasNext(); paramIdx++) {
+        Object arg = iterator.next();
 
         if (arg instanceof BigDecimal) {
           // to avoid scale problems because setObject assumes a scale of 0
@@ -2195,7 +2195,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * the specified table.
    *
    * @param connection The connection used for the update
-   * @param table      The table that the rows are updateed into
+   * @param table      The table that the rows are updated into
    */
   protected void beforeUpdate(Connection connection, Table table) throws SQLException {
   }
@@ -2205,7 +2205,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * the specified table.
    *
    * @param connection The connection used for the update
-   * @param table      The table that the rows have been updateed into
+   * @param table      The table that the rows have been updated into
    */
   protected void afterUpdate(Connection connection, Table table) throws SQLException {
   }
@@ -2410,7 +2410,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     try {
       Database model = getModelReader().getDatabase(connection, name);
 
-      postprocessModelFromDatabase(model);
+      postProcessModelFromDatabase(model);
       return model;
     } catch (SQLException ex) {
       throw new DatabaseOperationException(ex);
@@ -2440,7 +2440,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       JdbcModelReader reader = getModelReader();
       Database model = reader.getDatabase(connection, name, catalog, schema, tableTypes);
 
-      postprocessModelFromDatabase(model);
+      postProcessModelFromDatabase(model);
       if ((model.getName() == null) || (model.getName().isEmpty())) {
         model.setName(MODEL_DEFAULT_NAME);
       }
@@ -2451,11 +2451,11 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   }
 
   /**
-   * Allows the platform to postprocess the model just read from the database.
+   * Allows the platform to post process the model just read from the database.
    *
    * @param model The model
    */
-  protected void postprocessModelFromDatabase(Database model) {
+  protected void postProcessModelFromDatabase(Database model) {
     // Default values for CHAR/VARCHAR/LONGVARCHAR columns have quotation marks
     // around them which we'll remove now
     for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {

@@ -22,6 +22,7 @@ package org.apache.ddlutils;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.SqlBuilder;
+import org.apache.ddlutils.util.DatabaseTestHelper;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -250,5 +251,15 @@ public abstract class TestPlatformBase extends TestBase {
         "</database>";
 
     return getDatabaseCreationSql(schema);
+  }
+
+  /**
+   * 读取指定类相同包名下的指定名称的文件文本内容
+   *
+   * @param filename 指定名称，带扩展名
+   * @return 文本内容
+   */
+  public final String readString(String filename) {
+    return DatabaseTestHelper.readString(getClass(), filename);
   }
 }

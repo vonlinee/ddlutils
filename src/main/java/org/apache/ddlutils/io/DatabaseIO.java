@@ -237,39 +237,17 @@ public class DatabaseIO {
    * @return The database model
    */
   public Database read(File file) throws DdlUtilsXMLException {
-    FileReader reader = null;
-
     if (_validateXml) {
-      try {
-        reader = new FileReader(file);
+      try (FileReader reader = new FileReader(file)) {
         new ModelValidator().validate(new StreamSource(reader));
       } catch (IOException ex) {
         throw new DdlUtilsXMLException(ex);
-      } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException ex) {
-            _log.warn("Could not close reader for file " + file.getAbsolutePath());
-          }
-          reader = null;
-        }
       }
     }
-
-    try {
-      reader = new FileReader(file);
+    try (FileReader reader = new FileReader(file)){
       return read(getXMLInputFactory().createXMLStreamReader(reader));
     } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException ex) {
-          _log.warn("Could not close reader for file " + file.getAbsolutePath());
-        }
-      }
     }
   }
 

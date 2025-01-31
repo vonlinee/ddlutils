@@ -20,14 +20,18 @@ package org.apache.ddlutils.util;
  */
 
 import junit.framework.AssertionFailedError;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -173,5 +177,35 @@ public class DatabaseTestHelper {
     }
 
     return result.toString();
+  }
+
+  /**
+   * 读取指定类相同包名下的指定名称的文件文本内容
+   *
+   * @param clazz 指定类
+   * @param file  指定名称，带扩展名
+   * @return 文本内容
+   */
+  public static String readString(Class<?> clazz, String file) {
+    try (InputStream resourceAsStream = clazz.getResourceAsStream(file)) {
+      if (resourceAsStream != null) {
+        return new String(readAllBytes(resourceAsStream), StandardCharsets.UTF_8);
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+    return null;
+  }
+
+  private static byte[] readAllBytes(InputStream inputStream) throws IOException {
+    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+    byte[] buffer = new byte[1024];
+    int bytesRead;
+
+    while ((bytesRead = inputStream.read(buffer)) != -1) {
+      byteArrayOutputStream.write(buffer, 0, bytesRead);
+    }
+
+    return byteArrayOutputStream.toByteArray();
   }
 }

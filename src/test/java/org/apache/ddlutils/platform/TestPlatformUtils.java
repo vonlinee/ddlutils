@@ -37,7 +37,7 @@ public class TestPlatformUtils extends TestCase {
    * {@inheritDoc}
    */
   @Override
-  protected void setUp() throws Exception {
+  protected void setUp() {
     _platformUtils = new PlatformUtils();
   }
 
@@ -45,7 +45,7 @@ public class TestPlatformUtils extends TestCase {
    * {@inheritDoc}
    */
   @Override
-  protected void tearDown() throws Exception {
+  protected void tearDown() {
     _platformUtils = null;
   }
 
