@@ -24,7 +24,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -371,7 +371,7 @@ public class DatabaseDataIO {
   private List<Table> sortTables(Table[] tables) {
     ArrayList<Table> result = new ArrayList<>();
     HashSet<Table> processed = new HashSet<>();
-    ListOrderedMap<Table, HashSet<Table>> pending = new ListOrderedMap<>();
+    OrderedMap<Table, HashSet<Table>> pending = new OrderedMap<>();
 
     for (Table table : tables) {
       if (table.getForeignKeyCount() == 0) {

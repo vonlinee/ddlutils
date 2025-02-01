@@ -28,7 +28,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 import org.apache.ddlutils.platform.JdbcModelReader;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -75,7 +75,7 @@ public class MckoiModelReader extends JdbcModelReader {
     Table table = super.readTable(metaData, values);
 
     if (table != null) {
-      Map<String, Index> indices = new ListOrderedMap<>();
+      Map<String, Index> indices = new OrderedMap<>();
       PreparedStatement stmt = null;
 
       try {

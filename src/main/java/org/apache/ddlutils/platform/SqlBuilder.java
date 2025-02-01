@@ -33,7 +33,7 @@ import org.apache.ddlutils.model.IndexColumn;
 import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 import org.apache.ddlutils.util.StringUtils;
 
 import java.io.IOException;
@@ -108,7 +108,7 @@ public abstract class SqlBuilder {
   /**
    * The character sequences that need escaping.
    */
-  private final Map<String, String> _charSequencesToEscape = new ListOrderedMap<>();
+  private final Map<String, String> _charSequencesToEscape = new OrderedMap<>();
 
   //
   // Configuration
@@ -435,7 +435,7 @@ public abstract class SqlBuilder {
    * @param targetTable The target table
    */
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
-    ListOrderedMap<Column, Column> columns = new ListOrderedMap<>();
+    OrderedMap<Column, Column> columns = new OrderedMap<>();
 
     for (int idx = 0; idx < sourceTable.getColumnCount(); idx++) {
       Column sourceColumn = sourceTable.getColumn(idx);

@@ -21,7 +21,7 @@ package org.apache.ddlutils.model;
 
 import org.apache.ddlutils.util.EqualsBuilder;
 import org.apache.ddlutils.util.HashCodeBuilder;
-import org.apache.ddlutils.util.ListOrderedSet;
+import org.apache.ddlutils.util.OrderedSet;
 import org.apache.ddlutils.util.StringUtils;
 
 import java.io.Serializable;
@@ -61,7 +61,7 @@ public class ForeignKey implements Serializable {
   /**
    * The references between local and remote columns.
    */
-  private final ListOrderedSet<Reference> _references = new ListOrderedSet<>();
+  private final OrderedSet<Reference> _references = new OrderedSet<>();
   /**
    * Whether this foreign key has an associated auto-generated index.
    */

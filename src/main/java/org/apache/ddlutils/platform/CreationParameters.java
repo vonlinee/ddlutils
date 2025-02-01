@@ -20,7 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,8 +44,8 @@ public class CreationParameters {
    * @param table The table
    * @return The parameters
    */
-  public ListOrderedMap<String, Object> getParametersFor(Table table) {
-    ListOrderedMap<String, Object> result = new ListOrderedMap<>();
+  public OrderedMap<String, Object> getParametersFor(Table table) {
+    OrderedMap<String, Object> result = new OrderedMap<>();
     Map<String, Object> globalParams = _parametersPerTable.get(null);
     Map<String, Object> tableParams = _parametersPerTable.get(table.getName());
 
@@ -71,7 +71,7 @@ public class CreationParameters {
 
     if (params == null) {
       // we're using a list ordered map to retain the order
-      params = new ListOrderedMap<>();
+      params = new OrderedMap<>();
       _parametersPerTable.put(key, params);
     }
     params.put(paramName, paramValue);

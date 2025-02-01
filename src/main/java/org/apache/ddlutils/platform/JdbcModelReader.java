@@ -33,7 +33,7 @@ import org.apache.ddlutils.model.NonUniqueIndex;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.UniqueIndex;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 import org.apache.ddlutils.util.StringUtils;
 
 import java.sql.Connection;
@@ -819,7 +819,7 @@ public class JdbcModelReader {
    * @return The foreign keys
    */
   protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map<String, ForeignKey> fks = new ListOrderedMap<>();
+    Map<String, ForeignKey> fks = new OrderedMap<>();
     ResultSet fkData = null;
 
     try {
@@ -913,7 +913,7 @@ public class JdbcModelReader {
    * @return The list of indices
    */
   protected Collection<Index> readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map<String, Index> indices = new ListOrderedMap<>();
+    Map<String, Index> indices = new OrderedMap<>();
     ResultSet indexData = null;
 
     try {

@@ -21,7 +21,7 @@ package org.apache.ddlutils.task;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.io.PrettyPrintingXmlWriter;
-import org.apache.ddlutils.util.ListOrderedSet;
+import org.apache.ddlutils.util.OrderedSet;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -1233,7 +1233,7 @@ public class DumpMetadataTask extends Task {
    * @return The columns
    */
   private Set<String> getColumnsInResultSet(ResultSet resultSet) throws SQLException {
-    ListOrderedSet<String> result = new ListOrderedSet<>();
+    OrderedSet<String> result = new OrderedSet<>();
     ResultSetMetaData metaData = resultSet.getMetaData();
 
     for (int idx = 1; idx <= metaData.getColumnCount(); idx++) {

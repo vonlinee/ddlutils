@@ -30,7 +30,7 @@ import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -74,7 +74,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   /**
    * Maps column names to properties.
    */
-  private final ListOrderedMap<String, String> _columnsToProperties = new ListOrderedMap<>();
+  private final OrderedMap<String, String> _columnsToProperties = new OrderedMap<>();
   /**
    * Whether the next call to hasNext or next needs advancement.
    */

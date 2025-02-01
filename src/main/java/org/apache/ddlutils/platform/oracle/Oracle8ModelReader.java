@@ -27,7 +27,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 import org.apache.ddlutils.platform.JdbcModelReader;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.sql.DatabaseMetaData;
 import java.sql.Date;
@@ -277,7 +277,7 @@ public class Oracle8ModelReader extends JdbcModelReader {
     final String queryWithSchema =
       query.substring(0, query.length() - 1) + " AND c.OWNER LIKE ?) AND a.TABLE_OWNER LIKE ?";
 
-    Map<String, Index> indices = new ListOrderedMap<>();
+    Map<String, Index> indices = new OrderedMap<>();
     PreparedStatement stmt = null;
 
     try {

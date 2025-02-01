@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.util.ListOrderedSet;
+import org.apache.ddlutils.util.OrderedSet;
 
 import java.util.Iterator;
 
@@ -43,7 +43,7 @@ public class WaitingObject {
   /**
    * The identities of the waited-for objects.
    */
-  private final ListOrderedSet<Identity> _waitedForIdentities = new ListOrderedSet<>();
+  private final OrderedSet<Identity> _waitedForIdentities = new OrderedSet<>();
 
   /**
    * Creates a new <code>WaitingObject</code> instance for the given object.

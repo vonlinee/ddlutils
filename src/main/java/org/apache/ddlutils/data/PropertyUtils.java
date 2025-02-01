@@ -21,7 +21,6 @@ import org.apache.commons.beanutils.BeanIntrospector;
 import org.apache.commons.beanutils.BeanUtilsBean;
 import org.apache.commons.beanutils.NestedNullException;
 import org.apache.commons.beanutils.PropertyUtilsBean;
-import org.apache.commons.collections.FastHashMap;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
@@ -207,40 +206,6 @@ public class PropertyUtils {
     NoSuchMethodException {
 
     return getInstance().getMappedProperty(bean, name, key);
-
-  }
-
-  /**
-   * <p>Return the mapped property descriptors for this bean class.</p>
-   *
-   * <p>For more details see <code>PropertyUtilsBean</code>.</p>
-   *
-   * @param beanClass Bean class to be introspected
-   * @return the mapped property descriptors
-   * @see PropertyUtilsBean#getMappedPropertyDescriptors(Class)
-   * @deprecated This method should not be exposed
-   */
-  @Deprecated
-  public static FastHashMap getMappedPropertyDescriptors(final Class<?> beanClass) {
-
-    return getInstance().getMappedPropertyDescriptors(beanClass);
-
-  }
-
-  /**
-   * <p>Return the mapped property descriptors for this bean.</p>
-   *
-   * <p>For more details see <code>PropertyUtilsBean</code>.</p>
-   *
-   * @param bean Bean to be introspected
-   * @return the mapped property descriptors
-   * @see PropertyUtilsBean#getMappedPropertyDescriptors(Object)
-   * @deprecated This method should not be exposed
-   */
-  @Deprecated
-  public static FastHashMap getMappedPropertyDescriptors(final Object bean) {
-
-    return getInstance().getMappedPropertyDescriptors(bean);
 
   }
 

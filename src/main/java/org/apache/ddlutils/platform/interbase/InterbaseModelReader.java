@@ -27,7 +27,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 import org.apache.ddlutils.platform.JdbcModelReader;
-import org.apache.ddlutils.util.ListOrderedMap;
+import org.apache.ddlutils.util.OrderedMap;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -277,7 +277,7 @@ public class InterbaseModelReader extends JdbcModelReader {
    */
   @Override
   protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map<String, ForeignKey> fks = new ListOrderedMap<>();
+    Map<String, ForeignKey> fks = new OrderedMap<>();
     ResultSet fkData = null;
 
     try {
