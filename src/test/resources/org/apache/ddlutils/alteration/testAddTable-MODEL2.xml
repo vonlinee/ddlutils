@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<database xmlns='http://db.apache.org/ddlutils/schema/1.1' name='test'>
+  <table name='TABLEA'>
+    <column name='COLPK' type='INTEGER' primaryKey='true' required='true'/>
+  </table>
+  <table name='TABLEB'>
+    <column name='COLPK' type='INTEGER' primaryKey='true' required='true'/>
+  </table>
+</database>

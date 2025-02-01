@@ -1,0 +1,5 @@
+<database xmlns='http://db.apache.org/ddlutils/schema/1.1' name='test'>
+  <table name='TableA'>
+    <column name='ColPK' type='INTEGER' primaryKey='true' required='true'/>
+  </table>
+</database>

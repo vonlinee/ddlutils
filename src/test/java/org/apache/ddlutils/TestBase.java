@@ -23,6 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.util.DatabaseTestHelper;
 import org.junit.Assert;
 
 import java.io.StringReader;
@@ -122,5 +123,9 @@ public abstract class TestBase {
 
   public void setName(String name) {
 
+  }
+
+  protected final String readFileToString(String file) {
+    return DatabaseTestHelper.readString(getClass(), file);
   }
 }
