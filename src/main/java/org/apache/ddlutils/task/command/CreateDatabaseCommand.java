@@ -23,7 +23,6 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.task.DatabaseTask;
 import org.apache.ddlutils.task.Parameter;
-import org.apache.tools.ant.BuildException;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -68,7 +67,7 @@ public class CreateDatabaseCommand extends DatabaseCommand {
     DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
-      throw new BuildException("No database specified.");
+      throw new CommandExecuteException("No database specified.");
     }
     Properties properties = task.getProperties();
 

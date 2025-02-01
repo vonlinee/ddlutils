@@ -24,11 +24,8 @@ import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.task.DatabaseTask;
 import org.apache.ddlutils.task.Task;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Properties;
 
 /**
@@ -52,10 +49,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * A single data file to insert.
    */
   private File _singleDataFile = null;
-  /**
-   * The input files.
-   */
-  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
+
   /**
    * Whether explicit values for identity columns will be used.
    */
@@ -79,15 +73,6 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    */
   public void setUseExplicitIdentityValues(boolean useExplicitIdentityValues) {
     _useExplicitIdentityValues = useExplicitIdentityValues;
-  }
-
-  /**
-   * Adds a fileset.
-   *
-   * @param fileset The additional input files
-   */
-  public void addConfiguredFileset(FileSet fileset) {
-    _fileSets.add(fileset);
   }
 
   /**
@@ -146,8 +131,8 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    */
   @Override
   public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
-    if ((_singleDataFile != null) && !_fileSets.isEmpty()) {
-      throw new BuildException("Please use either the datafile attribute or the sub fileset element, but not both");
+    if ((_singleDataFile != null)) {
+      throw new CommandExecuteException("Please use either the datafile attribute or the sub fileset element, but not both");
     }
 
     Platform platform = getPlatform();

@@ -1,7 +1,5 @@
-package org.apache.ddlutils.task.ant;
+package org.apache.ddlutils.task;
 
-import org.apache.ddlutils.task.TaskEnvironment;
-import org.apache.ddlutils.task.TaskLog;
 import org.apache.ddlutils.util.Log;
 import org.apache.tools.ant.AntClassLoader;
 import org.apache.tools.ant.DirectoryScanner;

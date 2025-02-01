@@ -21,7 +21,6 @@ package org.apache.ddlutils.task;
 
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.ant.AntTaskEnvironment;
 import org.apache.ddlutils.task.command.Command;
 import org.apache.ddlutils.task.command.DatabaseCommand;
 
@@ -40,11 +39,6 @@ import java.util.Properties;
  * @ant.task ignore="true"
  */
 public abstract class DatabaseTask extends Task {
-
-  /**
-   * the runtime environment when a task is running.
-   */
-  protected final TaskEnvironment env = new AntTaskEnvironment();
 
   /**
    * properties, jdbc connection info

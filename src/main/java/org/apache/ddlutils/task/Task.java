@@ -5,6 +5,11 @@ import java.util.Properties;
 public abstract class Task {
 
   /**
+   * the runtime environment when a task is running.
+   */
+  protected TaskEnvironment env;
+
+  /**
    * Message priority of &quot;error&quot;.
    */
   public static final int MSG_ERR = 0;
@@ -42,6 +47,10 @@ public abstract class Task {
 
   public final String getProperty(String name) {
     return properties.getProperty(name);
+  }
+
+  public void setEnvironment(TaskEnvironment environment) {
+    this.env = environment;
   }
 
   public abstract void execute() throws TaskException;
