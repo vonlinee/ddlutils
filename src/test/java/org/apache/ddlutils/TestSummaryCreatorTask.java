@@ -244,7 +244,7 @@ public class TestSummaryCreatorTask extends Task {
   }
 
   /**
-   * Adds the data from the test jdbc propertis file to the document.
+   * Adds the data from the test jdbc properties file to the document.
    *
    * @param element            The element to add the relevant database properties to
    * @param jdbcPropertiesFile The path of the properties file
@@ -256,7 +256,7 @@ public class TestSummaryCreatorTask extends Task {
 
     Properties props = readProperties(jdbcPropertiesFile);
     Connection conn = null;
-    DatabaseMetaData metaData = null;
+    DatabaseMetaData metaData;
 
     try {
       String dataSourceClass = props.getProperty(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX + "class", BasicDataSource.class.getName());
