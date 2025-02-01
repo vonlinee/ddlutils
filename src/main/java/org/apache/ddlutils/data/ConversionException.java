@@ -20,49 +20,19 @@ package org.apache.ddlutils.data;
 /**
  * <p>A <strong>ConversionException</strong> indicates that a call to
  * <code>Converter.convert()</code> has failed to complete successfully.
- *
- * @since 1.3
  */
 public class ConversionException extends RuntimeException {
 
-    private static final long serialVersionUID = 1L;
+  /**
+   * Constructs a new exception with the specified message.
+   *
+   * @param message The message describing this exception
+   */
+  public ConversionException(final String message) {
+    super(message);
+  }
 
-    /**
-     * The cause, deprecated.
-     *
-     * @deprecated Use {@link Throwable#getCause()}}.
-     */
-    @Deprecated
-    protected Throwable cause;
-
-    /**
-     * Constructs a new exception with the specified message.
-     *
-     * @param message The message describing this exception
-     */
-    public ConversionException(final String message) {
-        super(message);
-    }
-
-    /**
-     * Constructs a new exception with the specified message and root cause.
-     *
-     * @param message The message describing this exception
-     * @param cause The root cause of this exception
-     */
-    public ConversionException(final String message, final Throwable cause) {
-        super(message, cause);
-        this.cause = cause;
-    }
-
-    /**
-     * Constructs a new exception with the specified root cause.
-     *
-     * @param cause The root cause of this exception
-     */
-    public ConversionException(final Throwable cause) {
-        super(cause);
-        this.cause = cause;
-    }
-
+  public ConversionException(final String message, Throwable throwable) {
+    super(message, throwable);
+  }
 }

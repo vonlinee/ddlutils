@@ -22,54 +22,53 @@ package org.apache.ddlutils.data;
  * <code>DynaBean</code> interface.  DynaBean instances that share the same
  * DynaClass all have the same set of available properties, along with any
  * associated data types, read-only states, and write-only states.</p>
- *
  */
 public interface DynaClass {
 
-    /**
-     * <p>Return an array of <code>PropertyDescriptors</code> for the properties
-     * currently defined in this DynaClass.  If no properties are defined, a
-     * zero-length array will be returned.</p>
-     *
-     * <p><strong>FIXME</strong> - Should we really be implementing
-     * <code>getBeanInfo()</code> instead, which returns property descriptors
-     * and a bunch of other stuff?</p>
-     *
-     * @return the array of properties for this DynaClass
-     */
-    DynaProperty[] getDynaProperties();
+  /**
+   * <p>Return an array of <code>PropertyDescriptors</code> for the properties
+   * currently defined in this DynaClass.  If no properties are defined, a
+   * zero-length array will be returned.</p>
+   *
+   * <p><strong>FIXME</strong> - Should we really be implementing
+   * <code>getBeanInfo()</code> instead, which returns property descriptors
+   * and a bunch of other stuff?</p>
+   *
+   * @return the array of properties for this DynaClass
+   */
+  DynaProperty[] getDynaProperties();
 
-    /**
-     * Return a property descriptor for the specified property, if it exists;
-     * otherwise, return <code>null</code>.
-     *
-     * @param name Name of the dynamic property for which a descriptor
-     *  is requested
-     * @return The descriptor for the specified property
-     * @throws IllegalArgumentException if no property name is specified
-     */
-    DynaProperty getDynaProperty(String name);
+  /**
+   * Return a property descriptor for the specified property, if it exists;
+   * otherwise, return <code>null</code>.
+   *
+   * @param name Name of the dynamic property for which a descriptor
+   *             is requested
+   * @return The descriptor for the specified property
+   * @throws IllegalArgumentException if no property name is specified
+   */
+  DynaProperty getDynaProperty(String name);
 
-    /**
-     * Return the name of this DynaClass (analogous to the
-     * <code>getName()</code> method of <code>java.lang.Class</code>), which
-     * allows the same <code>DynaClass</code> implementation class to support
-     * different dynamic classes, with different sets of properties.
-     *
-     * @return the name of the DynaClass
-     */
-    String getName();
+  /**
+   * Return the name of this DynaClass (analogous to the
+   * <code>getName()</code> method of <code>java.lang.Class</code>), which
+   * allows the same <code>DynaClass</code> implementation class to support
+   * different dynamic classes, with different sets of properties.
+   *
+   * @return the name of the DynaClass
+   */
+  String getName();
 
-    /**
-     * Instantiate and return a new DynaBean instance, associated
-     * with this DynaClass.
-     *
-     * @return A new <code>DynaBean</code> instance
-     * @throws IllegalAccessException if the Class or the appropriate
-     *  constructor is not accessible
-     * @throws InstantiationException if this Class represents an abstract
-     *  class, an array class, a primitive type, or void; or if instantiation
-     *  fails for some other reason
-     */
-    DynaBean newInstance() throws IllegalAccessException, InstantiationException;
+  /**
+   * Instantiate and return a new DynaBean instance, associated
+   * with this DynaClass.
+   *
+   * @return A new <code>DynaBean</code> instance
+   * @throws IllegalAccessException if the Class or the appropriate
+   *                                constructor is not accessible
+   * @throws InstantiationException if this Class represents an abstract
+   *                                class, an array class, a primitive type, or void; or if instantiation
+   *                                fails for some other reason
+   */
+  DynaBean newInstance() throws IllegalAccessException, InstantiationException;
 }

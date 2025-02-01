@@ -20,7 +20,6 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.PropertyUtils;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -40,7 +39,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -430,14 +428,7 @@ public class DataReader {
   private void setColumnValue(DynaBean bean, Table table, Column column, String value) throws DdlUtilsXMLException {
     SqlTypeConverter converter = _converterConf.getRegisteredConverter(table, column);
     Object propValue = (converter != null ? converter.convertFromString(value, column.getTypeCode()) : value);
-
-    try {
-      PropertyUtils.setProperty(bean, column.getName(), propValue);
-    } catch (NoSuchMethodException ex) {
-      throw new DdlUtilsXMLException("Undefined column " + column.getName());
-    } catch (IllegalAccessException | InvocationTargetException ex) {
-      throw new DdlUtilsXMLException("Could not set bean property for column " + column.getName(), ex);
-    }
+    bean.set(column.getName(), propValue);
   }
 
   /**

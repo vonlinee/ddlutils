@@ -215,23 +215,21 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
   /**
    * Is an object of the source class assignable to the destination class?
    *
-   * @param dest   Destination class
+   * @param target Destination class
    * @param source Source class
    * @return <code>true</code> if the source class is assignable to the
    * destination class, otherwise <code>false</code>
    */
-  protected boolean isAssignable(final Class<?> dest, final Class<?> source) {
-
-    return dest.isAssignableFrom(source) ||
-      dest == Boolean.TYPE && source == Boolean.class ||
-      dest == Byte.TYPE && source == Byte.class ||
-      dest == Character.TYPE && source == Character.class ||
-      dest == Double.TYPE && source == Double.class ||
-      dest == Float.TYPE && source == Float.class ||
-      dest == Integer.TYPE && source == Integer.class ||
-      dest == Long.TYPE && source == Long.class ||
-      dest == Short.TYPE && source == Short.class;
-
+  protected boolean isAssignable(final Class<?> target, final Class<?> source) {
+    return target.isAssignableFrom(source) ||
+      target == Boolean.TYPE && source == Boolean.class ||
+      target == Byte.TYPE && source == Byte.class ||
+      target == Character.TYPE && source == Character.class ||
+      target == Double.TYPE && source == Double.class ||
+      target == Float.TYPE && source == Float.class ||
+      target == Integer.TYPE && source == Integer.class ||
+      target == Long.TYPE && source == Long.class ||
+      target == Short.TYPE && source == Short.class;
   }
 
   /**
@@ -339,16 +337,16 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
    *                                  exists, but is not mapped
    */
   @Override
+  @SuppressWarnings("unchecked")
   public void set(final String name, final String key, final Object value) {
     final Object prop = values.get(name);
     Objects.requireNonNull(prop, () -> "No mapped value for '" + name + "(" + key + ")'");
     if (!(prop instanceof Map)) {
-      throw new IllegalArgumentException
-        ("Non-mapped property for '" + name + "(" + key + ")'");
+      throw new IllegalArgumentException("Non-mapped property for '" + name + "(" + key + ")'");
     }
     // This is safe to cast because mapped properties are always
     // maps of types String -> Object
-    @SuppressWarnings("unchecked") final Map<String, Object> map = (Map<String, Object>) prop;
+    Map<String, Object> map = (Map<String, Object>) prop;
     map.put(key, value);
   }
 

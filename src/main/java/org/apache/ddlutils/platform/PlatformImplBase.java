@@ -19,8 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.PropertyUtils;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
@@ -45,6 +43,7 @@ import org.apache.ddlutils.alteration.RemovePrimaryKeyChange;
 import org.apache.ddlutils.alteration.RemoveTableChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.data.SqlDynaProperty;
 import org.apache.ddlutils.model.CloneHelper;
@@ -1793,11 +1792,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           // the SQL statement looks like; rather we assume that we get the values
           // back in the same order as the auto increment columns
           Object value = getObjectFromResultSet(lastInsertedIds, autoIncrementColumns[idx], idx + 1);
-
-          PropertyUtils.setProperty(dynaBean, autoIncrementColumns[idx].getName(), value);
+          dynaBean.set(autoIncrementColumns[idx].getName(), value);
         }
-      } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException ex) {
-        // Can't happen because we're using dyna beans
       } catch (SQLException ex) {
         throw new DatabaseOperationException("Error while retrieving the identity column value(s) from the database", ex);
       } finally {

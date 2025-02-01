@@ -20,7 +20,6 @@ package org.apache.ddlutils;
  */
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.ddlutils.data.BeanUtils;
 import org.apache.ddlutils.util.IOUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
@@ -266,9 +265,7 @@ public class TestSummaryCreatorTask extends Task {
         String propName = (String) objectObjectEntry.getKey();
 
         if (propName.startsWith(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX) && !propName.equals(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX + "class")) {
-          BeanUtils.setProperty(dataSource,
-            propName.substring(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX.length()),
-            objectObjectEntry.getValue());
+          // TODO set value
         }
       }
 

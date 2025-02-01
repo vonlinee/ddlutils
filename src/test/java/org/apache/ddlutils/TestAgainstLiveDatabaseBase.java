@@ -21,7 +21,6 @@ package org.apache.ddlutils;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.data.BeanUtils;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.DynaProperty;
 import org.apache.ddlutils.data.SqlDynaBean;
@@ -196,9 +195,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         String propName = (String) entry.getKey();
 
         if (propName.startsWith(DATASOURCE_PROPERTY_PREFIX) && !propName.equals(DATASOURCE_PROPERTY_PREFIX + "class")) {
-          BeanUtils.setProperty(dataSource,
-            propName.substring(DATASOURCE_PROPERTY_PREFIX.length()),
-            entry.getValue());
+          // TODO set value
         }
       }
       return dataSource;

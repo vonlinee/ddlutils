@@ -24,6 +24,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
+import org.junit.Test;
 
 /**
  * Tests the MySQL platform.
@@ -42,6 +43,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE IF EXISTS `coltype`;\n" +
@@ -85,6 +87,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     // MySql-specific schema
     final String schema =

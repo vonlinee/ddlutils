@@ -21,7 +21,6 @@ package org.apache.ddlutils.data;
 
 import org.apache.ddlutils.model.Table;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,33 +48,6 @@ public class DynaClassCache {
     } catch (InstantiationException | IllegalAccessException ex) {
       throw new SqlDynaException("Could not create a new dyna bean for table " + table.getName(), ex);
     }
-  }
-
-  /**
-   * Creates a new dyna bean instance for the given table and copies the values from the
-   * given source object. The source object can be a bean, a map or a dyna bean.
-   * This method is useful when iterating through an arbitrary dyna bean
-   * result set after performing a query, then creating a copy as a DynaBean
-   * which is bound to a specific table.
-   * This new DynaBean can be kept around, changed and stored back into the database.
-   *
-   * @param table  The table to create the dyna bean for
-   * @param source Either a bean, a {@link java.util.Map} or a dyna bean that will be used
-   *               to populate the result int dyna bean
-   * @return A new dyna bean bound to the given table and containing all the properties from
-   * the source object
-   */
-  public DynaBean copy(Table table, Object source) throws SqlDynaException {
-    DynaBean answer = createNewInstance(table);
-
-    try {
-      // copy all the properties from the source
-      BeanUtils.copyProperties(answer, source);
-    } catch (InvocationTargetException | IllegalAccessException ex) {
-      throw new SqlDynaException("Could not populate the bean", ex);
-    }
-
-    return answer;
   }
 
   /**

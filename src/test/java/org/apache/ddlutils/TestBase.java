@@ -24,7 +24,9 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.util.DatabaseTestHelper;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 import java.io.StringReader;
 
@@ -46,6 +48,16 @@ public abstract class TestBase {
    */
   protected Log getLog() {
     return _log;
+  }
+
+  @Before
+  public void beforeEach() throws Exception {
+    this.setUp();
+  }
+
+  @After
+  public void afterEach() throws Exception {
+    this.tearDown();
   }
 
   /**
@@ -82,7 +94,7 @@ public abstract class TestBase {
    * @param original The original string
    * @return The resulting string
    */
-  private String compressWhitespaces(String original) {
+  protected String compressWhitespaces(String original) {
     StringBuilder result = new StringBuilder();
     char oldChar = ' ';
     char curChar;

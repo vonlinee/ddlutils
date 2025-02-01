@@ -17,34 +17,14 @@
 
 package org.apache.ddlutils.data;
 
-import org.apache.commons.beanutils.BeanUtilsBean;
-import org.apache.commons.beanutils.ConvertUtilsBean;
-import org.apache.commons.beanutils.Converter;
-
 /**
  * <p>Utility methods for converting String scalar values to objects of the
  * specified Class, String arrays to arrays of the specified Class.</p>
  *
  * <p>For more details, see <code>ConvertUtilsBean</code> which provides the
  * implementations for these methods.</p>
- *
- * @see ConvertUtilsBean
  */
-
 public class ConvertUtils {
-
-  /**
-   * <p>Convert the specified value into a String.</p>
-   *
-   * <p>For more details see <code>ConvertUtilsBean</code>.</p>
-   *
-   * @param value Value to be converted (maybe null)
-   * @return The converted String value or null if value is null
-   * @see ConvertUtilsBean#convert(Object)
-   */
-  public static String convert(final Object value) {
-    return BeanUtilsBean.getInstance().getConvertUtils().convert(value);
-  }
 
   /**
    * <p>Convert the value to an object of the specified class (if
@@ -59,8 +39,10 @@ public class ConvertUtils {
     return getInstance().convert(value, targetType);
   }
 
-  private static ConvertUtilsBean getInstance() {
-    return BeanUtilsBean.getInstance().getConvertUtils();
+  static final ConversionService service = new DefaultConversionService();
+
+  private static ConversionService getInstance() {
+    return service;
   }
 
   /**
@@ -72,7 +54,6 @@ public class ConvertUtils {
    * @param value Value to be converted (maybe null)
    * @param clazz Java class to be converted to (must not be null)
    * @return The converted value
-   * @see ConvertUtilsBean#convert(String, Class)
    */
   public static Object convert(final String value, final Class<?> clazz) {
     return getInstance().convert(value, clazz);
@@ -87,38 +68,9 @@ public class ConvertUtils {
    * @param values Array of values to be converted
    * @param clazz  Java array or element class to be converted to (must not be null)
    * @return The converted value
-   * @see ConvertUtilsBean#convert(String[], Class)
    */
   public static Object convert(final String[] values, final Class<?> clazz) {
     return getInstance().convert(values, clazz);
-  }
-
-  /**
-   * <p>Look up and return any registered {@link Converter} for the specified
-   * destination class; if there is no registered Converter, return
-   * <code>null</code>.</p>
-   *
-   * <p>For more details see <code>ConvertUtilsBean</code>.</p>
-   *
-   * @param clazz Class for which to return a registered Converter
-   * @return The registered {@link Converter} or <code>null</code> if not found
-   * @see ConvertUtilsBean#lookup(Class)
-   */
-  public static Converter lookup(final Class<?> clazz) {
-    return getInstance().lookup(clazz);
-  }
-
-  /**
-   * Look up and return any registered {@link Converter} for the specified
-   * source and destination class; if there is no registered Converter,
-   * return <code>null</code>.
-   *
-   * @param sourceType Class of the value being converted
-   * @param targetType Class of the value to be converted to
-   * @return The registered {@link Converter} or <code>null</code> if not found
-   */
-  public static Converter lookup(final Class<?> sourceType, final Class<?> targetType) {
-    return getInstance().lookup(sourceType, targetType);
   }
 
   /**
@@ -163,20 +115,5 @@ public class ConvertUtils {
       return (Class<T>) Character.class;
     }
     return type;
-  }
-
-  /**
-   * <p>Register a custom {@link Converter} for the specified destination
-   * <code>Class</code>, replacing any previously registered Converter.</p>
-   *
-   * <p>For more details see <code>ConvertUtilsBean</code>.</p>
-   *
-   * @param converter Converter to be registered
-   * @param clazz     Destination class for conversions performed by this
-   *                  Converter
-   * @see ConvertUtilsBean#register(Converter, Class)
-   */
-  public static void register(final Converter converter, final Class<?> clazz) {
-    getInstance().register(converter, clazz);
   }
 }

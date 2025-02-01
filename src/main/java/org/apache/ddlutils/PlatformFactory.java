@@ -42,8 +42,8 @@ import org.apache.ddlutils.platform.sybase.SybaseASE15Platform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A factory of {@link org.apache.ddlutils.Platform} instances based on a case-insensitive
@@ -66,7 +66,7 @@ public class PlatformFactory {
   private static synchronized Map<String, Class<? extends Platform>> getPlatforms() {
     if (_platforms == null) {
       // lazy initialization
-      _platforms = new HashMap<>();
+      _platforms = new ConcurrentHashMap<>();
       registerPlatforms();
     }
     return _platforms;
@@ -81,7 +81,6 @@ public class PlatformFactory {
    */
   public static synchronized Platform createNewPlatformInstance(String databaseName) throws DdlUtilsException {
     Class<? extends Platform> platformClass = getPlatforms().get(databaseName.toLowerCase());
-
     try {
       return platformClass != null ? platformClass.newInstance() : null;
     } catch (Exception ex) {
@@ -132,20 +131,10 @@ public class PlatformFactory {
    */
   public static synchronized Platform createNewPlatformInstance(DataSource dataSource, String username, String password) throws DdlUtilsException {
     Platform platform = createNewPlatformInstance(new PlatformUtils().determineDatabaseType(dataSource, username, password));
-
     platform.setDataSource(dataSource);
     platform.setUsername(username);
     platform.setPassword(password);
     return platform;
-  }
-
-  /**
-   * Returns a list of all supported platforms.
-   *
-   * @return The names of the currently registered platforms
-   */
-  public static synchronized String[] getSupportedPlatforms() {
-    return getPlatforms().keySet().toArray(new String[0]);
   }
 
   /**
