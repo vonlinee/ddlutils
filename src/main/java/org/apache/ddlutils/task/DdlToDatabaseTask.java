@@ -28,12 +28,9 @@ import org.apache.ddlutils.task.command.WriteDataToFileCommand;
 import org.apache.ddlutils.task.command.WriteDtdToFileCommand;
 import org.apache.ddlutils.task.command.WriteSchemaSqlToFileCommand;
 import org.apache.ddlutils.task.command.WriteSchemaToDatabaseCommand;
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Task for performing operations on a live database. Sub-tasks e.g. create the
@@ -69,15 +66,12 @@ import java.util.ArrayList;
  * @version $Revision: 289996 $
  * @ant.task name="ddlToDatabase"
  */
-public class DdlToDatabaseTask extends DatabaseTaskBase {
+public class DdlToDatabaseTask extends DatabaseTask {
   /**
    * A single schema file to read.
    */
   private File _singleSchemaFile = null;
-  /**
-   * The input files.
-   */
-  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
+
   /**
    * Whether XML input files are validated against the internal or an external DTD.
    */
@@ -109,14 +103,6 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
     _validateXml = validateXml;
   }
 
-  /**
-   * Adds a fileset.
-   *
-   * @param fileset The additional input files
-   */
-  public void addConfiguredFileset(FileSet fileset) {
-    _fileSets.add(fileset);
-  }
 
   /**
    * Defines the single file that contains the database file. You can use this instead of embedded
@@ -196,34 +182,27 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
    * {@inheritDoc}
    */
   @Override
-  protected Database readModel() {
+  protected Database readModel() throws TaskException {
     DatabaseIO reader = new DatabaseIO();
     Database model = null;
 
     reader.setValidateXml(_validateXml);
     reader.setUseInternalDtd(_useInternalDtd);
-    if (_singleSchemaFile != null && !_fileSets.isEmpty()) {
-      throw new BuildException("Please use either the schema file attribute or the sub fileset element, but not both");
-    }
     if (_singleSchemaFile != null) {
       model = readSingleSchemaFile(reader, _singleSchemaFile);
     } else {
-      for (FileSet fileSet : _fileSets) {
-        File fileSetDir = fileSet.getDir(getProject());
-        DirectoryScanner scanner = fileSet.getDirectoryScanner(getProject());
-        String[] files = scanner.getIncludedFiles();
+      List<File> files = env.getFiles();
 
-        for (int idx = 0; (files != null) && (idx < files.length); idx++) {
-          Database curModel = readSingleSchemaFile(reader, new File(fileSetDir, files[idx]));
+      for (File file : files) {
+        Database curModel = readSingleSchemaFile(reader, file);
 
-          if (model == null) {
-            model = curModel;
-          } else if (curModel != null) {
-            try {
-              model.mergeWith(curModel);
-            } catch (IllegalArgumentException ex) {
-              throw new BuildException("Could not merge with schema from file " + files[idx] + ": " + ex.getLocalizedMessage(), ex);
-            }
+        if (model == null) {
+          model = curModel;
+        } else if (curModel != null) {
+          try {
+            model.mergeWith(curModel);
+          } catch (IllegalArgumentException ex) {
+            throw new TaskException("Could not merge with schema from file " + file + ": " + ex.getLocalizedMessage(), ex);
           }
         }
       }
@@ -238,19 +217,17 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
    * @param schemaFile The schema file
    * @return The model
    */
-  private Database readSingleSchemaFile(DatabaseIO reader, File schemaFile) {
-    Database model = null;
-
+  private Database readSingleSchemaFile(DatabaseIO reader, File schemaFile) throws TaskException {
+    Database model;
     if (!schemaFile.isFile()) {
-      _log.error("Path " + schemaFile.getAbsolutePath() + " does not denote a file");
+      throw new TaskException("Path " + schemaFile.getAbsolutePath() + " does not denote a file");
     } else if (!schemaFile.canRead()) {
-      _log.error("Could not read schema file " + schemaFile.getAbsolutePath());
+      throw new TaskException("Could not read schema file " + schemaFile.getAbsolutePath());
     } else {
       try {
         model = reader.read(schemaFile);
-        _log.info("Read schema file " + schemaFile.getAbsolutePath());
       } catch (Exception ex) {
-        throw new BuildException("Could not read schema file " + schemaFile.getAbsolutePath() + ": " + ex.getLocalizedMessage(), ex);
+        throw new TaskException("Could not read schema file " + schemaFile.getAbsolutePath() + ": " + ex.getLocalizedMessage(), ex);
       }
     }
     return model;

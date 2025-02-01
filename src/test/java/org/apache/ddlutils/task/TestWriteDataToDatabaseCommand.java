@@ -67,6 +67,8 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
       task.addWriteDataToDatabase(subTask);
       task.setModelName("roundtriptest");
       task.execute();
+    } catch (TaskException e) {
+      throw new RuntimeException(e);
     } finally {
       if (!tmpFile.delete()) {
         getLog().warn("Could not delete temporary file " + tmpFile.getAbsolutePath());

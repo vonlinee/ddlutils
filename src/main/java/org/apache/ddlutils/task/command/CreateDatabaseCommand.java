@@ -21,7 +21,7 @@ package org.apache.ddlutils.task.command;
 
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
 import org.apache.ddlutils.task.Parameter;
 import org.apache.tools.ant.BuildException;
 
@@ -64,20 +64,23 @@ public class CreateDatabaseCommand extends DatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
       throw new BuildException("No database specified.");
     }
+    Properties properties = task.getProperties();
 
-    Platform platform = getPlatform();
+    String url = properties.getProperty("url");
+    String driverClassName = properties.getProperty("driverClassName");
+
+    Platform platform = getPlatform(url, driverClassName);
     try {
       createPlatformDatabase(platform);
-      _log.info("Created database");
     } catch (UnsupportedOperationException ex) {
-      _log.error("Database platform " + platform.getName() + " does not support database creation " +
-          "via JDBC or there was an error while creating it.",
+      throw new CommandExecuteException("Database platform " + platform.getName() + " does not support database creation " +
+        "via JDBC or there was an error while creating it.",
         ex);
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());

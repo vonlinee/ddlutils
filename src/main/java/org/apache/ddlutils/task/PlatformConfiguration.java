@@ -19,11 +19,9 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.PlatformUtils;
-import org.apache.tools.ant.BuildException;
 
 import javax.sql.DataSource;
 
@@ -41,7 +39,7 @@ public class PlatformConfiguration {
   /**
    * The data source to use for accessing the database.
    */
-  private BasicDataSource _dataSource;
+  private DataSource _dataSource;
   /**
    * Whether to use delimited SQL identifiers.
    */
@@ -105,7 +103,7 @@ public class PlatformConfiguration {
    *
    * @param dataSource The data source pointing to the database
    */
-  public void setDataSource(BasicDataSource dataSource) {
+  public void setDataSource(DataSource dataSource) {
     _dataSource = dataSource;
   }
 
@@ -214,14 +212,13 @@ public class PlatformConfiguration {
    *
    * @return The platform
    */
-  public Platform getPlatform() throws BuildException {
+  public Platform getPlatform(String url, String driverClassName) throws RuntimeException {
     if (_platform == null) {
       if (_databaseType == null) {
         if (_dataSource == null) {
-          throw new BuildException("No database specified.");
+          throw new RuntimeException("No database specified.");
         }
-        _databaseType = new PlatformUtils().determineDatabaseType(_dataSource.getDriverClassName(),
-          _dataSource.getUrl());
+        _databaseType = new PlatformUtils().determineDatabaseType(driverClassName, url);
         if (_databaseType == null) {
           _databaseType = new PlatformUtils().determineDatabaseType(_dataSource);
         }
@@ -229,10 +226,10 @@ public class PlatformConfiguration {
       try {
         _platform = PlatformFactory.createNewPlatformInstance(_databaseType);
       } catch (Exception ex) {
-        throw new BuildException("Database type " + _databaseType + " is not supported.", ex);
+        throw new RuntimeException("Database type " + _databaseType + " is not supported.", ex);
       }
       if (_platform == null) {
-        throw new BuildException("Database type " + _databaseType + " is not supported.");
+        throw new RuntimeException("Database type " + _databaseType + " is not supported.");
       }
       _platform.setDataSource(_dataSource);
       _platform.setDelimitedIdentifierModeOn(isUseDelimitedSqlIdentifiers());

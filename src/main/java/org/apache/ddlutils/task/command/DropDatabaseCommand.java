@@ -21,7 +21,7 @@ package org.apache.ddlutils.task.command;
 
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -53,7 +53,7 @@ public class DropDatabaseCommand extends DatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws CommandExecuteException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     DataSource dataSource = getDataSource();
 
     if (dataSource == null) {
@@ -64,10 +64,8 @@ public class DropDatabaseCommand extends DatabaseCommand {
 
     try {
       createPlatformDatabase(platform);
-
-      _log.info("Dropped database");
     } catch (UnsupportedOperationException ex) {
-      _log.error("Database platform " + platform.getName() + " does not support database dropping via JDBC",
+      throw new CommandExecuteException("Database platform " + platform.getName() + " does not support database dropping via JDBC",
         ex);
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());

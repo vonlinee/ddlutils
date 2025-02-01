@@ -22,8 +22,7 @@ package org.apache.ddlutils.task.command;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.CreationParameters;
-import org.apache.ddlutils.task.DatabaseTaskBase;
-import org.apache.tools.ant.BuildException;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import java.util.Properties;
 
@@ -93,9 +92,9 @@ public class WriteSchemaToDatabaseCommand extends DatabaseCommandWithCreationPar
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     if (getDataSource() == null) {
-      throw new BuildException("No database specified.");
+      throw new CommandExecuteException("No database specified.");
     }
 
     Platform platform = getPlatform();
@@ -116,8 +115,6 @@ public class WriteSchemaToDatabaseCommand extends DatabaseCommandWithCreationPar
           _doDrops,
           true);
       }
-
-      _log.info("Written schema to database");
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());
     }

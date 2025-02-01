@@ -20,8 +20,7 @@ package org.apache.ddlutils.task.command;
  */
 
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
-import org.apache.tools.ant.BuildException;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -96,12 +95,11 @@ public class WriteDataToFileCommand extends ConvertingDatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     try {
       getDataIO().setDetermineSchema(_determineSchema);
       getDataIO().writeDataToXML(getPlatform(), model,
         Files.newOutputStream(_outputFile.toPath()), _encoding);
-      _log.info("Written data XML to file" + _outputFile.getAbsolutePath());
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());
     }

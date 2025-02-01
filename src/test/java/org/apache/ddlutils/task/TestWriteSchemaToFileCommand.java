@@ -62,6 +62,8 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
       assertEquals(expectedModel,
         new DatabaseIO().read(tmpFile),
         isUseDelimitedIdentifiers());
+    } catch (TaskException e) {
+      throw new RuntimeException(e);
     } finally {
       if (!tmpFile.delete()) {
         getLog().warn("Could not delete temporary file " + tmpFile.getAbsolutePath());
@@ -459,7 +461,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   }
 
   /**
-   * Tests of the includeTables filter for multiple tables via reg exp.
+   * Tests of the includeTables filter for multiple tables via regexp.
    */
   public void testIncludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {
     final String modelXml =
@@ -813,7 +815,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   }
 
   /**
-   * Tests of the excludeTables filter for multiple tables via reg exp.
+   * Tests of the excludeTables filter for multiple tables via regexp.
    */
   public void testExcludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {
     final String modelXml =

@@ -30,6 +30,7 @@ public class StringUtils {
 
   /**
    * The empty String <code>""</code>.
+   *
    * @since 2.0
    */
   public static final String EMPTY = "";
@@ -75,7 +76,6 @@ public class StringUtils {
     return str == null || str.isEmpty();
   }
 
-
   /**
    * <p>Replaces all occurrences of a String within another String.</p>
    *
@@ -92,12 +92,12 @@ public class StringUtils {
    * StringUtils.replace("aba", "a", "z")   = "zbz"
    * </pre>
    *
-   * @see #replace(String text, String repl, String with, int max)
-   * @param text  text to search and replace in, may be null
-   * @param repl  the String to search for, may be null
-   * @param with  the String to replace with, may be null
+   * @param text text to search and replace in, may be null
+   * @param repl the String to search for, may be null
+   * @param with the String to replace with, may be null
    * @return the text with any replacements processed,
-   *  <code>null</code> if null String input
+   * <code>null</code> if null String input
+   * @see #replace(String text, String repl, String with, int max)
    */
   public static String replace(String text, String repl, String with) {
     return replace(text, repl, with, -1);
@@ -124,12 +124,12 @@ public class StringUtils {
    * StringUtils.replace("abaa", "a", "z", -1)  = "zbzz"
    * </pre>
    *
-   * @param text  text to search and replace in, may be null
-   * @param repl  the String to search for, may be null
-   * @param with  the String to replace with, may be null
+   * @param text text to search and replace in, may be null
+   * @param repl the String to search for, may be null
+   * @param with the String to replace with, may be null
    * @param max  maximum number of values to replace, or <code>-1</code> if no maximum
    * @return the text with any replacements processed,
-   *  <code>null</code> if null String input
+   * <code>null</code> if null String input
    */
   public static String replace(String text, String repl, String with, int max) {
     if (text == null || isEmpty(repl) || with == null || max == 0) {
@@ -163,10 +163,10 @@ public class StringUtils {
    * StringUtils.repeat("a", -2) = ""
    * </pre>
    *
-   * @param str  the String to repeat, may be null
-   * @param repeat  number of times to repeat str, negative treated as zero
+   * @param str    the String to repeat, may be null
+   * @param repeat number of times to repeat str, negative treated as zero
    * @return a new String consisting of the original String repeated,
-   *  <code>null</code> if null String input
+   * <code>null</code> if null String input
    */
   public static String repeat(String str, int repeat) {
     // Performance tuned for 2.0 (JDK1.4)
@@ -187,14 +187,14 @@ public class StringUtils {
 
     int outputLength = inputLength * repeat;
     switch (inputLength) {
-      case 1 :
+      case 1:
         char ch = str.charAt(0);
         char[] output1 = new char[outputLength];
         for (int i = repeat - 1; i >= 0; i--) {
           output1[i] = ch;
         }
         return new String(output1);
-      case 2 :
+      case 2:
         char ch0 = str.charAt(0);
         char ch1 = str.charAt(1);
         char[] output2 = new char[outputLength];
@@ -203,7 +203,7 @@ public class StringUtils {
           output2[i + 1] = ch1;
         }
         return new String(output2);
-      default :
+      default:
         StringBuilder buf = new StringBuilder(outputLength);
         for (int i = 0; i < repeat; i++) {
           buf.append(str);
@@ -223,7 +223,7 @@ public class StringUtils {
    * </pre>
    *
    * @param repeat  number of times to repeat delim
-   * @param padChar  character to repeat
+   * @param padChar character to repeat
    * @return String with repeated character
    * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>
    */

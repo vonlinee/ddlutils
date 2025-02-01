@@ -19,10 +19,11 @@ package org.apache.ddlutils.task.command;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
+import org.apache.ddlutils.task.TaskEnvironment;
+import org.apache.ddlutils.util.Log;
+import org.apache.ddlutils.util.LogFactory;
 
 /**
  * Base class for commands that work with a model.
@@ -35,6 +36,8 @@ public abstract class Command {
    * The log.
    */
   protected final Log _log = LogFactory.getLog(getClass());
+
+  protected TaskEnvironment environment;
 
   /**
    * Whether to stop execution upon an error.
@@ -61,6 +64,10 @@ public abstract class Command {
     _failOnError = failOnError;
   }
 
+  public void setEnvironment(TaskEnvironment environment) {
+    this.environment = environment;
+  }
+
   /**
    * Handles the given exception according to the fail-on-error setting by either
    * re-throwing it (wrapped in a build exception) or only logging it.
@@ -83,7 +90,7 @@ public abstract class Command {
 
   /**
    * Specifies whether this command requires a model, i.e. whether the second
-   * argument in {@link #execute(DatabaseTaskBase, Database)} cannot be <code>null</code>.
+   * argument in {@link #execute(DatabaseTask, Database)} cannot be <code>null</code>.
    *
    * @return <code>true</code> if this command requires a model
    */
@@ -95,5 +102,5 @@ public abstract class Command {
    * @param task  The executing task
    * @param model The database model
    */
-  public abstract void execute(DatabaseTaskBase task, Database model) throws CommandExecuteException;
+  public abstract void execute(DatabaseTask task, Database model) throws CommandExecuteException;
 }

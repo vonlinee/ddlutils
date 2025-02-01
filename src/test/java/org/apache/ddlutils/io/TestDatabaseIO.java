@@ -280,8 +280,8 @@ public class TestDatabaseIO extends TestCase {
       model.getTableCount());
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
-        "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\" />\n",
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+        "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\"></database>\n",
       model);
   }
 
@@ -302,9 +302,9 @@ public class TestDatabaseIO extends TestCase {
       model.getTable(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
-        "  <table name=\"SomeTable\" description=\"Some table\" />\n" +
+        "  <table name=\"SomeTable\" description=\"Some table\"></table>\n" +
         "</database>\n",
       model);
   }
@@ -353,10 +353,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -436,7 +436,7 @@ public class TestDatabaseIO extends TestCase {
     }
 
     modelXml.setLength(0);
-    modelXml.append("<?xml version='1.0' encoding='UTF-8'?>\n");
+    modelXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     modelXml.append("<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n");
     modelXml.append("  <table name=\"SomeTable\" description=\"Some table\">\n");
     for (int idx = 0; idx < types.length; idx++) {
@@ -444,7 +444,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append(idx);
       modelXml.append("\" primaryKey=\"false\" required=\"false\" type=\"");
       modelXml.append(TypeMap.getJdbcTypeName(types[idx]));
-      modelXml.append("\" autoIncrement=\"false\" />\n");
+      modelXml.append("\" autoIncrement=\"false\"></column>\n");
     }
     modelXml.append("  </table>\n");
     modelXml.append("</database>\n");
@@ -502,10 +502,10 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(column, table.getPrimaryKeyColumns()[0]);
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"true\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"true\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -521,7 +521,7 @@ public class TestDatabaseIO extends TestCase {
         "         description='Some table'>\n" +
         "    <column name='ID'\n" +
         "            type='INTEGER'\n" +
-        "            required='true'/>\n" +
+        "            required='true'></column>\n" +
         "  </table>\n" +
         "</database>");
 
@@ -536,10 +536,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"true\" type=\"INTEGER\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"true\" type=\"INTEGER\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -575,10 +575,10 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(column, table.getAutoIncrementColumns()[0]);
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"true\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"true\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -609,10 +609,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"20\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"20\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -643,10 +643,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"DECIMAL\" size=\"10,3\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"DECIMAL\" size=\"10,3\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -677,10 +677,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"Foo\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"Foo\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -712,10 +712,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"32\" default=\"Test string\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"32\" default=\"Test string\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -746,10 +746,10 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" javaName=\"testString\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" javaName=\"testString\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);
@@ -811,15 +811,15 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(fkColumn, pkColumn, fk.getFirstReference());
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n" +
         "  </table>\n" +
         "  <table name=\"AnotherTable\" description=\"And another table\">\n" +
-        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n" +
+        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n" +
         "    <foreign-key foreignTable=\"SomeTable\">\n" +
-        "      <reference local=\"Some_ID\" foreign=\"ID\" />\n" +
+        "      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n" +
         "    </foreign-key>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -888,19 +888,19 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(anotherTable.getColumn(1), someTable.getColumn(2), fk.getReference(1));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n" +
-        "    <column name=\"VALUE1\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"A value\" />\n" +
-        "    <column name=\"VALUE2\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" description=\"Another value\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n" +
+        "    <column name=\"VALUE1\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"A value\"></column>\n" +
+        "    <column name=\"VALUE2\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" description=\"Another value\"></column>\n" +
         "  </table>\n" +
         "  <table name=\"AnotherTable\" description=\"And another table\">\n" +
-        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n" +
-        "    <column name=\"Some_Value\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n" +
+        "    <column name=\"Some_Value\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
         "    <foreign-key foreignTable=\"SomeTable\">\n" +
-        "      <reference local=\"Some_ID\" foreign=\"ID\" />\n" +
-        "      <reference local=\"Some_Value\" foreign=\"VALUE2\" />\n" +
+        "      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n" +
+        "      <reference local=\"Some_Value\" foreign=\"VALUE2\"></reference>\n" +
         "    </foreign-key>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -989,15 +989,15 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n" +
         "  </table>\n" +
         "  <table name=\"AnotherTable\" description=\"And another table\">\n" +
-        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n" +
+        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n" +
         "    <foreign-key foreignTable=\"SomeTable\" name=\"The foreignkey\">\n" +
-        "      <reference local=\"Some_ID\" foreign=\"ID\" />\n" +
+        "      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n" +
         "    </foreign-key>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1070,13 +1070,13 @@ public class TestDatabaseIO extends TestCase {
     }
 
     modelXml.setLength(0);
-    modelXml.append("<?xml version='1.0' encoding='UTF-8'?>\n");
+    modelXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     modelXml.append("<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n");
     modelXml.append("  <table name=\"SomeTable\" description=\"Some table\">\n");
-    modelXml.append("    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n");
+    modelXml.append("    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n");
     modelXml.append("  </table>\n");
     modelXml.append("  <table name=\"AnotherTable\" description=\"And another table\">\n");
-    modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n");
+    modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n");
     for (Iterator<CascadeActionEnum> it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
       CascadeActionEnum enumValue = it.next();
 
@@ -1087,7 +1087,7 @@ public class TestDatabaseIO extends TestCase {
         modelXml.append(enumValue.getName());
       }
       modelXml.append("\">\n");
-      modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\" />\n");
+      modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n");
       modelXml.append("    </foreign-key>\n");
     }
     modelXml.append("  </table>\n");
@@ -1161,13 +1161,13 @@ public class TestDatabaseIO extends TestCase {
     }
 
     modelXml.setLength(0);
-    modelXml.append("<?xml version='1.0' encoding='UTF-8'?>\n");
+    modelXml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     modelXml.append("<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n");
     modelXml.append("  <table name=\"SomeTable\" description=\"Some table\">\n");
-    modelXml.append("    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n");
+    modelXml.append("    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n");
     modelXml.append("  </table>\n");
     modelXml.append("  <table name=\"AnotherTable\" description=\"And another table\">\n");
-    modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n");
+    modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n");
 
     for (CascadeActionEnum enumValue : CascadeActionEnum.values()) {
       modelXml.append("    <foreign-key foreignTable=\"SomeTable\" name=\"foreignkey ");
@@ -1177,7 +1177,7 @@ public class TestDatabaseIO extends TestCase {
         modelXml.append(enumValue.getName());
       }
       modelXml.append("\">\n");
-      modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\" />\n");
+      modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n");
       modelXml.append("    </foreign-key>\n");
     }
 
@@ -1552,21 +1552,21 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(anotherTable.getColumn(1), someTable.getColumn(2), fk.getReference(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\" description=\"Some table\">\n" +
-        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\" />\n" +
-        "    <column name=\"VALUE1\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"A value\" />\n" +
-        "    <column name=\"VALUE2\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" description=\"Another value\" />\n" +
+        "    <column name=\"ID\" primaryKey=\"true\" required=\"true\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The primary key\"></column>\n" +
+        "    <column name=\"VALUE1\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"A value\"></column>\n" +
+        "    <column name=\"VALUE2\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" description=\"Another value\"></column>\n" +
         "  </table>\n" +
         "  <table name=\"AnotherTable\" description=\"And another table\">\n" +
-        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n" +
-        "    <column name=\"Some_Value\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\"></column>\n" +
+        "    <column name=\"Some_Value\" primaryKey=\"false\" required=\"false\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
         "    <foreign-key foreignTable=\"SomeTable\">\n" +
-        "      <reference local=\"Some_ID\" foreign=\"ID\" />\n" +
+        "      <reference local=\"Some_ID\" foreign=\"ID\"></reference>\n" +
         "    </foreign-key>\n" +
         "    <foreign-key foreignTable=\"SomeTable\">\n" +
-        "      <reference local=\"Some_Value\" foreign=\"VALUE2\" />\n" +
+        "      <reference local=\"Some_Value\" foreign=\"VALUE2\"></reference>\n" +
         "    </foreign-key>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1657,13 +1657,13 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <index>\n" +
-        "      <index-column name=\"value\" />\n" +
+        "      <index-column name=\"value\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1715,15 +1715,15 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(0), null, index.getColumn(1));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"when\" primaryKey=\"false\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"when\" primaryKey=\"false\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <index>\n" +
-        "      <index-column name=\"when\" />\n" +
-        "      <index-column name=\"id\" />\n" +
+        "      <index-column name=\"when\"></index-column>\n" +
+        "      <index-column name=\"id\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1768,13 +1768,13 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <index name=\"The Index\">\n" +
-        "      <index-column name=\"value\" />\n" +
+        "      <index-column name=\"value\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1897,13 +1897,13 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <unique>\n" +
-        "      <unique-column name=\"value\" />\n" +
+        "      <unique-column name=\"value\"></unique-column>\n" +
         "    </unique>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -1955,15 +1955,15 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(0), null, index.getColumn(1));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"when\" primaryKey=\"false\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"when\" primaryKey=\"false\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <unique>\n" +
-        "      <unique-column name=\"when\" />\n" +
-        "      <unique-column name=\"id\" />\n" +
+        "      <unique-column name=\"when\"></unique-column>\n" +
+        "      <unique-column name=\"id\"></unique-column>\n" +
         "    </unique>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -2008,13 +2008,13 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndex\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"DOUBLE\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"value\" primaryKey=\"false\" required=\"false\" type=\"SMALLINT\" default=\"1\" autoIncrement=\"false\"></column>\n" +
         "    <unique name=\"The Index\">\n" +
-        "      <unique-column name=\"value\" />\n" +
+        "      <unique-column name=\"value\"></unique-column>\n" +
         "    </unique>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -2145,16 +2145,16 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"TableWithIndexes\">\n" +
-        "    <column name=\"id\" primaryKey=\"false\" required=\"true\" type=\"SMALLINT\" autoIncrement=\"true\" />\n" +
-        "    <column name=\"when\" primaryKey=\"false\" required=\"false\" type=\"DATE\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"id\" primaryKey=\"false\" required=\"true\" type=\"SMALLINT\" autoIncrement=\"true\"></column>\n" +
+        "    <column name=\"when\" primaryKey=\"false\" required=\"false\" type=\"DATE\" autoIncrement=\"false\"></column>\n" +
         "    <unique name=\"important column\">\n" +
-        "      <unique-column name=\"id\" />\n" +
+        "      <unique-column name=\"id\"></unique-column>\n" +
         "    </unique>\n" +
         "    <index>\n" +
-        "      <index-column name=\"when\" />\n" +
+        "      <index-column name=\"when\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -2309,39 +2309,39 @@ public class TestDatabaseIO extends TestCase {
     assertEquals(table.getColumn(1), null, index.getColumn(0));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"A\" description=\"Table A\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"INTEGER\" autoIncrement=\"true\" description=\"The primary key of table A\" />\n" +
-        "    <column name=\"parentId\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"The field for the foreign key parent\" />\n" +
-        "    <column name=\"name\" primaryKey=\"false\" required=\"true\" type=\"VARCHAR\" size=\"32\" autoIncrement=\"false\" description=\"The name\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"INTEGER\" autoIncrement=\"true\" description=\"The primary key of table A\"></column>\n" +
+        "    <column name=\"parentId\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"The field for the foreign key parent\"></column>\n" +
+        "    <column name=\"name\" primaryKey=\"false\" required=\"true\" type=\"VARCHAR\" size=\"32\" autoIncrement=\"false\" description=\"The name\"></column>\n" +
         "    <foreign-key foreignTable=\"A\" name=\"parent\">\n" +
-        "      <reference local=\"parentId\" foreign=\"id\" />\n" +
+        "      <reference local=\"parentId\" foreign=\"id\"></reference>\n" +
         "    </foreign-key>\n" +
         "    <unique>\n" +
-        "      <unique-column name=\"name\" />\n" +
+        "      <unique-column name=\"name\"></unique-column>\n" +
         "    </unique>\n" +
         "  </table>\n" +
         "  <table name=\"B\" description=\"Table B\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\" description=\"The primary key of table B\" />\n" +
-        "    <column name=\"aid\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"The field for the foreign key towards A\" />\n" +
-        "    <column name=\"cid\" primaryKey=\"false\" required=\"false\" type=\"CHAR\" size=\"32\" autoIncrement=\"false\" description=\"The field for the foreign key towards C\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"TIMESTAMP\" autoIncrement=\"false\" description=\"The primary key of table B\"></column>\n" +
+        "    <column name=\"aid\" primaryKey=\"false\" required=\"false\" type=\"INTEGER\" autoIncrement=\"false\" description=\"The field for the foreign key towards A\"></column>\n" +
+        "    <column name=\"cid\" primaryKey=\"false\" required=\"false\" type=\"CHAR\" size=\"32\" autoIncrement=\"false\" description=\"The field for the foreign key towards C\"></column>\n" +
         "    <foreign-key foreignTable=\"A\">\n" +
-        "      <reference local=\"aid\" foreign=\"id\" />\n" +
+        "      <reference local=\"aid\" foreign=\"id\"></reference>\n" +
         "    </foreign-key>\n" +
         "    <foreign-key foreignTable=\"C\">\n" +
-        "      <reference local=\"cid\" foreign=\"id\" />\n" +
+        "      <reference local=\"cid\" foreign=\"id\"></reference>\n" +
         "    </foreign-key>\n" +
         "    <index>\n" +
-        "      <index-column name=\"aid\" />\n" +
-        "      <index-column name=\"cid\" />\n" +
+        "      <index-column name=\"aid\"></index-column>\n" +
+        "      <index-column name=\"cid\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "  <table name=\"C\" description=\"Table C\">\n" +
-        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"CHAR\" size=\"32\" autoIncrement=\"false\" description=\"The primary key of table C\" />\n" +
-        "    <column name=\"text\" primaryKey=\"false\" required=\"false\" type=\"LONGVARCHAR\" autoIncrement=\"false\" description=\"The text\" />\n" +
+        "    <column name=\"id\" primaryKey=\"true\" required=\"true\" type=\"CHAR\" size=\"32\" autoIncrement=\"false\" description=\"The primary key of table C\"></column>\n" +
+        "    <column name=\"text\" primaryKey=\"false\" required=\"false\" type=\"LONGVARCHAR\" autoIncrement=\"false\" description=\"The text\"></column>\n" +
         "    <index name=\"byText\">\n" +
-        "      <index-column name=\"text\" />\n" +
+        "      <index-column name=\"text\"></index-column>\n" +
         "    </index>\n" +
         "  </table>\n" +
         "</database>\n",
@@ -2584,11 +2584,11 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(1));
 
     assertEquals(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns=\"" + DatabaseIO.DDLUTILS_NAMESPACE + "\" name=\"test\">\n" +
         "  <table name=\"SomeTable\">\n" +
-        "    <column name=\"intField\" primaryKey=\"false\" required=\"false\" type=\"TINYINT\" autoIncrement=\"false\" />\n" +
-        "    <column name=\"charField\" primaryKey=\"false\" required=\"false\" type=\"CHAR\" autoIncrement=\"false\" />\n" +
+        "    <column name=\"intField\" primaryKey=\"false\" required=\"false\" type=\"TINYINT\" autoIncrement=\"false\"></column>\n" +
+        "    <column name=\"charField\" primaryKey=\"false\" required=\"false\" type=\"CHAR\" autoIncrement=\"false\"></column>\n" +
         "  </table>\n" +
         "</database>\n",
       model);

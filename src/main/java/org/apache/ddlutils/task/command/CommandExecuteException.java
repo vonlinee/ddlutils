@@ -17,19 +17,14 @@
  */
 package org.apache.ddlutils.task.command;
 
+import org.apache.ddlutils.task.TaskException;
+
 /**
  * Signals an error condition during a build
  */
-public class CommandExecuteException extends RuntimeException {
+public class CommandExecuteException extends TaskException {
 
   private static final long serialVersionUID = -5419014565354664240L;
-
-  /**
-   * Constructs a build exception with no descriptive information.
-   */
-  public CommandExecuteException() {
-    super();
-  }
 
   /**
    * Constructs an exception with the given descriptive message.

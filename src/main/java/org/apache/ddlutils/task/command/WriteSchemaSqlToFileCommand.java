@@ -22,12 +22,10 @@ package org.apache.ddlutils.task.command;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.CreationParameters;
-import org.apache.ddlutils.task.DatabaseTaskBase;
-import org.apache.tools.ant.BuildException;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
@@ -115,21 +113,18 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     if (_outputFile == null) {
-      throw new BuildException("No output file specified");
+      throw new CommandExecuteException("No output file specified");
     }
     if (_outputFile.exists() && !_outputFile.canWrite()) {
-      throw new BuildException("Cannot overwrite output file " + _outputFile.getAbsolutePath());
+      throw new CommandExecuteException("Cannot overwrite output file " + _outputFile.getAbsolutePath());
     }
 
     Platform platform = getPlatform();
     boolean isCaseSensitive = platform.isDelimitedIdentifierModeOn();
     CreationParameters params = getFilteredParameters(model, platform.getName(), isCaseSensitive);
-    FileWriter writer = null;
-
-    try {
-      writer = new FileWriter(_outputFile);
+    try (FileWriter writer = new FileWriter(_outputFile)) {
 
       platform.setScriptModeOn(true);
       if (platform.getPlatformInfo().isSqlCommentsSupported()) {
@@ -142,7 +137,7 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
       if (shouldAlter) {
         if (getDataSource() == null) {
           shouldAlter = false;
-          _log.warn("Cannot alter the database because no database connection was specified." +
+          throw new CommandExecuteException("Cannot alter the database because no database connection was specified." +
             " SQL for database creation will be generated instead.");
         } else {
           try {
@@ -151,8 +146,8 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
             connection.close();
           } catch (SQLException ex) {
             shouldAlter = false;
-            _log.warn("Could not establish a connection to the specified database, " +
-                "so SQL for database creation will be generated instead.",
+            throw new CommandExecuteException("Could not establish a connection to the specified database, " +
+              "so SQL for database creation will be generated instead.",
               ex);
           }
         }
@@ -166,17 +161,8 @@ public class WriteSchemaSqlToFileCommand extends DatabaseCommandWithCreationPara
       } else {
         writer.write(platform.getCreateModelSql(model, params, _doDrops, !isFailOnError()));
       }
-      _log.info("Written schema SQL to " + _outputFile.getAbsolutePath());
     } catch (Exception ex) {
       handleException(ex, ex.getMessage());
-    } finally {
-      if (writer != null) {
-        try {
-          writer.close();
-        } catch (IOException ex) {
-          _log.error("Could not close file " + _outputFile.getAbsolutePath(), ex);
-        }
-      }
     }
   }
 }

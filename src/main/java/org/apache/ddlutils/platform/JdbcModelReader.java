@@ -19,8 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.CascadeActionEnum;
@@ -33,6 +31,8 @@ import org.apache.ddlutils.model.NonUniqueIndex;
 import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.UniqueIndex;
+import org.apache.ddlutils.util.Log;
+import org.apache.ddlutils.util.LogFactory;
 import org.apache.ddlutils.util.OrderedMap;
 import org.apache.ddlutils.util.StringUtils;
 

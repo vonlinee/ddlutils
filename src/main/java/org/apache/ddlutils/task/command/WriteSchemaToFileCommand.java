@@ -21,8 +21,7 @@ package org.apache.ddlutils.task.command;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
-import org.apache.tools.ant.BuildException;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -62,12 +61,12 @@ public class WriteSchemaToFileCommand extends Command {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     if (_outputFile == null) {
-      throw new BuildException("No output file specified");
+      throw new CommandExecuteException("No output file specified");
     }
     if (_outputFile.exists() && !_outputFile.canWrite()) {
-      throw new BuildException("Cannot overwrite output file " + _outputFile.getAbsolutePath());
+      throw new CommandExecuteException("Cannot overwrite output file " + _outputFile.getAbsolutePath());
     }
 
     try {
@@ -76,7 +75,6 @@ public class WriteSchemaToFileCommand extends Command {
 
       dbIO.write(model, outputWriter);
       outputWriter.close();
-      _log.info("Written schema to " + _outputFile.getAbsolutePath());
     } catch (Exception ex) {
       handleException(ex, "Failed to write to output file " + _outputFile.getAbsolutePath());
     }

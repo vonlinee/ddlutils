@@ -19,8 +19,6 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
@@ -33,6 +31,8 @@ import org.apache.ddlutils.model.IndexColumn;
 import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.util.Log;
+import org.apache.ddlutils.util.LogFactory;
 import org.apache.ddlutils.util.OrderedMap;
 import org.apache.ddlutils.util.StringUtils;
 

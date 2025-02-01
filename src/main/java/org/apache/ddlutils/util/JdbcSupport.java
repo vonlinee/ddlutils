@@ -19,8 +19,6 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DatabaseOperationException;
 
 import javax.sql.DataSource;

@@ -21,8 +21,6 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
@@ -58,6 +56,8 @@ import org.apache.ddlutils.model.ModelException;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.util.JdbcSupport;
+import org.apache.ddlutils.util.Log;
+import org.apache.ddlutils.util.LogFactory;
 import org.apache.ddlutils.util.SqlTokenizer;
 
 import java.io.IOException;

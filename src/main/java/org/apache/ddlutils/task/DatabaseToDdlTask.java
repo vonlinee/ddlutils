@@ -28,7 +28,6 @@ import org.apache.ddlutils.task.command.WriteDataToFileCommand;
 import org.apache.ddlutils.task.command.WriteDtdToFileCommand;
 import org.apache.ddlutils.task.command.WriteSchemaSqlToFileCommand;
 import org.apache.ddlutils.task.command.WriteSchemaToFileCommand;
-import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -62,7 +61,7 @@ import java.util.StringTokenizer;
  * @version $Revision: 289996 $
  * @ant.task name="databaseToDdl"
  */
-public class DatabaseToDdlTask extends DatabaseTaskBase {
+public class DatabaseToDdlTask extends DatabaseTask {
   /**
    * The table types to recognize when reading the model from the database.
    */
@@ -255,9 +254,9 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * {@inheritDoc}
    */
   @Override
-  protected Database readModel() {
+  protected Database readModel() throws TaskException {
     if (getDataSource() == null) {
-      throw new BuildException("No database specified.");
+      throw new TaskException("No database specified.");
     }
 
     try {
@@ -295,7 +294,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
       }
       return model;
     } catch (Exception ex) {
-      throw new BuildException("Could not read the schema from the specified database: " + ex.getLocalizedMessage(), ex);
+      throw new TaskException("Could not read the schema from the specified database: " + ex.getLocalizedMessage(), ex);
     }
   }
 }

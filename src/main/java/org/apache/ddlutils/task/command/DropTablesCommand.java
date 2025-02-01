@@ -24,7 +24,7 @@ import org.apache.ddlutils.model.CloneHelper;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ModelHelper;
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
 import org.apache.ddlutils.task.TaskHelper;
 
 import javax.sql.DataSource;
@@ -76,7 +76,7 @@ public class DropTablesCommand extends DatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws CommandExecuteException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     DataSource dataSource = getDataSource();
 
     if (dataSource == null) {

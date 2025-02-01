@@ -22,10 +22,9 @@ package org.apache.ddlutils.task.command;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
+import org.apache.ddlutils.task.Task;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.DirectoryScanner;
-import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
@@ -146,7 +145,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws BuildException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     if ((_singleDataFile != null) && !_fileSets.isEmpty()) {
       throw new BuildException("Please use either the datafile attribute or the sub fileset element, but not both");
     }
@@ -161,14 +160,8 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
       if (_singleDataFile != null) {
         readSingleDataFile(task, dataReader, _singleDataFile);
       } else {
-        for (FileSet fileSet : _fileSets) {
-          File fileSetDir = fileSet.getDir(task.getProject());
-          DirectoryScanner scanner = fileSet.getDirectoryScanner(task.getProject());
-          String[] files = scanner.getIncludedFiles();
-
-          for (int idx = 0; (files != null) && (idx < files.length); idx++) {
-            readSingleDataFile(task, dataReader, new File(fileSetDir, files[idx]));
-          }
+        for (File file : environment.getFiles()) {
+          readSingleDataFile(task, dataReader, file);
         }
       }
     } catch (Exception ex) {
@@ -187,17 +180,16 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * @param reader   The data reader
    * @param dataFile The schema file
    */
-  private void readSingleDataFile(Task task, DataReader reader, File dataFile) throws BuildException {
+  private void readSingleDataFile(Task task, DataReader reader, File dataFile) throws CommandExecuteException {
     if (!dataFile.exists()) {
-      _log.error("Could not find data file " + dataFile.getAbsolutePath());
+      throw new CommandExecuteException("Could not find data file " + dataFile.getAbsolutePath());
     } else if (!dataFile.isFile()) {
-      _log.error("Path " + dataFile.getAbsolutePath() + " does not denote a data file");
+      throw new CommandExecuteException("Path " + dataFile.getAbsolutePath() + " does not denote a data file");
     } else if (!dataFile.canRead()) {
-      _log.error("Could not read data file " + dataFile.getAbsolutePath());
+      throw new CommandExecuteException("Could not read data file " + dataFile.getAbsolutePath());
     } else {
       try {
         getDataIO().writeDataToDatabase(reader, dataFile.getAbsolutePath());
-        _log.info("Written data from file " + dataFile.getAbsolutePath() + " to database");
       } catch (Exception ex) {
         handleException(ex, "Could not parse or write data file " + dataFile.getAbsolutePath());
       }

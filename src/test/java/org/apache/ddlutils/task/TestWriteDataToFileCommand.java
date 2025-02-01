@@ -76,6 +76,8 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
       dataReader.read(tmpFile);
 
       assertEquals("Not the same tables in the expected and actual data", expectedData.keySet(), readData.keySet());
+    } catch (TaskException e) {
+      throw new RuntimeException(e);
     } finally {
       if (!tmpFile.delete()) {
         getLog().warn("Could not delete temporary file " + tmpFile.getAbsolutePath());

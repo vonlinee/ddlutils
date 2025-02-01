@@ -42,7 +42,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the task against an empty database.
    */
-  public void testEmptyDatabase() {
+  public void testEmptyDatabase() throws TaskException {
     DatabaseToDdlTask task = getDatabaseToDdlTaskInstance();
 
     task.addDropTables(new DropTablesCommand());
@@ -56,7 +56,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table.
    */
-  public void testSingleTable() {
+  public void testSingleTable() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -81,7 +81,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with an auto increment column.
    */
-  public void testSingleTableWithAutoIncrementColumn() {
+  public void testSingleTableWithAutoIncrementColumn() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -106,7 +106,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with an index.
    */
-  public void testSingleTableWithIndex() {
+  public void testSingleTableWithIndex() throws TaskException {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
     }
@@ -138,7 +138,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with a unique index.
    */
-  public void testSingleTableWithUniqeIndex() {
+  public void testSingleTableWithUniqeIndex() throws TaskException {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
     }
@@ -170,7 +170,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table with a self-referencing foreign key.
    */
-  public void testSingleTablesWithSelfReferencingFK() {
+  public void testSingleTablesWithSelfReferencingFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -198,7 +198,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of two tables with a foreign key between them.
    */
-  public void testTwoTablesWithFK() {
+  public void testTwoTablesWithFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -230,7 +230,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of two tables with circular foreign keys between them.
    */
-  public void testTwoTablesWithCircularFK() {
+  public void testTwoTablesWithCircularFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -265,7 +265,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
-  public void testNamesListWithSingleName() {
+  public void testNamesListWithSingleName() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -310,7 +310,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
-  public void testNamesListWithMultipleNames() {
+  public void testNamesListWithMultipleNames() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -347,7 +347,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
-  public void testNamesListWithSingleDelimitedName() {
+  public void testNamesListWithSingleDelimitedName() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -398,7 +398,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
-  public void testNamesListWithMultipleDelimitedNames() {
+  public void testNamesListWithMultipleDelimitedNames() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -441,7 +441,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
-  public void testNamesListWithSingleDelimitedNameWithComma() {
+  public void testNamesListWithSingleDelimitedNameWithComma() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -492,7 +492,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
-  public void testNamesListWithSingleDelimitedNameEndingInComma() {
+  public void testNamesListWithSingleDelimitedNameEndingInComma() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -543,7 +543,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
-  public void testNamesListWithMultipleDelimitedNameWithCommas() {
+  public void testNamesListWithMultipleDelimitedNameWithCommas() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -586,7 +586,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests an empty names list.
    */
-  public void testEmptyNamesList() {
+  public void testEmptyNamesList() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -623,7 +623,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via a regular expression.
    */
-  public void testSimpleRegExp() {
+  public void testSimpleRegExp() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -668,7 +668,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via a regular expression.
    */
-  public void testRegExpInDelimitedIdentifierMode() {
+  public void testRegExpInDelimitedIdentifierMode() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -719,7 +719,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via a regular expression.
    */
-  public void testRegExpMultipleTables() {
+  public void testRegExpMultipleTables() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -773,7 +773,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via a regular expression.
    */
-  public void testRegExpMultipleTablesInDelimitedIdentifierMode() {
+  public void testRegExpMultipleTablesInDelimitedIdentifierMode() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
     }
@@ -831,7 +831,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests a regular expression that matches nothing.
    */
-  public void testRegExpMatchingNothing() {
+  public void testRegExpMatchingNothing() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -868,7 +868,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests an empty regular expression.
    */
-  public void testEmptyRegExp() {
+  public void testEmptyRegExp() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +

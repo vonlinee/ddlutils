@@ -20,8 +20,6 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.data.DynaBean;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.data.SqlDynaBean;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
@@ -39,10 +37,6 @@ import java.util.List;
  * Writes dyna beans matching a specified database model into an XML file.
  */
 public class DataWriter extends PrettyPrintingXmlWriter {
-  /**
-   * Our log.
-   */
-  private final Log _log = LogFactory.getLog(DataWriter.class);
 
   /**
    * The converters.
@@ -162,7 +156,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
       if (bean instanceof SqlDynaBean) {
         write((SqlDynaBean) bean);
       } else {
-        _log.warn("Cannot write normal dyna beans (type: " + bean.getDynaClass().getName() + ")");
+        throw new DataWriterException("Cannot write normal dyna beans (type: " + bean.getDynaClass().getName() + ")");
       }
     }
   }

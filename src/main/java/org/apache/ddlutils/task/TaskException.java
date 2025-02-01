@@ -1,6 +1,6 @@
 package org.apache.ddlutils.task;
 
-public class TaskException extends RuntimeException {
+public class TaskException extends Exception {
 
   public TaskException(String message, Throwable cause) {
     super(message, cause);

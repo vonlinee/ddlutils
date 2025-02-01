@@ -19,18 +19,17 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.io.PrettyPrintingXmlWriter;
 import org.apache.ddlutils.util.OrderedSet;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
 
+import javax.sql.DataSource;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -58,7 +57,7 @@ public class DumpMetadataTask extends Task {
   /**
    * The data source to use for accessing the database.
    */
-  private BasicDataSource _dataSource;
+  private DataSource _dataSource;
   /**
    * The file to write the dump to.
    */
@@ -66,7 +65,7 @@ public class DumpMetadataTask extends Task {
   /**
    * The encoding of the XML output file.
    */
-  private String _outputEncoding = "UTF-8";
+  private String _outputEncoding = StandardCharsets.UTF_8.name();
   /**
    * The database catalog(s) to read.
    */
@@ -105,7 +104,7 @@ public class DumpMetadataTask extends Task {
    *
    * @param dataSource The data source
    */
-  public void addConfiguredDatabase(BasicDataSource dataSource) {
+  public void addConfiguredDatabase(DataSource dataSource) {
     _dataSource = dataSource;
   }
 
@@ -228,7 +227,7 @@ public class DumpMetadataTask extends Task {
   @Override
   public void execute() throws BuildException {
     if (_dataSource == null) {
-      log("No data source specified, so there is nothing to do.", Project.MSG_INFO);
+      log("No data source specified, so there is nothing to do.", Task.MSG_INFO);
       return;
     }
 
@@ -241,11 +240,15 @@ public class DumpMetadataTask extends Task {
         output = Files.newOutputStream(_outputFile.toPath());
       }
 
+
       PrettyPrintingXmlWriter xmlWriter = new PrettyPrintingXmlWriter(output, _outputEncoding);
 
       xmlWriter.writeDocumentStart();
       xmlWriter.writeElementStart(null, "metadata");
-      xmlWriter.writeAttribute(null, "driverClassName", _dataSource.getDriverClassName());
+
+      String driverClassName = getProperty("driverClassName");
+
+      xmlWriter.writeAttribute(null, "driverClassName", driverClassName);
 
       dumpMetaData(xmlWriter, connection.getMetaData());
 
@@ -268,9 +271,7 @@ public class DumpMetadataTask extends Task {
    * @param xmlWriter The XML writer to write to
    * @param metaData  The metadata to write
    */
-  private void dumpMetaData(PrettyPrintingXmlWriter xmlWriter, DatabaseMetaData metaData) throws NoSuchMethodException,
-    IllegalAccessException,
-    InvocationTargetException,
+  private void dumpMetaData(PrettyPrintingXmlWriter xmlWriter, DatabaseMetaData metaData) throws
     SQLException {
     // We rather iterate over the methods because most metadata properties
     // do not follow the bean naming standard
@@ -465,6 +466,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getCatalogs();
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         String catalogName = result.getString("TABLE_CAT");
@@ -475,6 +477,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the catalogs from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -485,6 +488,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getSchemas();
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         String schemaName = result.getString("TABLE_SCHEM");
@@ -495,6 +499,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the schemas from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -548,6 +553,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getTables(_catalogPattern, _schemaPattern, _tablePattern, tableTypesToRead);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -611,6 +617,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getColumns(catalogName, schemaName, tableName, _columnPattern);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -669,6 +676,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the colums for table '" + tableName + "' from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -695,6 +703,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getPrimaryKeys(catalogName, schemaName, tableName);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -710,6 +719,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the primary keys for table '" + tableName + "' from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -736,6 +746,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getVersionColumns(catalogName, schemaName, tableName);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -770,6 +781,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the versioned columns for table '" + tableName + "' from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -796,6 +808,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getImportedKeys(catalogName, schemaName, tableName);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -879,6 +892,7 @@ public class DumpMetadataTask extends Task {
         }
         xmlWriter.writeElementEnd();
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not determine the foreign keys for table '" + tableName + "': " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -960,6 +974,7 @@ public class DumpMetadataTask extends Task {
         addIntAttribute(xmlWriter, "pages", result, columns, "PAGES");
         addStringAttribute(xmlWriter, "filter", result, columns, "FILTER_CONDITION");
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the indexes for table '" + tableName + "' from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -1026,6 +1041,7 @@ public class DumpMetadataTask extends Task {
           xmlWriter.writeElementEnd();
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the procedures from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
@@ -1052,6 +1068,7 @@ public class DumpMetadataTask extends Task {
       public ResultSet getResultSet() throws SQLException {
         return metaData.getProcedureColumns(catalogName, schemaName, procedureName, _columnPattern);
       }
+
       @Override
       public void handleRow(PrettyPrintingXmlWriter xmlWriter, ResultSet result) throws SQLException {
         Set<String> columns = getColumnsInResultSet(result);
@@ -1113,6 +1130,7 @@ public class DumpMetadataTask extends Task {
           addStringAttribute(xmlWriter, "remarks", result, columns, "REMARKS");
         }
       }
+
       @Override
       public void handleError(SQLException ex) {
         log("Could not read the columns for procedure '" + procedureName + "' from the result set: " + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);

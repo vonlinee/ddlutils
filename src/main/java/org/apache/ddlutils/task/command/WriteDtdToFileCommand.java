@@ -21,7 +21,7 @@ package org.apache.ddlutils.task.command;
 
 import org.apache.ddlutils.io.DataDtdWriter;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.task.DatabaseTaskBase;
+import org.apache.ddlutils.task.DatabaseTask;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -62,7 +62,7 @@ public class WriteDtdToFileCommand extends Command {
    * {@inheritDoc}
    */
   @Override
-  public void execute(DatabaseTaskBase task, Database model) throws CommandExecuteException {
+  public void execute(DatabaseTask task, Database model) throws CommandExecuteException {
     if (_outputFile == null) {
       throw new CommandExecuteException("No output file specified");
     }
@@ -76,7 +76,6 @@ public class WriteDtdToFileCommand extends Command {
 
       dtdWriter.writeDtd(model, outputWriter);
       outputWriter.close();
-      _log.info("Written DTD to " + _outputFile.getAbsolutePath());
     } catch (Exception ex) {
       handleException(ex, "Failed to write to output file " + _outputFile.getAbsolutePath());
     }

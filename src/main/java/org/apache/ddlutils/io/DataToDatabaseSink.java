@@ -19,11 +19,9 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.Platform;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -46,11 +44,6 @@ import java.util.Iterator;
  * @version $Revision: 289996 $
  */
 public class DataToDatabaseSink implements DataSink {
-  /**
-   * Our log.
-   */
-  private final Log _log = LogFactory.getLog(DataToDatabaseSink.class);
-
   /**
    * Generates the sql and writes it to the database.
    */
@@ -230,20 +223,6 @@ public class DataToDatabaseSink implements DataSink {
       }
     }
     if (!_waitingObjects.isEmpty()) {
-      if (_log.isDebugEnabled()) {
-        for (WaitingObject obj : _waitingObjects) {
-          Table table = _model.getDynaClassFor(obj.getObject()).getTable();
-          Identity objId = buildIdentityFromPKs(table, obj.getObject());
-
-          _log.debug("Row " + objId + " is still not written because it depends on these yet unwritten rows");
-          for (Iterator<Identity> fkIt = obj.getPendingFKs(); fkIt.hasNext(); ) {
-            Identity pendingFkId = fkIt.next();
-
-            _log.debug("  " + pendingFkId);
-          }
-
-        }
-      }
       if (_waitingObjects.size() == 1) {
         throw new DataSinkException("There is one row still not written because of missing referenced rows");
       } else {
@@ -303,28 +282,12 @@ public class DataToDatabaseSink implements DataSink {
         }
       }
       if (waitingObj.hasPendingFKs()) {
-        if (_log.isDebugEnabled()) {
-          StringBuilder msg = new StringBuilder();
-
-          msg.append("Deferring insertion of row ");
-          msg.append(buildIdentityFromPKs(table, bean));
-          msg.append(" because it is waiting for:");
-          for (Iterator<Identity> it = waitingObj.getPendingFKs(); it.hasNext(); ) {
-            msg.append("\n  ");
-            msg.append(it.next().toString());
-          }
-          _log.debug(msg.toString());
-        }
         _waitingObjects.add(waitingObj);
         return;
       }
     }
 
     insertBeanIntoDatabase(table, bean);
-
-    if (_log.isDebugEnabled()) {
-      _log.debug("Inserted bean " + origIdentity);
-    }
 
     if (_ensureFkOrder && _fkTables.contains(table)) {
       Identity newIdentity = buildIdentityFromPKs(table, bean);
@@ -366,9 +329,6 @@ public class DataToDatabaseSink implements DataSink {
 
           _identityMap.put(objIdentity, newObjIdentity);
           identitiesToCheck.add(objIdentity);
-          if (_log.isDebugEnabled()) {
-            _log.debug("Inserted deferred row " + objIdentity);
-          }
         }
       }
     }
@@ -401,15 +361,10 @@ public class DataToDatabaseSink implements DataSink {
         if (!_connection.getAutoCommit()) {
           _connection.commit();
         }
-        if (_log.isDebugEnabled()) {
-          _log.debug("Inserted " + _batchQueue.size() + " rows in batch mode ");
-        }
       } catch (Exception ex) {
         if (_haltOnErrors) {
           _platform.returnConnection(_connection);
           throw new DataSinkException(ex);
-        } else {
-          _log.warn("Exception while inserting " + _batchQueue.size() + " rows via batch mode into the database", ex);
         }
       }
       _batchQueue.clear();
@@ -472,8 +427,6 @@ public class DataToDatabaseSink implements DataSink {
       if (_haltOnErrors) {
         _platform.returnConnection(_connection);
         throw new DataSinkException(ex);
-      } else {
-        _log.warn("Exception while inserting a row into the database", ex);
       }
     }
   }

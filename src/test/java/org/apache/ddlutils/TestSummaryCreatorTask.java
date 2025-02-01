@@ -19,8 +19,9 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.ddlutils.data.BeanUtils;
 import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.ddlutils.data.BeanUtils;
+import org.apache.ddlutils.util.IOUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
@@ -364,13 +365,7 @@ public class TestSummaryCreatorTask extends Task {
     } catch (Exception ex) {
       throw new BuildException("Cannot load test jdbc properties from file " + jdbcPropertiesFile, ex);
     } finally {
-      if (propStream != null) {
-        try {
-          propStream.close();
-        } catch (IOException ex) {
-          log("Could not close the stream used to read the test jdbc properties", Project.MSG_WARN);
-        }
-      }
+      IOUtils.closeQuietly(propStream);
     }
     return props;
   }

@@ -26,6 +26,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Helper class that writes XML data with or without pretty printing.
@@ -57,7 +58,7 @@ public class PrettyPrintingXmlWriter {
    * @param output The target to write the data XML to
    */
   public PrettyPrintingXmlWriter(OutputStream output) throws DdlUtilsXMLException {
-    this(output, "UTF-8");
+    this(output, StandardCharsets.UTF_8.name());
   }
 
   /**
@@ -75,7 +76,7 @@ public class PrettyPrintingXmlWriter {
       bufferedOutput = new BufferedOutputStream(output);
     }
     if ((encoding == null) || (encoding.isEmpty())) {
-      _encoding = "UTF-8";
+      _encoding = StandardCharsets.UTF_8.name();
     } else {
       _encoding = encoding;
     }

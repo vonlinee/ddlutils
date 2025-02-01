@@ -22,7 +22,6 @@ package org.apache.ddlutils.task.command;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.task.Parameter;
 import org.apache.ddlutils.task.PlatformConfiguration;
-import org.apache.tools.ant.BuildException;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -120,8 +119,20 @@ public abstract class DatabaseCommand extends Command {
    *
    * @return The platform
    */
-  public Platform getPlatform() throws BuildException {
-    return _platformConf.getPlatform();
+  public Platform getPlatform(String url, String driverClassName) throws CommandExecuteException {
+    return _platformConf.getPlatform(url, driverClassName);
+  }
+
+  /**
+   * Creates the platform for the configured database.
+   *
+   * @return The platform
+   */
+  public Platform getPlatform() throws CommandExecuteException {
+    String driverClassName = properties.getProperty("driverClassName");
+    String url = properties.getProperty("url");
+
+    return _platformConf.getPlatform(url, driverClassName);
   }
 
   /**

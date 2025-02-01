@@ -21,7 +21,6 @@ package org.apache.ddlutils.task;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
-import org.apache.tools.ant.Project;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -46,10 +45,7 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
     DataSource dataSource = getDataSource();
 
-    if (!(dataSource instanceof BasicDataSource)) {
-      fail("Datasource needs to be of type " + BasicDataSource.class.getName());
-    }
-    task.setProject(new Project());
+
     task.addConfiguredDatabase((BasicDataSource) getDataSource());
     task.setCatalogPattern(catalog);
     task.setSchemaPattern(schema);
@@ -73,8 +69,7 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
     if (!(dataSource instanceof BasicDataSource)) {
       fail("Datasource needs to be of type " + BasicDataSource.class.getName());
     }
-    task.setProject(new Project());
-    task.addConfiguredDatabase((BasicDataSource) getDataSource());
+    task.addConfiguredDatabase(getDataSource());
     task.setCatalogPattern(catalog);
     task.setSchemaPattern(schema);
     task.setUseDelimitedSqlIdentifiers(isUseDelimitedIdentifiers());

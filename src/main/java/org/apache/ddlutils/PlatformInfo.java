@@ -19,9 +19,9 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.util.Log;
+import org.apache.ddlutils.util.LogFactory;
 
 import java.lang.reflect.Field;
 import java.sql.Types;

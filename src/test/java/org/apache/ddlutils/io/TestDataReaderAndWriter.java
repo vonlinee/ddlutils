@@ -138,7 +138,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testRead() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='bookstore'>\n" +
         "  <table name='author'>\n" +
         "    <column name='author_id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -244,7 +244,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testReadFromFile1() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -291,7 +291,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testReadFromFile2() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -338,7 +338,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testReadFromFile3() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -385,7 +385,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testSubElements() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -440,7 +440,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testRootElementNameDoesntMatter() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -470,7 +470,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testElementForUndefinedTable() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -511,7 +511,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testAttributeForUndefinedColumn() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -540,7 +540,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testSubElementForUndefinedColumn() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -571,7 +571,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testCaseSensitivityTurnedOn() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='Test'>\n" +
         "    <column name='Id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -608,7 +608,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testCaseSensitivityTurnedOff() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='Test'>\n" +
         "    <column name='Id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -665,7 +665,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testSpecialCharacters() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -680,7 +680,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "ISO-8859-1",
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.ISO_8859_1) + "</value>\n" +
@@ -693,7 +693,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testSpecialCharactersUTF8() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -708,7 +708,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "ISO-8859-1",
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
@@ -721,7 +721,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testCData() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -732,7 +732,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value5' type='LONGVARCHAR' size='4000' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    String testedValue1 = "<?xml version='1.0' encoding='ISO-8859-1'?><test><![CDATA[some text]]></test>";
+    String testedValue1 = "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?><test><![CDATA[some text]]></test>";
     String testedValue2 = StringUtils.repeat("a ", 1000) + testedValue1;
     String testedValue3 = "<div>\n<h1><![CDATA[WfMOpen]]></h1>\n" + StringUtils.repeat("Make it longer\n", 99) + "</div>";
     String testedValue4 = "<![CDATA[" + StringUtils.repeat("b \n", 1000) + "]]>";
@@ -760,7 +760,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testTableNameLong() throws Exception {
     String tableName = StringUtils.repeat("test", 100);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='" + tableName + "'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -775,7 +775,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table id=\"1\" value=\"" + testedValue + "\">\n" +
         "    <table-name>" + tableName + "</table-name>\n" +
@@ -788,7 +788,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testTableNameNotAValidXmlIdentifier() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test$'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -803,7 +803,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table table-name=\"test$\" id=\"1\" value=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -815,7 +815,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testTableNameInvalidAndLong() throws Exception {
     String tableName = StringUtils.repeat("table name", 50);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='" + tableName + "'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -830,7 +830,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table id=\"1\" value=\"" + testedValue + "\">\n" +
         "    <table-name>" + tableName + "</table-name>\n" +
@@ -868,7 +868,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table table-name=\"test&amp;table\" id=\"1\" value=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -904,7 +904,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table table-name=\"test&lt;table\" id=\"1\" value=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -940,9 +940,9 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
-        "  <table table-name=\"test>table\" id=\"1\" value=\"" + testedValue + "\" />\n" +
+        "  <table table-name=\"test>table\" id=\"1\" value=\"" + testedValue + "\"></table>\n" +
         "</data>\n");
   }
 
@@ -976,7 +976,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <table id=\"1\" value=\"" + testedValue + "\">\n" +
         "    <table-name " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(tableName.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</table-name>\n" +
@@ -989,7 +989,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testTableNameIsTable() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='table'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1008,9 +1008,9 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
-        "  <table table-name=\"table\" id=\"1\" value=\"" + testedValue + "\" />\n" +
+        "  <table table-name=\"table\" id=\"1\" value=\"" + testedValue + "\"></table>\n" +
         "</data>\n");
   }
 
@@ -1020,7 +1020,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameAndValueShort() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1035,7 +1035,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\" value=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -1047,7 +1047,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameShortAndValueLong() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1062,7 +1062,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <value>" + testedValue + "</value>\n" +
@@ -1075,7 +1075,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameShortAndInvalidAndValueShort() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1090,7 +1090,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"the value\">" + testedValue + "</column>\n" +
@@ -1104,7 +1104,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameShortAndInvalidAndValueLong() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1119,7 +1119,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"the value\">" + testedValue + "</column>\n" +
@@ -1134,7 +1134,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testColumnNameLongAndValueShort() throws Exception {
     String columnName = StringUtils.repeat("value", 100);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1149,7 +1149,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1167,7 +1167,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testColumnNameLongAndValueLong() throws Exception {
     String columnName = StringUtils.repeat("value", 100);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1182,7 +1182,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1200,7 +1200,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testColumnNameAndValueLong() throws Exception {
     String columnName = StringUtils.repeat("value", 100);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1215,7 +1215,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1232,7 +1232,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameAndValueShortAndInvalid() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1247,7 +1247,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("the value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"the value\" " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</column>\n" +
@@ -1262,7 +1262,7 @@ public class TestDataReaderAndWriter extends TestCase {
   public void testColumnNameLongAndValueInvalidAndShort() throws Exception {
     String columnName = StringUtils.repeat("value", 100);
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1277,7 +1277,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1319,7 +1319,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1335,7 +1335,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameContainsInvalidCharacters() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1350,7 +1350,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <value " + DatabaseIO.BASE64_ATTR_NAME + "=\"true\">" + new String(Base64Utils.encodeBase64(testedValue.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8) + "</value>\n" +
@@ -1388,7 +1388,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column>\n" +
@@ -1429,7 +1429,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"foo&amp;bar\">" + testedValue + "</column>\n" +
@@ -1467,7 +1467,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"foo&lt;bar\">" + testedValue + "</column>\n" +
@@ -1505,7 +1505,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(columnName, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"foo>bar\">" + testedValue + "</column>\n" +
@@ -1518,7 +1518,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameIsColumn() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1533,7 +1533,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("column", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\" column=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -1544,7 +1544,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameIsColumnName() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1559,7 +1559,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("column-name", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\" column-name=\"" + testedValue + "\" />\n" +
         "</data>\n");
@@ -1570,7 +1570,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameIsTableName() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1585,7 +1585,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("table-name", testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"table-name\">" + testedValue + "</column>\n" +
@@ -1598,7 +1598,7 @@ public class TestDataReaderAndWriter extends TestCase {
    */
   public void testColumnNameIsBase64() throws Exception {
     Database model = readModel(
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
         "  <table name='test'>\n" +
         "    <column name='id' type='INTEGER' primaryKey='true' required='true'/>\n" +
@@ -1613,7 +1613,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set(DatabaseIO.BASE64_ATTR_NAME, testedValue);
 
     roundtripTest(model, bean, "UTF-8",
-      "<?xml version='1.0' encoding='UTF-8'?>\n" +
+      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
         "<data>\n" +
         "  <test id=\"1\">\n" +
         "    <column column-name=\"" + DatabaseIO.BASE64_ATTR_NAME + "\">" + testedValue + "</column>\n" +

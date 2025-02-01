@@ -21,8 +21,6 @@ package org.apache.ddlutils.io;
 
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.data.PropertyUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -54,10 +52,6 @@ import java.util.Map;
  * @version $Revision: $
  */
 public class DataReader {
-  /**
-   * Our log.
-   */
-  private final Log _log = LogFactory.getLog(DataReader.class);
 
   /**
    * The database model.
@@ -168,21 +162,10 @@ public class DataReader {
    * @param file The data file
    */
   public void read(File file) throws DdlUtilsXMLException {
-    FileInputStream input = null;
-
-    try {
-      input = new FileInputStream(file);
+    try (FileInputStream input = new FileInputStream(file)) {
       read(input);
     } catch (IOException ex) {
       throw new DdlUtilsXMLException(ex);
-    } finally {
-      if (input != null) {
-        try {
-          input.close();
-        } catch (IOException ex) {
-          _log.warn("Error while trying to close the input stream for " + file, ex);
-        }
-      }
     }
   }
 
@@ -290,18 +273,15 @@ public class DataReader {
         xmlReader.getAttributeValue(idx));
     }
     readColumnSubElements(xmlReader, attributes);
-
     if ("table".equals(elemQName.getLocalPart())) {
       tableName = attributes.get("table-name");
     } else {
       tableName = elemQName.getLocalPart();
     }
-
     Table table = _model.findTable(tableName, isCaseSensitive());
-
     if (table == null) {
-      _log.warn("Data XML contains an element " + elemQName + " at location " + location +
-        " but there is no table defined with this name. This element will be ignored.");
+      // _log.warn("Data XML contains an element " + elemQName + " at location " + location +
+      //  " but there is no table defined with this name. This element will be ignored.");
     } else {
       DynaBean bean = _model.createDynaBeanFor(table);
 

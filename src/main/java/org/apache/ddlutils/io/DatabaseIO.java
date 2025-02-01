@@ -19,8 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -48,6 +46,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * This class provides functions to read and write database models from/to XML.
@@ -167,11 +166,6 @@ public class DatabaseIO {
    * Qualified name of the version attribute.
    */
   public static final QName QNAME_ATTRIBUTE_VERSION = new QName(DDLUTILS_NAMESPACE, "version");
-
-  /**
-   * The log.
-   */
-  private final Log _log = LogFactory.getLog(DatabaseIO.class);
 
   /**
    * Whether to validate the XML.
@@ -796,7 +790,7 @@ public class DatabaseIO {
    * @param output The output writer
    */
   public void write(Database model, Writer output) throws DdlUtilsXMLException {
-    PrettyPrintingXmlWriter xmlWriter = new PrettyPrintingXmlWriter(output, "UTF-8");
+    PrettyPrintingXmlWriter xmlWriter = new PrettyPrintingXmlWriter(output, StandardCharsets.UTF_8.name());
 
     xmlWriter.setDefaultNamespace(DDLUTILS_NAMESPACE);
     xmlWriter.writeDocumentStart();
