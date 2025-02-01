@@ -23,6 +23,7 @@ import org.apache.ddlutils.TestBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.junit.Assert;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,7 +59,7 @@ public class TestSqlBuilder extends TestBase {
 
     String sql = sqlBuilder.getUpdateSql(database.getTable(0), map, false);
 
-    assertEquals("UPDATE \"TestTable\" SET \"name\" = 'ddlutils' WHERE \"id\" = '0'",
+    Assert.assertEquals("UPDATE \"TestTable\" SET \"name\" = 'ddlutils' WHERE \"id\" = '0'",
       sql);
   }
 
@@ -90,7 +91,7 @@ public class TestSqlBuilder extends TestBase {
 
     String sql = sqlBuilder.getUpdateSql(database.getTable(0), oldMap, newMap, false);
 
-    assertEquals("UPDATE \"TestTable\" SET \"id\" = '1', \"name\" = 'ddlutils' WHERE \"id\" = '0'",
+    Assert.assertEquals("UPDATE \"TestTable\" SET \"id\" = '1', \"name\" = 'ddlutils' WHERE \"id\" = '0'",
       sql);
   }
 }

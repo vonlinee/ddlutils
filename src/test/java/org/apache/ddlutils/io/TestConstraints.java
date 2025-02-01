@@ -19,15 +19,14 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.CascadeActionEnum;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
-import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.apache.ddlutils.util.StringUtils;
+import org.junit.Assert;
 
 import java.util.List;
 
@@ -37,14 +36,6 @@ import java.util.List;
  * @version $Revision: 289996 $
  */
 public class TestConstraints extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestConstraints.class);
-  }
 
   /**
    * Tests a nullable column. Basically we're creating the test database
@@ -67,7 +58,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     if (checkAlteration) {
       String alterTablesSql = getAlterTablesSql(modelFromDb).trim();
 
-      assertEquals(0, alterTablesSql.length());
+      Assert.assertEquals(0, alterTablesSql.length());
     }
   }
 
@@ -472,15 +463,15 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
 
     try {
       deleteRow("roundtrip_1", new Object[]{1});
-      fail();
+      Assert.fail();
     } catch (DdlUtilsException ignored) {
     }
   }
@@ -516,8 +507,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
@@ -527,8 +518,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1");
     beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(0, beansTable1.size());
-    assertEquals(0, beansTable2.size());
+    Assert.assertEquals(0, beansTable1.size());
+    Assert.assertEquals(0, beansTable2.size());
   }
 
   /**
@@ -562,8 +553,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
@@ -573,10 +564,10 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1");
     beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(0, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(0, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(5, beansTable2.get(0), "pk");
-    assertEquals((Object) null, beansTable2.get(0), "avalue");
+    assertEquals(null, beansTable2.get(0), "avalue");
   }
 
   /**
@@ -611,8 +602,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(2, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(2, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(2, beansTable1.get(1), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
@@ -623,8 +614,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1");
     beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(2, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(2, beansTable2.get(0), "avalue");
@@ -661,15 +652,15 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
 
     try {
       updateRow("roundtrip_1", beansTable1.get(0), new Object[]{5});
-      fail();
+      Assert.fail();
     } catch (DdlUtilsException ignored) {
     }
   }
@@ -705,8 +696,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
@@ -716,8 +707,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1");
     beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(2, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(2, beansTable2.get(0), "avalue");
@@ -754,8 +745,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
     assertEquals(1, beansTable2.get(0), "avalue");
@@ -765,11 +756,11 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1");
     beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(1, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(1, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(2, beansTable1.get(0), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
-    assertEquals((Object) null, beansTable2.get(0), "avalue");
+    assertEquals(null, beansTable2.get(0), "avalue");
   }
 
   /**
@@ -804,8 +795,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beansTable1 = getRows("roundtrip_1");
     List<DynaBean> beansTable2 = getRows("roundtrip_2");
 
-    assertEquals(2, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(2, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(1, beansTable1.get(0), "pk");
     assertEquals(2, beansTable1.get(1), "pk");
     assertEquals(5, beansTable2.get(0), "pk");
@@ -816,8 +807,8 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
     beansTable1 = getRows("roundtrip_1", "pk");
     beansTable2 = getRows("roundtrip_2", "pk");
 
-    assertEquals(2, beansTable1.size());
-    assertEquals(1, beansTable2.size());
+    Assert.assertEquals(2, beansTable1.size());
+    Assert.assertEquals(1, beansTable2.size());
     assertEquals(0, beansTable1.get(0), "pk");
     assertEquals(1, beansTable1.get(1), "pk");
     assertEquals(5, beansTable2.get(0), "pk");

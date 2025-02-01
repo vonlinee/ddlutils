@@ -19,7 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
@@ -29,6 +28,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.junit.Assert;
 import org.xml.sax.InputSource;
 
 import java.io.File;
@@ -47,14 +47,6 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestMisc extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestMisc.class);
-  }
 
   /**
    * Tests the backup and restore of a table with an identity column and a foreign key to
@@ -145,18 +137,18 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       valueColumnName = valueColumnName.toUpperCase();
     }
 
-    assertEquals(3, misc1Rows.size());
-    assertEquals("10", ((Element) misc1Rows.get(0)).attributeValue(pkColumnName));
-    assertEquals("1", ((Element) misc1Rows.get(0)).attributeValue(valueColumnName));
-    assertEquals("12", ((Element) misc1Rows.get(1)).attributeValue(pkColumnName));
-    assertEquals("2", ((Element) misc1Rows.get(1)).attributeValue(valueColumnName));
-    assertEquals("13", ((Element) misc1Rows.get(2)).attributeValue(pkColumnName));
-    assertEquals("3", ((Element) misc1Rows.get(2)).attributeValue(valueColumnName));
-    assertEquals(2, misc2Rows.size());
-    assertEquals("1", ((Element) misc2Rows.get(0)).attributeValue(pkColumnName));
-    assertEquals("10", ((Element) misc2Rows.get(0)).attributeValue(fkColumnName));
-    assertEquals("2", ((Element) misc2Rows.get(1)).attributeValue(pkColumnName));
-    assertEquals("13", ((Element) misc2Rows.get(1)).attributeValue(fkColumnName));
+    Assert.assertEquals(3, misc1Rows.size());
+    Assert.assertEquals("10", ((Element) misc1Rows.get(0)).attributeValue(pkColumnName));
+    Assert.assertEquals("1", ((Element) misc1Rows.get(0)).attributeValue(valueColumnName));
+    Assert.assertEquals("12", ((Element) misc1Rows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("2", ((Element) misc1Rows.get(1)).attributeValue(valueColumnName));
+    Assert.assertEquals("13", ((Element) misc1Rows.get(2)).attributeValue(pkColumnName));
+    Assert.assertEquals("3", ((Element) misc1Rows.get(2)).attributeValue(valueColumnName));
+    Assert.assertEquals(2, misc2Rows.size());
+    Assert.assertEquals("1", ((Element) misc2Rows.get(0)).attributeValue(pkColumnName));
+    Assert.assertEquals("10", ((Element) misc2Rows.get(0)).attributeValue(fkColumnName));
+    Assert.assertEquals("2", ((Element) misc2Rows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("13", ((Element) misc2Rows.get(1)).attributeValue(fkColumnName));
 
     dropDatabase();
     createDatabase(modelXml);
@@ -282,18 +274,18 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       valueColumnName = valueColumnName.toUpperCase();
     }
 
-    assertEquals(3, misc1Rows.size());
-    assertEquals("10", ((Element) misc1Rows.get(0)).attributeValue(pkColumnName));
-    assertEquals("1", ((Element) misc1Rows.get(0)).attributeValue(valueColumnName));
-    assertEquals("12", ((Element) misc1Rows.get(1)).attributeValue(pkColumnName));
-    assertEquals("2", ((Element) misc1Rows.get(1)).attributeValue(valueColumnName));
-    assertEquals("13", ((Element) misc1Rows.get(2)).attributeValue(pkColumnName));
-    assertEquals("3", ((Element) misc1Rows.get(2)).attributeValue(valueColumnName));
-    assertEquals(2, misc2Rows.size());
-    assertEquals("1", ((Element) misc2Rows.get(0)).attributeValue(pkColumnName));
-    assertEquals("10", ((Element) misc2Rows.get(0)).attributeValue(fkColumnName));
-    assertEquals("2", ((Element) misc2Rows.get(1)).attributeValue(pkColumnName));
-    assertEquals("13", ((Element) misc2Rows.get(1)).attributeValue(fkColumnName));
+    Assert.assertEquals(3, misc1Rows.size());
+    Assert.assertEquals("10", ((Element) misc1Rows.get(0)).attributeValue(pkColumnName));
+    Assert.assertEquals("1", ((Element) misc1Rows.get(0)).attributeValue(valueColumnName));
+    Assert.assertEquals("12", ((Element) misc1Rows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("2", ((Element) misc1Rows.get(1)).attributeValue(valueColumnName));
+    Assert.assertEquals("13", ((Element) misc1Rows.get(2)).attributeValue(pkColumnName));
+    Assert.assertEquals("3", ((Element) misc1Rows.get(2)).attributeValue(valueColumnName));
+    Assert.assertEquals(2, misc2Rows.size());
+    Assert.assertEquals("1", ((Element) misc2Rows.get(0)).attributeValue(pkColumnName));
+    Assert.assertEquals("10", ((Element) misc2Rows.get(0)).attributeValue(fkColumnName));
+    Assert.assertEquals("2", ((Element) misc2Rows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("13", ((Element) misc2Rows.get(1)).attributeValue(fkColumnName));
 
     dropDatabase();
     createDatabase(modelXml);
@@ -407,15 +399,15 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       fkColumnName = fkColumnName.toUpperCase();
     }
 
-    assertEquals(4, miscRows.size());
-    assertEquals("1", ((Element) miscRows.get(0)).attributeValue(pkColumnName));
-    assertNull(((Element) miscRows.get(0)).attributeValue(fkColumnName));
-    assertEquals("2", ((Element) miscRows.get(1)).attributeValue(pkColumnName));
-    assertEquals("1", ((Element) miscRows.get(1)).attributeValue(fkColumnName));
-    assertEquals("3", ((Element) miscRows.get(2)).attributeValue(pkColumnName));
-    assertEquals("2", ((Element) miscRows.get(2)).attributeValue(fkColumnName));
-    assertEquals("4", ((Element) miscRows.get(3)).attributeValue(pkColumnName));
-    assertEquals("4", ((Element) miscRows.get(3)).attributeValue(fkColumnName));
+    Assert.assertEquals(4, miscRows.size());
+    Assert.assertEquals("1", ((Element) miscRows.get(0)).attributeValue(pkColumnName));
+    Assert.assertNull(((Element) miscRows.get(0)).attributeValue(fkColumnName));
+    Assert.assertEquals("2", ((Element) miscRows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("1", ((Element) miscRows.get(1)).attributeValue(fkColumnName));
+    Assert.assertEquals("3", ((Element) miscRows.get(2)).attributeValue(pkColumnName));
+    Assert.assertEquals("2", ((Element) miscRows.get(2)).attributeValue(fkColumnName));
+    Assert.assertEquals("4", ((Element) miscRows.get(3)).attributeValue(pkColumnName));
+    Assert.assertEquals("4", ((Element) miscRows.get(3)).attributeValue(fkColumnName));
 
     dropDatabase();
     createDatabase(modelXml);
@@ -428,7 +420,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
-      assertNull(beans.get(0).get("fk"));
+      Assert.assertNull(beans.get(0).get("fk"));
       assertEquals(new BigDecimal(2), beans.get(1), "pk");
       assertEquals(new BigDecimal(1), beans.get(1), "fk");
       assertEquals(new BigDecimal(3), beans.get(2), "pk");
@@ -437,7 +429,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(new BigDecimal(4), beans.get(3), "fk");
     } else {
       assertEquals(1, beans.get(0), "pk");
-      assertNull(beans.get(0).get("fk"));
+      Assert.assertNull(beans.get(0).get("fk"));
       assertEquals(2, beans.get(1), "pk");
       assertEquals(1, beans.get(1), "fk");
       assertEquals(3, beans.get(2), "pk");
@@ -522,15 +514,15 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       fkColumnName = fkColumnName.toUpperCase();
     }
 
-    assertEquals(4, miscRows.size());
-    assertEquals("10", ((Element) miscRows.get(0)).attributeValue(pkColumnName));
-    assertNull(((Element) miscRows.get(0)).attributeValue(fkColumnName));
-    assertEquals("11", ((Element) miscRows.get(1)).attributeValue(pkColumnName));
-    assertEquals("10", ((Element) miscRows.get(1)).attributeValue(fkColumnName));
-    assertEquals("12", ((Element) miscRows.get(2)).attributeValue(pkColumnName));
-    assertEquals("11", ((Element) miscRows.get(2)).attributeValue(fkColumnName));
-    assertEquals("13", ((Element) miscRows.get(3)).attributeValue(pkColumnName));
-    assertEquals("13", ((Element) miscRows.get(3)).attributeValue(fkColumnName));
+    Assert.assertEquals(4, miscRows.size());
+    Assert.assertEquals("10", ((Element) miscRows.get(0)).attributeValue(pkColumnName));
+    Assert.assertNull(((Element) miscRows.get(0)).attributeValue(fkColumnName));
+    Assert.assertEquals("11", ((Element) miscRows.get(1)).attributeValue(pkColumnName));
+    Assert.assertEquals("10", ((Element) miscRows.get(1)).attributeValue(fkColumnName));
+    Assert.assertEquals("12", ((Element) miscRows.get(2)).attributeValue(pkColumnName));
+    Assert.assertEquals("11", ((Element) miscRows.get(2)).attributeValue(fkColumnName));
+    Assert.assertEquals("13", ((Element) miscRows.get(3)).attributeValue(pkColumnName));
+    Assert.assertEquals("13", ((Element) miscRows.get(3)).attributeValue(fkColumnName));
 
     dropDatabase();
     createDatabase(modelXml);
@@ -543,7 +535,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     if (isSybase) {
       assertEquals(new BigDecimal(10), beans.get(0), "pk");
-      assertNull(beans.get(0).get("fk"));
+      Assert.assertNull(beans.get(0).get("fk"));
       assertEquals(new BigDecimal(11), beans.get(1), "pk");
       assertEquals(new BigDecimal(10), beans.get(1), "fk");
       assertEquals(new BigDecimal(12), beans.get(2), "pk");
@@ -552,7 +544,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(new BigDecimal(13), beans.get(3), "fk");
     } else {
       assertEquals(10, beans.get(0), "pk");
-      assertNull(beans.get(0).get("fk"));
+      Assert.assertNull(beans.get(0).get("fk"));
       assertEquals(11, beans.get(1), "pk");
       assertEquals(10, beans.get(1), "fk");
       assertEquals(12, beans.get(2), "pk");
@@ -630,11 +622,11 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("misc", "id");
 
     if (isSybase) {
-      assertEquals(12, beans.size());
+      Assert.assertEquals(12, beans.size());
       assertEquals(new BigDecimal(1), beans.get(0), "id");
-      assertNull(beans.get(0).get("parent_id"));
+      Assert.assertNull(beans.get(0).get("parent_id"));
       assertEquals(new BigDecimal(2), beans.get(1), "id");
-      assertNull(beans.get(1).get("parent_id"));
+      Assert.assertNull(beans.get(1).get("parent_id"));
       assertEquals(new BigDecimal(3), beans.get(2), "id");
       assertEquals(new BigDecimal(2), beans.get(2), "parent_id");
       assertEquals(new BigDecimal(4), beans.get(3), "id");
@@ -642,7 +634,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(new BigDecimal(5), beans.get(4), "id");
       assertEquals(new BigDecimal(3), beans.get(4), "parent_id");
       assertEquals(new BigDecimal(6), beans.get(5), "id");
-      assertNull(beans.get(5).get("parent_id"));
+      Assert.assertNull(beans.get(5).get("parent_id"));
       assertEquals(new BigDecimal(7), beans.get(6), "id");
       assertEquals(new BigDecimal(1), beans.get(6), "parent_id");
       assertEquals(new BigDecimal(8), beans.get(7), "id");
@@ -652,15 +644,15 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(new BigDecimal(10), beans.get(9), "id");
       assertEquals(new BigDecimal(4), beans.get(9), "parent_id");
       assertEquals(new BigDecimal(11), beans.get(10), "id");
-      assertNull(beans.get(10).get("parent_id"));
+      Assert.assertNull(beans.get(10).get("parent_id"));
       assertEquals(new BigDecimal(12), beans.get(11), "id");
       assertEquals(new BigDecimal(11), beans.get(11), "parent_id");
     } else {
-      assertEquals(12, beans.size());
+      Assert.assertEquals(12, beans.size());
       assertEquals(1, beans.get(0), "id");
-      assertNull(beans.get(0).get("parent_id"));
+      Assert.assertNull(beans.get(0).get("parent_id"));
       assertEquals(2, beans.get(1), "id");
-      assertNull(beans.get(1).get("parent_id"));
+      Assert.assertNull(beans.get(1).get("parent_id"));
       assertEquals(3, beans.get(2), "id");
       assertEquals(2, beans.get(2), "parent_id");
       assertEquals(4, beans.get(3), "id");
@@ -668,7 +660,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(5, beans.get(4), "id");
       assertEquals(3, beans.get(4), "parent_id");
       assertEquals(6, beans.get(5), "id");
-      assertNull(beans.get(5).get("parent_id"));
+      Assert.assertNull(beans.get(5).get("parent_id"));
       assertEquals(7, beans.get(6), "id");
       assertEquals(1, beans.get(6), "parent_id");
       assertEquals(8, beans.get(7), "id");
@@ -678,7 +670,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(10, beans.get(9), "id");
       assertEquals(4, beans.get(9), "parent_id");
       assertEquals(11, beans.get(10), "id");
-      assertNull(beans.get(10).get("parent_id"));
+      Assert.assertNull(beans.get(10).get("parent_id"));
       assertEquals(12, beans.get(11), "id");
       assertEquals(11, beans.get(11), "parent_id");
     }
@@ -754,7 +746,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("misc", "id");
 
-    assertEquals(6, beans.size());
+    Assert.assertEquals(6, beans.size());
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "id");
       assertEquals(new BigDecimal(2), beans.get(0), "left_id");
@@ -767,13 +759,13 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(new BigDecimal(4), beans.get(2), "right_id");
       assertEquals(new BigDecimal(4), beans.get(3), "id");
       assertEquals(new BigDecimal(6), beans.get(3), "left_id");
-      assertEquals((Object) null, beans.get(3), "right_id");
+      assertEquals(null, beans.get(3), "right_id");
       assertEquals(new BigDecimal(5), beans.get(4), "id");
-      assertEquals((Object) null, beans.get(4), "left_id");
+      assertEquals(null, beans.get(4), "left_id");
       assertEquals(new BigDecimal(6), beans.get(4), "right_id");
       assertEquals(new BigDecimal(6), beans.get(5), "id");
-      assertEquals((Object) null, beans.get(5), "left_id");
-      assertEquals((Object) null, beans.get(5), "right_id");
+      assertEquals(null, beans.get(5), "left_id");
+      assertEquals(null, beans.get(5), "right_id");
     } else {
       assertEquals(1, beans.get(0), "id");
       assertEquals(2, beans.get(0), "left_id");
@@ -786,13 +778,13 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
       assertEquals(4, beans.get(2), "right_id");
       assertEquals(4, beans.get(3), "id");
       assertEquals(6, beans.get(3), "left_id");
-      assertEquals((Object) null, beans.get(3), "right_id");
+      assertEquals(null, beans.get(3), "right_id");
       assertEquals(5, beans.get(4), "id");
-      assertEquals((Object) null, beans.get(4), "left_id");
+      assertEquals(null, beans.get(4), "left_id");
       assertEquals(6, beans.get(4), "right_id");
       assertEquals(6, beans.get(5), "id");
-      assertEquals((Object) null, beans.get(5), "left_id");
-      assertEquals((Object) null, beans.get(5), "right_id");
+      assertEquals(null, beans.get(5), "left_id");
+      assertEquals(null, beans.get(5), "right_id");
     }
   }
 
@@ -893,15 +885,15 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     List<Node> rows = testDoc.selectNodes("/*/*");
     String pkColumnName = "pk";
 
-    assertEquals(12, rows.size());
+    Assert.assertEquals(12, rows.size());
     if (!"e".equals(rows.get(0).getName())) {
-      assertEquals("E", rows.get(0).getName());
+      Assert.assertEquals("E", rows.get(0).getName());
       uppercase = true;
     }
     if (!"pk".equals(((Element) rows.get(0)).attribute(0).getName())) {
       pkColumnName = pkColumnName.toUpperCase();
     }
-    assertEquals("1", ((Element) rows.get(0)).attributeValue(pkColumnName));
+    Assert.assertEquals("1", ((Element) rows.get(0)).attributeValue(pkColumnName));
 
     // we cannot be sure of the order in which the database returns the rows
     // per table (some return them in pk order, some in insertion order)
@@ -909,48 +901,48 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     HashSet<String> pkValues = new HashSet<>();
     HashSet<String> expectedValues = new HashSet<>(Arrays.asList("1", "2"));
 
-    assertEquals(uppercase ? "G" : "g", rows.get(1).getName());
-    assertEquals(uppercase ? "G" : "g", rows.get(2).getName());
+    Assert.assertEquals(uppercase ? "G" : "g", rows.get(1).getName());
+    Assert.assertEquals(uppercase ? "G" : "g", rows.get(2).getName());
     pkValues.add(((Element) rows.get(1)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(2)).attributeValue(pkColumnName));
-    assertEquals(pkValues, expectedValues);
+    Assert.assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "A" : "a", rows.get(3).getName());
-    assertEquals(uppercase ? "A" : "a", rows.get(4).getName());
+    Assert.assertEquals(uppercase ? "A" : "a", rows.get(3).getName());
+    Assert.assertEquals(uppercase ? "A" : "a", rows.get(4).getName());
     pkValues.add(((Element) rows.get(3)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(4)).attributeValue(pkColumnName));
-    assertEquals(pkValues, expectedValues);
+    Assert.assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "B" : "b", rows.get(5).getName());
-    assertEquals(uppercase ? "B" : "b", rows.get(6).getName());
+    Assert.assertEquals(uppercase ? "B" : "b", rows.get(5).getName());
+    Assert.assertEquals(uppercase ? "B" : "b", rows.get(6).getName());
     pkValues.add(((Element) rows.get(5)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(6)).attributeValue(pkColumnName));
-    assertEquals(pkValues, expectedValues);
+    Assert.assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "C" : "c", rows.get(7).getName());
-    assertEquals(uppercase ? "C" : "c", rows.get(8).getName());
+    Assert.assertEquals(uppercase ? "C" : "c", rows.get(7).getName());
+    Assert.assertEquals(uppercase ? "C" : "c", rows.get(8).getName());
     pkValues.add(((Element) rows.get(7)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(8)).attributeValue(pkColumnName));
-    assertEquals(pkValues, expectedValues);
+    Assert.assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "D" : "d", rows.get(9).getName());
-    assertEquals(uppercase ? "D" : "d", rows.get(10).getName());
+    Assert.assertEquals(uppercase ? "D" : "d", rows.get(9).getName());
+    Assert.assertEquals(uppercase ? "D" : "d", rows.get(10).getName());
     pkValues.add(((Element) rows.get(9)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(10)).attributeValue(pkColumnName));
-    assertEquals(pkValues, expectedValues);
+    Assert.assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "F" : "f", rows.get(11).getName());
-    assertEquals("1", ((Element) rows.get(11)).attributeValue(pkColumnName));
+    Assert.assertEquals(uppercase ? "F" : "f", rows.get(11).getName());
+    Assert.assertEquals("1", ((Element) rows.get(11)).attributeValue(pkColumnName));
 
     dropDatabase();
     createDatabase(modelXml);
@@ -959,13 +951,13 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    assertEquals(2, getRows("A").size());
-    assertEquals(2, getRows("B").size());
-    assertEquals(2, getRows("C").size());
-    assertEquals(2, getRows("D").size());
-    assertEquals(1, getRows("E").size());
-    assertEquals(1, getRows("F").size());
-    assertEquals(2, getRows("G").size());
+    Assert.assertEquals(2, getRows("A").size());
+    Assert.assertEquals(2, getRows("B").size());
+    Assert.assertEquals(2, getRows("C").size());
+    Assert.assertEquals(2, getRows("D").size());
+    Assert.assertEquals(1, getRows("E").size());
+    Assert.assertEquals(1, getRows("F").size());
+    Assert.assertEquals(2, getRows("G").size());
   }
 
   /**
@@ -1108,16 +1100,16 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1", "pk1");
     List<DynaBean> beans2 = getRows("roundtrip2", "pk1");
 
-    assertEquals(2, beans1.size());
-    assertEquals(2, beans2.size());
+    Assert.assertEquals(2, beans1.size());
+    Assert.assertEquals(2, beans2.size());
     assertEquals(1, beans1.get(0), "pk1");
-    assertEquals((Object) "foo", beans1.get(0), "pk2");
+    assertEquals("foo", beans1.get(0), "pk2");
     assertEquals(2, beans1.get(1), "pk1");
-    assertEquals((Object) "bar", beans1.get(1), "pk2");
+    assertEquals("bar", beans1.get(1), "pk2");
     assertEquals(1, beans2.get(0), "pk1");
-    assertEquals((Object) "foo", beans2.get(0), "pk2");
+    assertEquals("foo", beans2.get(0), "pk2");
     assertEquals(2, beans2.get(1), "pk1");
-    assertEquals((Object) "bar", beans2.get(1), "pk2");
+    assertEquals("bar", beans2.get(1), "pk2");
 
     deleteRow("roundtrip1", new Object[]{1, "foo"});
     deleteRow("roundtrip2", new Object[]{"foo", 1});
@@ -1125,12 +1117,12 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     beans1 = getRows("roundtrip1", "pk1");
     beans2 = getRows("roundtrip2", "pk1");
 
-    assertEquals(1, beans1.size());
-    assertEquals(1, beans2.size());
+    Assert.assertEquals(1, beans1.size());
+    Assert.assertEquals(1, beans2.size());
     assertEquals(2, beans1.get(0), "pk1");
-    assertEquals((Object) "bar", beans1.get(0), "pk2");
+    assertEquals("bar", beans1.get(0), "pk2");
     assertEquals(2, beans2.get(0), "pk1");
-    assertEquals((Object) "bar", beans2.get(0), "pk2");
+    assertEquals("bar", beans2.get(0), "pk2");
   }
 
   /**
@@ -1157,9 +1149,9 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("Roundtrip");
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
     assertEquals(1, beans.get(0), "Pk");
-    assertEquals((Object) "foo", beans.get(0), "Avalue");
+    assertEquals("foo", beans.get(0), "Avalue");
 
     Table table = getModel().findTable("Roundtrip", getPlatform().isDelimitedIdentifierModeOn());
     StringBuilder query = new StringBuilder();
@@ -1191,8 +1183,8 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     beans = getPlatform().fetch(getModel(), query.toString(), new Table[]{table});
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
     assertEquals(1, beans.get(0), "Pk");
-    assertEquals((Object) "foo", beans.get(0), "Avalue");
+    assertEquals("foo", beans.get(0), "Avalue");
   }
 }

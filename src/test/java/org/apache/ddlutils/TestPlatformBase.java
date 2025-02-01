@@ -49,6 +49,11 @@ public abstract class TestPlatformBase extends TestBase {
   protected void setUp() throws Exception {
     _writer = new StringWriter();
     _platform = PlatformFactory.createNewPlatformInstance(getDatabaseName());
+
+    if (_platform == null) {
+      throw new NullPointerException();
+    }
+
     _platform.getSqlBuilder().setWriter(_writer);
     if (_platform.getPlatformInfo().isDelimitedIdentifiersSupported()) {
       _platform.setDelimitedIdentifierModeOn(true);

@@ -19,8 +19,6 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import junit.framework.AssertionFailedError;
-import junit.framework.TestSuite;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.data.BeanUtils;
@@ -46,14 +44,13 @@ import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultValueHelper;
 import org.apache.ddlutils.util.StringUtils;
+import org.junit.Assert;
 
 import javax.sql.DataSource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -120,64 +117,26 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   private boolean _useDelimitedIdentifiers;
 
-  /**
-   * Creates the test suite for the given test class which must be a subclass of
-   * {@link RoundtripTestBase}. If the platform supports it, it will be tested
-   * with both delimited and undelimited identifiers.
-   *
-   * @param testedClass The tested class
-   * @return The tests
-   */
-  protected static TestSuite getTests(Class<?> testedClass) {
-    if (!TestAgainstLiveDatabaseBase.class.isAssignableFrom(testedClass) ||
-      Modifier.isAbstract(testedClass.getModifiers())) {
-      throw new DdlUtilsException("Cannot create parameterized tests for class " + testedClass.getName());
-    }
-
-    TestSuite suite = new TestSuite();
+  @Override
+  protected void setUp() {
     Properties props = readTestProperties();
 
-    if (props == null) {
-      return suite;
-    }
-
     DataSource dataSource = initDataSourceFromProperties(props);
+    assert props != null;
     String databaseName = determineDatabaseName(props, dataSource);
 
     try {
-      Method[] methods = testedClass.getMethods();
-      PlatformInfo info = null;
-      TestAgainstLiveDatabaseBase newTest;
-
-      for (Method method : methods) {
-        if (method.getName().startsWith("test") && method.getParameterTypes().length == 0) {
-          newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-          newTest.setName(method.getName());
-          newTest.setTestProperties(props);
-          newTest.setDataSource(dataSource);
-          newTest.setDatabaseName(databaseName);
-          newTest.setUseDelimitedIdentifiers(false);
-          suite.addTest(newTest);
-
-          if (info == null) {
-            info = PlatformFactory.createNewPlatformInstance(newTest.getDatabaseName()).getPlatformInfo();
-          }
-          if (info.isDelimitedIdentifiersSupported()) {
-            newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-            newTest.setName(method.getName());
-            newTest.setTestProperties(props);
-            newTest.setDataSource(dataSource);
-            newTest.setDatabaseName(databaseName);
-            newTest.setUseDelimitedIdentifiers(true);
-            suite.addTest(newTest);
-          }
-        }
-      }
+      TestAgainstLiveDatabaseBase newTest = this;
+      newTest.setTestProperties(props);
+      newTest.setDataSource(dataSource);
+      newTest.setDatabaseName(databaseName);
+      newTest.setUseDelimitedIdentifiers(false);
     } catch (Exception ex) {
       throw new DdlUtilsException(ex);
     }
 
-    return suite;
+    getPlatform().setDataSource(getDataSource());
+    getPlatform().setDelimitedIdentifierModeOn(_useDelimitedIdentifiers);
   }
 
   /**
@@ -369,15 +328,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected Database getModel() {
     return _model;
-  }
-
-  /**
-   * {@inheritDoc}
-   */
-  protected void setUp() throws Exception {
-    super.setUp();
-    getPlatform().setDataSource(getDataSource());
-    getPlatform().setDelimitedIdentifierModeOn(_useDelimitedIdentifiers);
   }
 
   /**
@@ -605,7 +555,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
 
   /**
    * Checks that the database is clear, and if not clears it (no tables, sequences etc. left) and
-   * throws an {@link AssertionFailedError}.
    */
   protected void assertAndEnsureClearDatabase() {
     Database liveModel = readModelFromDatabase("tmp");
@@ -636,7 +585,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     }
     // TODO: Check for sequences
     if (hasStuff) {
-      fail("Database is not empty after test");
+      Assert.fail("Database is not empty after test");
     }
   }
 
@@ -955,9 +904,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
       }
     }
     if (expected == null) {
-      assertNull(value);
+      Assert.assertNull(value);
     } else {
-      assertEquals(expected, value);
+      Assert.assertEquals(expected, value);
     }
   }
 
@@ -974,7 +923,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
       assertEquals("Model names do not match.",
         expected.getName(),
         actual.getName());
-      assertEquals("Not the same number of tables.",
+      Assert.assertEquals("Not the same number of tables.",
         expected.getTableCount(),
         actual.getTableCount());
       for (int tableIdx = 0; tableIdx < actual.getTableCount(); tableIdx++) {
@@ -1020,7 +969,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(expected.getName().toUpperCase(), getSqlBuilder().getMaxTableNameLength()),
         getPlatform().getSqlBuilder().shortenName(actual.getName().toUpperCase(), getSqlBuilder().getMaxTableNameLength()));
     }
-    assertEquals("Not the same number of columns in table " + actual.getName() + ".",
+    Assert.assertEquals("Not the same number of columns in table " + actual.getName() + ".",
       expected.getColumnCount(),
       actual.getColumnCount());
     for (int columnIdx = 0; columnIdx < actual.getColumnCount(); columnIdx++) {
@@ -1028,7 +977,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         actual.getColumn(columnIdx),
         caseSensitive);
     }
-    assertEquals("Not the same number of foreign keys in table " + actual.getName() + ".",
+    Assert.assertEquals("Not the same number of foreign keys in table " + actual.getName() + ".",
       expected.getForeignKeyCount(),
       actual.getForeignKeyCount());
     // order is not assumed with the way foreignkeys are returned.
@@ -1047,7 +996,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         }
       }
     }
-    assertEquals("Not the same number of indices in table " + actual.getName() + ".",
+    Assert.assertEquals("Not the same number of indices in table " + actual.getName() + ".",
       expected.getIndexCount(),
       actual.getIndexCount());
     for (int indexIdx = 0; indexIdx < actual.getIndexCount(); indexIdx++) {
@@ -1074,36 +1023,36 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(expected.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()),
         getPlatform().getSqlBuilder().shortenName(actual.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()));
     }
-    assertEquals("Primary key status not the same for column " + actual.getName() + ".",
+    Assert.assertEquals("Primary key status not the same for column " + actual.getName() + ".",
       expected.isPrimaryKey(),
       actual.isPrimaryKey());
-    assertEquals("Required status not the same for column " + actual.getName() + ".",
+    Assert.assertEquals("Required status not the same for column " + actual.getName() + ".",
       expected.isRequired(),
       actual.isRequired());
     if (getPlatformInfo().getIdentityStatusReadingSupported()) {
       // we're only comparing this if the platform can actually read the
       // auto-increment status back from an existing database
-      assertEquals("Auto-increment status not the same for column " + actual.getName() + ".",
+      Assert.assertEquals("Auto-increment status not the same for column " + actual.getName() + ".",
         expected.isAutoIncrement(),
         actual.isAutoIncrement());
     }
     assertEquals("Type not the same for column " + actual.getName() + ".",
       expected.getType(),
       actual.getType());
-    assertEquals("Type code not the same for column " + actual.getName() + ".",
+    Assert.assertEquals("Type code not the same for column " + actual.getName() + ".",
       expected.getTypeCode(),
       actual.getTypeCode());
-    assertEquals("Parsed default values do not match for column " + actual.getName() + ".",
+    Assert.assertEquals("Parsed default values do not match for column " + actual.getName() + ".",
       expected.getParsedDefaultValue(),
       actual.getParsedDefaultValue());
 
     // comparing the size makes only sense for types where it is relevant
     if ((expected.getTypeCode() == Types.NUMERIC) ||
       (expected.getTypeCode() == Types.DECIMAL)) {
-      assertEquals("Precision not the same for column " + actual.getName() + ".",
+      Assert.assertEquals("Precision not the same for column " + actual.getName() + ".",
         expected.getSizeAsInt(),
         actual.getSizeAsInt());
-      assertEquals("Scale not the same for column " + actual.getName() + ".",
+      Assert.assertEquals("Scale not the same for column " + actual.getName() + ".",
         expected.getScale(),
         actual.getScale());
     } else if ((expected.getTypeCode() == Types.CHAR) ||
@@ -1140,14 +1089,14 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(actual.getForeignTableName().toUpperCase(), getSqlBuilder().getMaxTableNameLength()));
     }
 
-    assertTrue("Not the same onUpdate setting in foreign key " + actual.getName() + ": expected = " + expected.getOnUpdate() + ", actual = " + actual.getOnUpdate(),
+    Assert.assertTrue("Not the same onUpdate setting in foreign key " + actual.getName() + ": expected = " + expected.getOnUpdate() + ", actual = " + actual.getOnUpdate(),
       expected.getOnUpdate().equals(actual.getOnUpdate()) ||
         getPlatformInfo().areEquivalentOnUpdateActions(expected.getOnUpdate(), actual.getOnUpdate()));
-    assertTrue("Not the same onDelete setting in foreign key " + actual.getName() + ": expected = " + expected.getOnDelete() + ", actual = " + actual.getOnDelete(),
+    Assert.assertTrue("Not the same onDelete setting in foreign key " + actual.getName() + ": expected = " + expected.getOnDelete() + ", actual = " + actual.getOnDelete(),
       expected.getOnDelete().equals(actual.getOnDelete()) ||
         getPlatformInfo().areEquivalentOnDeleteActions(expected.getOnDelete(), actual.getOnDelete()));
 
-    assertEquals("Not the same number of references in foreign key " + actual.getName() + ".",
+    Assert.assertEquals("Not the same number of references in foreign key " + actual.getName() + ".",
       expected.getReferenceCount(),
       actual.getReferenceCount());
     for (int refIdx = 0; refIdx < actual.getReferenceCount(); refIdx++) {
@@ -1199,10 +1148,10 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(expected.getName().toUpperCase(), getSqlBuilder().getMaxConstraintNameLength()),
         getPlatform().getSqlBuilder().shortenName(actual.getName().toUpperCase(), getSqlBuilder().getMaxConstraintNameLength()));
     }
-    assertEquals("Unique status not the same for index " + actual.getName() + ".",
+    Assert.assertEquals("Unique status not the same for index " + actual.getName() + ".",
       expected.isUnique(),
       actual.isUnique());
-    assertEquals("Not the same number of columns in index " + actual.getName() + ".",
+    Assert.assertEquals("Not the same number of columns in index " + actual.getName() + ".",
       expected.getColumnCount(),
       actual.getColumnCount());
     for (int columnIdx = 0; columnIdx < actual.getColumnCount(); columnIdx++) {

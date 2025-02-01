@@ -20,6 +20,7 @@ package org.apache.ddlutils.io.converters;
  */
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 import java.sql.Date;
 import java.sql.Types;
@@ -65,7 +66,7 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
+    Assert.assertTrue(result instanceof Date);
     assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -82,7 +83,7 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
+    Assert.assertTrue(result instanceof Date);
     assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -98,7 +99,7 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
+    Assert.assertTrue(result instanceof Date);
     assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -114,7 +115,7 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
+    Assert.assertTrue(result instanceof Date);
     assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 

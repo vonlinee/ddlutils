@@ -20,6 +20,7 @@ package org.apache.ddlutils.io.converters;
  */
 
 import junit.framework.TestCase;
+import org.junit.Assert;
 
 import java.sql.Time;
 import java.sql.Types;
@@ -67,7 +68,7 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
+    Assert.assertTrue(result instanceof Time);
     assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -85,7 +86,7 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
+    Assert.assertTrue(result instanceof Time);
     assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -102,7 +103,7 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
+    Assert.assertTrue(result instanceof Time);
     assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -121,7 +122,7 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
+    Assert.assertTrue(result instanceof Time);
     assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 

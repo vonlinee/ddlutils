@@ -19,10 +19,11 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
-import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.platform.BuiltinDriverType;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,18 +34,11 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestAddColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestAddColumn.class);
-  }
 
   /**
    * Tests the addition of a column.
    */
+  @Test
   public void testAddColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -73,12 +67,13 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
    * Tests the addition of an auto-increment column.
    */
+  @Test
   public void testAddAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -129,7 +124,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
   }
 
@@ -171,8 +166,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue1 = beans.get(0).get("avalue1");
     Object avalue2 = beans.get(0).get("avalue2");
 
-    assertTrue((avalue1 == null) || new Integer(1).equals(avalue1));
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    Assert.assertTrue((avalue1 == null) || new Integer(1).equals(avalue1));
+    Assert.assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
   /**
@@ -241,7 +236,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Double(2).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
 
   /**
@@ -297,7 +292,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
   }
 
@@ -333,7 +328,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || "sometext".equals(avalue));
+    Assert.assertTrue((avalue == null) || "sometext".equals(avalue));
   }
 
   /**
@@ -373,10 +368,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue3 = beans.get(0).get("avalue3");
 
-    assertEquals((Object) "test", beans.get(0), "avalue1");
+    assertEquals("test", beans.get(0), "avalue1");
     assertEquals(3, beans.get(0), "avalue2");
-    assertTrue((avalue3 == null) || new Double(1.0).equals(avalue3));
-    assertEquals((Object) null, beans.get(0), "avalue4");
+    Assert.assertTrue((avalue3 == null) || new Double(1.0).equals(avalue3));
+    assertEquals(null, beans.get(0), "avalue4");
   }
 
   /**
@@ -412,10 +407,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       // Mckoi uses null to initialize the new pk column
-      assertEquals((Object) null, beans.get(0), "pk");
+      assertEquals(null, beans.get(0), "pk");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -509,12 +504,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
-      assertEquals((Object) null, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk1");
+      assertEquals(null, beans.get(0), "pk2");
       assertEquals(2.0, beans.get(0), "pk3");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -552,12 +547,12 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
-      assertEquals((Object) null, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk1");
+      assertEquals(null, beans.get(0), "pk2");
       assertEquals(2.0, beans.get(0), "pk3");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -600,11 +595,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals((Object) null, beans.get(0), "pk3");
+      assertEquals(null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk3");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -643,10 +638,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk2");
       assertEquals(2, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -701,8 +696,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals(-1, beans.get(0).get("pk1"));
-    assertEquals(2, beans.get(0).get("avalue"));
+    Assert.assertEquals(-1, beans.get(0).get("pk1"));
+    Assert.assertEquals(2, beans.get(0).get("avalue"));
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk2");
     } else {
@@ -746,11 +741,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals((Object) null, beans.get(0), "pk3");
-      assertEquals((Object) null, beans.get(0), "avalue");
+      assertEquals(null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk3");
+      assertEquals(null, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -794,11 +789,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
-      assertEquals((Object) null, beans.get(0), "pk2");
-      assertEquals((Object) null, beans.get(0), "pk3");
+      assertEquals(null, beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk3");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -842,11 +837,11 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     if (BuiltinDriverType.MCKOI.getName().equals(getPlatform().getName())) {
       assertEquals(1, beans.get(0), "pk1");
-      assertEquals((Object) "text", beans.get(0), "pk2");
-      assertEquals((Object) null, beans.get(0), "pk3");
+      assertEquals("text", beans.get(0), "pk2");
+      assertEquals(null, beans.get(0), "pk3");
       assertEquals(1, beans.get(0), "avalue");
     } else {
-      assertTrue(beans.isEmpty());
+      Assert.assertTrue(beans.isEmpty());
     }
   }
 
@@ -888,7 +883,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
@@ -931,7 +926,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
 
   /**
@@ -972,7 +967,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1014,7 +1009,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Double(2).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
 
   /**
@@ -1098,7 +1093,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals((Object) "sometext", beans.get(0), "avalue");
+    assertEquals("sometext", beans.get(0), "avalue");
   }
 
   /**
@@ -1141,7 +1136,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
 
@@ -1185,7 +1180,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
@@ -1228,7 +1223,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
 
   /**
@@ -1269,7 +1264,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1311,7 +1306,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Double(2).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
 
   /**
@@ -1395,7 +1390,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertEquals((Object) "sometext", beans.get(0), "avalue");
+    assertEquals("sometext", beans.get(0), "avalue");
   }
 
   /**
@@ -1440,7 +1435,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1483,7 +1478,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1531,7 +1526,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) null, beans.get(0), "avalue2");
+    assertEquals(null, beans.get(0), "avalue2");
   }
 
   /**
@@ -1581,7 +1576,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
   /**
@@ -1628,7 +1623,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1677,7 +1672,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
   /**
@@ -1775,7 +1770,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) "sometext", beans.get(0), "avalue2");
+    assertEquals("sometext", beans.get(0), "avalue2");
   }
 
   /**
@@ -1824,7 +1819,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -1874,7 +1869,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) null, beans.get(0), "avalue2");
+    assertEquals(null, beans.get(0), "avalue2");
   }
 
   /**
@@ -1924,7 +1919,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
   /**
@@ -1971,7 +1966,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -2020,7 +2015,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
   /**
@@ -2118,7 +2113,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) "sometext", beans.get(0), "avalue2");
+    assertEquals("sometext", beans.get(0), "avalue2");
   }
 
   /**
@@ -2169,7 +2164,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -2218,7 +2213,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -2263,9 +2258,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals((Object) "text", beans1.get(0), "pk");
+    assertEquals("text", beans1.get(0), "pk");
     assertEquals(1, beans2.get(0), "pk");
-    assertEquals((Object) null, beans2.get(0), "avalue");
+    assertEquals(null, beans2.get(0), "avalue");
   }
 
   /**
@@ -2317,7 +2312,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     assertEquals(1, beans1.get(0), "pk");
     assertEquals(2, beans2.get(0), "pk");
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
   }
 
   /**
@@ -2370,7 +2365,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new BigDecimal(1), beans1.get(0), "pk");
-    assertTrue(beans2.isEmpty());
+    Assert.assertTrue(beans2.isEmpty());
   }
 
   /**
@@ -2418,7 +2413,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     assertEquals(1.0, beans1.get(0), "pk");
     assertEquals(2, beans2.get(0), "pk");
-    assertTrue((avalue == null) || new Double(1).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Double(1).equals(avalue));
   }
 
   /**
@@ -2514,9 +2509,9 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
-    assertEquals((Object) "moretext", beans1.get(0), "pk");
+    assertEquals("moretext", beans1.get(0), "pk");
     assertEquals(1, beans2.get(0), "pk");
-    assertEquals((Object) "moretext", beans2.get(0), "avalue");
+    assertEquals("moretext", beans2.get(0), "avalue");
   }
 
   /**
@@ -2574,7 +2569,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     assertEquals(1, beans1.get(0), "pk1");
     assertEquals(2.0, beans1.get(0), "pk2");
-    assertTrue(beans2.isEmpty());
+    Assert.assertTrue(beans2.isEmpty());
   }
 
   /**
@@ -2865,7 +2860,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(1, beans1.get(0), "pk2");
     assertEquals(2, beans2.get(0), "pk");
     assertEquals(1, beans2.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
   }
 
   /**
@@ -2963,7 +2958,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(2.0, beans1.get(0), "pk2");
     assertEquals(2, beans2.get(0), "pk");
     assertEquals(1, beans2.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
+    Assert.assertTrue((avalue2 == null) || new Double(2).equals(avalue2));
   }
 
   /**
@@ -3073,10 +3068,10 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(1, beans1.get(0), "pk1");
-    assertEquals((Object) "sometext", beans1.get(0), "pk2");
+    assertEquals("sometext", beans1.get(0), "pk2");
     assertEquals(2, beans2.get(0), "pk");
     assertEquals(1, beans2.get(0), "avalue1");
-    assertEquals((Object) "sometext", beans2.get(0), "avalue2");
+    assertEquals("sometext", beans2.get(0), "avalue2");
   }
 
   /**

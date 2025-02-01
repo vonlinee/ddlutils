@@ -21,9 +21,13 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
 
 import java.sql.Types;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the model comparison of tables.
@@ -328,7 +332,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType1() {
     final String MODEL1 =
@@ -364,7 +368,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType2() {
     final String MODEL1 =
@@ -400,7 +404,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType3() {
     final String MODEL1 =
@@ -436,7 +440,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType4() {
     final String MODEL1 =
@@ -472,7 +476,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType5() {
     final String MODEL1 =
@@ -508,7 +512,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType6() {
     final String MODEL1 =
@@ -544,7 +548,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType7() {
     final String MODEL1 =
@@ -580,7 +584,7 @@ public class TestTableComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the data type of a column.
+   * Tests changing the data type of column.
    */
   public void testChangeColumnDataType8() {
     final String MODEL1 =
@@ -754,7 +758,7 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = parseDatabaseFromString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertTrue(changes.isEmpty());
+    Assert.assertTrue(changes.isEmpty());
   }
 
   /**
@@ -855,7 +859,7 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = parseDatabaseFromString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertTrue(changes.isEmpty());
+    Assert.assertTrue(changes.isEmpty());
   }
 
   /**

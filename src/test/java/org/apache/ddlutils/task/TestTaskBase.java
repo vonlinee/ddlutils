@@ -21,6 +21,7 @@ package org.apache.ddlutils.task;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.junit.Assert;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -67,7 +68,7 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
     DataSource dataSource = getDataSource();
 
     if (!(dataSource instanceof BasicDataSource)) {
-      fail("Datasource needs to be of type " + BasicDataSource.class.getName());
+      Assert.fail("Datasource needs to be of type " + BasicDataSource.class.getName());
     }
     task.addConfiguredDatabase(getDataSource());
     task.setCatalogPattern(catalog);

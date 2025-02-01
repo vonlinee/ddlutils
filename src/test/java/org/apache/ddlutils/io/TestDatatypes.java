@@ -19,11 +19,12 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -38,21 +39,12 @@ import java.util.List;
 import java.util.TreeSet;
 
 /**
- * Performs roundtrip datatype tests.
+ * Performs round trip datatype tests.
  *
  * @version $Revision: $
  */
 public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   // TODO: special columns (java_object, array, distinct, ...)
-
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestDatatypes.class);
-  }
 
   /**
    * Performs a data type test.
@@ -85,7 +77,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
 
   /**
    * Performs a data type test. In short, we're testing creation of a database, insertion of values
-   * into it, and reading the model back. In addition we also check that DdlUtils does not try to
+   * into it, and reading the model back. In addition, we also check that DdlUtils does not try to
    * alter the new database when using the <code>alterTables</code>/<code>getAlterTablesSql</code>
    * methods of the {@link org.apache.ddlutils.Platform} with the read-back model.
    *
@@ -112,7 +104,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
 
     String alterTablesSql = getAlterTablesSql(modelFromDb).trim();
 
-    assertEquals("",
+    Assert.  assertEquals("",
       alterTablesSql);
 
     StringWriter stringWriter = new StringWriter();
@@ -122,7 +114,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
 
     String dataSql = stringWriter.toString();
 
-    assertTrue((dataSql != null) && (!dataSql.isEmpty()));
+    Assert.assertTrue((dataSql != null) && (!dataSql.isEmpty()));
 
     getPlatform().dropTables(getModel(), false);
 
@@ -155,6 +147,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a BIT column with a default value.
    */
+  @Test
   public void testBitWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

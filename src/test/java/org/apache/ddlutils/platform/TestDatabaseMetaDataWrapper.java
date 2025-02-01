@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.DatabaseMetaData;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Tests for the utility methods in the {@link DatabaseMetaDataWrapper} class.
  */

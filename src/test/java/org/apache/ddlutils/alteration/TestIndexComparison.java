@@ -25,6 +25,9 @@ import org.apache.ddlutils.model.Database;
 import java.sql.Types;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 /**
  * Tests the model comparison.
  * <p>
@@ -633,7 +636,7 @@ public class TestIndexComparison extends TestComparisonBase {
   }
 
   /**
-   * Tests changing the type of an index.
+   * Tests changing the type of index.
    */
   public void testChangeIndexType() {
     final String MODEL1 =

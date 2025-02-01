@@ -27,6 +27,7 @@ import org.apache.ddlutils.model.ForeignKey;
 import org.apache.ddlutils.model.Index;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.TestPlatform;
+import org.junit.Assert;
 
 import java.sql.Types;
 
@@ -71,15 +72,15 @@ public abstract class TestComparisonBase extends TestBase {
    * @param table       The table to assert
    */
   protected void assertTable(String name, String description, int columnCount, int fkCount, int indexCount, Table table) {
-    assertEquals(name,
+    Assert.assertEquals(name,
       table.getName());
-    assertEquals(description,
+    Assert.assertEquals(description,
       table.getDescription());
-    assertEquals(columnCount,
+    Assert.assertEquals(columnCount,
       table.getColumnCount());
-    assertEquals(fkCount,
+    Assert.assertEquals(fkCount,
       table.getForeignKeyCount());
-    assertEquals(indexCount,
+    Assert.assertEquals(indexCount,
       table.getIndexCount());
   }
 
@@ -103,19 +104,19 @@ public abstract class TestComparisonBase extends TestBase {
                               boolean isRequired,
                               boolean isAutoIncrement,
                               Column column) {
-    assertEquals(name,
+    Assert.assertEquals(name,
       column.getName());
-    assertEquals(typeCode,
+    Assert.assertEquals(typeCode,
       column.getTypeCode());
-    assertEquals(sizeSpec,
+    Assert.assertEquals(sizeSpec,
       column.getSize());
-    assertEquals(defaultValue,
+    Assert.assertEquals(defaultValue,
       column.getDefaultValue());
-    assertEquals(isPrimaryKey,
+    Assert.assertEquals(isPrimaryKey,
       column.isPrimaryKey());
-    assertEquals(isRequired,
+    Assert.assertEquals(isRequired,
       column.isRequired());
-    assertEquals(isAutoIncrement,
+    Assert.assertEquals(isAutoIncrement,
       column.isAutoIncrement());
   }
 
@@ -128,16 +129,16 @@ public abstract class TestComparisonBase extends TestBase {
    * @param index        The index to assert
    */
   protected void assertIndex(String name, boolean isUnique, String[] indexColumns, Index index) {
-    assertEquals(name,
+    Assert.assertEquals(name,
       index.getName());
-    assertEquals(isUnique,
+    Assert.assertEquals(isUnique,
       index.isUnique());
-    assertEquals(indexColumns.length,
+    Assert.assertEquals(indexColumns.length,
       index.getColumnCount());
     for (int idx = 0; idx < indexColumns.length; idx++) {
-      assertEquals(indexColumns[idx],
+      Assert.assertEquals(indexColumns[idx],
         index.getColumn(idx).getName());
-      assertEquals(indexColumns[idx],
+      Assert.assertEquals(indexColumns[idx],
         index.getColumn(idx).getColumn().getName());
     }
   }
@@ -152,16 +153,16 @@ public abstract class TestComparisonBase extends TestBase {
    * @param fk                 The foreign key to assert
    */
   protected void assertForeignKey(String name, String targetTableName, String[] localColumnNames, String[] foreignColumnNames, ForeignKey fk) {
-    assertEquals(name,
+    Assert.assertEquals(name,
       fk.getName());
-    assertEquals(targetTableName,
+    Assert.assertEquals(targetTableName,
       fk.getForeignTable().getName());
-    assertEquals(localColumnNames.length,
+    Assert.assertEquals(localColumnNames.length,
       fk.getReferenceCount());
     for (int idx = 0; idx < localColumnNames.length; idx++) {
-      assertEquals(localColumnNames[idx],
+      Assert.assertEquals(localColumnNames[idx],
         fk.getReference(idx).getLocalColumnName());
-      assertEquals(foreignColumnNames[idx],
+      Assert.assertEquals(foreignColumnNames[idx],
         fk.getReference(idx).getForeignColumnName());
     }
   }

@@ -21,9 +21,13 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
 
 import java.sql.Types;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * Tests the model comparison.
@@ -78,7 +82,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       colChange.getNewColumn());
     assertEquals("ColPK",
       colChange.getPreviousColumn());
-    assertNull(colChange.getNextColumn());
+    Assert.assertNull(colChange.getNextColumn());
 
     assertEquals("TableA",
       fkChange.getChangedTable());
@@ -132,7 +136,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       colChange.getChangedTable());
     assertColumn("COLPK", Types.INTEGER, null, null, false, true, false,
       colChange.getNewColumn());
-    assertNull(colChange.getPreviousColumn());
+    Assert.assertNull(colChange.getPreviousColumn());
     assertEquals("Col",
       colChange.getNextColumn());
 
@@ -989,7 +993,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = parseDatabaseFromString(MODEL2);
     List changes = getPlatform(true).getChanges(model1, model2);
 
-    assertTrue(changes.isEmpty());
+    Assert.assertTrue(changes.isEmpty());
   }
 
   /**

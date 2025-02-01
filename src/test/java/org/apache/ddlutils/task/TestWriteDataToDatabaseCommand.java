@@ -19,10 +19,10 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
+import org.junit.Assert;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -35,14 +35,6 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestWriteDataToDatabaseCommand extends TestTaskBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestWriteDataToDatabaseCommand.class);
-  }
 
   /**
    * Adds the writeDataToDatabase sub-task to the given task, executes it, and checks its output.
@@ -102,12 +94,12 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     List<DynaBean> beans = getRows("roundtrip", "pk");
 
-    assertEquals(3, beans.size());
-    assertEquals((Object) "val1", beans.get(0), "pk");
+    Assert.assertEquals(3, beans.size());
+    assertEquals("val1", beans.get(0), "pk");
     assertEquals(1, beans.get(0), "avalue");
-    assertEquals((Object) "val2", beans.get(1), "pk");
+    assertEquals("val2", beans.get(1), "pk");
     assertEquals(2, beans.get(1), "avalue");
-    assertEquals((Object) "val3", beans.get(2), "pk");
+    assertEquals("val3", beans.get(2), "pk");
     assertEquals(3, beans.get(2), "avalue");
   }
 
@@ -143,9 +135,9 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     List<DynaBean> beans = getRows("roundtrip", "avalue");
 
-    assertEquals(numObjs, beans.size());
+    Assert.assertEquals(numObjs, beans.size());
     for (int idx = 0; idx < numObjs; idx++) {
-      assertEquals((Object) ("val" + idx), beans.get(idx), "pk");
+      assertEquals("val" + idx, beans.get(idx), "pk");
       assertEquals(idx, beans.get(idx), "avalue");
     }
   }

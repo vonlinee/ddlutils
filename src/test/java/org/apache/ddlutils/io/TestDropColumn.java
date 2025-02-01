@@ -19,7 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 
@@ -33,14 +32,6 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestDropColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestDropColumn.class);
-  }
 
   /**
    * Tests the removal of a column.

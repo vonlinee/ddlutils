@@ -19,10 +19,10 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.DynaBean;
 import org.apache.ddlutils.platform.BuiltinDriverType;
+import org.junit.Assert;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,14 +33,6 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestInsertColumn.class);
-  }
 
   /**
    * Tests the insertion of a column.
@@ -129,7 +121,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
   }
 
@@ -206,7 +198,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     // it directly (in which case it might still be NULL)
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Double(2).equals(avalue));
+    Assert.assertTrue((avalue == null) || new Double(2).equals(avalue));
   }
 
   /**
@@ -262,7 +254,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      Assert.assertTrue((avalue == null) || new Integer(1).equals(avalue));
     }
   }
 
@@ -310,11 +302,11 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", avalue);
+      Assert.assertEquals("text", avalue);
     } else {
       // TODO
-      //assertTrue((avalue == null) || "text    ".equals(avalue));
-      assertEquals("text    ", avalue);
+      //Assert.assertTrue((avalue == null) || "text    ".equals(avalue));
+      Assert.assertEquals("text    ", avalue);
     }
   }
 
@@ -390,7 +382,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     List<DynaBean> beans = getRows("roundtrip");
 
-    assertTrue(beans.isEmpty());
+    Assert.assertTrue(beans.isEmpty());
   }
 
   /**
@@ -479,7 +471,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
 
@@ -514,7 +506,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -573,7 +565,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     } else {
       assertEquals(-1, beans.get(0), "pk1");
     }
-    assertEquals(2, beans.get(0).get("avalue"));
+    Assert.assertEquals(2, beans.get(0).get("avalue"));
   }
 
   /**
@@ -612,7 +604,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -734,7 +726,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -864,9 +856,9 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", avalue);
+      Assert.assertEquals("text", avalue);
     } else {
-      assertEquals("text    ", avalue);
+      Assert.assertEquals("text    ", avalue);
     }
   }
 
@@ -908,7 +900,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1030,7 +1022,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1160,9 +1152,9 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", avalue);
+      Assert.assertEquals("text", avalue);
     } else {
-      assertEquals("text    ", avalue);
+      Assert.assertEquals("text    ", avalue);
     }
   }
 
@@ -1204,7 +1196,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1346,7 +1338,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1497,9 +1489,9 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", avalue2);
+      Assert.assertEquals("text", avalue2);
     } else {
-      assertEquals("text    ", avalue2);
+      Assert.assertEquals("text    ", avalue2);
     }
   }
 
@@ -1547,7 +1539,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1689,7 +1681,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -1840,9 +1832,9 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", avalue2);
+      Assert.assertEquals("text", avalue2);
     } else {
-      assertEquals("text    ", avalue2);
+      Assert.assertEquals("text    ", avalue2);
     }
   }
 
@@ -1890,7 +1882,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    assertTrue(getRows("roundtrip").isEmpty());
+    Assert.assertTrue(getRows("roundtrip").isEmpty());
   }
 
   /**
@@ -2034,7 +2026,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans2 = getRows("roundtrip2");
 
     assertEquals(new BigDecimal(1), beans1.get(0), "pk");
-    assertTrue(beans2.isEmpty());
+    Assert.assertTrue(beans2.isEmpty());
   }
 
   /**
@@ -2185,13 +2177,13 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", pk1);
-      assertEquals("text", avalue);
+      Assert.assertEquals("text", pk1);
+      Assert.assertEquals("text", avalue);
     } else {
       // TODO
-      //assertTrue((avalue == null) || "text    ".equals(avalue));
-      assertEquals("text    ", pk1);
-      assertEquals("text    ", avalue);
+      //Assert.assertTrue((avalue == null) || "text    ".equals(avalue));
+      Assert.assertEquals("text    ", pk1);
+      Assert.assertEquals("text    ", avalue);
     }
   }
 
@@ -2243,7 +2235,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     assertEquals(1, beans1.get(0), "pk1");
     assertEquals(2.0, beans1.get(0), "pk2");
-    assertTrue(beans2.isEmpty());
+    Assert.assertTrue(beans2.isEmpty());
   }
 
   /**
@@ -2749,11 +2741,11 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
       BuiltinDriverType.HSQL.getName().equals(getPlatform().getName()) ||
       BuiltinDriverType.MAX_DB.getName().equals(getPlatform().getName())) {
       // Some DBs ignore that the type is CHAR(8) and trim the value
-      assertEquals("text", pk2);
-      assertEquals("text", avalue2);
+      Assert.assertEquals("text", pk2);
+      Assert.assertEquals("text", avalue2);
     } else {
-      assertEquals("text    ", pk2);
-      assertEquals("text    ", avalue2);
+      Assert.assertEquals("text    ", pk2);
+      Assert.assertEquals("text    ", avalue2);
     }
   }
 

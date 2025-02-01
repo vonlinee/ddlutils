@@ -21,9 +21,12 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Test;
 
 import java.sql.Types;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Tests the comparison on the model level.
@@ -34,6 +37,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of a table.
    */
+  @Test
   public void testAddTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -71,6 +75,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of a table with an index.
    */
+  @Test
   public void testAddTableWithIndex() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -116,6 +121,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of a table and a foreign key to it.
    */
+  @Test
   public void testAddTableAndForeignKeyToIt() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -164,6 +170,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of two tables with foreign keys to each other .
    */
+  @Test
   public void testAddTablesWithForeignKeys() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -228,6 +235,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the removal of a table.
    */
+  @Test
   public void testDropTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -263,6 +271,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the removal of a table with an index.
    */
+  @Test
   public void testDropTableWithIndex() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -302,6 +311,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the removal of a table with a foreign key.
    */
+  @Test
   public void testDropTableWithForeignKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -347,6 +357,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the removal of a table and a foreign key to it.
    */
+  @Test
   public void testDropTableAndForeignKeyToIt() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -393,6 +404,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition and removal of a table.
    */
+  @Test
   public void testAddAndDropTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

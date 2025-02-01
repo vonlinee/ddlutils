@@ -19,11 +19,11 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
 
 import java.io.StringReader;
 
@@ -32,7 +32,7 @@ import java.io.StringReader;
  *
  * @version $Revision: $
  */
-public abstract class TestBase extends TestCase {
+public abstract class TestBase {
   /**
    * The log for the tests.
    */
@@ -71,8 +71,7 @@ public abstract class TestBase extends TestCase {
   protected void assertEqualsIgnoringWhitespaces(String expected, String actual) {
     String processedExpected = compressWhitespaces(expected);
     String processedActual = compressWhitespaces(actual);
-
-    assertEquals(processedExpected, processedActual);
+    Assert.assertEquals(processedExpected, processedActual);
   }
 
   /**
@@ -111,5 +110,17 @@ public abstract class TestBase extends TestCase {
       }
     }
     return result.toString();
+  }
+
+  protected void setUp() throws Exception {
+
+  }
+
+  protected void tearDown() throws Exception {
+
+  }
+
+  public void setName(String name) {
+
   }
 }
