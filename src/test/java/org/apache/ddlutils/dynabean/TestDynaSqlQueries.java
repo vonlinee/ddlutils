@@ -20,9 +20,9 @@ package org.apache.ddlutils.dynabean;
  */
 
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlRowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.BuiltinDriverType;
@@ -84,7 +84,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
     // we call the method a second time to assert that the result set does not get advanced twice
     Assert.assertTrue(true);
 
-    DynaBean bean = it.next();
+    RowObject bean = it.next();
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -134,14 +134,14 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='3' TheText='Text 3'/>" +
         "</data>");
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(3,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -192,8 +192,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
 
     // we're inserting the rows manually via beans since we do want to
     // check the back-reading of the auto-increment columns
-    SqlDynaClass dynaClass = getModel().getDynaClassFor("TestTable");
-    DynaBean bean = null;
+    SqlTableClass dynaClass = getModel().getDynaClassFor("TestTable");
+    RowObject bean = null;
     Object id1 = null;
     Object id2 = null;
     Object id3 = null;
@@ -223,7 +223,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
       Assert.assertNotNull(id3);
     }
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
@@ -307,7 +307,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
 
     Assert.assertTrue(it.hasNext());
 
-    DynaBean bean = it.next();
+    RowObject bean = it.next();
 
     Assert.assertEquals(2,
       getPropertyValue(bean, "Id1"));
@@ -331,22 +331,22 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new SqlRowObject(dynaClass);
 
-    dynaBean.set("TheId", 1);
-    dynaBean.set("TheText", "Text 1");
+    rowObject.set("TheId", 1);
+    rowObject.set("TheText", "Text 1");
 
-    getPlatform().insert(getModel(), dynaBean);
+    getPlatform().insert(getModel(), rowObject);
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(1,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -367,34 +367,34 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean1 = new SqlDynaBean(dynaClass);
-    DynaBean dynaBean2 = new SqlDynaBean(dynaClass);
-    DynaBean dynaBean3 = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject1 = new SqlRowObject(dynaClass);
+    RowObject rowObject2 = new SqlRowObject(dynaClass);
+    RowObject rowObject3 = new SqlRowObject(dynaClass);
 
-    dynaBean1.set("TheId", 1);
-    dynaBean1.set("TheText", "Text 1");
-    dynaBean2.set("TheId", 2);
-    dynaBean2.set("TheText", "Text 2");
-    dynaBean3.set("TheId", 3);
-    dynaBean3.set("TheText", "Text 3");
+    rowObject1.set("TheId", 1);
+    rowObject1.set("TheText", "Text 1");
+    rowObject2.set("TheId", 2);
+    rowObject2.set("TheText", "Text 2");
+    rowObject3.set("TheId", 3);
+    rowObject3.set("TheText", "Text 3");
 
-    List<DynaBean> dynaBeans = new ArrayList<>();
+    List<RowObject> rowObjects = new ArrayList<>();
 
-    dynaBeans.add(dynaBean1);
-    dynaBeans.add(dynaBean2);
-    dynaBeans.add(dynaBean3);
+    rowObjects.add(rowObject1);
+    rowObjects.add(rowObject2);
+    rowObjects.add(rowObject3);
 
-    getPlatform().insert(getModel(), dynaBeans);
+    getPlatform().insert(getModel(), rowObjects);
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(3,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -435,22 +435,22 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='1' TheText='Text 1'/>\n" +
         "</data>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new SqlRowObject(dynaClass);
 
-    dynaBean.set("TheId", 1);
-    dynaBean.set("TheText", "Text 10");
+    rowObject.set("TheId", 1);
+    rowObject.set("TheText", "Text 10");
 
-    getPlatform().update(getModel(), dynaBean);
+    getPlatform().update(getModel(), rowObject);
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(1,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -478,21 +478,21 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='3' TheText='Text 3'/>\n" +
         "</data>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean1 = new SqlDynaBean(dynaClass);
-    DynaBean dynaBean2 = new SqlDynaBean(dynaClass);
-    DynaBean dynaBean3 = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject1 = new SqlRowObject(dynaClass);
+    RowObject rowObject2 = new SqlRowObject(dynaClass);
+    RowObject rowObject3 = new SqlRowObject(dynaClass);
 
-    dynaBean1.set("TheId", 1);
-    dynaBean1.set("TheText", "Text 1");
-    dynaBean2.set("TheId", 2);
-    dynaBean2.set("TheText", "Text 2");
-    dynaBean3.set("TheId", 3);
-    dynaBean3.set("TheText", "Text 30");
+    rowObject1.set("TheId", 1);
+    rowObject1.set("TheText", "Text 1");
+    rowObject2.set("TheId", 2);
+    rowObject2.set("TheText", "Text 2");
+    rowObject3.set("TheId", 3);
+    rowObject3.set("TheText", "Text 30");
 
-    Assert.assertTrue(getPlatform().exists(getModel(), dynaBean1));
-    Assert.assertFalse(getPlatform().exists(getModel(), dynaBean2));
-    Assert.assertTrue(getPlatform().exists(getModel(), dynaBean3));
+    Assert.assertTrue(getPlatform().exists(getModel(), rowObject1));
+    Assert.assertFalse(getPlatform().exists(getModel(), rowObject2));
+    Assert.assertTrue(getPlatform().exists(getModel(), rowObject3));
   }
 
 
@@ -509,22 +509,22 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new SqlRowObject(dynaClass);
 
-    dynaBean.set("TheId", 1);
-    dynaBean.set("TheText", "Text 1");
+    rowObject.set("TheId", 1);
+    rowObject.set("TheText", "Text 1");
 
-    getPlatform().store(getModel(), dynaBean);
+    getPlatform().store(getModel(), rowObject);
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(1,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));
@@ -551,22 +551,22 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='1' TheText='Text 1'/>\n" +
         "</data>");
 
-    SqlDynaClass dynaClass = SqlDynaClass.newInstance(getModel().getTable(0));
-    DynaBean dynaBean = new SqlDynaBean(dynaClass);
+    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new SqlRowObject(dynaClass);
 
-    dynaBean.set("TheId", 1);
-    dynaBean.set("TheText", "Text 10");
+    rowObject.set("TheId", 1);
+    rowObject.set("TheText", "Text 10");
 
-    getPlatform().store(getModel(), dynaBean);
+    getPlatform().store(getModel(), rowObject);
 
-    List<DynaBean> beans = getPlatform().fetch(getModel(),
+    List<RowObject> beans = getPlatform().fetch(getModel(),
       "SELECT * FROM " + asIdentifier("TestTable"),
       new Table[]{getModel().getTable(0)});
 
     Assert.assertEquals(1,
       beans.size());
 
-    DynaBean bean = beans.get(0);
+    RowObject bean = beans.get(0);
 
     Assert.assertEquals(1,
       getPropertyValue(bean, "TheId"));

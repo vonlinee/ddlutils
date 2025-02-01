@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.util.OrderedSet;
 
 import java.util.Iterator;
@@ -35,7 +35,7 @@ public class WaitingObject {
   /**
    * The object that is waiting for insertion.
    */
-  private final DynaBean _obj;
+  private final RowObject _obj;
   /**
    * The original identity of the waiting object.
    */
@@ -51,7 +51,7 @@ public class WaitingObject {
    * @param obj         The object that is waiting
    * @param objIdentity The (original) identity of the object
    */
-  public WaitingObject(DynaBean obj, Identity objIdentity) {
+  public WaitingObject(RowObject obj, Identity objIdentity) {
     _obj = obj;
     _objIdentity = objIdentity;
   }
@@ -61,7 +61,7 @@ public class WaitingObject {
    *
    * @return The object
    */
-  public DynaBean getObject() {
+  public RowObject getObject() {
     return _obj;
   }
 

@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.junit.Assert;
@@ -92,7 +92,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
     insertRow("roundtrip", new Object[]{1, inserted1});
     insertRow("roundtrip", new Object[]{2, inserted2});
 
-    List<DynaBean> beans = getRows("roundtrip");
+    List<RowObject> beans = getRows("roundtrip");
 
     assertEquals(expected1, beans.get(0), "avalue");
     assertEquals(expected2, beans.get(1), "avalue");

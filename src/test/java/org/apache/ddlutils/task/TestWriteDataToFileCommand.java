@@ -19,8 +19,8 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToFileCommand;
@@ -46,7 +46,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
    * @param task         The task
    * @param expectedData A map table name -> list of dyna beans sorted by the pk value that is expected
    */
-  private void runTask(DatabaseToDdlTask task, Map<String, List<DynaBean>> expectedData) throws IOException {
+  private void runTask(DatabaseToDdlTask task, Map<String, List<RowObject>> expectedData) throws IOException {
     WriteDataToFileCommand subTask = new WriteDataToFileCommand(task.getProperties());
     File tmpFile = File.createTempFile("data", ".xml");
 
@@ -57,12 +57,12 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
       task.execute();
 
       DataReader dataReader = new DataReader();
-      final Map<String, List<DynaBean>> readData = new HashMap<>();
+      final Map<String, List<RowObject>> readData = new HashMap<>();
 
       dataReader.setModel(getAdjustedModel());
       dataReader.setSink(bean -> {
-        String key = ((SqlDynaClass) bean.getDynaClass()).getTableName();
-        List<DynaBean> beans = readData.computeIfAbsent(key, k -> new ArrayList<>());
+        String key = ((SqlTableClass) bean.getDynaClass()).getTableName();
+        List<RowObject> beans = readData.computeIfAbsent(key, k -> new ArrayList<>());
         beans.add(bean);
       });
       dataReader.read(tmpFile);
@@ -99,12 +99,12 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
 
     createDatabase(modelXml);
 
-    List<DynaBean> beans = new ArrayList<>();
+    List<RowObject> beans = new ArrayList<>();
 
     beans.add(insertRow("roundtrip", new Object[]{"test1", 1}));
     beans.add(insertRow("roundtrip", new Object[]{"test2", null}));
 
-    Map<String, List<DynaBean>> expected = new HashMap<>();
+    Map<String, List<RowObject>> expected = new HashMap<>();
 
     expected.put("roundtrip", beans);
     runTask(getDatabaseToDdlTaskInstance(), expected);
@@ -142,9 +142,9 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
 
     createDatabase(modelXml);
 
-    List<DynaBean> beans1 = new ArrayList<>();
-    List<DynaBean> beans2 = new ArrayList<>();
-    List<DynaBean> beans3 = new ArrayList<>();
+    List<RowObject> beans1 = new ArrayList<>();
+    List<RowObject> beans2 = new ArrayList<>();
+    List<RowObject> beans3 = new ArrayList<>();
 
     beans1.add(insertRow("Roundtrip_1", new Object[]{"test1", null}));
     beans2.add(insertRow("Roundtrip_2", new Object[]{3, null}));
@@ -157,7 +157,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
     beans3.add(insertRow("Roundtrip_3", new Object[]{2, "test3"}));
     beans2.add(insertRow("Roundtrip_2", new Object[]{1, 2}));
 
-    Map<String, List<DynaBean>> expected = new HashMap<>();
+    Map<String, List<RowObject>> expected = new HashMap<>();
 
     expected.put("Roundtrip_1", beans1);
     expected.put("Roundtrip_2", beans2);

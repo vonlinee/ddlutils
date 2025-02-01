@@ -142,7 +142,7 @@ represents the table with its columns. Of this dyna class, instances - the dyna 
 are then created which can be inserted by DdlUtils into the database::
 
 	import javax.sql.DataSource;
-	import org.apache.ddlutils.data.DynaBean;
+	import org.apache.ddlutils.data.RowObject;
 	import org.apache.ddlutils.Platform;
 	import org.apache.ddlutils.PlatformFactory;
 	import org.apache.ddlutils.model.Database;
@@ -178,7 +178,7 @@ to stdout::
 	import java.util.ArrayList;
 	import java.util.Iterator;
 	import javax.sql.DataSource;
-	import org.apache.ddlutils.data.DynaBean;
+	import org.apache.ddlutils.data.RowObject;
 	import org.apache.ddlutils.Platform;
 	import org.apache.ddlutils.PlatformFactory;
 	import org.apache.ddlutils.model.Database;
@@ -229,7 +229,7 @@ on the safe side, then you could write the above statement like this::
 	import java.util.ArrayList;
 	import java.util.Iterator;
 	import javax.sql.DataSource;
-	import org.apache.ddlutils.data.DynaBean;
+	import org.apache.ddlutils.data.RowObject;
 	import org.apache.ddlutils.Platform;
 	import org.apache.ddlutils.PlatformFactory;
 	import org.apache.ddlutils.model.Database;

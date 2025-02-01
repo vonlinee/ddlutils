@@ -30,13 +30,13 @@ import java.util.HashMap;
  * constructor of its own that accepts a <code>DynaClass</code>.  This is
  * used to associate the DynaBean instance with this DynaClass.</p>
  */
-public class BasicDynaClass implements DynaClass, Serializable {
+public class BasicTableClass implements TableClass, Serializable {
 
   /**
    * The method signature of the constructor we will use to create
    * new DynaBean instances.
    */
-  protected static Class<?>[] constructorTypes = {DynaClass.class};
+  protected static Class<?>[] constructorTypes = {TableClass.class};
 
   /**
    * The constructor of the <code>dynaBeanClass</code> that we will use
@@ -54,7 +54,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * The <code>DynaBean</code> implementation class we will use for
    * creating new instances.
    */
-  protected Class<?> dynaBeanClass = BasicDynaBean.class;
+  protected Class<?> dynaBeanClass = BasicRowObject.class;
 
   /**
    * The "name" of this DynaBean class.
@@ -64,19 +64,19 @@ public class BasicDynaClass implements DynaClass, Serializable {
   /**
    * The set of dynamic properties that are part of this DynaClass.
    */
-  protected DynaProperty[] properties = {};
+  protected ColumnProperty[] properties = {};
 
   /**
    * The set of dynamic properties that are part of this DynaClass,
    * keyed by the property name.  Individual descriptor instances will
    * be the same instances as those in the <code>properties</code> list.
    */
-  protected HashMap<String, DynaProperty> propertiesMap = new HashMap<>();
+  protected HashMap<String, ColumnProperty> propertiesMap = new HashMap<>();
 
   /**
    * Construct a new BasicDynaClass with default parameters.
    */
-  public BasicDynaClass() {
+  public BasicTableClass() {
     this(null, null, null);
   }
 
@@ -86,7 +86,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * @param name          Name of this DynaBean class
    * @param dynaBeanClass The implementation class for new instances
    */
-  public BasicDynaClass(final String name, final Class<?> dynaBeanClass) {
+  public BasicTableClass(final String name, final Class<?> dynaBeanClass) {
     this(name, dynaBeanClass, null);
   }
 
@@ -97,13 +97,13 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * @param dynaBeanClass The implementation class for new intances
    * @param properties    Property descriptors for the supported properties
    */
-  public BasicDynaClass(final String name, Class<?> dynaBeanClass,
-                        final DynaProperty[] properties) {
+  public BasicTableClass(final String name, Class<?> dynaBeanClass,
+                         final ColumnProperty[] properties) {
     if (name != null) {
       this.name = name;
     }
     if (dynaBeanClass == null) {
-      dynaBeanClass = BasicDynaBean.class;
+      dynaBeanClass = BasicRowObject.class;
     }
     setDynaBeanClass(dynaBeanClass);
     if (properties != null) {
@@ -116,7 +116,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * <code>newInstance()</code> method.  This Class <strong>MUST</strong>
    * implement the <code>DynaBean</code> interface.
    *
-   * @return The class of the {@link DynaBean}
+   * @return The class of the {@link RowObject}
    */
   public Class<?> getDynaBeanClass() {
     return this.dynaBeanClass;
@@ -134,7 +134,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * @return the array of properties for this DynaClass
    */
   @Override
-  public DynaProperty[] getDynaProperties() {
+  public ColumnProperty[] getDynaProperties() {
     return properties;
   }
 
@@ -148,7 +148,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    * @throws IllegalArgumentException if no property name is specified
    */
   @Override
-  public DynaProperty getDynaProperty(final String name) {
+  public ColumnProperty getDynaProperty(final String name) {
     if (name == null) {
       throw new IllegalArgumentException
         ("No property name specified");
@@ -181,7 +181,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
    *                                fails for some other reason
    */
   @Override
-  public DynaBean newInstance()
+  public RowObject newInstance()
     throws IllegalAccessException, InstantiationException {
     try {
       // find the constructor after a deserialization (if needed) again
@@ -189,7 +189,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
         setDynaBeanClass(this.dynaBeanClass);
       }
       // Invoke the constructor to create a new bean instance
-      return (DynaBean) constructor.newInstance(constructorValues);
+      return (RowObject) constructor.newInstance(constructorValues);
     } catch (final InvocationTargetException e) {
       throw new InstantiationException
         (e.getTargetException().getMessage());
@@ -212,7 +212,7 @@ public class BasicDynaClass implements DynaClass, Serializable {
         ("Class " + dynaBeanClass.getName() +
           " is an interface, not a class");
     }
-    if (!DynaBean.class.isAssignableFrom(dynaBeanClass)) {
+    if (!RowObject.class.isAssignableFrom(dynaBeanClass)) {
       throw new IllegalArgumentException
         ("Class " + dynaBeanClass.getName() +
           " does not implement DynaBean");
@@ -233,11 +233,11 @@ public class BasicDynaClass implements DynaClass, Serializable {
    *
    * @param properties List of dynamic properties to be supported
    */
-  protected void setProperties(final DynaProperty[] properties) {
+  protected void setProperties(final ColumnProperty[] properties) {
     this.properties = properties;
     propertiesMap.clear();
-    for (final DynaProperty dynaProperty : properties) {
-      propertiesMap.put(dynaProperty.getName(), dynaProperty);
+    for (final ColumnProperty columnProperty : properties) {
+      propertiesMap.put(columnProperty.getName(), columnProperty);
     }
   }
 

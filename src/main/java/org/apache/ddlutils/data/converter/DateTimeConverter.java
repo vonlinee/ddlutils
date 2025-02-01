@@ -79,8 +79,6 @@ import java.util.TimeZone;
  * The <strong>Time Zone</strong> to use with the date format can be specified
  * using the <code>setTimeZone()</code> method.
  * </p>
- *
- * @since 1.8.0
  */
 public abstract class DateTimeConverter extends AbstractConverter {
 
@@ -218,12 +216,12 @@ public abstract class DateTimeConverter extends AbstractConverter {
     // Handle Long
     if (value instanceof Long) {
       final Long longObj = (Long) value;
-      return toDate(targetType, longObj.longValue());
+      return toDate(targetType, longObj);
     }
 
     // Convert all other types to String & handle
     final String stringValue = value.toString().trim();
-    if (stringValue.length() == 0) {
+    if (stringValue.isEmpty()) {
       return handleMissing(targetType);
     }
 
@@ -435,8 +433,7 @@ public abstract class DateTimeConverter extends AbstractConverter {
   public void setPatterns(final String[] patterns) {
     this.patterns = patterns;
     if (patterns != null && patterns.length > 1) {
-      final String buffer = String.join(", ", patterns);
-      displayPatterns = buffer;
+      displayPatterns = String.join(", ", patterns);
     }
     setUseLocaleFormat(true);
   }

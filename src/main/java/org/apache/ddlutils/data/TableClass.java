@@ -23,7 +23,7 @@ package org.apache.ddlutils.data;
  * DynaClass all have the same set of available properties, along with any
  * associated data types, read-only states, and write-only states.</p>
  */
-public interface DynaClass {
+public interface TableClass {
 
   /**
    * <p>Return an array of <code>PropertyDescriptors</code> for the properties
@@ -36,7 +36,7 @@ public interface DynaClass {
    *
    * @return the array of properties for this DynaClass
    */
-  DynaProperty[] getDynaProperties();
+  ColumnProperty[] getDynaProperties();
 
   /**
    * Return a property descriptor for the specified property, if it exists;
@@ -47,7 +47,7 @@ public interface DynaClass {
    * @return The descriptor for the specified property
    * @throws IllegalArgumentException if no property name is specified
    */
-  DynaProperty getDynaProperty(String name);
+  ColumnProperty getDynaProperty(String name);
 
   /**
    * Return the name of this DynaClass (analogous to the
@@ -70,5 +70,5 @@ public interface DynaClass {
    *                                class, an array class, a primitive type, or void; or if instantiation
    *                                fails for some other reason
    */
-  DynaBean newInstance() throws IllegalAccessException, InstantiationException;
+  RowObject newInstance() throws IllegalAccessException, InstantiationException;
 }

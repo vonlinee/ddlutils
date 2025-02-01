@@ -19,7 +19,7 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
 import org.junit.Assert;
@@ -92,7 +92,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     runTask(getDatabaseToDdlTaskInstance(), dataXml, false, false);
 
-    List<DynaBean> beans = getRows("roundtrip", "pk");
+    List<RowObject> beans = getRows("roundtrip", "pk");
 
     Assert.assertEquals(3, beans.size());
     assertEquals("val1", beans.get(0), "pk");
@@ -133,7 +133,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
     runTask(getDatabaseToDdlTaskInstance(), dataXml.toString(), true, false);
 
-    List<DynaBean> beans = getRows("roundtrip", "avalue");
+    List<RowObject> beans = getRows("roundtrip", "avalue");
 
     Assert.assertEquals(numObjs, beans.size());
     for (int idx = 0; idx < numObjs; idx++) {

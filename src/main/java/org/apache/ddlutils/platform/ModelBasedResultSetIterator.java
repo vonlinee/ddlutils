@@ -19,14 +19,14 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.ddlutils.data.BasicDynaBean;
-import org.apache.ddlutils.data.BasicDynaClass;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.DynaClass;
-import org.apache.ddlutils.data.DynaProperty;
+import org.apache.ddlutils.data.BasicRowObject;
+import org.apache.ddlutils.data.BasicTableClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.TableClass;
+import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.DatabaseOperationException;
-import org.apache.ddlutils.data.SqlDynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.SqlRowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -44,13 +44,13 @@ import java.util.NoSuchElementException;
 
 /**
  * This is an iterator that is specifically targeted at traversing result sets.
- * If the query is against a known table, then {@link SqlDynaBean} instances
- * are created from the rows, otherwise normal {@link DynaBean} instances
+ * If the query is against a known table, then {@link SqlRowObject} instances
+ * are created from the rows, otherwise normal {@link RowObject} instances
  * are created.
  *
  * @version $Revision: 289996 $
  */
-public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
+public class ModelBasedResultSetIterator implements Iterator<RowObject> {
   /**
    * The platform.
    */
@@ -62,7 +62,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   /**
    * The dyna class to use for creating beans.
    */
-  private DynaClass _dynaClass;
+  private TableClass _tableClass;
   /**
    * Whether the case of identifiers matters.
    */
@@ -165,15 +165,15 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
       _columnsToProperties.put(columnName, propName);
     }
     if (singleKnownTable && (tableName != null)) {
-      _dynaClass = model.getDynaClassFor(tableName);
+      _tableClass = model.getDynaClassFor(tableName);
     } else {
-      DynaProperty[] props = new DynaProperty[_columnsToProperties.size()];
+      ColumnProperty[] props = new ColumnProperty[_columnsToProperties.size()];
       int idx = 0;
 
       for (Iterator<String> it = _columnsToProperties.values().iterator(); it.hasNext(); idx++) {
-        props[idx] = new DynaProperty(it.next());
+        props[idx] = new ColumnProperty(it.next());
       }
-      _dynaClass = new BasicDynaClass("result", BasicDynaBean.class, props);
+      _tableClass = new BasicTableClass("result", BasicRowObject.class, props);
     }
   }
 
@@ -215,17 +215,17 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * {@inheritDoc}
    */
   @Override
-  public DynaBean next() throws DatabaseOperationException {
+  public RowObject next() throws DatabaseOperationException {
     advanceIfNecessary();
     if (_isAtEnd) {
       throw new NoSuchElementException("No more elements in the result set");
     } else {
       try {
-        DynaBean bean = _dynaClass.newInstance();
+        RowObject bean = _tableClass.newInstance();
         Table table = null;
 
-        if (bean instanceof SqlDynaBean) {
-          SqlDynaClass dynaClass = (SqlDynaClass) bean.getDynaClass();
+        if (bean instanceof SqlRowObject) {
+          SqlTableClass dynaClass = (SqlTableClass) bean.getDynaClass();
 
           table = dynaClass.getTable();
         }

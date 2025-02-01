@@ -25,15 +25,15 @@ package org.apache.ddlutils.data;
  *
  * @version $Revision$
  */
-public class SqlDynaBean extends BasicDynaBean {
+public class SqlRowObject extends BasicRowObject {
 
   /**
    * Creates a new dyna bean of the given class.
    *
-   * @param dynaClass The dyna class
+   * @param tableClass The dyna class
    */
-  public SqlDynaBean(DynaClass dynaClass) {
-    super(dynaClass);
+  public SqlRowObject(TableClass tableClass) {
+    super(tableClass);
   }
 
   /**
@@ -42,8 +42,8 @@ public class SqlDynaBean extends BasicDynaBean {
   @Override
   public String toString() {
     StringBuilder result = new StringBuilder();
-    DynaClass type = getDynaClass();
-    DynaProperty[] props = type.getDynaProperties();
+    TableClass type = getDynaClass();
+    ColumnProperty[] props = type.getDynaProperties();
 
     result.append(type.getName());
     result.append(": ");
@@ -71,14 +71,14 @@ public class SqlDynaBean extends BasicDynaBean {
    */
   @Override
   public boolean equals(Object obj) {
-    if (obj instanceof SqlDynaBean) {
-      SqlDynaBean other = (SqlDynaBean) obj;
-      DynaClass dynaClass = getDynaClass();
+    if (obj instanceof SqlRowObject) {
+      SqlRowObject other = (SqlRowObject) obj;
+      TableClass tableClass = getDynaClass();
 
-      if (dynaClass.equals(other.getDynaClass())) {
-        DynaProperty[] props = dynaClass.getDynaProperties();
+      if (tableClass.equals(other.getDynaClass())) {
+        ColumnProperty[] props = tableClass.getDynaProperties();
 
-        for (DynaProperty prop : props) {
+        for (ColumnProperty prop : props) {
           Object value = get(prop.getName());
           Object otherValue = other.get(prop.getName());
 

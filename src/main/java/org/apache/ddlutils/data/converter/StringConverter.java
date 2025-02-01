@@ -16,8 +16,10 @@
  */
 package org.apache.ddlutils.data.converter;
 
+import org.apache.ddlutils.data.Converter;
+
 /**
- * {@link org.apache.commons.beanutils.Converter}
+ * {@link Converter}
  * implementation that converts an incoming
  * object into a <code>java.lang.String</code> object.
  * <p>
@@ -37,60 +39,59 @@ package org.apache.ddlutils.data.converter;
  * them up based on the class of the input object). However this is not part
  * of the existing ConvertUtils framework.
  *
- *
  * @since 1.3
  */
 public final class StringConverter extends AbstractConverter {
 
-    /**
-     * Construct a <strong>java.lang.String</strong> <em>Converter</em> that throws
-     * a <code>ConversionException</code> if an error occurs.
-     */
-    public StringConverter() {
-    }
+  /**
+   * Construct a <strong>java.lang.String</strong> <em>Converter</em> that throws
+   * a <code>ConversionException</code> if an error occurs.
+   */
+  public StringConverter() {
+  }
 
-    /**
-     * Construct a <strong>java.lang.String</strong> <em>Converter</em> that returns
-     * a default value if an error occurs.
-     *
-     * @param defaultValue The default value to be returned
-     * if the value to be converted is missing or an error
-     * occurs converting the value.
-     */
-    public StringConverter(final Object defaultValue) {
-        super(defaultValue);
-    }
+  /**
+   * Construct a <strong>java.lang.String</strong> <em>Converter</em> that returns
+   * a default value if an error occurs.
+   *
+   * @param defaultValue The default value to be returned
+   *                     if the value to be converted is missing or an error
+   *                     occurs converting the value.
+   */
+  public StringConverter(final Object defaultValue) {
+    super(defaultValue);
+  }
 
-    /**
-     * Convert the specified input object into an output object of the
-     * specified type.
-     *
-     * @param <T> Target type of the conversion.
-     * @param type Data type to which this value should be converted.
-     * @param value The input value to be converted.
-     * @return The converted value.
-     * @throws Throwable if an error occurs converting to the specified type
-     * @since 1.8.0
-     */
-    @Override
-    protected <T> T convertToType(final Class<T> type, final Object value) throws Throwable {
-        // We have to support Object, too, because this class is sometimes
-        // used for a standard to Object conversion
-        if (String.class.equals(type) || Object.class.equals(type)) {
-            return type.cast(value.toString());
-        }
-        throw conversionException(type, value);
+  /**
+   * Convert the specified input object into an output object of the
+   * specified type.
+   *
+   * @param <T>   Target type of the conversion.
+   * @param type  Data type to which this value should be converted.
+   * @param value The input value to be converted.
+   * @return The converted value.
+   * @throws Throwable if an error occurs converting to the specified type
+   * @since 1.8.0
+   */
+  @Override
+  protected <T> T convertToType(final Class<T> type, final Object value) throws Throwable {
+    // We have to support Object, too, because this class is sometimes
+    // used for a standard to Object conversion
+    if (String.class.equals(type) || Object.class.equals(type)) {
+      return type.cast(value.toString());
     }
+    throw conversionException(type, value);
+  }
 
-    /**
-     * Return the default type this <code>Converter</code> handles.
-     *
-     * @return The default type this <code>Converter</code> handles.
-     * @since 1.8.0
-     */
-    @Override
-    protected Class<?> getDefaultType() {
-        return String.class;
-    }
+  /**
+   * Return the default type this <code>Converter</code> handles.
+   *
+   * @return The default type this <code>Converter</code> handles.
+   * @since 1.8.0
+   */
+  @Override
+  protected Class<?> getDefaultType() {
+    return String.class;
+  }
 
 }

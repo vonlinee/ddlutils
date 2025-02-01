@@ -30,11 +30,11 @@ import java.util.Map;
  *
  * @version $Revision: 231110 $
  */
-public class DynaClassCache {
+public class TableClassCache {
   /**
    * A cache of the SqlDynaClasses per table name.
    */
-  private final Map<String, DynaClass> _dynaClassCache = new HashMap<>();
+  private final Map<String, TableClass> _dynaClassCache = new HashMap<>();
 
   /**
    * Creates a new dyna bean instance for the given table.
@@ -42,7 +42,7 @@ public class DynaClassCache {
    * @param table The table
    * @return The new empty dyna bean
    */
-  public DynaBean createNewInstance(Table table) throws SqlDynaException {
+  public RowObject createNewInstance(Table table) throws SqlDynaException {
     try {
       return getDynaClass(table).newInstance();
     } catch (InstantiationException | IllegalAccessException ex) {
@@ -51,14 +51,14 @@ public class DynaClassCache {
   }
 
   /**
-   * Returns the {@link SqlDynaClass} for the given table. If it does not
+   * Returns the {@link SqlTableClass} for the given table. If it does not
    * exist yet, a new one will be created based on the Table definition.
    *
    * @param table The table
    * @return The <code>SqlDynaClass</code> for the indicated table
    */
-  public SqlDynaClass getDynaClass(Table table) {
-    SqlDynaClass answer = (SqlDynaClass) _dynaClassCache.get(table.getName());
+  public SqlTableClass getDynaClass(Table table) {
+    SqlTableClass answer = (SqlTableClass) _dynaClassCache.get(table.getName());
 
     if (answer == null) {
       answer = createDynaClass(table);
@@ -68,16 +68,16 @@ public class DynaClassCache {
   }
 
   /**
-   * Returns the {@link SqlDynaClass} for the given bean.
+   * Returns the {@link SqlTableClass} for the given bean.
    *
-   * @param dynaBean The bean
+   * @param rowObject The bean
    * @return The dyna bean class
    */
-  public SqlDynaClass getDynaClass(DynaBean dynaBean) throws SqlDynaException {
-    DynaClass dynaClass = dynaBean.getDynaClass();
+  public SqlTableClass getDynaClass(RowObject rowObject) throws SqlDynaException {
+    TableClass tableClass = rowObject.getDynaClass();
 
-    if (dynaClass instanceof SqlDynaClass) {
-      return (SqlDynaClass) dynaClass;
+    if (tableClass instanceof SqlTableClass) {
+      return (SqlTableClass) tableClass;
     } else {
       // TODO: we could autogenerate an SqlDynaClass here ?
       throw new SqlDynaException("The dyna bean is not an instance of a SqlDynaClass");
@@ -85,12 +85,12 @@ public class DynaClassCache {
   }
 
   /**
-   * Creates a new {@link SqlDynaClass} instance for the given table based on the table definition.
+   * Creates a new {@link SqlTableClass} instance for the given table based on the table definition.
    *
    * @param table The table
    * @return The new dyna class
    */
-  private SqlDynaClass createDynaClass(Table table) {
-    return SqlDynaClass.newInstance(table);
+  private SqlTableClass createDynaClass(Table table) {
+    return SqlTableClass.newInstance(table);
   }
 }

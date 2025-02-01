@@ -71,7 +71,7 @@ public final class ConverterFacade implements Converter {
    */
   @Override
   public String toString() {
-    return "ConverterFacade[" + converter.toString() + "]";
+    return "ConverterFacade[" + converter + "]";
   }
 
 }

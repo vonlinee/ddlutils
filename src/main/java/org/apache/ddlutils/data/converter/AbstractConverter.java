@@ -221,6 +221,7 @@ public abstract class AbstractConverter implements Converter {
    * @param value       the value to be converted
    * @return the converted value
    */
+  @SuppressWarnings("unchecked")
   private <T> T convertToDefaultType(final Class<T> targetClass, final Object value) {
     return (T) convert(getDefaultType(), value);
   }

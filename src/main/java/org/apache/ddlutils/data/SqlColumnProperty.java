@@ -29,7 +29,7 @@ import org.apache.ddlutils.model.Column;
  *
  * @version $Revision$
  */
-public class SqlDynaProperty extends DynaProperty {
+public class SqlColumnProperty extends ColumnProperty {
 
   /**
    * The column for which this dyna property is defined.
@@ -41,7 +41,7 @@ public class SqlDynaProperty extends DynaProperty {
    *
    * @param column The column
    */
-  public SqlDynaProperty(Column column) {
+  public SqlColumnProperty(Column column) {
     super(column.getName());
     _column = column;
   }
@@ -52,7 +52,7 @@ public class SqlDynaProperty extends DynaProperty {
    * @param column The column
    * @param type   The type of the property
    */
-  public SqlDynaProperty(Column column, Class<?> type) {
+  public SqlColumnProperty(Column column, Class<?> type) {
     super(column.getName(), type);
     _column = column;
   }

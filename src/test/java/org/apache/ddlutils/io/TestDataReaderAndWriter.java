@@ -20,8 +20,8 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaBean;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlRowObject;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -69,7 +69,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param encoding The encoding in which to write the xml
    * @return The xml output as raw bytes
    */
-  private byte[] writeBean(Database model, SqlDynaBean bean, String encoding) {
+  private byte[] writeBean(Database model, SqlRowObject bean, String encoding) {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     DataWriter dataWriter = new DataWriter(output, encoding);
 
@@ -87,8 +87,8 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param dataXml The raw xml data
    * @return The read dyna beans
    */
-  private List<DynaBean> readBeans(Database model, byte[] dataXml) {
-    ArrayList<DynaBean> beans = new ArrayList<>();
+  private List<RowObject> readBeans(Database model, byte[] dataXml) {
+    ArrayList<RowObject> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setModel(model);
@@ -104,8 +104,8 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param dataXml The xml data
    * @return The read dyna beans
    */
-  private List<DynaBean> readBeans(Database model, String dataXml) {
-    ArrayList<DynaBean> beans = new ArrayList<>();
+  private List<RowObject> readBeans(Database model, String dataXml) {
+    ArrayList<RowObject> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setModel(model);
@@ -122,12 +122,12 @@ public class TestDataReaderAndWriter extends TestCase {
    * @param encoding        The encoding to use for the data xml
    * @param expectedDataXml The expected xml generated for the bean
    */
-  private void roundtripTest(Database model, SqlDynaBean bean, String encoding, String expectedDataXml) throws UnsupportedEncodingException {
+  private void roundtripTest(Database model, SqlRowObject bean, String encoding, String expectedDataXml) throws UnsupportedEncodingException {
     byte[] xmlData = writeBean(model, bean, encoding);
 
     assertEquals(expectedDataXml, new String(xmlData, encoding));
 
-    List<DynaBean> beans = readBeans(model, xmlData);
+    List<RowObject> beans = readBeans(model, xmlData);
 
     assertEquals(1, beans.size());
     assertEquals(bean, beans.get(0));
@@ -159,7 +159,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    </index>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<data>\n" +
         "  <author author_id='1' name='Ernest Hemingway'/>\n" +
@@ -183,11 +183,11 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(5, beans.size());
 
-    DynaBean obj1 = beans.get(0);
-    DynaBean obj2 = beans.get(1);
-    DynaBean obj3 = beans.get(2);
-    DynaBean obj4 = beans.get(3);
-    DynaBean obj5 = beans.get(4);
+    RowObject obj1 = beans.get(0);
+    RowObject obj2 = beans.get(1);
+    RowObject obj3 = beans.get(2);
+    RowObject obj4 = beans.get(3);
+    RowObject obj5 = beans.get(4);
 
     assertEquals("author",
       obj1.getDynaClass().getName());
@@ -264,7 +264,7 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList<DynaBean> beans = new ArrayList<>();
+      ArrayList<RowObject> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
@@ -273,7 +273,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = beans.get(0);
+      RowObject obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -311,7 +311,7 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList<DynaBean> beans = new ArrayList<>();
+      ArrayList<RowObject> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
@@ -320,7 +320,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = beans.get(0);
+      RowObject obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -358,7 +358,7 @@ public class TestDataReaderAndWriter extends TestCase {
       writer.write(testDataXml);
       writer.close();
 
-      ArrayList<DynaBean> beans = new ArrayList<>();
+      ArrayList<RowObject> beans = new ArrayList<>();
       DataReader dataReader = new DataReader();
 
       dataReader.setModel(model);
@@ -367,7 +367,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
       assertEquals(1, beans.size());
 
-      DynaBean obj = beans.get(0);
+      RowObject obj = beans.get(0);
 
       assertEquals("test",
         obj.getDynaClass().getName());
@@ -392,7 +392,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1'>\n" +
@@ -407,7 +407,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(3, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -447,7 +447,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<someRandomName>\n" +
         "  <test id='1' value='foo'/>\n" +
@@ -455,7 +455,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -477,7 +477,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1' value='foo'/>\n" +
@@ -487,7 +487,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(2, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -518,7 +518,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1' value1='foo'/>\n" +
@@ -526,7 +526,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -547,7 +547,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "    <column name='value' type='VARCHAR' size='50' required='true'/>\n" +
         "  </table>\n" +
         "</database>");
-    List<DynaBean> beans = readBeans(
+    List<RowObject> beans = readBeans(
       model,
       "<data>\n" +
         "  <test id='1'>\n" +
@@ -557,7 +557,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("test",
       obj.getDynaClass().getName());
@@ -584,7 +584,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "  <Test Id='2' value='baz'/>\n" +
         "</data>";
 
-    ArrayList<DynaBean> beans = new ArrayList<>();
+    ArrayList<RowObject> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setCaseSensitive(true);
@@ -594,7 +594,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(1, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -622,7 +622,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "  <Test id='3' Value='baz'/>\n" +
         "</data>";
 
-    ArrayList<DynaBean> beans = new ArrayList<>();
+    ArrayList<RowObject> beans = new ArrayList<>();
     DataReader dataReader = new DataReader();
 
     dataReader.setCaseSensitive(false);
@@ -632,7 +632,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     assertEquals(3, beans.size());
 
-    DynaBean obj = beans.get(0);
+    RowObject obj = beans.get(0);
 
     assertEquals("Test",
       obj.getDynaClass().getName());
@@ -674,7 +674,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Special Characters: \u0001\u0009\u0010";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -702,7 +702,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Special Characters: \u0001\u0009\u0010";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -738,7 +738,7 @@ public class TestDataReaderAndWriter extends TestCase {
     String testedValue4 = "<![CDATA[" + StringUtils.repeat("b \n", 1000) + "]]>";
     String testedValue5 = "<<![CDATA[" + StringUtils.repeat("b \n", 500) + "]]>><![CDATA[" + StringUtils.repeat("c \n", 500) + "]]>";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value1", testedValue1);
@@ -748,7 +748,7 @@ public class TestDataReaderAndWriter extends TestCase {
     bean.set("value5", testedValue5);
 
     byte[] xmlData = writeBean(model, bean, "UTF-8");
-    List<DynaBean> beans = readBeans(model, xmlData);
+    List<RowObject> beans = readBeans(model, xmlData);
 
     assertEquals(1, beans.size());
     assertEquals(bean, beans.get(0));
@@ -769,7 +769,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -797,7 +797,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -824,7 +824,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -861,7 +861,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -897,7 +897,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -933,7 +933,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -969,7 +969,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -1002,7 +1002,7 @@ public class TestDataReaderAndWriter extends TestCase {
 
     modelIO.setValidateXml(true);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -1029,7 +1029,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -1056,7 +1056,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = StringUtils.repeat("Some Text", 40);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -1084,7 +1084,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("the value", testedValue);
@@ -1113,7 +1113,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = StringUtils.repeat("Some Text", 40);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("the value", testedValue);
@@ -1143,7 +1143,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set(columnName, testedValue);
@@ -1176,7 +1176,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = StringUtils.repeat("Some Text", 40);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set(columnName, testedValue);
@@ -1209,7 +1209,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set(columnName, testedValue);
@@ -1241,7 +1241,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "the\u0000value";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("the value", testedValue);
@@ -1271,7 +1271,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "the\u0000value";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set(columnName, testedValue);
@@ -1312,7 +1312,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = StringUtils.repeat("the\u0000value", 40);
 
     bean.set("id", 1);
@@ -1344,7 +1344,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "the\u0000value";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("value", testedValue);
@@ -1381,7 +1381,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -1422,7 +1422,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -1460,7 +1460,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -1498,7 +1498,7 @@ public class TestDataReaderAndWriter extends TestCase {
     table.addColumn(valueColumn);
     model.addTable(table);
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
     String testedValue = "Some Text";
 
     bean.set("id", 1);
@@ -1527,7 +1527,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("column", testedValue);
@@ -1553,7 +1553,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("column-name", testedValue);
@@ -1579,7 +1579,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set("table-name", testedValue);
@@ -1607,7 +1607,7 @@ public class TestDataReaderAndWriter extends TestCase {
         "</database>");
     String testedValue = "Some Text";
 
-    SqlDynaBean bean = (SqlDynaBean) model.createDynaBeanFor(model.getTable(0));
+    SqlRowObject bean = (SqlRowObject) model.createDynaBeanFor(model.getTable(0));
 
     bean.set("id", 1);
     bean.set(DatabaseIO.BASE64_ATTR_NAME, testedValue);
@@ -1628,14 +1628,14 @@ public class TestDataReaderAndWriter extends TestCase {
     /**
      * Stores the read objects.
      */
-    private final ArrayList<DynaBean> readObjects;
+    private final ArrayList<RowObject> readObjects;
 
     /**
      * Creates a new test data sink using the given list as the backing store.
      *
      * @param readObjects The list to store the read object
      */
-    private TestDataSink(ArrayList<DynaBean> readObjects) {
+    private TestDataSink(ArrayList<RowObject> readObjects) {
       this.readObjects = readObjects;
     }
 
@@ -1643,7 +1643,7 @@ public class TestDataReaderAndWriter extends TestCase {
      * {@inheritDoc}
      */
     @Override
-    public void addBean(DynaBean bean) throws DataSinkException {
+    public void addBean(RowObject bean) throws DataSinkException {
       readObjects.add(bean);
     }
   }

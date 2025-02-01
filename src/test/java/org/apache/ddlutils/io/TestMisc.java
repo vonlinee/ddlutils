@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.BuiltinDriverType;
@@ -157,7 +157,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc1");
+    List<RowObject> beans = getRows("misc1");
 
     if (isSybase) {
       assertEquals(new BigDecimal(10), beans.get(0), "pk");
@@ -296,7 +296,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc1");
+    List<RowObject> beans = getRows("misc1");
 
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
@@ -416,7 +416,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc");
+    List<RowObject> beans = getRows("misc");
 
     if (isSybase) {
       assertEquals(new BigDecimal(1), beans.get(0), "pk");
@@ -531,7 +531,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc");
+    List<RowObject> beans = getRows("misc");
 
     if (isSybase) {
       assertEquals(new BigDecimal(10), beans.get(0), "pk");
@@ -619,7 +619,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc", "id");
+    List<RowObject> beans = getRows("misc", "id");
 
     if (isSybase) {
       Assert.assertEquals(12, beans.size());
@@ -744,7 +744,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     dataIO.writeDataToDatabase(getPlatform(), getModel(), new Reader[]{stringReader});
 
-    List<DynaBean> beans = getRows("misc", "id");
+    List<RowObject> beans = getRows("misc", "id");
 
     Assert.assertEquals(6, beans.size());
     if (isSybase) {
@@ -1097,8 +1097,8 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
     insertRow("roundtrip2", new Object[]{"foo", 1});
     insertRow("roundtrip2", new Object[]{"bar", 2});
 
-    List<DynaBean> beans1 = getRows("roundtrip1", "pk1");
-    List<DynaBean> beans2 = getRows("roundtrip2", "pk1");
+    List<RowObject> beans1 = getRows("roundtrip1", "pk1");
+    List<RowObject> beans2 = getRows("roundtrip2", "pk1");
 
     Assert.assertEquals(2, beans1.size());
     Assert.assertEquals(2, beans2.size());
@@ -1147,7 +1147,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
 
     insertRow("Roundtrip", new Object[]{1, "foo"});
 
-    List<DynaBean> beans = getRows("Roundtrip");
+    List<RowObject> beans = getRows("Roundtrip");
 
     Assert.assertEquals(1, beans.size());
     assertEquals(1, beans.get(0), "Pk");

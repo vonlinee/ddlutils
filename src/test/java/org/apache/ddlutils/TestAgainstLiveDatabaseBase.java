@@ -21,11 +21,11 @@ package org.apache.ddlutils;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.DynaProperty;
-import org.apache.ddlutils.data.SqlDynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
-import org.apache.ddlutils.data.SqlDynaProperty;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.ColumnProperty;
+import org.apache.ddlutils.data.SqlRowObject;
+import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.SqlColumnProperty;
 import org.apache.ddlutils.io.BinaryObjectsHelper;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataToDatabaseSink;
@@ -438,9 +438,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param columnValues The values for the columns in order of definition
    * @return The dyna bean for the row
    */
-  protected DynaBean insertRow(String tableName, Object[] columnValues) {
+  protected RowObject insertRow(String tableName, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
-    DynaBean bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createDynaBeanFor(table);
 
     for (int idx = 0; (idx < table.getColumnCount()) && (idx < columnValues.length); idx++) {
       Column column = table.getColumn(idx);
@@ -459,9 +459,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param columnValues The values for the columns in order of definition
    * @return The dyna bean for the new row
    */
-  protected DynaBean updateRow(String tableName, DynaBean oldBean, Object[] columnValues) {
+  protected RowObject updateRow(String tableName, RowObject oldBean, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
-    DynaBean bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createDynaBeanFor(table);
 
     for (int idx = 0; (idx < table.getColumnCount()) && (idx < columnValues.length); idx++) {
       Column column = table.getColumn(idx);
@@ -480,7 +480,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected void deleteRow(String tableName, Object[] pkColumnValues) {
     Table table = getModel().findTable(tableName);
-    DynaBean bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createDynaBeanFor(table);
     Column[] pkColumns = table.getPrimaryKeyColumns();
 
     for (int idx = 0; (idx < pkColumns.length) && (idx < pkColumnValues.length); idx++) {
@@ -527,7 +527,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param tableName The table
    * @return The rows
    */
-  protected List<DynaBean> getRows(String tableName) {
+  protected List<RowObject> getRows(String tableName) {
     Table table = getModel().findTable(tableName, getPlatform().isDelimitedIdentifierModeOn());
 
     return getPlatform().fetch(getModel(),
@@ -542,7 +542,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param orderColumn The column to order the rows by
    * @return The rows
    */
-  protected List<DynaBean> getRows(String tableName, String orderColumn) {
+  protected List<RowObject> getRows(String tableName, String orderColumn) {
     Table table = getModel().findTable(tableName, getPlatform().isDelimitedIdentifierModeOn());
 
     return getPlatform().fetch(getModel(),
@@ -795,13 +795,13 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param propName The name of the property
    * @return The value
    */
-  protected Object getPropertyValue(DynaBean bean, String propName) {
+  protected Object getPropertyValue(RowObject bean, String propName) {
     if (getPlatform().isDelimitedIdentifierModeOn()) {
       return bean.get(propName);
     } else {
-      DynaProperty[] props = bean.getDynaClass().getDynaProperties();
+      ColumnProperty[] props = bean.getDynaClass().getDynaProperties();
 
-      for (DynaProperty prop : props) {
+      for (ColumnProperty prop : props) {
         if (propName.equalsIgnoreCase(prop.getName())) {
           return bean.get(prop.getName());
         }
@@ -889,12 +889,12 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param attrName The attribute name
    */
   protected void assertEquals(Object expected, Object bean, String attrName) {
-    DynaBean dynaBean = (DynaBean) bean;
-    Object value = dynaBean.get(attrName);
+    RowObject rowObject = (RowObject) bean;
+    Object value = rowObject.get(attrName);
 
-    if ((value instanceof byte[]) && !(expected instanceof byte[]) && (dynaBean instanceof SqlDynaBean)) {
-      SqlDynaClass dynaClass = (SqlDynaClass) dynaBean.getDynaClass();
-      Column column = ((SqlDynaProperty) dynaClass.getDynaProperty(attrName)).getColumn();
+    if ((value instanceof byte[]) && !(expected instanceof byte[]) && (rowObject instanceof SqlRowObject)) {
+      SqlTableClass dynaClass = (SqlTableClass) rowObject.getDynaClass();
+      Column column = ((SqlColumnProperty) dynaClass.getDynaProperty(attrName)).getColumn();
 
       if (TypeMap.isBinaryType(column.getTypeCode())) {
         value = new BinaryObjectsHelper().deserialize((byte[]) value);

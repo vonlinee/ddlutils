@@ -16,10 +16,13 @@
  */
 package org.apache.ddlutils.data.converter;
 
+import org.apache.ddlutils.data.ConversionException;
+import org.apache.ddlutils.data.Converter;
+
 /**
- * {@link org.apache.commons.beanutils.Converter} implementation that handles conversion
+ * {@link Converter} implementation that handles conversion
  * to and from <strong>Boolean</strong> objects.
- * {@link org.apache.commons.beanutils.Converter} implementation that
+ * {@link Converter} implementation that
  * handles conversion to and from <strong>java.lang.Boolean</strong> objects.
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
@@ -52,178 +55,173 @@ package org.apache.ddlutils.data.converter;
  */
 public final class BooleanConverter extends AbstractConverter {
 
-    /**
-     * This is a special reference that can be passed as the "default object"
-     * to the constructor to indicate that no default is desired. Note that
-     * the value 'null' cannot be used for this purpose, as the caller may
-     * want a null to be returned as the default.
-     * @deprecated Use constructors without default value.
-     */
-    @Deprecated
-    public static final Object NO_DEFAULT = new Object();
+  /**
+   * This is a special reference that can be passed as the "default object"
+   * to the constructor to indicate that no default is desired. Note that
+   * the value 'null' cannot be used for this purpose, as the caller may
+   * want a null to be returned as the default.
+   *
+   * @deprecated Use constructors without default value.
+   */
+  @Deprecated
+  public static final Object NO_DEFAULT = new Object();
 
-    /**
-     * This method creates a copy of the provided array, and ensures that
-     * all the strings in the newly created array contain only lower-case
-     * letters.
-     * <p>
-     * Using this method to copy string arrays means that changes to the
-     * src array do not modify the dst array.
-     */
-    private static String[] copyStrings(final String[] src) {
-        final String[] dst = new String[src.length];
-        for(int i=0; i<src.length; ++i) {
-            dst[i] = src[i].toLowerCase();
+  /**
+   * This method creates a copy of the provided array, and ensures that
+   * all the strings in the newly created array contain only lower-case
+   * letters.
+   * <p>
+   * Using this method to copy string arrays means that changes to the
+   * src array do not modify the dst array.
+   */
+  private static String[] copyStrings(final String[] src) {
+    final String[] dst = new String[src.length];
+    for (int i = 0; i < src.length; ++i) {
+      dst[i] = src[i].toLowerCase();
+    }
+    return dst;
+  }
+
+  /**
+   * The set of strings that are known to map to Boolean.TRUE.
+   */
+  private String[] trueStrings = {"true", "yes", "y", "on", "1"};
+
+  /**
+   * The set of strings that are known to map to Boolean.FALSE.
+   */
+  private String[] falseStrings = {"false", "no", "n", "off", "0"};
+
+  /**
+   * Create a {@link Converter} that will throw a
+   * {@link ConversionException}
+   * if a conversion error occurs, ie the string value being converted is
+   * not one of the known true strings, nor one of the known false strings.
+   */
+  public BooleanConverter() {
+  }
+
+  /**
+   * Create a {@link Converter} that will return the specified default value
+   * if a conversion error occurs, ie the string value being converted is
+   * not one of the known true strings, nor one of the known false strings.
+   *
+   * @param defaultValue The default value to be returned if the value
+   *                     being converted is not recognized. This value may be null, in which
+   *                     case null will be returned on conversion failure. When non-null, it is
+   *                     expected that this value will be either Boolean.TRUE or Boolean.FALSE.
+   *                     The special value BooleanConverter.NO_DEFAULT can also be passed here,
+   *                     in which case this constructor acts like the no-argument one.
+   */
+  public BooleanConverter(final Object defaultValue) {
+    if (defaultValue != NO_DEFAULT) {
+      setDefaultValue(defaultValue);
+    }
+  }
+
+  /**
+   * Create a {@link Converter} that will throw a
+   * {@link ConversionException}
+   * if a conversion error occurs, ie the string value being converted is
+   * not one of the known true strings, nor one of the known false strings.
+   * <p>
+   * The provided string arrays are copied, so that changes to the elements
+   * of the array after this call is made do not affect this object.
+   *
+   * @param trueStrings  is the set of strings which should convert to the
+   *                     value Boolean.TRUE. The value null must not be present. Case is
+   *                     ignored.
+   * @param falseStrings is the set of strings which should convert to the
+   *                     value Boolean.TRUE. The value null must not be present. Case is
+   *                     ignored.
+   * @since 1.8.0
+   */
+  public BooleanConverter(final String[] trueStrings, final String[] falseStrings) {
+    this.trueStrings = copyStrings(trueStrings);
+    this.falseStrings = copyStrings(falseStrings);
+  }
+
+  /**
+   * Create a {@link Converter} that will return
+   * the specified default value if a conversion error occurs.
+   * <p>
+   * The provided string arrays are copied, so that changes to the elements
+   * of the array after this call is made do not affect this object.
+   *
+   * @param trueStrings  is the set of strings which should convert to the
+   *                     value Boolean.TRUE. The value null must not be present. Case is
+   *                     ignored.
+   * @param falseStrings is the set of strings which should convert to the
+   *                     value Boolean.TRUE. The value null must not be present. Case is
+   *                     ignored.
+   * @param defaultValue The default value to be returned if the value
+   *                     being converted is not recognized. This value may be null, in which
+   *                     case null will be returned on conversion failure. When non-null, it is
+   *                     expected that this value will be either Boolean.TRUE or Boolean.FALSE.
+   *                     The special value BooleanConverter.NO_DEFAULT can also be passed here,
+   *                     in which case an exception will be thrown on conversion failure.
+   * @since 1.8.0
+   */
+  public BooleanConverter(final String[] trueStrings, final String[] falseStrings,
+                          final Object defaultValue) {
+    this.trueStrings = copyStrings(trueStrings);
+    this.falseStrings = copyStrings(falseStrings);
+    if (defaultValue != NO_DEFAULT) {
+      setDefaultValue(defaultValue);
+    }
+  }
+
+  /**
+   * Convert the specified input object into an output object of the
+   * specified type.
+   *
+   * @param <T>   Target type of the conversion.
+   * @param type  is the type to which this value should be converted. In the
+   *              case of this BooleanConverter class, this value is ignored.
+   * @param value is the input value to be converted. The toString method
+   *              shall be invoked on this object, and the result compared (ignoring
+   *              case) against the known "true" and "false" string values.
+   * @return Boolean.TRUE if the value was a recognized "true" value,
+   * Boolean.FALSE if the value was a recognized "false" value, or
+   * the default value if the value was not recognized and the constructor
+   * was provided with a default value.
+   * @throws Throwable if an error occurs converting to the specified type
+   * @since 1.8.0
+   */
+  @Override
+  protected <T> T convertToType(final Class<T> type, final Object value) throws Throwable {
+
+    if (Boolean.class.equals(type) || Boolean.TYPE.equals(type)) {
+      // All the values in the trueStrings and falseStrings arrays are
+      // guaranteed to be lower-case. By converting the input value
+      // to lowercase too, we can use the efficient String.equals method
+      // instead of the less-efficient String.equalsIgnoreCase method.
+      final String stringValue = value.toString().toLowerCase();
+
+      for (final String trueString : trueStrings) {
+        if (trueString.equals(stringValue)) {
+          return type.cast(Boolean.TRUE);
         }
-        return dst;
-    }
+      }
 
-    /**
-     * The set of strings that are known to map to Boolean.TRUE.
-     */
-    private String[] trueStrings = {"true", "yes", "y", "on", "1"};
-
-    /**
-     * The set of strings that are known to map to Boolean.FALSE.
-     */
-    private String[] falseStrings = {"false", "no", "n", "off", "0"};
-
-    /**
-     * Create a {@link org.apache.commons.beanutils.Converter} that will throw a
-     * {@link org.apache.commons.beanutils.ConversionException}
-     * if a conversion error occurs, ie the string value being converted is
-     * not one of the known true strings, nor one of the known false strings.
-     */
-    public BooleanConverter() {
-    }
-
-    /**
-     * Create a {@link org.apache.commons.beanutils.Converter} that will return the specified default value
-     * if a conversion error occurs, ie the string value being converted is
-     * not one of the known true strings, nor one of the known false strings.
-     *
-     * @param defaultValue The default value to be returned if the value
-     *  being converted is not recognized. This value may be null, in which
-     *  case null will be returned on conversion failure. When non-null, it is
-     *  expected that this value will be either Boolean.TRUE or Boolean.FALSE.
-     *  The special value BooleanConverter.NO_DEFAULT can also be passed here,
-     *  in which case this constructor acts like the no-argument one.
-     */
-    public BooleanConverter(final Object defaultValue) {
-        if (defaultValue != NO_DEFAULT) {
-            setDefaultValue(defaultValue);
+      for (final String falseString : falseStrings) {
+        if (falseString.equals(stringValue)) {
+          return type.cast(Boolean.FALSE);
         }
+      }
     }
 
-    /**
-     * Create a {@link org.apache.commons.beanutils.Converter} that will throw a
-     * {@link org.apache.commons.beanutils.ConversionException}
-     * if a conversion error occurs, ie the string value being converted is
-     * not one of the known true strings, nor one of the known false strings.
-     * <p>
-     * The provided string arrays are copied, so that changes to the elements
-     * of the array after this call is made do not affect this object.
-     *
-     * @param trueStrings is the set of strings which should convert to the
-     *  value Boolean.TRUE. The value null must not be present. Case is
-     *  ignored.
-     *
-     * @param falseStrings is the set of strings which should convert to the
-     *  value Boolean.TRUE. The value null must not be present. Case is
-     *  ignored.
-     * @since 1.8.0
-     */
-    public BooleanConverter(final String[] trueStrings, final String[] falseStrings) {
-        this.trueStrings = copyStrings(trueStrings);
-        this.falseStrings = copyStrings(falseStrings);
-    }
+    throw conversionException(type, value);
+  }
 
-    /**
-     * Create a {@link org.apache.commons.beanutils.Converter} that will return
-     * the specified default value if a conversion error occurs.
-     * <p>
-     * The provided string arrays are copied, so that changes to the elements
-     * of the array after this call is made do not affect this object.
-     *
-     * @param trueStrings is the set of strings which should convert to the
-     *  value Boolean.TRUE. The value null must not be present. Case is
-     *  ignored.
-     *
-     * @param falseStrings is the set of strings which should convert to the
-     *  value Boolean.TRUE. The value null must not be present. Case is
-     *  ignored.
-     *
-     * @param defaultValue The default value to be returned if the value
-     *  being converted is not recognized. This value may be null, in which
-     *  case null will be returned on conversion failure. When non-null, it is
-     *  expected that this value will be either Boolean.TRUE or Boolean.FALSE.
-     *  The special value BooleanConverter.NO_DEFAULT can also be passed here,
-     *  in which case an exception will be thrown on conversion failure.
-     * @since 1.8.0
-     */
-    public BooleanConverter(final String[] trueStrings, final String[] falseStrings,
-                final Object defaultValue) {
-        this.trueStrings = copyStrings(trueStrings);
-        this.falseStrings = copyStrings(falseStrings);
-        if (defaultValue != NO_DEFAULT) {
-            setDefaultValue(defaultValue);
-        }
-    }
-
-    /**
-     * Convert the specified input object into an output object of the
-     * specified type.
-     *
-     * @param <T> Target type of the conversion.
-     * @param type is the type to which this value should be converted. In the
-     *  case of this BooleanConverter class, this value is ignored.
-     *
-     * @param value is the input value to be converted. The toString method
-     *  shall be invoked on this object, and the result compared (ignoring
-     *  case) against the known "true" and "false" string values.
-     *
-     * @return Boolean.TRUE if the value was a recognized "true" value,
-     *  Boolean.FALSE if the value was a recognized "false" value, or
-     *  the default value if the value was not recognized and the constructor
-     *  was provided with a default value.
-     *
-     * @throws Throwable if an error occurs converting to the specified type
-     * @since 1.8.0
-     */
-    @Override
-    protected <T> T convertToType(final Class<T> type, final Object value) throws Throwable {
-
-        if (Boolean.class.equals(type) || Boolean.TYPE.equals(type)) {
-            // All the values in the trueStrings and falseStrings arrays are
-            // guaranteed to be lower-case. By converting the input value
-            // to lowercase too, we can use the efficient String.equals method
-            // instead of the less-efficient String.equalsIgnoreCase method.
-            final String stringValue = value.toString().toLowerCase();
-
-            for (final String trueString : trueStrings) {
-                if (trueString.equals(stringValue)) {
-                    return type.cast(Boolean.TRUE);
-                }
-            }
-
-            for (final String falseString : falseStrings) {
-                if (falseString.equals(stringValue)) {
-                    return type.cast(Boolean.FALSE);
-                }
-            }
-        }
-
-        throw conversionException(type, value);
-    }
-
-    /**
-     * Return the default type this <code>Converter</code> handles.
-     *
-     * @return The default type this <code>Converter</code> handles.
-     * @since 1.8.0
-     */
-    @Override
-    protected Class<Boolean> getDefaultType() {
-        return Boolean.class;
-    }
+  /**
+   * Return the default type this <code>Converter</code> handles.
+   *
+   * @return The default type this <code>Converter</code> handles.
+   * @since 1.8.0
+   */
+  @Override
+  protected Class<Boolean> getDefaultType() {
+    return Boolean.class;
+  }
 }

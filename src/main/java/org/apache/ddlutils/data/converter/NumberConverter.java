@@ -17,6 +17,7 @@
 package org.apache.ddlutils.data.converter;
 
 import org.apache.ddlutils.data.ConversionException;
+import org.apache.ddlutils.data.Converter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -29,7 +30,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * {@link org.apache.commons.beanutils.Converter} implementation that handles conversion
+ * {@link Converter} implementation that handles conversion
  * to and from <strong>java.lang.Number</strong> objects.
  * <p>
  * This implementation handles conversion for the following

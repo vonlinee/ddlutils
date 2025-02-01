@@ -26,8 +26,8 @@ import org.apache.ddlutils.alteration.ModelComparator;
 import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaProperty;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlColumnProperty;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -197,9 +197,9 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * {@inheritDoc}
    */
   @Override
-  protected void setObject(PreparedStatement statement, int sqlIndex, DynaBean dynaBean, SqlDynaProperty property) throws SQLException {
+  protected void setObject(PreparedStatement statement, int sqlIndex, RowObject rowObject, SqlColumnProperty property) throws SQLException {
     int typeCode = property.getColumn().getTypeCode();
-    Object value = dynaBean.get(property.getName());
+    Object value = rowObject.get(property.getName());
 
     // PostgreSQL doesn't like setNull for BYTEA columns
     if (value == null) {
@@ -215,7 +215,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
           break;
       }
     } else {
-      super.setObject(statement, sqlIndex, dynaBean, property);
+      super.setObject(statement, sqlIndex, rowObject, property);
     }
   }
 

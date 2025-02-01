@@ -1,9 +1,7 @@
 package org.apache.ddlutils.util;
 
-@Deprecated
 public class LogFactory {
 
-  @Deprecated
   public static Log getLog(Class<?> clazz) {
     return new Log() {
       @Override

@@ -35,15 +35,13 @@ import java.util.Objects;
  * successfully serialized and deserialized <strong>ONLY</strong> if all
  * property values are <code>Serializable</code>.</p>
  */
-public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, Serializable {
-
-  private static final long serialVersionUID = 1L;
+public class BasicRowObject extends HashMap<String, Object> implements RowObject, Serializable {
 
   /**
    * The <code>DynaClass</code> "base class" that this DynaBean
    * is associated with.
    */
-  protected DynaClass dynaClass;
+  protected TableClass tableClass;
 
   /**
    * The set of property values for this DynaBean, keyed by property name.
@@ -54,10 +52,10 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
    * Construct a new <code>DynaBean</code> associated with the specified
    * <code>DynaClass</code> instance.
    *
-   * @param dynaClass The DynaClass we are associated with
+   * @param tableClass The DynaClass we are associated with
    */
-  public BasicDynaBean(final DynaClass dynaClass) {
-    this.dynaClass = dynaClass;
+  public BasicRowObject(final TableClass tableClass) {
+    this.tableClass = tableClass;
   }
 
   /**
@@ -189,8 +187,8 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
    * @return The associated DynaClass
    */
   @Override
-  public DynaClass getDynaClass() {
-    return this.dynaClass;
+  public TableClass getDynaClass() {
+    return this.tableClass;
   }
 
   /**
@@ -201,9 +199,9 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
    * @throws IllegalArgumentException if this is not a valid property
    *                                  name for our DynaClass
    */
-  protected DynaProperty getDynaProperty(final String name) {
+  protected ColumnProperty getDynaProperty(final String name) {
 
-    final DynaProperty descriptor = getDynaClass().getDynaProperty(name);
+    final ColumnProperty descriptor = getDynaClass().getDynaProperty(name);
     if (descriptor == null) {
       throw new IllegalArgumentException
         ("Invalid property name '" + name + "'");
@@ -306,7 +304,7 @@ public class BasicDynaBean extends HashMap<String, Object> implements DynaBean, 
   @Override
   public void set(final String name, final Object value) {
 
-    final DynaProperty descriptor = getDynaProperty(name);
+    final ColumnProperty descriptor = getDynaProperty(name);
     if (value == null) {
       if (descriptor.getType().isPrimitive()) {
         throw new NullPointerException

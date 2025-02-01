@@ -19,7 +19,7 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -832,7 +832,7 @@ public interface Platform {
    * @param sql   The sql query to perform
    * @return An iterator for the dyna beans resulting from the query
    */
-  Iterator<DynaBean> query(Database model, String sql) throws DatabaseOperationException;
+  Iterator<RowObject> query(Database model, String sql) throws DatabaseOperationException;
 
   /**
    * Performs the given parameterized SQL query returning an iterator over the results.
@@ -842,7 +842,7 @@ public interface Platform {
    * @param parameters The query parameter values
    * @return An iterator for the dyna beans resulting from the query
    */
-  Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
+  Iterator<RowObject> query(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
 
   /**
    * Performs the given SQL query returning an iterator over the results.
@@ -852,7 +852,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return An iterator for the dyna beans resulting from the query
    */
-  Iterator<DynaBean> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
+  Iterator<RowObject> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Performs the given parameterized SQL query returning an iterator over the results.
@@ -863,7 +863,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return An iterator for the dyna beans resulting from the query
    */
-  Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
+  Iterator<RowObject> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -874,7 +874,7 @@ public interface Platform {
    * @param sql   The sql query
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -887,7 +887,7 @@ public interface Platform {
    * @param parameters The parameter values
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -899,7 +899,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -913,7 +913,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -929,7 +929,7 @@ public interface Platform {
    * @param end   Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, int start, int end) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -946,7 +946,7 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, int start, int end) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Collection<Object> parameters, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -963,7 +963,7 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -981,17 +981,17 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException;
+  List<RowObject> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException;
 
   /**
    * Determines whether the given dyna bean is stored in the database. Note that this checks only
    * checks the primary key, not the other attributes.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean
+   * @param rowObject The bean
    * @return <code>true</code> if a bean with this primary key exists in the database
    */
-  boolean exists(Database model, DynaBean dynaBean);
+  boolean exists(Database model, RowObject rowObject);
 
   /**
    * Determines whether the given dyna bean is stored in the database. Note that this checks only
@@ -999,19 +999,19 @@ public interface Platform {
    *
    * @param connection The connection
    * @param model      The database model to use
-   * @param dynaBean   The bean
+   * @param rowObject   The bean
    * @return <code>true</code> if a bean with this primary key exists in the database
    */
-  boolean exists(Connection connection, Database model, DynaBean dynaBean);
+  boolean exists(Connection connection, Database model, RowObject rowObject);
 
   /**
    * Stores the given bean in the database, inserting it if there is no primary key
    * otherwise the bean is updated in the database.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean to store
+   * @param rowObject The bean to store
    */
-  void store(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void store(Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Stores the given bean in the database, inserting it if there is no primary key
@@ -1019,26 +1019,26 @@ public interface Platform {
    *
    * @param connection The connection
    * @param model      The database model to use
-   * @param dynaBean   The bean to store
+   * @param rowObject   The bean to store
    */
-  void store(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void store(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Returns the sql for inserting the given bean.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean
+   * @param rowObject The bean
    * @return The insert sql
    */
-  String getInsertSql(Database model, DynaBean dynaBean);
+  String getInsertSql(Database model, RowObject rowObject);
 
   /**
    * Inserts the given DynaBean in the database, assuming the primary key values are specified.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean to insert
+   * @param rowObject The bean to insert
    */
-  void insert(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void insert(Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Inserts the bean. If one of the columns is an auto-incremented column, then the
@@ -1047,9 +1047,9 @@ public interface Platform {
    *
    * @param connection The database connection
    * @param model      The database model to use
-   * @param dynaBean   The bean
+   * @param rowObject   The bean
    */
-  void insert(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void insert(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Inserts the given beans in the database, assuming the primary key values are specified.
@@ -1059,9 +1059,9 @@ public interface Platform {
    * or identity constraint).
    *
    * @param model     The database model to use
-   * @param dynaBeans The beans to insert
+   * @param rowObjects The beans to insert
    */
-  void insert(Database model, Collection<DynaBean> dynaBeans) throws DatabaseOperationException;
+  void insert(Database model, Collection<RowObject> rowObjects) throws DatabaseOperationException;
 
   /**
    * Inserts the given beans. Note that a batch insert is used for subsequent beans of the same type.
@@ -1072,39 +1072,39 @@ public interface Platform {
    *
    * @param connection The database connection
    * @param model      The database model to use
-   * @param dynaBeans  The beans
+   * @param rowObjects  The beans
    */
-  void insert(Connection connection, Database model, Collection<DynaBean> dynaBeans) throws DatabaseOperationException;
+  void insert(Connection connection, Database model, Collection<RowObject> rowObjects) throws DatabaseOperationException;
 
   /**
    * Returns the sql for updating the given bean in the database. Note that this method can not be used to
    * generate SQL for updating primary key columns.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean
+   * @param rowObject The bean
    * @return The update sql
    */
-  String getUpdateSql(Database model, DynaBean dynaBean);
+  String getUpdateSql(Database model, RowObject rowObject);
 
   /**
    * Returns the sql for updating the given bean in the database. Note that this method can not be used to
    * generate SQL for updating primary key columns.
    *
    * @param model       The database model to use
-   * @param oldDynaBean The bean identifying the row to update
-   * @param newDynaBean The bean containing the new values
+   * @param oldRowObject The bean identifying the row to update
+   * @param newRowObject The bean containing the new values
    * @return The update sql
    */
-  String getUpdateSql(Database model, DynaBean oldDynaBean, DynaBean newDynaBean);
+  String getUpdateSql(Database model, RowObject oldRowObject, RowObject newRowObject);
 
   /**
    * Updates the given bean in the database, assuming the primary key values are specified. Note that this means
    * that this method will not update the primary key columns.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean
+   * @param rowObject The bean
    */
-  void update(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void update(Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Updates the row which maps to the given bean. Note that this means that this method will not update the
@@ -1112,19 +1112,19 @@ public interface Platform {
    *
    * @param connection The database connection
    * @param model      The database model to use
-   * @param dynaBean   The bean
+   * @param rowObject   The bean
    */
-  void update(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void update(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Updates the row identified by the given <code>oldDynaBean</code> in the database with the
    * values in <code>newDynaBean</code>. This method can be used to update primary key columns.
    *
    * @param model       The database model to use
-   * @param oldDynaBean The bean identifying the row (which means the primary key fields need to be specified)
-   * @param newDynaBean The bean containing the new data
+   * @param oldRowObject The bean identifying the row (which means the primary key fields need to be specified)
+   * @param newRowObject The bean containing the new data
    */
-  void update(Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
+  void update(Database model, RowObject oldRowObject, RowObject newRowObject) throws DatabaseOperationException;
 
   /**
    * Updates the row identified by the given <code>oldDynaBean</code> in the database with the
@@ -1132,36 +1132,36 @@ public interface Platform {
    *
    * @param connection  The database connection
    * @param model       The database model to use
-   * @param oldDynaBean The bean identifying the row (which means the primary key fields need to be specified)
-   * @param newDynaBean The bean containing the new data
+   * @param oldRowObject The bean identifying the row (which means the primary key fields need to be specified)
+   * @param newRowObject The bean containing the new data
    */
-  void update(Connection connection, Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
+  void update(Connection connection, Database model, RowObject oldRowObject, RowObject newRowObject) throws DatabaseOperationException;
 
   /**
    * Returns the sql for deleting the given bean from the database.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean
+   * @param rowObject The bean
    * @return The sql
    */
-  String getDeleteSql(Database model, DynaBean dynaBean);
+  String getDeleteSql(Database model, RowObject rowObject);
 
   /**
    * Deletes the given bean from the database, assuming the primary key values are specified.
    *
    * @param model    The database model to use
-   * @param dynaBean The bean to delete
+   * @param rowObject The bean to delete
    */
-  void delete(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void delete(Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Deletes the row which maps to the given bean from the database.
    *
    * @param model      The database model to use
-   * @param dynaBean   The bean
+   * @param rowObject   The bean
    * @param connection The database connection
    */
-  void delete(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void delete(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException;
 
   /**
    * Reads the database model from the live database as specified by the data source set for

@@ -19,9 +19,9 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlRowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Table;
@@ -117,8 +117,8 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param bean The bean to write
    */
-  public void write(SqlDynaBean bean) throws DataWriterException {
-    SqlDynaClass dynaClass = (SqlDynaClass) bean.getDynaClass();
+  public void write(SqlRowObject bean) throws DataWriterException {
+    SqlTableClass dynaClass = (SqlTableClass) bean.getDynaClass();
     Table table = dynaClass.getTable();
     TableXmlWriter tableWriter = new TableXmlWriter(table);
     List<ColumnXmlWriter> columnWriters = new ArrayList<>();
@@ -149,12 +149,12 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans iterator
    */
-  public void write(Iterator<DynaBean> beans) throws DataWriterException {
+  public void write(Iterator<RowObject> beans) throws DataWriterException {
     while (beans.hasNext()) {
-      DynaBean bean = beans.next();
+      RowObject bean = beans.next();
 
-      if (bean instanceof SqlDynaBean) {
-        write((SqlDynaBean) bean);
+      if (bean instanceof SqlRowObject) {
+        write((SqlRowObject) bean);
       } else {
         throw new DataWriterException("Cannot write normal dyna beans (type: " + bean.getDynaClass().getName() + ")");
       }
@@ -166,7 +166,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans
    */
-  public void write(Collection<DynaBean> beans) throws DataWriterException {
+  public void write(Collection<RowObject> beans) throws DataWriterException {
     write(beans.iterator());
   }
 }

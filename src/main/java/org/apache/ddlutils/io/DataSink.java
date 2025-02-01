@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.ddlutils.data.DynaBean;
+import org.apache.ddlutils.data.RowObject;
 
 /**
  * Marks classes that can receive dyna beans read by the {@link org.apache.ddlutils.io.DataReader}.
@@ -38,7 +38,7 @@ public interface DataSink {
    *
    * @param bean The dyna bean to add
    */
-  void addBean(DynaBean bean) throws DataSinkException;
+  void addBean(RowObject bean) throws DataSinkException;
 
   /**
    * Notifies the sink that all beans have been added.

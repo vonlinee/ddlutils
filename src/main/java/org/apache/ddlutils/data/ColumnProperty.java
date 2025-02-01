@@ -36,7 +36,7 @@ import java.util.Objects;
  * Alternatively, an implementation may choose to ignore this property.
  * All keys for maps must be of type String so no meta data is needed for map keys.</p>
  */
-public class DynaProperty implements Serializable {
+public class ColumnProperty implements Serializable {
 
   private static final long serialVersionUID = 1L;
   /*
@@ -76,7 +76,7 @@ public class DynaProperty implements Serializable {
    *
    * @param name Name of the property being described
    */
-  public DynaProperty(final String name) {
+  public ColumnProperty(final String name) {
 
     this(name, Object.class);
 
@@ -88,7 +88,7 @@ public class DynaProperty implements Serializable {
    * @param name Name of the property being described
    * @param type Java class representing the property data type
    */
-  public DynaProperty(final String name, final Class<?> type) {
+  public ColumnProperty(final String name, final Class<?> type) {
 
     this.name = name;
     this.type = type;
@@ -106,7 +106,7 @@ public class DynaProperty implements Serializable {
    * @param type        Java class representing the property data type
    * @param contentType Class that all indexed or mapped elements are instances of
    */
-  public DynaProperty(final String name, final Class<?> type, final Class<?> contentType) {
+  public ColumnProperty(final String name, final Class<?> type, final Class<?> contentType) {
 
     this.name = name;
     this.type = type;
@@ -125,8 +125,8 @@ public class DynaProperty implements Serializable {
   @Override
   public boolean equals(final Object obj) {
     boolean result = obj == this;
-    if (!result && obj instanceof DynaProperty) {
-      final DynaProperty that = (DynaProperty) obj;
+    if (!result && obj instanceof ColumnProperty) {
+      final ColumnProperty that = (ColumnProperty) obj;
       result = Objects.equals(this.name, that.name) &&
         Objects.equals(this.type, that.type) &&
         Objects.equals(this.contentType, that.contentType);

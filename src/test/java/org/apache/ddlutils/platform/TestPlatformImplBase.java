@@ -20,9 +20,9 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestBase;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlRowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -45,8 +45,8 @@ public class TestPlatformImplBase extends TestBase {
     Database database = parseDatabaseFromString(schema);
     PlatformImplBase platform = new TestPlatform();
     Table table = database.getTable(0);
-    SqlDynaClass clz = SqlDynaClass.newInstance(table);
-    DynaBean db = new SqlDynaBean(SqlDynaClass.newInstance(table));
+    SqlTableClass clz = SqlTableClass.newInstance(table);
+    RowObject db = new SqlRowObject(SqlTableClass.newInstance(table));
 
     db.set("name", "name");
 

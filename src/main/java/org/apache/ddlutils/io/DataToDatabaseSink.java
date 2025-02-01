@@ -21,8 +21,8 @@ package org.apache.ddlutils.io;
 
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.Platform;
-import org.apache.ddlutils.data.DynaBean;
-import org.apache.ddlutils.data.SqlDynaClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.SqlTableClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ForeignKey;
@@ -71,7 +71,7 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * The queued objects for batch insertion.
    */
-  private final ArrayList<DynaBean> _batchQueue = new ArrayList<>();
+  private final ArrayList<RowObject> _batchQueue = new ArrayList<>();
   /**
    * The number of beans to insert in one batch.
    */
@@ -260,7 +260,7 @@ public class DataToDatabaseSink implements DataSink {
    * {@inheritDoc}
    */
   @Override
-  public void addBean(DynaBean bean) throws DataSinkException {
+  public void addBean(RowObject bean) throws DataSinkException {
     Table table = _model.getDynaClassFor(bean).getTable();
     Identity origIdentity = buildIdentityFromPKs(table, bean);
 
@@ -291,7 +291,7 @@ public class DataToDatabaseSink implements DataSink {
 
     if (_ensureFkOrder && _fkTables.contains(table)) {
       Identity newIdentity = buildIdentityFromPKs(table, bean);
-      ArrayList<DynaBean> finishedObjs = new ArrayList<>();
+      ArrayList<RowObject> finishedObjs = new ArrayList<>();
 
       _identityMap.put(origIdentity, newIdentity);
 
@@ -319,7 +319,7 @@ public class DataToDatabaseSink implements DataSink {
             finishedObjs.add(waitingObj.getObject());
           }
         }
-        for (DynaBean finishedObj : finishedObjs) {
+        for (RowObject finishedObj : finishedObjs) {
           Table tableForObj = _model.getDynaClassFor(finishedObj).getTable();
           Identity objIdentity = buildIdentityFromPKs(tableForObj, finishedObj);
 
@@ -340,7 +340,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param table The table
    * @param bean  The bean
    */
-  private void insertBeanIntoDatabase(Table table, DynaBean bean) throws DataSinkException {
+  private void insertBeanIntoDatabase(Table table, RowObject bean) throws DataSinkException {
     if (_useBatchMode) {
       _batchQueue.add(bean);
       if (_batchQueue.size() >= _batchSize) {
@@ -377,7 +377,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param table The table of the bean
    * @param bean  The bean
    */
-  private void insertSingleBeanIntoDatabase(Table table, DynaBean bean) throws DataSinkException {
+  private void insertSingleBeanIntoDatabase(Table table, RowObject bean) throws DataSinkException {
     try {
       boolean needTwoStepInsert = false;
       ForeignKey selfRefFk = null;
@@ -475,7 +475,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param bean  The bean
    * @return The identity
    */
-  private Identity buildIdentityFromPKs(Table table, DynaBean bean) {
+  private Identity buildIdentityFromPKs(Table table, RowObject bean) {
     Identity identity = new Identity(table);
     Column[] pkColumns = table.getPrimaryKeyColumns();
 
@@ -494,7 +494,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param bean        The bean
    * @return The identity
    */
-  private Identity buildIdentityFromFK(Table owningTable, ForeignKey fk, DynaBean bean) {
+  private Identity buildIdentityFromFK(Table owningTable, ForeignKey fk, RowObject bean) {
     Identity identity = new Identity(fk.getForeignTable(), getFKName(owningTable, fk));
 
     for (int idx = 0; idx < fk.getReferenceCount(); idx++) {
@@ -517,8 +517,8 @@ public class DataToDatabaseSink implements DataSink {
    * @param fkName   The name of the foreign key
    * @param identity The target identity
    */
-  private void updateFKColumns(DynaBean bean, String fkName, Identity identity) {
-    Table sourceTable = ((SqlDynaClass) bean.getDynaClass()).getTable();
+  private void updateFKColumns(RowObject bean, String fkName, Identity identity) {
+    Table sourceTable = ((SqlTableClass) bean.getDynaClass()).getTable();
     Table targetTable = identity.getTable();
     ForeignKey fk = null;
 

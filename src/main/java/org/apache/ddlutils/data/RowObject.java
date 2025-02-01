@@ -24,7 +24,7 @@ package org.apache.ddlutils.data;
  * will recognize such beans and treat them as standard JavaBeans for the
  * purpose of retrieving and setting property values.</p>
  */
-public interface DynaBean {
+public interface RowObject {
 
   /**
    * Does the specified mapped property contain a value for the specified
@@ -86,7 +86,7 @@ public interface DynaBean {
    *
    * @return The associated DynaClass
    */
-  DynaClass getDynaClass();
+  TableClass getDynaClass();
 
   /**
    * Remove any existing value for the specified key on the
