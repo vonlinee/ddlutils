@@ -22,6 +22,7 @@ package org.apache.ddlutils.task;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.task.command.DropTablesCommand;
+import org.junit.Test;
 
 /**
  * Tests the dropTables sub task.
@@ -33,6 +34,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the task against an empty database.
    */
+  @Test
   public void testEmptyDatabase() throws TaskException {
     DatabaseToDdlTask task = getDatabaseToDdlTaskInstance();
 
@@ -47,6 +49,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table.
    */
+  @Test
   public void testSingleTable() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -72,6 +75,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with an auto increment column.
    */
+  @Test
   public void testSingleTableWithAutoIncrementColumn() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -97,6 +101,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with an index.
    */
+  @Test
   public void testSingleTableWithIndex() throws TaskException {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -129,6 +134,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a single table with a unique index.
    */
+  @Test
   public void testSingleTableWithUniqeIndex() throws TaskException {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -161,6 +167,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table with a self-referencing foreign key.
    */
+  @Test
   public void testSingleTablesWithSelfReferencingFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -189,6 +196,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of two tables with a foreign key between them.
    */
+  @Test
   public void testTwoTablesWithFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -221,6 +229,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of two tables with circular foreign keys between them.
    */
+  @Test
   public void testTwoTablesWithCircularFK() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -256,6 +265,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
+  @Test
   public void testNamesListWithSingleName() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -301,6 +311,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
+  @Test
   public void testNamesListWithMultipleNames() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -338,6 +349,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
+  @Test
   public void testNamesListWithSingleDelimitedName() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -389,6 +401,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
+  @Test
   public void testNamesListWithMultipleDelimitedNames() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -432,6 +445,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
+  @Test
   public void testNamesListWithSingleDelimitedNameWithComma() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -483,6 +497,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via the names list.
    */
+  @Test
   public void testNamesListWithSingleDelimitedNameEndingInComma() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -534,6 +549,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via the names list.
    */
+  @Test
   public void testNamesListWithMultipleDelimitedNameWithCommas() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -577,6 +593,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests an empty names list.
    */
+  @Test
   public void testEmptyNamesList() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -614,6 +631,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via a regular expression.
    */
+  @Test
   public void testSimpleRegExp() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -659,6 +677,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of a table via a regular expression.
    */
+  @Test
   public void testRegExpInDelimitedIdentifierMode() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -710,6 +729,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via a regular expression.
    */
+  @Test
   public void testRegExpMultipleTables() throws TaskException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -764,6 +784,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests the removal of multiple tables via a regular expression.
    */
+  @Test
   public void testRegExpMultipleTablesInDelimitedIdentifierMode() throws TaskException {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported()) {
       return;
@@ -822,6 +843,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests a regular expression that matches nothing.
    */
+  @Test
   public void testRegExpMatchingNothing() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -859,6 +881,7 @@ public class TestDropTablesCommand extends TestTaskBase {
   /**
    * Tests an empty regular expression.
    */
+  @Test
   public void testEmptyRegExp() throws TaskException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

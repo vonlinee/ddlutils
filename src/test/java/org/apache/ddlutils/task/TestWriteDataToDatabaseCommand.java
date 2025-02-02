@@ -108,6 +108,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
   /**
    * Tests data insertion in batch mode.
    */
+  @Test
   public void testBatchMode() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

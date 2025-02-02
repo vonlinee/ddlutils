@@ -40,6 +40,7 @@ public class TestTimeConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     _timeConverter = new TimeConverter();
@@ -48,6 +49,7 @@ public class TestTimeConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     _timeConverter = null;
     super.tearDown();

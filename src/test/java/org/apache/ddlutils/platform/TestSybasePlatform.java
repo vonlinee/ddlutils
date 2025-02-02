@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
+import org.junit.Test;
 
 /**
  * Tests the Sybase platform.
@@ -38,6 +39,7 @@ public class TestSybasePlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "SET quoted_identifier on;\n" +
@@ -87,6 +89,7 @@ public class TestSybasePlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     // this is not valid sql as a table can have only one identity column at most
     assertEqualsIgnoringWhitespaces(
@@ -113,6 +116,7 @@ public class TestSybasePlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "SET quoted_identifier on;\n" +
@@ -172,6 +176,7 @@ public class TestSybasePlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Cloudscape requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "SET quoted_identifier on;\n" +

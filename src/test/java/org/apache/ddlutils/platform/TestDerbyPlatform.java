@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
+import org.junit.Test;
 
 /**
  * Tests the Derby platform.
@@ -81,6 +82,7 @@ public class TestDerbyPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"constraints\";\n" +
@@ -100,6 +102,7 @@ public class TestDerbyPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE \"table3\" DROP CONSTRAINT \"testfk\";\n" +
@@ -139,6 +142,7 @@ public class TestDerbyPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Derby requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"escapedcharacters\";\n" +

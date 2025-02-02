@@ -24,11 +24,15 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.util.DatabaseTestHelper;
+import org.apache.ddlutils.util.IOUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringReader;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Base class for DdlUtils tests.
@@ -68,7 +72,6 @@ public abstract class TestBase {
    */
   protected Database parseDatabaseFromString(String dbDef) {
     DatabaseIO dbIO = new DatabaseIO();
-
     dbIO.setUseInternalDtd(true);
     dbIO.setValidateXml(true);
     return dbIO.read(new StringReader(dbDef));
@@ -81,7 +84,7 @@ public abstract class TestBase {
    * @param expected The expected string
    * @param actual   The actual string
    */
-  protected void assertEqualsIgnoringWhitespaces(String expected, String actual) {
+  public static void assertEqualsIgnoringWhitespaces(String expected, String actual) {
     String processedExpected = compressWhitespaces(expected);
     String processedActual = compressWhitespaces(actual);
     Assert.assertEquals(processedExpected, processedActual);
@@ -94,7 +97,7 @@ public abstract class TestBase {
    * @param original The original string
    * @return The resulting string
    */
-  protected String compressWhitespaces(String original) {
+  public static String compressWhitespaces(String original) {
     StringBuilder result = new StringBuilder();
     char oldChar = ' ';
     char curChar;
@@ -139,5 +142,17 @@ public abstract class TestBase {
 
   protected final String readFileToString(String file) {
     return DatabaseTestHelper.readString(getClass(), file);
+  }
+
+  /**
+   * @param pathFromSourceRoot such as: org/apache/ddlutils/platform/mysql/testColumnConstraints.xml
+   * @return text content of file
+   */
+  public static String readTestFileAsString(String pathFromSourceRoot) {
+    try (InputStream resourceAsStream = TestBase.class.getClassLoader().getResourceAsStream(pathFromSourceRoot)) {
+      return new String(IOUtils.readAllBytes(resourceAsStream), StandardCharsets.UTF_8);
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

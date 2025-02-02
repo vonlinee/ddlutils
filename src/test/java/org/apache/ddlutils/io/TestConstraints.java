@@ -27,6 +27,7 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.util.StringUtils;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.List;
 
@@ -65,6 +66,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a table name that is longer than the maximum allowed.
    */
+  @Test
   public void testLongTableName() {
     if (getSqlBuilder().getMaxTableNameLength() == -1) {
       return;
@@ -86,6 +88,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a column name that is longer than the maximum allowed.
    */
+  @Test
   public void testLongColumnName() {
     if (getPlatformInfo().getMaxColumnNameLength() == -1) {
       return;
@@ -107,6 +110,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a constraint name that is longer than the maximum allowed.
    */
+  @Test
   public void testLongConstraintName() {
     if (getSqlBuilder().getMaxConstraintNameLength() == -1) {
       return;
@@ -131,6 +135,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a foreign key name that is longer than the maximum allowed.
    */
+  @Test
   public void testLongForeignKeyName() {
     if (getSqlBuilder().getMaxForeignKeyNameLength() == -1) {
       return;
@@ -158,6 +163,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a nullable column.
    */
+  @Test
   public void testNullableColumn() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -174,6 +180,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a not-nullable column.
    */
+  @Test
   public void testNotNullableColumn() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -190,6 +197,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests an auto-increment INTEGER column.
    */
+  @Test
   public void testAutoIncrementIntegerColumn() {
     // only test this if the platform supports it
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
@@ -224,6 +232,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests an auto-increment primary key column.
    */
+  @Test
   public void testPrimaryKeyAutoIncrementColumn() {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
@@ -251,6 +260,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Test for DDLUTILS-199.
    */
+  @Test
   public void testAutoIncrementPrimaryKeyWithUnderscoreInName() {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
@@ -278,6 +288,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple index.
    */
+  @Test
   public void testIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -301,6 +312,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests an unique index for two columns.
    */
+  @Test
   public void testUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -326,6 +338,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests an index for two columns, one of which a pk column.
    */
+  @Test
   public void testPrimaryKeyIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -351,6 +364,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a simple foreign key relationship between them.
    */
+  @Test
   public void testSimpleForeignKey() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -373,6 +387,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with overlapping foreign key relationships between them.
    */
+  @Test
   public void testOverlappingForeignKeys() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -403,6 +418,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with circular foreign key relationships between them.
    */
+  @Test
   public void testCircularForeignKeys() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -435,6 +451,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a restrict onDelete action.
    */
+  @Test
   public void testForeignKeyWithOnDeleteRestrict() {
     if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.RESTRICT)) {
       return;
@@ -479,6 +496,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a cascade onDelete action.
    */
+  @Test
   public void testForeignKeyWithOnDeleteCascade() {
     if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.CASCADE)) {
       return;
@@ -525,6 +543,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a set-null onDelete action.
    */
+  @Test
   public void testForeignKeyWithOnDeleteSetNull() {
     if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.SET_NULL)) {
       return;
@@ -573,6 +592,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a set-default onDelete action.
    */
+  @Test
   public void testForeignKeyWithOnDeleteSetDefault() {
     if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.SET_DEFAULT)) {
       return;
@@ -624,6 +644,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a restrict onUpdate action.
    */
+  @Test
   public void testForeignKeyWithOnUpdateRestrict() {
     if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.RESTRICT)) {
       return;
@@ -668,6 +689,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a cascade onUpdate action.
    */
+  @Test
   public void testForeignKeyWithOnUpdateCascade() {
     if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.CASCADE)) {
       return;
@@ -717,6 +739,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a set-null onUpdate action.
    */
+  @Test
   public void testForeignKeyWithOnUpdateSetNull() {
     if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.SET_NULL)) {
       return;
@@ -766,6 +789,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
   /**
    * Tests two tables with a foreign key with a det-default onUpdate action.
    */
+  @Test
   public void testForeignKeyWithOnUpdateSetDefault() {
     if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.SET_DEFAULT)) {
       return;

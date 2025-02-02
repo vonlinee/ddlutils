@@ -362,7 +362,7 @@ public class TestSummaryCreatorTask extends Task {
     } catch (Exception ex) {
       throw new BuildException("Cannot load test jdbc properties from file " + jdbcPropertiesFile, ex);
     } finally {
-      IOUtils.closeQuietly(propStream);
+      IOUtils.closeSilently(propStream);
     }
     return props;
   }

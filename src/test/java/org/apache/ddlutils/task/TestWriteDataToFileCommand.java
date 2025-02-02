@@ -25,6 +25,7 @@ import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToFileCommand;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,6 +81,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests the task against an empty database.
    */
+  @Test
   public void testEmptyDatabase() throws IOException {
     runTask(getDatabaseToDdlTaskInstance(), new HashMap<>());
   }
@@ -87,6 +89,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests against a simple model.
    */
+  @Test
   public void testSimpleModel() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -113,6 +116,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests against a model with multiple tables and foreign keys.
    */
+  @Test
   public void testComplexModel() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

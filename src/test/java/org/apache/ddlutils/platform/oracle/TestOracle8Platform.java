@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform.oracle;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.BuiltinDriverType;
+import org.junit.Test;
 
 /**
  * Tests the Oracle 8 platform.
@@ -39,6 +40,7 @@ public class TestOracle8Platform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"coltype\" CASCADE CONSTRAINTS;\n" +
@@ -82,6 +84,7 @@ public class TestOracle8Platform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TRIGGER \"trg_constraints_L_PK_AUTO_INCR\";\n" +
@@ -111,6 +114,7 @@ public class TestOracle8Platform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"table3\" CASCADE CONSTRAINTS;\n" +
@@ -148,6 +152,7 @@ public class TestOracle8Platform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Oracle requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"escapedcharacters\" CASCADE CONSTRAINTS;\n" +

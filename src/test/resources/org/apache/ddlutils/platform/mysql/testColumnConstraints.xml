@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<database xmlns='http://db.apache.org/ddlutils/schema/1.1' name='columnconstraintstest'>
+  <table name='constraints'>
+    <column name='COL_PK' type='VARCHAR' size='32' primaryKey='true'/>
+    <column name='COL_PK_AUTO_INCR' type='INTEGER' primaryKey='true'/>
+    <column name='COL_NOT_NULL' type='BINARY' size='100' required='true'/>
+    <column name='COL_NOT_NULL_DEFAULT' type='DOUBLE' required='true' default='-2.0'/>
+    <column name='COL_DEFAULT' type='CHAR' size='4' default='test'/>
+    <column name='COL_AUTO_INCR' type='BIGINT'/>
+  </table>
+</database>

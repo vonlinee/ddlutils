@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.TestPlatformBase;
+import org.junit.Test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,12 +42,13 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     String sql = getColumnTestDatabaseCreationSql();
 
     // Since we have no way of knowing the auto-generated variables in the SQL,
     // we simply try to extract it from the SQL
-    Pattern declarePattern = Pattern.compile("DECLARE @([\\S]+) [^@]+@([\\S]+)");
+    Pattern declarePattern = Pattern.compile("DECLARE @(\\S+) [^@]+@(\\S+)");
     Matcher matcher = declarePattern.matcher(sql);
     String tableNameVar = "tablename";
     String constraintNameVar = "constraintname";
@@ -117,6 +119,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     String sql = getConstraintTestDatabaseCreationSql();
 
@@ -169,6 +172,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     String sql = getTableConstraintTestDatabaseCreationSql();
 
@@ -282,6 +286,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Sql Server requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     String sql = getCharEscapingTestDatabaseCreationSql();
 

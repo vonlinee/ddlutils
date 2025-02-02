@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `constraints`;
+CREATE TABLE `constraints`
+(
+    `COL_PK`               VARCHAR(32) NULL,
+    `COL_PK_AUTO_INCR`     INTEGER,
+    `COL_NOT_NULL`         BINARY(100) NOT NULL,
+    `COL_NOT_NULL_DEFAULT` DOUBLE DEFAULT -2.0 NOT NULL,
+    `COL_DEFAULT`          CHAR(4) DEFAULT 'test' NULL,
+    `COL_AUTO_INCR`        BIGINT,
+    PRIMARY KEY (`COL_PK`, `COL_PK_AUTO_INCR`)
+);

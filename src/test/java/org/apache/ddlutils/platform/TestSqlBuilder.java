@@ -24,6 +24,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,6 +38,7 @@ public class TestSqlBuilder extends TestBase {
   /**
    * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, boolean)} method.
    */
+  @Test
   public void testUpdateSql1() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -66,6 +68,7 @@ public class TestSqlBuilder extends TestBase {
   /**
    * Tests the {@link SqlBuilder#getUpdateSql(Table, Map, Map, boolean)} method.
    */
+  @Test
   public void testUpdateSql2() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

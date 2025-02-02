@@ -121,6 +121,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE `table3` DROP FOREIGN KEY `testfk`;\n" +
@@ -160,6 +161,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the usage of creation parameters.
    */
+  @Test
   public void testCreationParameters1() throws Exception {
     // MySql-specific schema
     String schema = readString("testCreationParameters1.xml");
@@ -191,6 +193,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where MySQL requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     // MySql-specific schema
     final String schema =

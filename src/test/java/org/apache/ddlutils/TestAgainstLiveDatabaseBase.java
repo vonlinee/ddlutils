@@ -20,9 +20,8 @@ package org.apache.ddlutils;
  */
 
 import org.apache.commons.dbcp.BasicDataSource;
-import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.data.ColumnProperty;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.BinaryObjectsHelper;
 import org.apache.ddlutils.io.DataReader;
@@ -40,11 +39,12 @@ import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultValueHelper;
+import org.apache.ddlutils.util.IOUtils;
+import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.StringUtils;
 import org.junit.Assert;
 
 import javax.sql.DataSource;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -115,22 +115,14 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   private boolean _useDelimitedIdentifiers;
 
   @Override
-  protected void setUp() {
+  protected void setUp() throws Exception {
     Properties props = readTestProperties();
-
+    setTestProperties(props);
     DataSource dataSource = initDataSourceFromProperties(props);
     assert props != null;
-    String databaseName = determineDatabaseName(props, dataSource);
+    this._databaseName = determineDatabaseName(props, dataSource);
 
-    try {
-      TestAgainstLiveDatabaseBase newTest = this;
-      newTest.setTestProperties(props);
-      newTest.setDataSource(dataSource);
-      newTest.setDatabaseName(databaseName);
-      newTest.setUseDelimitedIdentifiers(false);
-    } catch (Exception ex) {
-      throw new DdlUtilsException(ex);
-    }
+    super.setUp();
 
     getPlatform().setDataSource(getDataSource());
     getPlatform().setDelimitedIdentifierModeOn(_useDelimitedIdentifiers);
@@ -143,34 +135,25 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected static Properties readTestProperties() {
     String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
-
     if (propFile == null) {
       return null;
     }
-
     InputStream propStream = null;
-
     try {
       propStream = TestAgainstLiveDatabaseBase.class.getResourceAsStream(propFile);
-
+      if (propStream == null) {
+        propStream = TestAgainstLiveDatabaseBase.class.getClassLoader().getResourceAsStream(propFile);
+      }
       if (propStream == null) {
         propStream = Files.newInputStream(Paths.get(propFile));
       }
-
       Properties props = new Properties();
-
       props.load(propStream);
       return props;
     } catch (Exception ex) {
       throw new RuntimeException(ex);
     } finally {
-      if (propStream != null) {
-        try {
-          propStream.close();
-        } catch (IOException ex) {
-          LogFactory.getLog(TestAgainstLiveDatabaseBase.class).error("Could not close the stream used to read the test jdbc properties", ex);
-        }
-      }
+      IOUtils.closeSilently(propStream);
     }
   }
 
@@ -184,7 +167,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     if (props == null) {
       return null;
     }
-
     try {
       String dataSourceClass = props.getProperty(DATASOURCE_PROPERTY_PREFIX + "class", BasicDataSource.class.getName());
       DataSource dataSource = (DataSource) Class.forName(dataSourceClass).newInstance();
@@ -212,7 +194,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   private static String determineDatabaseName(Properties props, DataSource dataSource) {
     String platformName = props.getProperty(DDLUTILS_PLATFORM_PROPERTY);
-
     if (platformName == null) {
       // property not set, then try to determine
       platformName = new PlatformUtils().determineDatabaseType(dataSource);
@@ -237,7 +218,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    *
    * @param props The properties
    */
-  private void setTestProperties(Properties props) {
+  protected void setTestProperties(Properties props) {
     _testProps = props;
   }
 
@@ -249,11 +230,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected CreationParameters getTableCreationParameters(Database model) {
     CreationParameters params = new CreationParameters();
-
     for (Map.Entry<Object, Object> entry : _testProps.entrySet()) {
       String name = (String) entry.getKey();
       String value = (String) entry.getValue();
-
       if (name.startsWith(DDLUTILS_TABLE_CREATION_PREFIX)) {
         name = name.substring(DDLUTILS_TABLE_CREATION_PREFIX.length());
         for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
@@ -303,6 +282,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return _databaseName;
   }
@@ -328,6 +308,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     try {
       if (_model != null) {
@@ -348,7 +329,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected Database createDatabase(String schemaXml) throws DatabaseOperationException {
     Database model = parseDatabaseFromString(schemaXml);
-
     createDatabase(model);
     return model;
   }
@@ -458,16 +438,15 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @return The dyna bean for the new row
    */
   protected RowObject updateRow(String tableName, RowObject oldBean, Object[] columnValues) {
-    Table table = getModel().findTable(tableName);
-    RowObject bean = getModel().createRowObjectFor(table);
-
+    final Database model = getModel();
+    Table table = model.findTable(tableName);
+    RowObject row = model.createRowObjectFor(table);
     for (int idx = 0; (idx < table.getColumnCount()) && (idx < columnValues.length); idx++) {
       Column column = table.getColumn(idx);
-
-      bean.set(column.getName(), columnValues[idx]);
+      row.set(column.getName(), columnValues[idx]);
     }
-    getPlatform().update(getModel(), oldBean, bean);
-    return bean;
+    getPlatform().update(model, oldBean, row);
+    return row;
   }
 
   /**
@@ -655,13 +634,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     } catch (Exception ex) {
       getLog().error("Error while dropping the remaining triggers", ex);
     } finally {
-      if (stmt != null) {
-        try {
-          stmt.close();
-        } catch (Exception ex) {
-          getLog().error("Error while clearing the database", ex);
-        }
-      }
+      JdbcUtils.closeSilently(stmt);
     }
     return hasTriggers;
   }
@@ -676,7 +649,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     Properties props = getTestProperties();
     String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
-
     return getPlatform().readModelFromDatabase(databaseName, catalog, schema, null);
   }
 

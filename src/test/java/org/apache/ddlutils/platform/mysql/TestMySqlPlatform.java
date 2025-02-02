@@ -24,6 +24,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.apache.ddlutils.platform.CreationParameters;
+import org.junit.Test;
 
 /**
  * Tests the MySQL platform.
@@ -42,6 +43,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE IF EXISTS `coltype`;\n" +
@@ -85,79 +87,33 @@ public class TestMySqlPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     // MySql-specific schema
-    final String schema =
-      "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
-        "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='columnconstraintstest'>\n" +
-        "  <table name='constraints'>\n" +
-        "    <column name='COL_PK' type='VARCHAR' size='32' primaryKey='true'/>\n" +
-        "    <column name='COL_PK_AUTO_INCR' type='INTEGER' primaryKey='true'/>\n" +
-        "    <column name='COL_NOT_NULL' type='BINARY' size='100' required='true'/>\n" +
-        "    <column name='COL_NOT_NULL_DEFAULT' type='DOUBLE' required='true' default='-2.0'/>\n" +
-        "    <column name='COL_DEFAULT' type='CHAR' size='4' default='test'/>\n" +
-        "    <column name='COL_AUTO_INCR' type='BIGINT'/>\n" +
-        "  </table>\n" +
-        "</database>";
+    final String schema = readTestFileAsString(
+      "org/apache/ddlutils/platform/mysql/testColumnConstraints.xml");
 
+    final String expected = readTestFileAsString(
+      "org/apache/ddlutils/platform/mysql/testColumnConstraints-expected.sql");
 
-    assertEqualsIgnoringWhitespaces(
-      "DROP TABLE IF EXISTS `constraints`;\n" +
-        "CREATE TABLE `constraints`\n" +
-        "(\n" +
-        "    `COL_PK`               VARCHAR(32) NULL,\n" +
-        "    `COL_PK_AUTO_INCR`     INTEGER,\n" +
-        "    `COL_NOT_NULL`         BINARY(100) NOT NULL,\n" +
-        "    `COL_NOT_NULL_DEFAULT` DOUBLE DEFAULT -2.0 NOT NULL,\n" +
-        "    `COL_DEFAULT`          CHAR(4) DEFAULT 'test' NULL,\n" +
-        "    `COL_AUTO_INCR`        BIGINT,\n" +
-        "    PRIMARY KEY (`COL_PK`, `COL_PK_AUTO_INCR`)\n" +
-        ");\n",
-      getDatabaseCreationSql(schema));
+    assertEqualsIgnoringWhitespaces(expected, getDatabaseCreationSql(schema));
   }
 
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
-    assertEqualsIgnoringWhitespaces(
-      "ALTER TABLE `table3` DROP FOREIGN KEY `testfk`;\n" +
-        "ALTER TABLE `table2` DROP FOREIGN KEY `table2_FK_COL_FK_1_COL_FK_2_table1`;\n" +
-        "DROP TABLE IF EXISTS `table3`;\n" +
-        "DROP TABLE IF EXISTS `table2`;\n" +
-        "DROP TABLE IF EXISTS `table1`;\n" +
-        "CREATE TABLE `table1`\n" +
-        "(\n" +
-        "    `COL_PK_1`    VARCHAR(32) NOT NULL,\n" +
-        "    `COL_PK_2`    INTEGER,\n" +
-        "    `COL_INDEX_1` BINARY(100) NOT NULL,\n" +
-        "    `COL_INDEX_2` DOUBLE NOT NULL,\n" +
-        "    `COL_INDEX_3` CHAR(4) NULL,\n" +
-        "    PRIMARY KEY (`COL_PK_1`, `COL_PK_2`)\n" +
-        ");\n" +
-        "CREATE INDEX `testindex1` ON `table1` (`COL_INDEX_2`);\n" +
-        "CREATE UNIQUE INDEX `testindex2` ON `table1` (`COL_INDEX_3`, `COL_INDEX_1`);\n" +
-        "CREATE TABLE `table2`\n" +
-        "(\n" +
-        "    `COL_PK`   INTEGER,\n" +
-        "    `COL_FK_1` INTEGER,\n" +
-        "    `COL_FK_2` VARCHAR(32) NOT NULL,\n" +
-        "    PRIMARY KEY (`COL_PK`)\n" +
-        ");\n" +
-        "CREATE TABLE `table3`\n" +
-        "(\n" +
-        "    `COL_PK` VARCHAR(16) NULL,\n" +
-        "    `COL_FK` INTEGER NOT NULL,\n" +
-        "    PRIMARY KEY (`COL_PK`)\n" +
-        ");\n" +
-        "ALTER TABLE `table2` ADD CONSTRAINT `table2_FK_COL_FK_1_COL_FK_2_table1` FOREIGN KEY (`COL_FK_1`, `COL_FK_2`) REFERENCES `table1` (`COL_PK_2`, `COL_PK_1`) ON DELETE NO ACTION ON UPDATE NO ACTION;\n" +
-        "ALTER TABLE `table3` ADD CONSTRAINT `testfk` FOREIGN KEY (`COL_FK`) REFERENCES `table2` (`COL_PK`) ON DELETE NO ACTION ON UPDATE NO ACTION;\n",
-      getTableConstraintTestDatabaseCreationSql());
+    String expected = readTestFileAsString(
+      "org/apache/ddlutils/platform/mysql/testTableConstraints-expected.sql");
+
+    assertEqualsIgnoringWhitespaces(expected, getTableConstraintTestDatabaseCreationSql());
   }
 
   /**
    * Tests the usage of creation parameters.
    */
+  @Test
   public void testCreationParameters1() throws Exception {
     // MySql-specific schema
     final String schema =
@@ -204,6 +160,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where MySQL requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     // MySql-specific schema
     final String schema =

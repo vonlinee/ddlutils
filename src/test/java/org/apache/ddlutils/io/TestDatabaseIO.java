@@ -31,6 +31,7 @@ import org.apache.ddlutils.model.Reference;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.util.StringUtils;
+import org.junit.Test;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -249,6 +250,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the database element has no name attribute.
    */
+  @Test
   public void testDatabaseWithoutName() {
     try {
       readModel(
@@ -269,6 +271,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model without tables.
    */
+  @Test
   public void testNoTables() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
