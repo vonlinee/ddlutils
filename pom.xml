@@ -150,49 +150,56 @@
     </dependency>
 
     <dependency>
+      <groupId>commons-beanutils</groupId>
+      <artifactId>commons-beanutils</artifactId>
+      <version>1.10.0</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
       <groupId>org.jetbrains</groupId>
       <artifactId>annotations</artifactId>
       <version>24.0.0</version>
       <scope>compile</scope>
     </dependency>
-    <!--
-        <dependency>
-          <groupId>axion</groupId>
-          <artifactId>axion</artifactId>
-          <version>1.0-M3-dev</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>org.apache.derby</groupId>
-          <artifactId>derbyclient</artifactId>
-          <version>10.1.2.1</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>hsqldb</groupId>
-          <artifactId>hsqldb</artifactId>
-          <version>1.8.0.4</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>mckoi</groupId>
-          <artifactId>mckoi</artifactId>
-          <version>1.0.2</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>mysql</groupId>
-          <artifactId>mysql-connector-java</artifactId>
-          <version>3.1.12</version>
-          <scope>test</scope>
-        </dependency>
-        <dependency>
-          <groupId>postgresql</groupId>
-          <artifactId>postgresql</artifactId>
-          <version>8.1-404.jdbc3</version>
-          <scope>test</scope>
-        </dependency>
-     -->
+
+    <!-- test drivers-->
+    <dependency>
+      <groupId>axion</groupId>
+      <artifactId>axion</artifactId>
+      <version>1.0-M3-dev</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.derby</groupId>
+      <artifactId>derbyclient</artifactId>
+      <version>10.1.2.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>hsqldb</groupId>
+      <artifactId>hsqldb</artifactId>
+      <version>1.8.0.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>mckoi</groupId>
+      <artifactId>mckoi</artifactId>
+      <version>1.0.2</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>postgresql</groupId>
+      <artifactId>postgresql</artifactId>
+      <version>8.1-404.jdbc3</version>
+      <scope>test</scope>
+    </dependency>
     <!-- NB: No public driver for DB2, interbase, sapdb, oracle, sqlserver -->
   </dependencies>
 

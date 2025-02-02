@@ -19,6 +19,7 @@ package org.apache.ddlutils;
  * under the License.
  */
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.data.RowObject;
@@ -122,6 +123,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     assert props != null;
     this._databaseName = determineDatabaseName(props, dataSource);
 
+    setDataSource(dataSource);
     super.setUp();
 
     getPlatform().setDataSource(getDataSource());
@@ -175,7 +177,10 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         String propName = (String) entry.getKey();
 
         if (propName.startsWith(DATASOURCE_PROPERTY_PREFIX) && !propName.equals(DATASOURCE_PROPERTY_PREFIX + "class")) {
-          // TODO set value
+
+          BeanUtils.setProperty(dataSource,
+            propName.substring(DATASOURCE_PROPERTY_PREFIX.length()),
+            entry.getValue());
         }
       }
       return dataSource;
