@@ -86,7 +86,7 @@ public class RowObject extends HashMap<String, Object> {
     }
 
     // Return a null value for a non-primitive property
-    final Class<?> type = getDynaProperty(name).getType();
+    final Class<?> type = getColumnProperty(name).getType();
     if (!type.isPrimitive()) {
       return null;
     }
@@ -167,12 +167,6 @@ public class RowObject extends HashMap<String, Object> {
     throw new IllegalArgumentException("Non-mapped property for '" + name + "(" + key + ")'");
   }
 
-  /**
-   * Return the <code>DynaClass</code> instance that describes the set of
-   * properties available for this DynaBean.
-   *
-   * @return The associated DynaClass
-   */
   public TableClass getTableClass() {
     return this.tableClass;
   }
@@ -185,11 +179,10 @@ public class RowObject extends HashMap<String, Object> {
    * @throws IllegalArgumentException if this is not a valid property
    *                                  name for our DynaClass
    */
-  protected ColumnProperty getDynaProperty(final String name) {
+  protected ColumnProperty getColumnProperty(final String name) {
     final ColumnProperty descriptor = getTableClass().getProperty(name);
     if (descriptor == null) {
-      throw new IllegalArgumentException
-        ("Invalid property name '" + name + "'");
+      throw new IllegalArgumentException("Invalid property name '" + name + "'");
     }
     return descriptor;
   }
@@ -282,7 +275,7 @@ public class RowObject extends HashMap<String, Object> {
    */
   public void set(final String name, final Object value) {
 
-    final ColumnProperty descriptor = getDynaProperty(name);
+    final ColumnProperty descriptor = getColumnProperty(name);
     if (value == null) {
       if (descriptor.getType().isPrimitive()) {
         throw new NullPointerException

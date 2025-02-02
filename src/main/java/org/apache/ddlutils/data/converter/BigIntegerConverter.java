@@ -29,8 +29,6 @@ import java.math.BigInteger;
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
  * <code>ConversionException</code> if a conversion error occurs.
- *
- * @since 1.3
  */
 public final class BigIntegerConverter extends NumberConverter {
 

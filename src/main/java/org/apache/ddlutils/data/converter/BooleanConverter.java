@@ -184,7 +184,6 @@ public final class BooleanConverter extends AbstractConverter {
    * the default value if the value was not recognized and the constructor
    * was provided with a default value.
    * @throws Throwable if an error occurs converting to the specified type
-   * @since 1.8.0
    */
   @Override
   protected <T> T convertToType(final Class<T> type, final Object value) throws Throwable {

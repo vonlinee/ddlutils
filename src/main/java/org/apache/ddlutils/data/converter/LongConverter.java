@@ -27,8 +27,6 @@ package org.apache.ddlutils.data.converter;
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
  * <code>ConversionException</code> if a conversion error occurs.
- *
- * @since 1.3
  */
 public final class LongConverter extends NumberConverter {
 

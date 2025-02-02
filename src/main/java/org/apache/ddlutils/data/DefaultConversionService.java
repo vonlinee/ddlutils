@@ -116,7 +116,7 @@ import java.util.Collection;
  * AbstractArrayConverter for the supported input formats for these converters.
  * </p>
  */
-public class DefaultConversionService implements ConversionService {
+class DefaultConversionService implements ConversionService {
 
   private static final Integer ZERO = 0;
   private static final Character SPACE = ' ';

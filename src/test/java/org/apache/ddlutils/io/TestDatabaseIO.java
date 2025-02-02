@@ -405,7 +405,7 @@ public class TestDatabaseIO extends TestCase {
    */
   public void testColumnTypes() throws Exception {
     StringBuilder modelXml = new StringBuilder();
-    int[] types = TypeMap.getSuportedJdbcTypes();
+    int[] types = TypeMap.getSupportedJdbcTypes();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
     modelXml.append("  <table name='SomeTable'\n");

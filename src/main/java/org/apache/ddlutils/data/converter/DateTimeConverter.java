@@ -113,7 +113,7 @@ public abstract class DateTimeConverter extends AbstractConverter {
    * <strong>N.B.</strong>If the converter has been configured to with
    * one or more patterns (using <code>setPatterns()</code>), then
    * the first pattern will be used to format the date into a String.
-   * Otherwise the default <code>DateFormat</code> for the default locale
+   * Otherwise, the default <code>DateFormat</code> for the default locale
    * (and <em>style</em> if configured) will be used.
    *
    * @param value The input value to be converted
@@ -175,7 +175,7 @@ public abstract class DateTimeConverter extends AbstractConverter {
    * For <code>String</code> conversion, if the converter has been configured
    * with one or more patterns (using <code>setPatterns()</code>), then
    * the conversion is attempted with each of the specified patterns.
-   * Otherwise the default <code>DateFormat</code> for the default locale
+   * Otherwise, the default <code>DateFormat</code> for the default locale
    * (and <em>style</em> if configured) will be used.
    *
    * @param <T>        The desired target type of the conversion.
@@ -248,8 +248,8 @@ public abstract class DateTimeConverter extends AbstractConverter {
   /**
    * Return a <code>DateFormat</code> for the Locale.
    *
-   * @param locale   The Locale to create the Format with (may be null)
-   * @param timeZone The Time Zone create the Format with (may be null)
+   * @param locale   The Locale to create the Format with (maybe null)
+   * @param timeZone The Time Zone create the Format with (maybe null)
    * @return A Date Format.
    */
   protected DateFormat getFormat(final Locale locale, final TimeZone timeZone) {

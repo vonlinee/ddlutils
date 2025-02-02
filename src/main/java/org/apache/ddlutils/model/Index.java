@@ -30,7 +30,7 @@ public interface Index extends Serializable {
   /**
    * Determines whether this index is unique or not.
    *
-   * @return <code>true</code> if the index is an unique one
+   * @return <code>true</code> if the index is a unique one
    */
   boolean isUnique();
 

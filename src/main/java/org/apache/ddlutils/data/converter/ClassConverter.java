@@ -28,8 +28,6 @@ import org.apache.ddlutils.data.Converter;
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
  * <code>ConversionException</code> if a conversion error occurs.
- *
- * @since 1.4
  */
 public final class ClassConverter extends AbstractConverter {
 

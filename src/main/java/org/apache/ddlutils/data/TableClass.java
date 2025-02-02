@@ -311,8 +311,7 @@ public class TableClass {
    */
   public ColumnProperty getProperty(final String name) {
     if (name == null) {
-      throw new IllegalArgumentException
-        ("No property name specified");
+      throw new IllegalArgumentException("No property name specified");
     }
     return propertiesMap.get(name);
   }
@@ -323,7 +322,7 @@ public class TableClass {
    * allows the same <code>DynaClass</code> implementation class to support
    * different dynamic classes, with different sets of properties.
    *
-   * @return the name of the DynaClass
+   * @return the name of the TableClass
    */
   public String getName() {
     return this.name;

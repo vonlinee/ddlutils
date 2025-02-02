@@ -29,8 +29,6 @@ import java.util.Date;
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
  * <code>ConversionException</code> if a conversion error occurs.
- *
- * @since 1.8.0
  */
 public final class DateConverter extends DateTimeConverter {
 

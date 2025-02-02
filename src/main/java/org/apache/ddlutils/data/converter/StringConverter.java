@@ -36,10 +36,8 @@ import org.apache.ddlutils.data.Converter;
  * It is possible to replace this converter with something that has a big
  * if/else statement that selects behaviour based on the real type of the
  * object being converted (or possibly has a map of converters, and looks
- * them up based on the class of the input object). However this is not part
+ * them up based on the class of the input object). However, this is not part
  * of the existing ConvertUtils framework.
- *
- * @since 1.3
  */
 public final class StringConverter extends AbstractConverter {
 

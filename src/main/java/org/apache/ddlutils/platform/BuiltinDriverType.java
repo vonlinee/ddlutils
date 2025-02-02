@@ -2,6 +2,7 @@ package org.apache.ddlutils.platform;
 
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
 
@@ -259,17 +260,43 @@ public enum BuiltinDriverType implements DriverType {
   /**
    * The standard MySQL jdbc driver.
    */
-  MYSQL("MySQL", "com.mysql.jdbc.Driver", "mysql", 3306),
+  MYSQL("MySQL", "com.mysql.jdbc.Driver", "mysql", 3306) {
+    @Override
+    public String getConnectionUrl(String host, Integer port, String database, String username, String password, @Nullable Properties properties) {
+      String url = String.format("jdbc:mysql://%s:%s/%s", host, port, database);
+      if (properties != null) {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+          sb.append(entry.getKey()).append("=").append(entry.getValue());
+          sb.append("&");
+        }
+        if (sb.length() > 0) {
+          url = url + "?" + sb;
+        }
+      }
+      return url;
+    }
+  },
 
   /**
    * The standard MySQL jdbc driver above mysql 5.0.
    */
-  MYSQL5X("MySQL5", "com.mysql.jdbc.Driver", "mysql", MYSQL.defaultPort),
+  MYSQL5X("MySQL5", "com.mysql.jdbc.Driver", "mysql", MYSQL.defaultPort) {
+    @Override
+    public String getConnectionUrl(String host, Integer port, String database, String username, String password, @Nullable Properties properties) {
+      return MYSQL.getConnectionUrl(host, port, database, username, password, properties);
+    }
+  },
 
   /**
    * The standard MySQL jdbc driver above mysql 8.x.
    */
-  MYSQL8X("MySQL8", "com.mysql.cj.jdbc.Driver", "mysql", MYSQL.defaultPort),
+  MYSQL8X("MySQL8", "com.mysql.cj.jdbc.Driver", "mysql", MYSQL.defaultPort) {
+    @Override
+    public String getConnectionUrl(String host, Integer port, String database, String username, String password, @Nullable Properties properties) {
+      return MYSQL.getConnectionUrl(host, port, database, username, password, properties);
+    }
+  },
 
   /**
    * The old MySQL jdbc driver.
@@ -333,7 +360,8 @@ public enum BuiltinDriverType implements DriverType {
    */
   GBASE8S("南大Gbase 8s", "com.gbasedbt.jdbc.Driver", "gbasedbt-sqli", 9088) {
     @Override
-    public String getConnectionUrl(String host, @Nullable Integer port, String database, String username, String password, Properties properties) {
+    public String getConnectionUrl(String host, @Nullable Integer port, String database, String username, String
+      password, Properties properties) {
       // 数据库实例的名称
       String instance = properties.getProperty("GBASEDBTSERVER", "");
       return String.format("jdbc:gbasedbt-sqli://{%s}:%s/%s:GBASEDBTSERVER=%s", host, port, database, instance);
@@ -341,9 +369,13 @@ public enum BuiltinDriverType implements DriverType {
   },
 
   H2("H2", "org.h2.Driver", "h2"),
+
   SQLITE("SQLite", "org.sqlite.JDBC", "sqlite"),
+
   DM("达梦", "dm.jdbc.driver.DmDriver", "dm"),
+
   GAUSSDB("GaussDB", "com.gaussdb.jdbc.Driver", "gaussdb"),
+
   CLICK_HOUSE("ClickHouse", "com.clickhouse.jdbc.ClickHouseDriver", "clickhouse"),
 
   ;
@@ -386,7 +418,7 @@ public enum BuiltinDriverType implements DriverType {
 
   @Override
   public String getConnectionUrl(String host, Integer port, String database, String username, String password, @Nullable Properties properties) {
-    throw new UnsupportedOperationException("TODO");
+    return "jdbc://" + getSubProtocol() + "//" + host + ":" + port;
   }
 
   public static BuiltinDriverType findByDriverClassName(String driverClassName) {

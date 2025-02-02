@@ -50,8 +50,6 @@ import java.util.Collection;
  * conversion is not possible and a default value is set, the converter
  * tries to transform the default value to the requested target type.
  * If this fails, a {@code ConversionException} if thrown.
- *
- * @since 1.8.0
  */
 public abstract class AbstractConverter implements Converter {
 

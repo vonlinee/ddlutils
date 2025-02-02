@@ -32,8 +32,6 @@ import java.util.TimeZone;
  * <p>
  * Can be configured to either return a <em>default value</em> or throw a
  * <code>ConversionException</code> if a conversion error occurs.
- *
- * @since 1.3
  */
 public final class SqlTimeConverter extends DateTimeConverter {
 

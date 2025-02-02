@@ -45,7 +45,7 @@ import java.util.List;
  *         appropriate for the type, to convert individual elements
  *         of the array. This leverages the power of existing converters
  *         without having to replicate their functionality for converting
- *         to the element type and removes the need to create a specifc
+ *         to the element type and removes the need to create a specific
  *         array type converters.</li>
  *     <li><strong>Arrays or Collections</strong> - can convert from either arrays or
  *         Collections to an array, limited only by the capability
@@ -97,7 +97,7 @@ import java.util.List;
  * </ul>
  *
  * <h2>Multi Dimensional Arrays</h2>
- * It is possible to convert a <code>String</code> to mulit-dimensional arrays by using
+ * It is possible to convert a <code>String</code> to multidimensional arrays by using
  * {@link ArrayConverter} as the element {@link Converter}
  * within another {@link ArrayConverter}.
  * <p>
@@ -409,19 +409,19 @@ public class ArrayConverter extends AbstractConverter {
       // Split comma-delimited tokens into a List
       List<String> list = null;
       while (true) {
-        final int ttype = st.nextToken();
-        if (ttype == StreamTokenizer.TT_WORD || ttype > 0) {
+        final int tokenType = st.nextToken();
+        if (tokenType == StreamTokenizer.TT_WORD || tokenType > 0) {
           if (st.sval != null) {
             if (list == null) {
               list = new ArrayList<>();
             }
             list.add(st.sval);
           }
-        } else if (ttype == StreamTokenizer.TT_EOF) {
+        } else if (tokenType == StreamTokenizer.TT_EOF) {
           break;
         } else {
           throw new ConversionException("Encountered token of type "
-            + ttype + " parsing elements to '" + toString(type) + ".");
+            + tokenType + " parsing elements to '" + toString(type) + ".");
         }
       }
 
@@ -483,13 +483,12 @@ public class ArrayConverter extends AbstractConverter {
    */
   @Override
   public String toString() {
-    String buffer = toString(getClass()) +
+    return toString(getClass()) +
       "[UseDefault=" +
       isUseDefault() +
       ", " +
       elementConverter.toString() +
       ']';
-    return buffer;
   }
 
 }
