@@ -19,8 +19,8 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.platform.BuiltinDriverType;
 import org.junit.Assert;
 

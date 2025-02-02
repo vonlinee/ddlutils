@@ -32,35 +32,35 @@ package org.apache.ddlutils.data.converter;
  */
 public final class DoubleConverter extends NumberConverter {
 
-    /**
-     * Construct a <strong>java.lang.Double</strong> <em>Converter</em> that throws
-     * a <code>ConversionException</code> if an error occurs.
-     */
-    public DoubleConverter() {
-        super(true);
-    }
+  /**
+   * Construct a <strong>java.lang.Double</strong> <em>Converter</em> that throws
+   * a <code>ConversionException</code> if an error occurs.
+   */
+  public DoubleConverter() {
+    super(true);
+  }
 
-    /**
-     * Construct a <strong>java.lang.Double</strong> <em>Converter</em> that returns
-     * a default value if an error occurs.
-     *
-     * @param defaultValue The default value to be returned
-     * if the value to be converted is missing or an error
-     * occurs converting the value.
-     */
-    public DoubleConverter(final Object defaultValue) {
-        super(true, defaultValue);
-    }
+  /**
+   * Construct a <strong>java.lang.Double</strong> <em>Converter</em> that returns
+   * a default value if an error occurs.
+   *
+   * @param defaultValue The default value to be returned
+   *                     if the value to be converted is missing or an error
+   *                     occurs converting the value.
+   */
+  public DoubleConverter(final Object defaultValue) {
+    super(true, defaultValue);
+  }
 
-    /**
-     * Return the default type this <code>Converter</code> handles.
-     *
-     * @return The default type this <code>Converter</code> handles.
-     * @since 1.8.0
-     */
-    @Override
-    protected Class<Double> getDefaultType() {
-        return Double.class;
-    }
+  /**
+   * Return the default type this <code>Converter</code> handles.
+   *
+   * @return The default type this <code>Converter</code> handles.
+   * @since 1.8.0
+   */
+  @Override
+  protected Class<Double> getDefaultType() {
+    return Double.class;
+  }
 
 }

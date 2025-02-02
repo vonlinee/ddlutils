@@ -21,8 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestBase;
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlRowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -45,8 +44,8 @@ public class TestPlatformImplBase extends TestBase {
     Database database = parseDatabaseFromString(schema);
     PlatformImplBase platform = new TestPlatform();
     Table table = database.getTable(0);
-    SqlTableClass clz = SqlTableClass.newInstance(table);
-    RowObject db = new SqlRowObject(SqlTableClass.newInstance(table));
+    TableClass clz = TableClass.newInstance(table);
+    RowObject db = new RowObject(TableClass.newInstance(table));
 
     db.set("name", "name");
 

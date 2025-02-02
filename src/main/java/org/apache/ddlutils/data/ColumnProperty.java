@@ -1,32 +1,39 @@
+package org.apache.ddlutils.data;
+
 /*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *   http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
  */
 
-package org.apache.ddlutils.data;
+import org.apache.ddlutils.model.Column;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 /**
+ * A DynaProperty which maps to a persistent Column in a database.
+ * The Column describes additional relational metadata
+ * for the property such as whether the property is a primary key column,
+ * an autoIncrement column and the SQL type etc.
  * <p>The metadata describing an individual property of a DynaBean.</p>
  *
  * <p>The meta contains an <em>optional</em> content type property ({@link #getContentType})
@@ -35,10 +42,48 @@ import java.util.Objects;
  * The DynaBean implementation may choose to enforce this type on its entries.
  * Alternatively, an implementation may choose to ignore this property.
  * All keys for maps must be of type String so no meta data is needed for map keys.</p>
+ *
+ * @version $Revision$
  */
-public class ColumnProperty implements Serializable {
+public class ColumnProperty {
 
-  private static final long serialVersionUID = 1L;
+  /**
+   * The column for which this dyna property is defined.
+   * TODO final
+   */
+  private Column _column;
+
+  /**
+   * Creates a property instance for the given column that accepts any data type.
+   *
+   * @param column The column
+   */
+  public ColumnProperty(Column column) {
+    this(column.getName());
+    _column = column;
+  }
+
+  /**
+   * Returns the column for which this property is defined.
+   *
+   * @return The column
+   */
+  public Column getColumn() {
+    return _column;
+  }
+
+  // Helper methods
+  //-------------------------------------------------------------------------
+
+  /**
+   * Determines whether this property is for a primary key column.
+   *
+   * @return <code>true</code> if the property is for a primary key column
+   */
+  public boolean isPrimaryKey() {
+    return getColumn().isPrimaryKey();
+  }
+
   /*
    * There are issues with serializing primitive class types on certain JVM versions
    * (including java 1.3).
@@ -77,9 +122,7 @@ public class ColumnProperty implements Serializable {
    * @param name Name of the property being described
    */
   public ColumnProperty(final String name) {
-
     this(name, Object.class);
-
   }
 
   /**
@@ -95,7 +138,6 @@ public class ColumnProperty implements Serializable {
     if (type != null && type.isArray()) {
       this.contentType = type.getComponentType();
     }
-
   }
 
   /**

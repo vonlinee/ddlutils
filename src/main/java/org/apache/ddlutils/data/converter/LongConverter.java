@@ -32,35 +32,35 @@ package org.apache.ddlutils.data.converter;
  */
 public final class LongConverter extends NumberConverter {
 
-    /**
-     * Construct a <strong>java.lang.Long</strong> <em>Converter</em> that throws
-     * a <code>ConversionException</code> if an error occurs.
-     */
-    public LongConverter() {
-        super(false);
-    }
+  /**
+   * Construct a <strong>java.lang.Long</strong> <em>Converter</em> that throws
+   * a <code>ConversionException</code> if an error occurs.
+   */
+  public LongConverter() {
+    super(false);
+  }
 
-    /**
-     * Construct a <strong>java.lang.Long</strong> <em>Converter</em> that returns
-     * a default value if an error occurs.
-     *
-     * @param defaultValue The default value to be returned
-     * if the value to be converted is missing or an error
-     * occurs converting the value.
-     */
-    public LongConverter(final Object defaultValue) {
-        super(false, defaultValue);
-    }
+  /**
+   * Construct a <strong>java.lang.Long</strong> <em>Converter</em> that returns
+   * a default value if an error occurs.
+   *
+   * @param defaultValue The default value to be returned
+   *                     if the value to be converted is missing or an error
+   *                     occurs converting the value.
+   */
+  public LongConverter(final Object defaultValue) {
+    super(false, defaultValue);
+  }
 
-    /**
-     * Return the default type this <code>Converter</code> handles.
-     *
-     * @return The default type this <code>Converter</code> handles.
-     * @since 1.8.0
-     */
-    @Override
-    protected Class<Long> getDefaultType() {
-        return Long.class;
-    }
+  /**
+   * Return the default type this <code>Converter</code> handles.
+   *
+   * @return The default type this <code>Converter</code> handles.
+   * @since 1.8.0
+   */
+  @Override
+  protected Class<Long> getDefaultType() {
+    return Long.class;
+  }
 
 }

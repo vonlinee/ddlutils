@@ -23,6 +23,7 @@ import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToDatabaseCommand;
 import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -71,6 +72,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
   /**
    * Basic test that creates a schema and puts some data into it.
    */
+  @Test
   public void testSimple() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

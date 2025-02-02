@@ -281,7 +281,7 @@ public class DataReader {
       // _log.warn("Data XML contains an element " + elemQName + " at location " + location +
       //  " but there is no table defined with this name. This element will be ignored.");
     } else {
-      RowObject bean = _model.createDynaBeanFor(table);
+      RowObject bean = _model.createRowObjectFor(table);
 
       for (int idx = 0; idx < table.getColumnCount(); idx++) {
         Column column = table.getColumn(idx);

@@ -65,28 +65,10 @@ public final class BooleanConverter extends AbstractConverter {
    */
   @Deprecated
   public static final Object NO_DEFAULT = new Object();
-
-  /**
-   * This method creates a copy of the provided array, and ensures that
-   * all the strings in the newly created array contain only lower-case
-   * letters.
-   * <p>
-   * Using this method to copy string arrays means that changes to the
-   * src array do not modify the dst array.
-   */
-  private static String[] copyStrings(final String[] src) {
-    final String[] dst = new String[src.length];
-    for (int i = 0; i < src.length; ++i) {
-      dst[i] = src[i].toLowerCase();
-    }
-    return dst;
-  }
-
   /**
    * The set of strings that are known to map to Boolean.TRUE.
    */
   private String[] trueStrings = {"true", "yes", "y", "on", "1"};
-
   /**
    * The set of strings that are known to map to Boolean.FALSE.
    */
@@ -169,6 +151,22 @@ public final class BooleanConverter extends AbstractConverter {
     if (defaultValue != NO_DEFAULT) {
       setDefaultValue(defaultValue);
     }
+  }
+
+  /**
+   * This method creates a copy of the provided array, and ensures that
+   * all the strings in the newly created array contain only lower-case
+   * letters.
+   * <p>
+   * Using this method to copy string arrays means that changes to the
+   * src array do not modify the dst array.
+   */
+  private static String[] copyStrings(final String[] src) {
+    final String[] dst = new String[src.length];
+    for (int i = 0; i < src.length; ++i) {
+      dst[i] = src[i].toLowerCase();
+    }
+    return dst;
   }
 
   /**

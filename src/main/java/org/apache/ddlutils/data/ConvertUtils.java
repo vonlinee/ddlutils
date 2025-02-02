@@ -26,19 +26,6 @@ package org.apache.ddlutils.data;
  */
 public class ConvertUtils {
 
-  /**
-   * <p>Convert the value to an object of the specified class (if
-   * possible).</p>
-   *
-   * @param value      Value to be converted (maybe null)
-   * @param targetType Class of the value to be converted to (must not be null)
-   * @return The converted value
-   * @throws ConversionException if thrown by an underlying Converter
-   */
-  public static Object convert(final Object value, final Class<?> targetType) {
-    return getInstance().convert(value, targetType);
-  }
-
   static final ConversionService service = new DefaultConversionService();
 
   private static ConversionService getInstance() {
@@ -60,20 +47,6 @@ public class ConvertUtils {
   }
 
   /**
-   * <p>Convert an array of specified values to an array of objects of the
-   * specified class (if possible).</p>
-   *
-   * <p>For more details see <code>ConvertUtilsBean</code>.</p>
-   *
-   * @param values Array of values to be converted
-   * @param clazz  Java array or element class to be converted to (must not be null)
-   * @return The converted value
-   */
-  public static Object convert(final String[] values, final Class<?> clazz) {
-    return getInstance().convert(values, clazz);
-  }
-
-  /**
    * Change primitive Class types to the associated wrapper class. This is
    * useful for concrete converter implementations which typically treat
    * primitive types like their corresponding wrapper types.
@@ -81,7 +54,6 @@ public class ConvertUtils {
    * @param <T>  The type to be checked.
    * @param type The class type to check.
    * @return The converted type.
-   * @since 1.9
    */
   // All type casts are safe because the TYPE members of the wrapper types
   // return their own class.

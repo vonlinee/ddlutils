@@ -32,35 +32,35 @@ package org.apache.ddlutils.data.converter;
  */
 public final class IntegerConverter extends NumberConverter {
 
-    /**
-     * Construct a <strong>java.lang.Integer</strong> <em>Converter</em> that throws
-     * a <code>ConversionException</code> if an error occurs.
-     */
-    public IntegerConverter() {
-        super(false);
-    }
+  /**
+   * Construct a <strong>java.lang.Integer</strong> <em>Converter</em> that throws
+   * a <code>ConversionException</code> if an error occurs.
+   */
+  public IntegerConverter() {
+    super(false);
+  }
 
-    /**
-     * Construct a <strong>java.lang.Integer</strong> <em>Converter</em> that returns
-     * a default value if an error occurs.
-     *
-     * @param defaultValue The default value to be returned
-     * if the value to be converted is missing or an error
-     * occurs converting the value.
-     */
-    public IntegerConverter(final Object defaultValue) {
-        super(false, defaultValue);
-    }
+  /**
+   * Construct a <strong>java.lang.Integer</strong> <em>Converter</em> that returns
+   * a default value if an error occurs.
+   *
+   * @param defaultValue The default value to be returned
+   *                     if the value to be converted is missing or an error
+   *                     occurs converting the value.
+   */
+  public IntegerConverter(final Object defaultValue) {
+    super(false, defaultValue);
+  }
 
-    /**
-     * Return the default type this <code>Converter</code> handles.
-     *
-     * @return The default type this <code>Converter</code> handles.
-     * @since 1.8.0
-     */
-    @Override
-    protected Class<Integer> getDefaultType() {
-        return Integer.class;
-    }
+  /**
+   * Return the default type this <code>Converter</code> handles.
+   *
+   * @return The default type this <code>Converter</code> handles.
+   * @since 1.8.0
+   */
+  @Override
+  protected Class<Integer> getDefaultType() {
+    return Integer.class;
+  }
 
 }

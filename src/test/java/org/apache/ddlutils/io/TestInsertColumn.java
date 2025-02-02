@@ -65,7 +65,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     List<RowObject> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
@@ -345,10 +345,10 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     List<RowObject> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue1");
-    assertEquals((Object) null, beans.get(0), "avalue2");
+    assertEquals(null, beans.get(0), "avalue1");
+    assertEquals(null, beans.get(0), "avalue2");
     assertEquals(3.0, beans.get(0), "avalue3");
-    assertEquals((Object) null, beans.get(0), "avalue4");
+    assertEquals(null, beans.get(0), "avalue4");
   }
 
   /**
@@ -645,7 +645,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     List<RowObject> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
@@ -941,7 +941,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
     List<RowObject> beans = getRows("roundtrip");
 
-    assertEquals((Object) null, beans.get(0), "avalue");
+    assertEquals(null, beans.get(0), "avalue");
   }
 
   /**
@@ -1244,7 +1244,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<RowObject> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) null, beans.get(0), "avalue2");
+    assertEquals(null, beans.get(0), "avalue2");
   }
 
   /**
@@ -1587,7 +1587,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<RowObject> beans = getRows("roundtrip");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertEquals((Object) null, beans.get(0), "avalue2");
+    assertEquals(null, beans.get(0), "avalue2");
   }
 
   /**
@@ -1927,9 +1927,9 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     List<RowObject> beans1 = getRows("roundtrip1");
     List<RowObject> beans2 = getRows("roundtrip2");
 
-    assertEquals((Object) "text", beans1.get(0), "pk");
+    assertEquals("text", beans1.get(0), "pk");
     assertEquals(1, beans2.get(0), "pk");
-    assertEquals((Object) null, beans2.get(0), "avalue");
+    assertEquals(null, beans2.get(0), "avalue");
   }
 
   /**

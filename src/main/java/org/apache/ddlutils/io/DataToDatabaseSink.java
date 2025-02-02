@@ -22,7 +22,7 @@ package org.apache.ddlutils.io;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ForeignKey;
@@ -261,7 +261,7 @@ public class DataToDatabaseSink implements DataSink {
    */
   @Override
   public void addBean(RowObject bean) throws DataSinkException {
-    Table table = _model.getDynaClassFor(bean).getTable();
+    Table table = _model.getTableClassFor(bean).getTable();
     Identity origIdentity = buildIdentityFromPKs(table, bean);
 
     if (_ensureFkOrder && (table.getForeignKeyCount() > 0)) {
@@ -320,7 +320,7 @@ public class DataToDatabaseSink implements DataSink {
           }
         }
         for (RowObject finishedObj : finishedObjs) {
-          Table tableForObj = _model.getDynaClassFor(finishedObj).getTable();
+          Table tableForObj = _model.getTableClassFor(finishedObj).getTable();
           Identity objIdentity = buildIdentityFromPKs(tableForObj, finishedObj);
 
           insertBeanIntoDatabase(tableForObj, finishedObj);
@@ -518,7 +518,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param identity The target identity
    */
   private void updateFKColumns(RowObject bean, String fkName, Identity identity) {
-    Table sourceTable = ((SqlTableClass) bean.getDynaClass()).getTable();
+    Table sourceTable = ((TableClass) bean.getTableClass()).getTable();
     Table targetTable = identity.getTable();
     ForeignKey fk = null;
 

@@ -483,14 +483,13 @@ public class ArrayConverter extends AbstractConverter {
    */
   @Override
   public String toString() {
-    final StringBuilder buffer = new StringBuilder();
-    buffer.append(toString(getClass()));
-    buffer.append("[UseDefault=");
-    buffer.append(isUseDefault());
-    buffer.append(", ");
-    buffer.append(elementConverter.toString());
-    buffer.append(']');
-    return buffer.toString();
+    String buffer = toString(getClass()) +
+      "[UseDefault=" +
+      isUseDefault() +
+      ", " +
+      elementConverter.toString() +
+      ']';
+    return buffer;
   }
 
 }

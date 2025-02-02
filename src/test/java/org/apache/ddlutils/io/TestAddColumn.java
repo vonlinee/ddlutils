@@ -131,6 +131,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the addition of another auto-increment column.
    */
+  @Test
   public void testAddSecondAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
       !getPlatformInfo().isMultipleIdentityColumnsSupported()) {

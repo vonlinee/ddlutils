@@ -19,8 +19,8 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.alteration.ModelChange;
+import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;

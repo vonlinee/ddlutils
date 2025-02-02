@@ -38,8 +38,6 @@ import org.apache.ddlutils.data.converter.SqlTimeConverter;
 import org.apache.ddlutils.data.converter.SqlTimestampConverter;
 import org.apache.ddlutils.data.converter.StringConverter;
 import org.apache.ddlutils.data.converter.URLConverter;
-import org.apache.ddlutils.util.Log;
-import org.apache.ddlutils.util.LogFactory;
 import org.apache.ddlutils.util.WeakFastHashMap;
 
 import java.io.File;
@@ -127,13 +125,7 @@ public class DefaultConversionService implements ConversionService {
    * The set of {@link Converter}s that can be used to convert Strings
    * into objects of a specified Class, keyed by the destination Class.
    */
-  private final WeakFastHashMap<Class<?>, Converter> converters =
-    new WeakFastHashMap<>();
-
-  /**
-   * The <code>Log</code> instance for this class.
-   */
-  private final Log log = LogFactory.getLog(getClass());
+  private final WeakFastHashMap<Class<?>, Converter> converters = new WeakFastHashMap<>();
 
   /**
    * Construct a bean with standard converters registered
@@ -190,35 +182,18 @@ public class DefaultConversionService implements ConversionService {
 
     final Class<?> sourceType = value == null ? null : value.getClass();
 
-    if (log.isDebugEnabled()) {
-      if (value == null) {
-        log.debug("Convert null value to type '" +
-          targetType.getName() + "'");
-      } else {
-        log.debug("Convert type '" + sourceType.getName() + "' value '" + value +
-          "' to type '" + targetType.getName() + "'");
-      }
-    }
-
     Object converted = value;
     Converter converter = lookup(sourceType, targetType);
     if (converter != null) {
-      if (log.isTraceEnabled()) {
-        log.trace("  Using converter " + converter);
-      }
       converted = converter.convert(targetType, value);
     }
-    if (String.class.equals(targetType) && converted != null &&
-      !(converted instanceof String)) {
+    if (String.class.equals(targetType) && converted != null && !(converted instanceof String)) {
 
       // NOTE: For backwards compatibility, if the Converter
       //       doesn't handle  conversion-->String then
       //       use the registered String Converter
       converter = lookup(String.class);
       if (converter != null) {
-        if (log.isTraceEnabled()) {
-          log.trace("  Using converter " + converter);
-        }
         converted = converter.convert(String.class, converted);
       }
 
@@ -242,17 +217,9 @@ public class DefaultConversionService implements ConversionService {
    * @throws ConversionException if thrown by an underlying Converter
    */
   public Object convert(final String value, final Class<?> clazz) {
-
-    if (log.isDebugEnabled()) {
-      log.debug("Convert string '" + value + "' to class '" +
-        clazz.getName() + "'");
-    }
     Converter converter = lookup(clazz);
     if (converter == null) {
       converter = lookup(String.class);
-    }
-    if (log.isTraceEnabled()) {
-      log.trace("  Using converter " + converter);
     }
     return converter.convert(clazz, value);
 
@@ -270,22 +237,16 @@ public class DefaultConversionService implements ConversionService {
    * @return The converted value
    * @throws ConversionException if thrown by an underlying Converter
    */
+  @Override
   public Object convert(final String[] values, final Class<?> clazz) {
 
     Class<?> type = clazz;
     if (clazz.isArray()) {
       type = clazz.getComponentType();
     }
-    if (log.isDebugEnabled()) {
-      log.debug("Convert String[" + values.length + "] to class '" +
-        type.getName() + "[]'");
-    }
     Converter converter = lookup(type);
     if (converter == null) {
       converter = lookup(String.class);
-    }
-    if (log.isTraceEnabled()) {
-      log.trace("  Using converter " + converter);
     }
     final Object array = Array.newInstance(type, values.length);
     for (int i = 0; i < values.length; i++) {
@@ -317,6 +278,7 @@ public class DefaultConversionService implements ConversionService {
    *
    * @param clazz Class for which to remove a registered Converter
    */
+  @Override
   public void deregister(final Class<?> clazz) {
     converters.remove(clazz);
   }
@@ -355,8 +317,7 @@ public class DefaultConversionService implements ConversionService {
     // Convert --> String
     if (targetType == String.class) {
       converter = lookup(sourceType);
-      if (converter == null && (sourceType.isArray() ||
-        Collection.class.isAssignableFrom(sourceType))) {
+      if (converter == null && (sourceType.isArray() || Collection.class.isAssignableFrom(sourceType))) {
         converter = lookup(String[].class);
       }
       if (converter == null) {
@@ -429,8 +390,7 @@ public class DefaultConversionService implements ConversionService {
    *                           value used in the event of a conversion error
    * @param defaultArraySize   The size of the default array
    */
-  private void registerArrayConverter(final Class<?> componentType, final Converter componentConverter,
-                                      final boolean throwException, final int defaultArraySize) {
+  private void registerArrayConverter(final Class<?> componentType, final Converter componentConverter, final boolean throwException, final int defaultArraySize) {
     final Class<?> arrayType = Array.newInstance(componentType, 0).getClass();
     Converter arrayConverter;
     if (throwException) {
@@ -576,14 +536,14 @@ public class DefaultConversionService implements ConversionService {
    */
   private void registerStandard(final boolean throwException, final boolean defaultNull) {
     final Number defaultNumber = defaultNull ? null : ZERO;
-    final BigDecimal bigDecDeflt = defaultNull ? null : new BigDecimal("0.0");
-    final BigInteger bigIntDeflt = defaultNull ? null : new BigInteger("0");
+    final BigDecimal bigDecimalDefault = defaultNull ? null : new BigDecimal("0.0");
+    final BigInteger bigIntDefault = defaultNull ? null : new BigInteger("0");
     final Boolean booleanDefault = defaultNull ? null : Boolean.FALSE;
     final Character charDefault = defaultNull ? null : SPACE;
     final String stringDefault = defaultNull ? null : "";
 
-    register(BigDecimal.class, throwException ? new BigDecimalConverter() : new BigDecimalConverter(bigDecDeflt));
-    register(BigInteger.class, throwException ? new BigIntegerConverter() : new BigIntegerConverter(bigIntDeflt));
+    register(BigDecimal.class, throwException ? new BigDecimalConverter() : new BigDecimalConverter(bigDecimalDefault));
+    register(BigInteger.class, throwException ? new BigIntegerConverter() : new BigIntegerConverter(bigIntDefault));
     register(Boolean.class, throwException ? new BooleanConverter() : new BooleanConverter(booleanDefault));
     register(Byte.class, throwException ? new ByteConverter() : new ByteConverter(defaultNumber));
     register(Character.class, throwException ? new CharacterConverter() : new CharacterConverter(charDefault));

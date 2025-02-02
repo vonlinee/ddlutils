@@ -1,0 +1,19 @@
+<data>
+  <author author_id='1' name='Ernest Hemingway'/>
+  <author author_id='2' name='William Shakespeare'/>
+  <book book_id='1' author_id='1'>
+    <isbn>0684830493</isbn>
+    <title>Old Man And The Sea</title>
+    <issue_date>1952</issue_date>
+  </book>
+  <book book_id='2' author_id='2'>
+    <isbn>0198321465</isbn>
+    <title>Macbeth</title>
+    <issue_date>1606</issue_date>
+  </book>
+  <book book_id='3' author_id='2'>
+    <isbn>0140707026</isbn>
+    <title>A Midsummer Night's Dream</title>
+    <issue_date>1595</issue_date>
+  </book>
+</data>

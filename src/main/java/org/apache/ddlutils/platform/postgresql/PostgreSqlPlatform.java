@@ -27,7 +27,7 @@ import org.apache.ddlutils.alteration.RemoveColumnChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlColumnProperty;
+import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -197,7 +197,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * {@inheritDoc}
    */
   @Override
-  protected void setObject(PreparedStatement statement, int sqlIndex, RowObject rowObject, SqlColumnProperty property) throws SQLException {
+  protected void setObject(PreparedStatement statement, int sqlIndex, RowObject rowObject, ColumnProperty property) throws SQLException {
     int typeCode = property.getColumn().getTypeCode();
     Object value = rowObject.get(property.getName());
 

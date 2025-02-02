@@ -290,6 +290,16 @@ public abstract class DateTimeConverter extends AbstractConverter {
   }
 
   /**
+   * Set the Locale for the <em>Converter</em>.
+   *
+   * @param locale The Locale.
+   */
+  public void setLocale(final Locale locale) {
+    this.locale = locale;
+    setUseLocaleFormat(true);
+  }
+
+  /**
    * Return the date format patterns used to convert
    * dates to/from a <code>java.lang.String</code>
    * (or <code>null</code> if none specified).
@@ -302,6 +312,21 @@ public abstract class DateTimeConverter extends AbstractConverter {
   }
 
   /**
+   * Set the date format patterns to use to convert
+   * dates to/from a <code>java.lang.String</code>.
+   *
+   * @param patterns Array of format patterns.
+   * @see SimpleDateFormat
+   */
+  public void setPatterns(final String[] patterns) {
+    this.patterns = patterns;
+    if (patterns != null && patterns.length > 1) {
+      displayPatterns = String.join(", ", patterns);
+    }
+    setUseLocaleFormat(true);
+  }
+
+  /**
    * Return the Time Zone to use when converting dates
    * (or <code>null</code> if none specified.
    *
@@ -309,6 +334,15 @@ public abstract class DateTimeConverter extends AbstractConverter {
    */
   public TimeZone getTimeZone() {
     return timeZone;
+  }
+
+  /**
+   * Set the Time Zone to use when converting dates.
+   *
+   * @param timeZone The Time Zone.
+   */
+  public void setTimeZone(final TimeZone timeZone) {
+    this.timeZone = timeZone;
   }
 
   /**
@@ -403,16 +437,6 @@ public abstract class DateTimeConverter extends AbstractConverter {
   }
 
   /**
-   * Set the Locale for the <em>Converter</em>.
-   *
-   * @param locale The Locale.
-   */
-  public void setLocale(final Locale locale) {
-    this.locale = locale;
-    setUseLocaleFormat(true);
-  }
-
-  /**
    * Set a date format pattern to use to convert
    * dates to/from a <code>java.lang.String</code>.
    *
@@ -421,30 +445,6 @@ public abstract class DateTimeConverter extends AbstractConverter {
    */
   public void setPattern(final String pattern) {
     setPatterns(new String[]{pattern});
-  }
-
-  /**
-   * Set the date format patterns to use to convert
-   * dates to/from a <code>java.lang.String</code>.
-   *
-   * @param patterns Array of format patterns.
-   * @see SimpleDateFormat
-   */
-  public void setPatterns(final String[] patterns) {
-    this.patterns = patterns;
-    if (patterns != null && patterns.length > 1) {
-      displayPatterns = String.join(", ", patterns);
-    }
-    setUseLocaleFormat(true);
-  }
-
-  /**
-   * Set the Time Zone to use when converting dates.
-   *
-   * @param timeZone The Time Zone.
-   */
-  public void setTimeZone(final TimeZone timeZone) {
-    this.timeZone = timeZone;
   }
 
   /**

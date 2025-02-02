@@ -91,9 +91,8 @@ public abstract class NumberConverter extends AbstractConverter {
 
   private static final Integer ZERO = 0;
   private static final Integer ONE = 1;
-
-  private String pattern;
   private final boolean allowDecimals;
+  private String pattern;
   private boolean useLocaleFormat;
   private Locale locale;
 
@@ -254,6 +253,16 @@ public abstract class NumberConverter extends AbstractConverter {
   }
 
   /**
+   * Set the Locale for the <em>Converter</em>.
+   *
+   * @param locale The locale to use for conversion
+   */
+  public void setLocale(final Locale locale) {
+    this.locale = locale;
+    setUseLocaleFormat(true);
+  }
+
+  /**
    * Return the number format pattern used to convert
    * Numbers to/from a <code>java.lang.String</code>
    * (or <code>null</code> if none specified).
@@ -265,6 +274,20 @@ public abstract class NumberConverter extends AbstractConverter {
    */
   public String getPattern() {
     return pattern;
+  }
+
+  /**
+   * Set a number format pattern to use to convert
+   * Numbers to/from a <code>java.lang.String</code>.
+   * <p>
+   * See <code>java.text.DecimalFormat</code> for details
+   * of how to specify the pattern.
+   *
+   * @param pattern The format pattern.
+   */
+  public void setPattern(final String pattern) {
+    this.pattern = pattern;
+    setUseLocaleFormat(true);
   }
 
   /**
@@ -303,30 +326,6 @@ public abstract class NumberConverter extends AbstractConverter {
       throw new ConversionException(msg);
     }
     return parsedNumber;
-  }
-
-  /**
-   * Set the Locale for the <em>Converter</em>.
-   *
-   * @param locale The locale to use for conversion
-   */
-  public void setLocale(final Locale locale) {
-    this.locale = locale;
-    setUseLocaleFormat(true);
-  }
-
-  /**
-   * Set a number format pattern to use to convert
-   * Numbers to/from a <code>java.lang.String</code>.
-   * <p>
-   * See <code>java.text.DecimalFormat</code> for details
-   * of how to specify the pattern.
-   *
-   * @param pattern The format pattern.
-   */
-  public void setPattern(final String pattern) {
-    this.pattern = pattern;
-    setUseLocaleFormat(true);
   }
 
   /**

@@ -21,8 +21,7 @@ package org.apache.ddlutils.dynabean;
 
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlRowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.BuiltinDriverType;
@@ -116,6 +115,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple SELECT fetch.
    */
+  @Test
   public void testSimpleFetch() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -166,6 +166,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests insertion & reading of auto-increment columns.
    */
+  @Test
   public void testAutoIncrement() throws Exception {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
@@ -192,8 +193,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
 
     // we're inserting the rows manually via beans since we do want to
     // check the back-reading of the auto-increment columns
-    SqlTableClass dynaClass = getModel().getDynaClassFor("TestTable");
-    RowObject bean = null;
+    TableClass dynaClass = getModel().getTableClassFor("TestTable");
+    RowObject bean;
     Object id1 = null;
     Object id2 = null;
     Object id3 = null;
@@ -264,6 +265,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a more complicated SELECT query that leads to a JOIN in the database.
    */
+  @Test
   public void testJoinQuery() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -321,6 +323,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insert method.
    */
+  @Test
   public void testInsertSingle() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -331,8 +334,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new RowObject(dynaClass);
 
     rowObject.set("TheId", 1);
     rowObject.set("TheText", "Text 1");
@@ -357,6 +360,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insert method.
    */
+  @Test
   public void testInsertMultiple() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -367,10 +371,10 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject1 = new SqlRowObject(dynaClass);
-    RowObject rowObject2 = new SqlRowObject(dynaClass);
-    RowObject rowObject3 = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject1 = new RowObject(dynaClass);
+    RowObject rowObject2 = new RowObject(dynaClass);
+    RowObject rowObject3 = new RowObject(dynaClass);
 
     rowObject1.set("TheId", 1);
     rowObject1.set("TheText", "Text 1");
@@ -419,6 +423,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the update method.
    */
+  @Test
   public void testUpdate() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -435,8 +440,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='1' TheText='Text 1'/>\n" +
         "</data>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new RowObject(dynaClass);
 
     rowObject.set("TheId", 1);
     rowObject.set("TheText", "Text 10");
@@ -461,6 +466,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the exists method.
    */
+  @Test
   public void testExists() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -478,10 +484,10 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='3' TheText='Text 3'/>\n" +
         "</data>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject1 = new SqlRowObject(dynaClass);
-    RowObject rowObject2 = new SqlRowObject(dynaClass);
-    RowObject rowObject3 = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject1 = new RowObject(dynaClass);
+    RowObject rowObject2 = new RowObject(dynaClass);
+    RowObject rowObject3 = new RowObject(dynaClass);
 
     rowObject1.set("TheId", 1);
     rowObject1.set("TheText", "Text 1");
@@ -499,6 +505,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the store method.
    */
+  @Test
   public void testStoreNew() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -509,8 +516,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  </table>\n" +
         "</database>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new RowObject(dynaClass);
 
     rowObject.set("TheId", 1);
     rowObject.set("TheText", "Text 1");
@@ -535,6 +542,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the store method.
    */
+  @Test
   public void testStoreExisting() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -551,8 +559,8 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
         "  <TestTable TheId='1' TheText='Text 1'/>\n" +
         "</data>");
 
-    SqlTableClass dynaClass = SqlTableClass.newInstance(getModel().getTable(0));
-    RowObject rowObject = new SqlRowObject(dynaClass);
+    TableClass dynaClass = TableClass.newInstance(getModel().getTable(0));
+    RowObject rowObject = new RowObject(dynaClass);
 
     rowObject.set("TheId", 1);
     rowObject.set("TheText", "Text 10");

@@ -23,9 +23,7 @@ import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.data.ColumnProperty;
-import org.apache.ddlutils.data.SqlRowObject;
-import org.apache.ddlutils.data.SqlTableClass;
-import org.apache.ddlutils.data.SqlColumnProperty;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.BinaryObjectsHelper;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataToDatabaseSink;
@@ -440,7 +438,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected RowObject insertRow(String tableName, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
-    RowObject bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createRowObjectFor(table);
 
     for (int idx = 0; (idx < table.getColumnCount()) && (idx < columnValues.length); idx++) {
       Column column = table.getColumn(idx);
@@ -461,7 +459,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected RowObject updateRow(String tableName, RowObject oldBean, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
-    RowObject bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createRowObjectFor(table);
 
     for (int idx = 0; (idx < table.getColumnCount()) && (idx < columnValues.length); idx++) {
       Column column = table.getColumn(idx);
@@ -480,7 +478,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    */
   protected void deleteRow(String tableName, Object[] pkColumnValues) {
     Table table = getModel().findTable(tableName);
-    RowObject bean = getModel().createDynaBeanFor(table);
+    RowObject bean = getModel().createRowObjectFor(table);
     Column[] pkColumns = table.getPrimaryKeyColumns();
 
     for (int idx = 0; (idx < pkColumns.length) && (idx < pkColumnValues.length); idx++) {
@@ -799,7 +797,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     if (getPlatform().isDelimitedIdentifierModeOn()) {
       return bean.get(propName);
     } else {
-      ColumnProperty[] props = bean.getDynaClass().getDynaProperties();
+      ColumnProperty[] props = bean.getTableClass().getProperties();
 
       for (ColumnProperty prop : props) {
         if (propName.equalsIgnoreCase(prop.getName())) {
@@ -892,9 +890,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     RowObject rowObject = (RowObject) bean;
     Object value = rowObject.get(attrName);
 
-    if ((value instanceof byte[]) && !(expected instanceof byte[]) && (rowObject instanceof SqlRowObject)) {
-      SqlTableClass dynaClass = (SqlTableClass) rowObject.getDynaClass();
-      Column column = ((SqlColumnProperty) dynaClass.getDynaProperty(attrName)).getColumn();
+    if (value instanceof byte[] && !(expected instanceof byte[])) {
+      TableClass dynaClass = rowObject.getTableClass();
+      Column column = dynaClass.getProperty(attrName).getColumn();
 
       if (TypeMap.isBinaryType(column.getTypeCode())) {
         value = new BinaryObjectsHelper().deserialize((byte[]) value);

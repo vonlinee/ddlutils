@@ -44,8 +44,8 @@ import org.apache.ddlutils.alteration.RemoveTableChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlTableClass;
-import org.apache.ddlutils.data.SqlColumnProperty;
+import org.apache.ddlutils.data.TableClass;
+import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.model.CloneHelper;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
@@ -1617,7 +1617,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean       Optionally the concrete bean to insert
    * @return The SQL required to insert an instance of the class
    */
-  protected String createInsertSql(Database model, SqlTableClass dynaClass, SqlColumnProperty[] properties, RowObject bean) {
+  protected String createInsertSql(Database model, TableClass dynaClass, ColumnProperty[] properties, RowObject bean) {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> columnValues = toColumnValues(properties, bean);
 
@@ -1632,7 +1632,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @return The SQL required for querying for the id, or <code>null</code> if the database does not
    * support this
    */
-  protected String createSelectLastInsertIdSql(Database model, SqlTableClass dynaClass) {
+  protected String createSelectLastInsertIdSql(Database model, TableClass dynaClass) {
     Table table = model.findTable(dynaClass.getTableName());
 
     return _builder.getSelectLastIdentityValues(table);
@@ -1643,8 +1643,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public String getInsertSql(Database model, RowObject rowObject) {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] properties = dynaClass.getSqlDynaProperties();
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] properties = dynaClass.getSqlDynaProperties();
 
     if (properties.length == 0) {
       _log.info("Cannot insert instances of type " + dynaClass + " because it has no properties");
@@ -1663,8 +1663,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean      The bean
    * @return The properties
    */
-  private SqlColumnProperty[] getPropertiesForInsertion(Database model, SqlTableClass dynaClass, final RowObject bean) {
-    SqlColumnProperty[] properties = dynaClass.getSqlDynaProperties();
+  private ColumnProperty[] getPropertiesForInsertion(Database model, TableClass dynaClass, final RowObject bean) {
+    ColumnProperty[] properties = dynaClass.getSqlDynaProperties();
     return Arrays.stream(properties).filter(prop -> {
       if (bean.get(prop.getName()) != null) {
         // we ignore properties for which a value is present in the bean
@@ -1680,7 +1680,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         return !prop.getColumn().isAutoIncrement() &&
           (prop.getColumn().getDefaultValue() == null);
       }
-    }).toArray(SqlColumnProperty[]::new);
+    }).toArray(ColumnProperty[]::new);
   }
 
   /**
@@ -1692,8 +1692,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean      The bean
    * @return The columns
    */
-  private Column[] getRelevantIdentityColumns(Database model, SqlTableClass dynaClass, final RowObject bean) {
-    SqlColumnProperty[] properties = dynaClass.getSqlDynaProperties();
+  private Column[] getRelevantIdentityColumns(Database model, TableClass dynaClass, final RowObject bean) {
+    ColumnProperty[] properties = dynaClass.getSqlDynaProperties();
 
     return Arrays.stream(properties).filter(input -> {
         // we only want those identity columns that were really specified by the DB
@@ -1703,7 +1703,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         return input.getColumn().isAutoIncrement() &&
           (!isIdentityOverrideOn() || !getPlatformInfo().isIdentityOverrideAllowed() || (bean.get(input.getName()) == null));
       })
-      .map(SqlColumnProperty::getColumn)
+      .map(ColumnProperty::getColumn)
       .toArray(Column[]::new);
   }
 
@@ -1712,8 +1712,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void insert(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] properties = getPropertiesForInsertion(model, dynaClass, rowObject);
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] properties = getPropertiesForInsertion(model, dynaClass, rowObject);
     Column[] autoIncrementColumns = getRelevantIdentityColumns(model, dynaClass, rowObject);
 
     if ((properties.length == 0) && (autoIncrementColumns.length == 0)) {
@@ -1837,14 +1837,14 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void insert(Connection connection, Database model, Collection<RowObject> rowObjects) throws DatabaseOperationException {
-    SqlTableClass dynaClass = null;
-    SqlColumnProperty[] properties = null;
+    TableClass dynaClass = null;
+    ColumnProperty[] properties = null;
     PreparedStatement statement = null;
     int addedStmts = 0;
     boolean identityWarningPrinted = false;
 
     for (RowObject rowObject : rowObjects) {
-      SqlTableClass curDynaClass = model.getDynaClassFor(rowObject);
+      TableClass curDynaClass = model.getTableClassFor(rowObject);
 
       if (curDynaClass != dynaClass) {
         if (dynaClass != null) {
@@ -1986,7 +1986,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean        Optionally the concrete bean to update
    * @return The SQL required to update the instance
    */
-  protected String createUpdateSql(Database model, SqlTableClass dynaClass, SqlColumnProperty[] primaryKeys, SqlColumnProperty[] properties, RowObject bean) {
+  protected String createUpdateSql(Database model, TableClass dynaClass, ColumnProperty[] primaryKeys, ColumnProperty[] properties, RowObject bean) {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> columnValues = toColumnValues(properties, bean);
 
@@ -2008,7 +2008,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param newBean     Contains the new column values to write
    * @return The SQL required to update the instance
    */
-  protected String createUpdateSql(Database model, SqlTableClass dynaClass, SqlColumnProperty[] primaryKeys, SqlColumnProperty[] properties, RowObject oldBean, RowObject newBean) {
+  protected String createUpdateSql(Database model, TableClass dynaClass, ColumnProperty[] primaryKeys, ColumnProperty[] properties, RowObject oldBean, RowObject newBean) {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> oldColumnValues = toColumnValues(primaryKeys, oldBean);
     HashMap<String, Object> newColumnValues = toColumnValues(properties, newBean);
@@ -2026,9 +2026,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public String getUpdateSql(Database model, RowObject rowObject) {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
-    SqlColumnProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    ColumnProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
       _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
@@ -2043,9 +2043,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public String getUpdateSql(Database model, RowObject oldRowObject, RowObject newRowObject) {
-    SqlTableClass dynaClass = model.getDynaClassFor(oldRowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
-    SqlColumnProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(oldRowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    ColumnProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
       _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
@@ -2060,15 +2060,15 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void update(Connection connection, Database model, RowObject rowObject) throws DatabaseOperationException {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
       _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return;
     }
 
-    SqlColumnProperty[] properties = dynaClass.getNonPrimaryKeyProperties();
+    ColumnProperty[] properties = dynaClass.getNonPrimaryKeyProperties();
     String sql = createUpdateSql(model, dynaClass, primaryKeys, properties, null);
     PreparedStatement statement = null;
 
@@ -2082,10 +2082,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
       int sqlIndex = 1;
 
-      for (SqlColumnProperty property : properties) {
+      for (ColumnProperty property : properties) {
         setObject(statement, sqlIndex++, rowObject, property);
       }
-      for (SqlColumnProperty primaryKey : primaryKeys) {
+      for (ColumnProperty primaryKey : primaryKeys) {
         setObject(statement, sqlIndex++, rowObject, primaryKey);
       }
 
@@ -2124,10 +2124,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void update(Connection connection, Database model, RowObject oldRowObject, RowObject newRowObject) throws DatabaseOperationException {
-    SqlTableClass dynaClass = model.getDynaClassFor(oldRowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(oldRowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
-    if (!dynaClass.getTable().equals(model.getDynaClassFor(newRowObject).getTable())) {
+    if (!dynaClass.getTable().equals(model.getTableClassFor(newRowObject).getTable())) {
       throw new DatabaseOperationException("The old and new dyna beans need to be for the same table");
     }
     if (primaryKeys.length == 0) {
@@ -2135,7 +2135,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       return;
     }
 
-    SqlColumnProperty[] properties = dynaClass.getSqlDynaProperties();
+    ColumnProperty[] properties = dynaClass.getSqlDynaProperties();
     String sql = createUpdateSql(model, dynaClass, primaryKeys, properties, null, null);
     PreparedStatement statement = null;
 
@@ -2149,10 +2149,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
       int sqlIndex = 1;
 
-      for (SqlColumnProperty property : properties) {
+      for (ColumnProperty property : properties) {
         setObject(statement, sqlIndex++, newRowObject, property);
       }
-      for (SqlColumnProperty primaryKey : primaryKeys) {
+      for (ColumnProperty primaryKey : primaryKeys) {
         setObject(statement, sqlIndex++, oldRowObject, primaryKey);
       }
 
@@ -2226,8 +2226,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean exists(Connection connection, Database model, RowObject rowObject) {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
       return false;
@@ -2305,7 +2305,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean        Optionally the concrete bean to update
    * @return The SQL required to delete the instance
    */
-  protected String createDeleteSql(Database model, SqlTableClass dynaClass, SqlColumnProperty[] primaryKeys, RowObject bean) {
+  protected String createDeleteSql(Database model, TableClass dynaClass, ColumnProperty[] primaryKeys, RowObject bean) {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> pkValues = toColumnValues(primaryKeys, bean);
 
@@ -2317,8 +2317,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public String getDeleteSql(Database model, RowObject rowObject) {
-    SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-    SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+    TableClass dynaClass = model.getTableClassFor(rowObject);
+    ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
       _log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
@@ -2350,8 +2350,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     PreparedStatement statement = null;
 
     try {
-      SqlTableClass dynaClass = model.getDynaClassFor(rowObject);
-      SqlColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
+      TableClass dynaClass = model.getTableClassFor(rowObject);
+      ColumnProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
       if (primaryKeys.length == 0) {
         _log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
@@ -2481,10 +2481,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param bean       The bean
    * @return The values indexed by the column names
    */
-  protected HashMap<String, Object> toColumnValues(SqlColumnProperty[] properties, RowObject bean) {
+  protected HashMap<String, Object> toColumnValues(ColumnProperty[] properties, RowObject bean) {
     HashMap<String, Object> result = new HashMap<>();
 
-    for (SqlColumnProperty property : properties) {
+    for (ColumnProperty property : properties) {
       result.put(property.getName(),
         bean == null ? null : bean.get(property.getName()));
     }
@@ -2499,7 +2499,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param rowObject  The bean of which to take the value
    * @param property  The property of the bean, which also defines the corresponding column
    */
-  protected void setObject(PreparedStatement statement, int sqlIndex, RowObject rowObject, SqlColumnProperty property) throws SQLException {
+  protected void setObject(PreparedStatement statement, int sqlIndex, RowObject rowObject, ColumnProperty property) throws SQLException {
     int typeCode = property.getColumn().getTypeCode();
     Object value = rowObject.get(property.getName());
 

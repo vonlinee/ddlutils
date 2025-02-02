@@ -20,11 +20,11 @@ package org.apache.ddlutils.model;
  */
 
 import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.RuntimeSqlException;
+import org.apache.ddlutils.data.TableClass;
+import org.apache.ddlutils.data.TableClassCache;
 import org.apache.ddlutils.util.EqualsBuilder;
 import org.apache.ddlutils.util.HashCodeBuilder;
-import org.apache.ddlutils.data.TableClassCache;
-import org.apache.ddlutils.data.SqlTableClass;
-import org.apache.ddlutils.data.SqlDynaException;
 
 import java.io.Serializable;
 import java.sql.Types;
@@ -280,7 +280,7 @@ public class Database implements Serializable {
   /**
    * Initializes the model by establishing the relationships between elements in this model encoded
    * e.g. in foreign keys etc. Also checks that the model elements are valid (table and columns have
-   * a name, foreign keys rference existing tables etc.)
+   * a name, foreign keys reference existing tables etc.)
    */
   public void initialize() throws ModelException {
     // we have to set up
@@ -349,13 +349,13 @@ public class Database implements Serializable {
           Table targetTable = findTable(fk.getForeignTableName(), true);
 
           if (targetTable == null) {
-            throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined table " + fk.getForeignTableName());
+            throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined table " + fk.getForeignTableName());
           } else {
             fk.setForeignTable(targetTable);
           }
         }
         if (fk.getReferenceCount() == 0) {
-          throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " does not have any references");
+          throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " does not have any references");
         }
         for (int refIdx = 0; refIdx < fk.getReferenceCount(); refIdx++) {
           Reference ref = fk.getReference(refIdx);
@@ -364,7 +364,7 @@ public class Database implements Serializable {
             Column localColumn = curTable.findColumn(ref.getLocalColumnName(), true);
 
             if (localColumn == null) {
-              throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getLocalColumnName());
+              throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getLocalColumnName());
             } else {
               ref.setLocalColumn(localColumn);
             }
@@ -373,7 +373,7 @@ public class Database implements Serializable {
             Column foreignColumn = fk.getForeignTable().findColumn(ref.getForeignColumnName(), true);
 
             if (foreignColumn == null) {
-              throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getForeignColumnName() + " in table " + fk.getForeignTable().getName());
+              throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getForeignColumnName() + " in table " + fk.getForeignTable().getName());
             } else {
               ref.setForeignColumn(foreignColumn);
             }
@@ -502,7 +502,7 @@ public class Database implements Serializable {
    *
    * @return The dyna class cache
    */
-  private TableClassCache getDynaClassCache() {
+  private TableClassCache getTableClassCache() {
     if (_tableClassCache == null) {
       _tableClassCache = new TableClassCache();
     }
@@ -518,27 +518,26 @@ public class Database implements Serializable {
   }
 
   /**
-   * Returns the {@link SqlTableClass} for the given table name. If it does not
+   * Returns the {@link TableClass} for the given table name. If it does not
    * exist yet, a new one will be created based on the Table definition.
    *
    * @param tableName The name of the table to create the bean for
    * @return The <code>SqlDynaClass</code> for the indicated table or <code>null</code>
    * if the model contains no such table
    */
-  public SqlTableClass getDynaClassFor(String tableName) {
+  public TableClass getTableClassFor(String tableName) {
     Table table = findTable(tableName);
-
-    return table != null ? getDynaClassCache().getDynaClass(table) : null;
+    return table != null ? getTableClassCache().getTableClass(table) : null;
   }
 
   /**
-   * Returns the {@link SqlTableClass} for the given dyna bean.
+   * Returns the {@link TableClass} for the given dyna bean.
    *
    * @param bean The dyna bean
    * @return The <code>SqlDynaClass</code> for the given bean
    */
-  public SqlTableClass getDynaClassFor(RowObject bean) {
-    return getDynaClassCache().getDynaClass(bean);
+  public TableClass getTableClassFor(RowObject bean) {
+    return getTableClassCache().getTableClass(bean);
   }
 
   /**
@@ -547,20 +546,8 @@ public class Database implements Serializable {
    * @param table The table to create the bean for
    * @return The new dyna bean
    */
-  public RowObject createDynaBeanFor(Table table) throws SqlDynaException {
-    return getDynaClassCache().createNewInstance(table);
-  }
-
-  /**
-   * Convenience method that combines {@link #createDynaBeanFor(Table)} and
-   * {@link #findTable(String, boolean)}.
-   *
-   * @param tableName     The name of the table to create the bean for
-   * @param caseSensitive Whether case matters for the names
-   * @return The new dyna bean
-   */
-  public RowObject createDynaBeanFor(String tableName, boolean caseSensitive) throws SqlDynaException {
-    return getDynaClassCache().createNewInstance(findTable(tableName, caseSensitive));
+  public RowObject createRowObjectFor(Table table) throws RuntimeSqlException {
+    return getTableClassCache().createNewInstance(table);
   }
 
   /**
@@ -594,7 +581,6 @@ public class Database implements Serializable {
    */
   @Override
   public String toString() {
-
     return "Database [name=" +
       getName() +
       "; " +
@@ -609,7 +595,6 @@ public class Database implements Serializable {
    */
   public String toVerboseString() {
     StringBuilder result = new StringBuilder();
-
     result.append("Database [");
     result.append(getName());
     result.append("] tables:");
@@ -617,7 +602,6 @@ public class Database implements Serializable {
       result.append(" ");
       result.append(getTable(idx).toVerboseString());
     }
-
     return result.toString();
   }
 }

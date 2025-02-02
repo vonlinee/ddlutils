@@ -20,8 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlRowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Table;
@@ -117,8 +116,8 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param bean The bean to write
    */
-  public void write(SqlRowObject bean) throws DataWriterException {
-    SqlTableClass dynaClass = (SqlTableClass) bean.getDynaClass();
+  public void write(RowObject bean) throws DataWriterException {
+    TableClass dynaClass = bean.getTableClass();
     Table table = dynaClass.getTable();
     TableXmlWriter tableWriter = new TableXmlWriter(table);
     List<ColumnXmlWriter> columnWriters = new ArrayList<>();
@@ -153,10 +152,10 @@ public class DataWriter extends PrettyPrintingXmlWriter {
     while (beans.hasNext()) {
       RowObject bean = beans.next();
 
-      if (bean instanceof SqlRowObject) {
-        write((SqlRowObject) bean);
+      if (bean != null) {
+        write(bean);
       } else {
-        throw new DataWriterException("Cannot write normal dyna beans (type: " + bean.getDynaClass().getName() + ")");
+        throw new DataWriterException("Cannot write normal dyna beans (type: " + bean.getTableClass().getName() + ")");
       }
     }
   }

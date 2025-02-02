@@ -19,14 +19,10 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.ddlutils.data.BasicRowObject;
-import org.apache.ddlutils.data.BasicTableClass;
-import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.TableClass;
-import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.DatabaseOperationException;
-import org.apache.ddlutils.data.SqlRowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.data.ColumnProperty;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -44,7 +40,7 @@ import java.util.NoSuchElementException;
 
 /**
  * This is an iterator that is specifically targeted at traversing result sets.
- * If the query is against a known table, then {@link SqlRowObject} instances
+ * If the query is against a known table, then {@link RowObject} instances
  * are created from the rows, otherwise normal {@link RowObject} instances
  * are created.
  *
@@ -165,7 +161,7 @@ public class ModelBasedResultSetIterator implements Iterator<RowObject> {
       _columnsToProperties.put(columnName, propName);
     }
     if (singleKnownTable && (tableName != null)) {
-      _tableClass = model.getDynaClassFor(tableName);
+      _tableClass = model.getTableClassFor(tableName);
     } else {
       ColumnProperty[] props = new ColumnProperty[_columnsToProperties.size()];
       int idx = 0;
@@ -173,7 +169,7 @@ public class ModelBasedResultSetIterator implements Iterator<RowObject> {
       for (Iterator<String> it = _columnsToProperties.values().iterator(); it.hasNext(); idx++) {
         props[idx] = new ColumnProperty(it.next());
       }
-      _tableClass = new BasicTableClass("result", BasicRowObject.class, props);
+      _tableClass = new TableClass("result", props);
     }
   }
 
@@ -224,8 +220,8 @@ public class ModelBasedResultSetIterator implements Iterator<RowObject> {
         RowObject bean = _tableClass.newInstance();
         Table table = null;
 
-        if (bean instanceof SqlRowObject) {
-          SqlTableClass dynaClass = (SqlTableClass) bean.getDynaClass();
+        if (bean != null) {
+          TableClass dynaClass = bean.getTableClass();
 
           table = dynaClass.getTable();
         }

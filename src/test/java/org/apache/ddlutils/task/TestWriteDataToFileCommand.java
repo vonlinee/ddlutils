@@ -20,7 +20,7 @@ package org.apache.ddlutils.task;
  */
 
 import org.apache.ddlutils.data.RowObject;
-import org.apache.ddlutils.data.SqlTableClass;
+import org.apache.ddlutils.data.TableClass;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.task.command.WriteDataToFileCommand;
@@ -61,7 +61,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
 
       dataReader.setModel(getAdjustedModel());
       dataReader.setSink(bean -> {
-        String key = ((SqlTableClass) bean.getDynaClass()).getTableName();
+        String key = ((TableClass) bean.getTableClass()).getTableName();
         List<RowObject> beans = readData.computeIfAbsent(key, k -> new ArrayList<>());
         beans.add(bean);
       });

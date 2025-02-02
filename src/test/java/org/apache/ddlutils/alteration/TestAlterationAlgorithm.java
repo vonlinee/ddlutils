@@ -177,6 +177,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a table that has a foreign key to an existing one.
    */
+  @Test
   public void testAddTableWithForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -320,6 +321,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of a table with a foreign key to an existing table.
    */
+  @Test
   public void testRemoveTableWithForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -352,6 +354,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of a table that is referenced by a foreign key of an existing table.
    */
+  @Test
   public void testRemoveTableReferencedByForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -385,6 +388,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of two tables that have foreign key to each other.
    */
+  @Test
   public void testRemoveTablesWithForeignKeys() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -448,7 +452,7 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the addition of an unique index to an existing table.
+   * Tests the addition of a unique index to an existing table.
    */
   @Test
   public void testAddUniqueIndex() throws IOException {
@@ -508,8 +512,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the removal of an unique index from a table.
+   * Tests the removal of a unique index from a table.
    */
+  @Test
   public void testRemoveUniqueIndex() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -566,6 +571,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a primary key and a column to an existing table.
    */
+  @Test
   public void testAddPrimaryKeyAndColumn() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -634,6 +640,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a column to an existing table.
    */
+  @Test
   public void testAddColumn() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -698,6 +705,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a primary key column to an existing table.
    */
+  @Test
   public void testAddPrimaryKeyColumn() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -778,6 +786,7 @@ public class TestAlterationAlgorithm extends TestBase {
    * Tests the addition of columns to the primary key of a table and the foreign key
    * of another table referencing it.
    */
+  @Test
   public void testAddColumnsToPrimaryAndForeignKeys() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -998,7 +1007,7 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the addition of an unique index column to an existing table.
+   * Tests the addition of a unique index column to an existing table.
    */
   @Test
   public void testAddUniqueIndexColumn() throws IOException {
@@ -1035,8 +1044,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the removal of an unique index column from an existing table.
+   * Tests the removal of a unique index column from an existing table.
    */
+  @Test
   public void testRemoveUniqueIndexColumn() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1123,6 +1133,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a column to a table that has a foreign key.
    */
+  @Test
   public void testAddColumnToTableWithForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1164,6 +1175,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of a column to a table that is referenced by a foreign key.
    */
+  @Test
   public void testAddColumnToTableReferencedByForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1302,6 +1314,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of a column from a primary key.
    */
+  @Test
   public void testRemoveColumnFromPrimaryKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1343,6 +1356,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of existing columns to a primary and the referencing foreign key.
    */
+  @Test
   public void testAddExistingColumnsToPrimaryAndForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1403,6 +1417,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of existing columns from a primary and the referencing foreign key.
    */
+  @Test
   public void testRemoveExistingColumnsFromPrimaryAndForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1463,6 +1478,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of an existing column to an index.
    */
+  @Test
   public void testAddExistingColumnToIndex() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1499,6 +1515,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the addition of an existing column from an index.
    */
+  @Test
   public void testRemoveExistingColumnFromIndex() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1535,6 +1552,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the removal of a column from a table referenced by a foreign key.
    */
+  @Test
   public void testRemoveColumnFromTableReferencedByForeignKey() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1589,6 +1607,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a column's datatype.
    */
+  @Test
   public void testChangeColumnDatatype() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1630,6 +1649,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a primary key column's datatype.
    */
+  @Test
   public void testChangePrimaryKeyColumnDatatype() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1669,8 +1689,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the change of a index column's datatype.
+   * Tests the change of an index column's datatype.
    */
+  @Test
   public void testChangeIndexColumnDatatype() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1719,6 +1740,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of the datatype of the columns of a primary key and the referencing foreign key.
    */
+  @Test
   public void testChangePrimaryAndForeignKeyColumnsDatatype() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1788,6 +1810,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a column's size.
    */
+  @Test
   public void testChangeColumnSize() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1829,6 +1852,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a primary key column's size.
    */
+  @Test
   public void testChangePrimaryKeyColumnSize() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1868,8 +1892,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the change of a index column's size.
+   * Tests the change of an index column's size.
    */
+  @Test
   public void testChangeIndexColumnSize() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1918,6 +1943,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of the size of the columns of a primary key and the referencing foreign key.
    */
+  @Test
   public void testChangePrimaryAndForeignKeyColumnsSize() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1987,6 +2013,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a column's default value.
    */
+  @Test
   public void testChangeColumnDefault() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2028,6 +2055,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a primary key column's default value.
    */
+  @Test
   public void testChangePrimaryKeyColumnDefault() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2069,6 +2097,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a index column's default value.
    */
+  @Test
   public void testChangeIndexColumnDefault() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2117,6 +2146,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of the default value of the columns of a primary key and the referencing foreign key.
    */
+  @Test
   public void testChangePrimaryAndForeignKeyColumnsDefault() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2186,6 +2216,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a column's auto-increment attribute.
    */
+  @Test
   public void testChangeColumnAutoIncrement() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2227,6 +2258,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a primary key column's auto-increment attribute.
    */
+  @Test
   public void testChangePrimaryKeyColumnAutoIncrement() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2266,8 +2298,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the change of a index column's auto-increment attribute.
+   * Tests the change of an index column's auto-increment attribute.
    */
+  @Test
   public void testChangeIndexColumnAutoIncrement() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2317,6 +2350,7 @@ public class TestAlterationAlgorithm extends TestBase {
    * Tests the change of the auto-increment attribute of the columns of a primary key
    * and the referencing foreign key.
    */
+  @Test
   public void testChangePrimaryAndForeignKeyColumnsAutoIncrement() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2370,6 +2404,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a column's required attribute.
    */
+  @Test
   public void testChangeColumnRequired() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2411,6 +2446,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * Tests the change of a primary key column's required attribute.
    */
+  @Test
   public void testChangePrimaryKeyColumnRequired() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2450,8 +2486,9 @@ public class TestAlterationAlgorithm extends TestBase {
   }
 
   /**
-   * Tests the change of a index column's required attribute.
+   * Tests the change of an index column's required attribute.
    */
+  @Test
   public void testChangeIndexColumnRequired() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2501,6 +2538,7 @@ public class TestAlterationAlgorithm extends TestBase {
    * Tests the change of the required attribute of the columns of a primary key
    * and the referencing foreign key.
    */
+  @Test
   public void testChangePrimaryAndForeignKeyColumnsRequired() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

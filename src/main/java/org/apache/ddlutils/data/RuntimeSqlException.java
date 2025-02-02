@@ -26,7 +26,7 @@ import org.apache.ddlutils.DdlUtilsException;
  *
  * @version $Revision: 289996 $
  */
-public class SqlDynaException extends DdlUtilsException {
+public class RuntimeSqlException extends DdlUtilsException {
   /**
    * Constant for serializing instances of this class.
    */
@@ -35,7 +35,7 @@ public class SqlDynaException extends DdlUtilsException {
   /**
    * Creates a new empty exception object.
    */
-  public SqlDynaException() {
+  public RuntimeSqlException() {
     super();
   }
 
@@ -44,7 +44,7 @@ public class SqlDynaException extends DdlUtilsException {
    *
    * @param msg The exception message
    */
-  public SqlDynaException(String msg) {
+  public RuntimeSqlException(String msg) {
     super(msg);
   }
 
@@ -53,7 +53,7 @@ public class SqlDynaException extends DdlUtilsException {
    *
    * @param baseEx The base exception
    */
-  public SqlDynaException(Throwable baseEx) {
+  public RuntimeSqlException(Throwable baseEx) {
     super(baseEx);
   }
 
@@ -63,7 +63,7 @@ public class SqlDynaException extends DdlUtilsException {
    * @param msg    The exception message
    * @param baseEx The base exception
    */
-  public SqlDynaException(String msg, Throwable baseEx) {
+  public RuntimeSqlException(String msg, Throwable baseEx) {
     super(msg, baseEx);
   }
 
