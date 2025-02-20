@@ -21,6 +21,7 @@ package org.apache.ddlutils;
 
 import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.data.RowObject;
+import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
@@ -29,6 +30,9 @@ import org.apache.ddlutils.platform.SqlBuilder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -244,14 +248,14 @@ public interface Platform {
   Connection borrowConnection() throws DatabaseOperationException;
 
   /**
-   * Closes the given JDBC connection (returns it back to the pool if the datasource is poolable).
+   * Closes the given JDBC connection (returns it back to the pool if the datasource is pooled).
    *
    * @param connection The connection
    */
   void returnConnection(Connection connection);
 
   /**
-   * Executes a series of sql statements which must be seperated by the delimiter
+   * Executes a series of sql statements which must be separated by the delimiter
    * configured as {@link PlatformInfo#getSqlCommandDelimiter()} of the info object
    * of this platform.
    *
@@ -262,7 +266,7 @@ public interface Platform {
   int evaluateBatch(String sql, boolean continueOnError) throws DatabaseOperationException;
 
   /**
-   * Executes a series of sql statements which must be seperated by the delimiter
+   * Executes a series of sql statements which must be separated by the delimiter
    * configured as {@link PlatformInfo#getSqlCommandDelimiter()} of the info object
    * of this platform.
    * <p>
@@ -298,7 +302,7 @@ public interface Platform {
    * retrieve the connection information from it without establishing a connection.<br/>
    * The given connection url is the url that you'd use to connect to the already-created
    * database.<br/>
-   * On some platforms, this method suppurts additional parameters. These are documented in the
+   * On some platforms, this method supports additional parameters. These are documented in the
    * manual section for the individual platforms.
    *
    * @param jdbcDriverClassName The jdbc driver class name
@@ -684,7 +688,7 @@ public interface Platform {
   String getAlterTablesSql(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
 
   /**
-   * Alters the given live database model so that it match the desired model, using the default database conneciton.
+   * Alters the given live database model so that it match the desired model, using the default database connection.
    *
    * @param currentModel    The current database model
    * @param desiredModel    The desired database model
@@ -693,7 +697,7 @@ public interface Platform {
   void alterModel(Database currentModel, Database desiredModel, boolean continueOnError) throws DatabaseOperationException;
 
   /**
-   * Alters the given live database model so that it match the desired model, using the default database conneciton.
+   * Alters the given live database model so that it match the desired model, using the default database connection.
    *
    * @param currentModel    The current database model
    * @param desiredModel    The desired database model
@@ -1212,4 +1216,10 @@ public interface Platform {
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
   Database readModelFromDatabase(Connection connection, String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
+
+  Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException;
+
+  Object getObjectFromResultSet(ResultSet resultSet, Column column, int idx) throws SQLException;
+
+  void closeStatement(Statement stmt);
 }

@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.ddlutils.DatabaseOperationException;
+import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.data.RowObject;
 import org.apache.ddlutils.data.ColumnProperty;
 import org.apache.ddlutils.data.TableClass;
@@ -50,7 +51,7 @@ public class ModelBasedResultSetIterator implements Iterator<RowObject> {
   /**
    * The platform.
    */
-  private PlatformImplBase _platform;
+  private Platform _platform;
   /**
    * The base result set.
    */

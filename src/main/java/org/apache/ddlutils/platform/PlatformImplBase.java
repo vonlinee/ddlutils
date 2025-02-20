@@ -2559,7 +2559,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param table      The table
    * @return The value
    */
-  protected Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
+  @Override
+  public Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
     Column column = (table == null ? null : table.findColumn(columnName, isDelimitedIdentifierModeOn()));
     Object value;
 
@@ -2594,7 +2595,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param idx       The value's index in the result set (starting from 1)
    * @return The value
    */
-  protected Object getObjectFromResultSet(ResultSet resultSet, Column column, int idx) throws SQLException {
+  @Override
+  public Object getObjectFromResultSet(ResultSet resultSet, Column column, int idx) throws SQLException {
     int originalJdbcType = column.getTypeCode();
     int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
     int jdbcType = originalJdbcType;
