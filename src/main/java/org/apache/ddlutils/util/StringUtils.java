@@ -222,7 +222,7 @@ public class StringUtils {
    * StringUtils.padding(-2, 'e') = IndexOutOfBoundsException
    * </pre>
    *
-   * @param repeat  number of times to repeat delim
+   * @param repeat  number of times to repeat delimiter
    * @param padChar character to repeat
    * @return String with repeated character
    * @throws IndexOutOfBoundsException if <code>repeat &lt; 0</code>

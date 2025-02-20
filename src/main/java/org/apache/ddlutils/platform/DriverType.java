@@ -22,9 +22,9 @@ public interface DriverType {
   String getDriverClassName();
 
   /**
-   * Gets the subprotocol used by the driver.
+   * Gets the sub protocol used by the driver.
    *
-   * @return the subprotocol (e.g., "mysql").
+   * @return the sub protocol (e.g., "mysql").
    */
   String getSubProtocol();
 

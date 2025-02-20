@@ -174,7 +174,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
   }
 
   /**
-   * Extractes the default value from a default value spec of the form
+   * Extracts the default value from a default value spec of the form
    * "-9000000000000000000::bigint".
    *
    * @param defaultValue The default value spec
