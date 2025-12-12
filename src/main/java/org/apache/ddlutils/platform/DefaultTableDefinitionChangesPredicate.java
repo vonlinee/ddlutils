@@ -36,9 +36,9 @@ public class DefaultTableDefinitionChangesPredicate implements TableDefinitionCh
   /**
    * {@inheritDoc}
    */
-  public boolean areSupported(Table intermediateTable, List changes) {
-    for (Iterator changeIt = changes.iterator(); changeIt.hasNext(); ) {
-      TableChange change = (TableChange) changeIt.next();
+  public boolean areSupported(Table intermediateTable, List<TableChange> changes) {
+    for (Iterator<TableChange> changeIt = changes.iterator(); changeIt.hasNext(); ) {
+      TableChange change = changeIt.next();
 
       if (!isSupported(intermediateTable, change)) {
         return false;
@@ -62,10 +62,6 @@ public class DefaultTableDefinitionChangesPredicate implements TableDefinitionCh
              (!addColumnChange.getNewColumn().isRequired() ||
               (addColumnChange.getNewColumn().getDefaultValue() != null) ||
               addColumnChange.getNewColumn().isAutoIncrement());
-    } else if (change instanceof AddPrimaryKeyChange) {
-      return true;
-    } else {
-      return false;
-    }
+    } else return change instanceof AddPrimaryKeyChange;
   }
 }

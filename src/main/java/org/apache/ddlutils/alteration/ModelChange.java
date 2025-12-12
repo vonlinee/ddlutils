@@ -33,5 +33,5 @@ public interface ModelChange {
    * @param database      The database
    * @param caseSensitive Whether the case of names matters
    */
-  public void apply(Database database, boolean caseSensitive);
+  void apply(Database database, boolean caseSensitive);
 }

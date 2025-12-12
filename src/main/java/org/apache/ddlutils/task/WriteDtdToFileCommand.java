@@ -53,6 +53,7 @@ public class WriteDtdToFileCommand extends Command {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return true;
   }
@@ -60,6 +61,7 @@ public class WriteDtdToFileCommand extends Command {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     if (_outputFile == null) {
       throw new BuildException("No output file specified");

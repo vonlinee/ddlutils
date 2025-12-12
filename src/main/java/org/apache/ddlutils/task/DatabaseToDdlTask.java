@@ -215,21 +215,21 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * @return The table types
    */
   private String[] getTableTypes() {
-    if ((_tableTypes == null) || (_tableTypes.length() == 0)) {
+    if ((_tableTypes == null) || (_tableTypes.isEmpty())) {
       return new String[0];
     }
 
     StringTokenizer tokenizer = new StringTokenizer(_tableTypes, ",");
-    ArrayList result = new ArrayList();
+    ArrayList<String> result = new ArrayList<>();
 
     while (tokenizer.hasMoreTokens()) {
       String token = tokenizer.nextToken().trim();
 
-      if (token.length() > 0) {
+      if (!token.isEmpty()) {
         result.add(token);
       }
     }
-    return (String[]) result.toArray(new String[result.size()]);
+    return result.toArray(new String[0]);
   }
 
   /**
@@ -248,6 +248,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Database readModel() {
     if (getDataSource() == null) {
       throw new BuildException("No database specified.");

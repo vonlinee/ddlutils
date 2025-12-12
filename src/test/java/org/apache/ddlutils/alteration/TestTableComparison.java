@@ -53,7 +53,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -91,7 +91,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -129,7 +129,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -167,7 +167,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -206,7 +206,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -242,7 +242,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -278,7 +278,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -314,7 +314,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -350,7 +350,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -386,7 +386,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -422,7 +422,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -458,7 +458,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -494,7 +494,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -530,7 +530,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -566,7 +566,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -602,7 +602,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -640,7 +640,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -676,7 +676,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -712,7 +712,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -752,7 +752,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertTrue(changes.isEmpty());
   }
@@ -780,7 +780,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -816,7 +816,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -853,7 +853,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertTrue(changes.isEmpty());
   }
@@ -881,7 +881,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -917,7 +917,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -953,7 +953,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -993,7 +993,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -1036,7 +1036,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(2,
       changes.size());
@@ -1087,7 +1087,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(true).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(2,
       changes.size());
@@ -1132,7 +1132,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -1167,7 +1167,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());
@@ -1202,7 +1202,7 @@ public class TestTableComparison extends TestComparisonBase {
 
     Database model1 = parseDatabaseFromString(MODEL1);
     Database model2 = parseDatabaseFromString(MODEL2);
-    List changes = getPlatform(false).getChanges(model1, model2);
+    List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
       changes.size());

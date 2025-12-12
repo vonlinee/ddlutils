@@ -19,10 +19,10 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.util.StringUtilsExt;
 import org.xml.sax.InputSource;
 
 import javax.xml.namespace.QName;
@@ -243,9 +243,7 @@ public class DatabaseIO {
     try {
       reader = new FileReader(file);
       return read(getXMLInputFactory().createXMLStreamReader(reader));
-    } catch (XMLStreamException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (IOException ex) {
+    } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
     } finally {
       if (reader != null) {
@@ -268,7 +266,7 @@ public class DatabaseIO {
   public Database read(Reader reader) throws DdlUtilsXMLException {
     try {
       if (_validateXml) {
-        StringBuffer tmpXml = new StringBuffer();
+        StringBuilder tmpXml = new StringBuilder();
         char[] buf = new char[4096];
         int len;
 
@@ -280,9 +278,7 @@ public class DatabaseIO {
       } else {
         return read(getXMLInputFactory().createXMLStreamReader(reader));
       }
-    } catch (XMLStreamException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (IOException ex) {
+    } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
     }
   }
@@ -328,9 +324,7 @@ public class DatabaseIO {
       if (isSameAs(xmlReader.getName(), QNAME_ELEMENT_DATABASE)) {
         model = readDatabaseElement(xmlReader);
       }
-    } catch (IOException ex) {
-      throw new DdlUtilsXMLException(ex);
-    } catch (XMLStreamException ex) {
+    } catch (IOException | XMLStreamException ex) {
       throw new DdlUtilsXMLException(ex);
     }
     if (model != null) {
@@ -445,7 +439,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The column object
    */
-  private Column readColumnElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private Column readColumnElement(XMLStreamReader xmlReader) throws XMLStreamException {
     Column column = new Column();
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -670,7 +664,7 @@ public class DatabaseIO {
    * @return <code>true</code> if they are the same
    */
   private boolean isSameAs(QName curElemQName, QName qName) {
-    if (StringUtils.isEmpty(curElemQName.getNamespaceURI())) {
+    if (StringUtilsExt.isEmpty(curElemQName.getNamespaceURI())) {
       return qName.getLocalPart().equals(curElemQName.getLocalPart());
     } else {
       return qName.equals(curElemQName);
@@ -772,17 +766,9 @@ public class DatabaseIO {
    */
   public void write(Database model, String filename) throws DdlUtilsXMLException {
     try {
-      BufferedWriter writer = null;
-
-      try {
-        writer = new BufferedWriter(new FileWriter(filename));
-
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
         write(model, writer);
         writer.flush();
-      } finally {
-        if (writer != null) {
-          writer.close();
-        }
       }
     } catch (Exception ex) {
       throw new DdlUtilsXMLException(ex);

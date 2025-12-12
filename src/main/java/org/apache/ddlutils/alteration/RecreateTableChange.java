@@ -37,11 +37,11 @@ public class RecreateTableChange extends TableChangeImplBase {
   /**
    * The target table definition.
    */
-  private Table _targetTable;
+  private final Table _targetTable;
   /**
    * The original table changes, one of which is unsupported by the current platform.
    */
-  private List _originalChanges;
+  private final List<TableChange> _originalChanges;
 
   /**
    * Creates a new change object for recreating a table. This change is used to specify that a table needs
@@ -54,7 +54,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    *                        change object
    * @param originalChanges The original changes that this change object replaces
    */
-  public RecreateTableChange(String tableName, Table targetTable, List originalChanges) {
+  public RecreateTableChange(String tableName, Table targetTable, List<TableChange> originalChanges) {
     super(tableName);
     _targetTable = targetTable;
     _originalChanges = originalChanges;
@@ -65,7 +65,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    *
    * @return The table changes
    */
-  public List getOriginalChanges() {
+  public List<TableChange> getOriginalChanges() {
     return _originalChanges;
   }
 
@@ -83,6 +83,7 @@ public class RecreateTableChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database database, boolean caseSensitive) {
     // we only need to replace the table in the model, as there can't be a
     // foreign key from or to it when these kind of changes are created

@@ -32,7 +32,6 @@ import org.apache.ddlutils.platform.PlatformImplBase;
 import java.io.IOException;
 import java.sql.Types;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -101,6 +100,7 @@ public class FirebirdPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -108,6 +108,7 @@ public class FirebirdPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     ModelComparator comparator = super.getModelComparator();
 
@@ -118,18 +119,18 @@ public class FirebirdPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
-      public boolean areSupported(Table intermediateTable, List changes) {
+      @Override
+      public boolean areSupported(Table intermediateTable, List<TableChange> changes) {
         // Firebird does support adding a primary key, but only if none of the primary
         // key columns have been added within the same session
         if (super.areSupported(intermediateTable, changes)) {
-          HashSet addedColumns = new HashSet();
+          HashSet<String> addedColumns = new HashSet<>();
           String[] pkColNames = null;
 
-          for (Iterator it = changes.iterator(); it.hasNext(); ) {
-            TableChange change = (TableChange) it.next();
-
+          for (TableChange change : changes) {
             if (change instanceof AddColumnChange) {
               addedColumns.add(((AddColumnChange) change).getNewColumn().getName());
             } else if (change instanceof AddPrimaryKeyChange) {
@@ -139,8 +140,8 @@ public class FirebirdPlatform extends PlatformImplBase {
             }
           }
           if (pkColNames != null) {
-            for (int colIdx = 0; colIdx < pkColNames.length; colIdx++) {
-              if (addedColumns.contains(pkColNames[colIdx])) {
+            for (String pkColName : pkColNames) {
+              if (addedColumns.contains(pkColName)) {
                 return false;
               }
             }
@@ -151,6 +152,7 @@ public class FirebirdPlatform extends PlatformImplBase {
         }
       }
 
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         // Firebird cannot add columns to the primary key or drop columns from it but
         // since we add/drop the primary key with separate changes anyways, this will
@@ -177,6 +179,7 @@ public class FirebirdPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
+  @Override
   public void processChange(Database currentModel,
                             CreationParameters params,
                             AddColumnChange change) throws IOException {

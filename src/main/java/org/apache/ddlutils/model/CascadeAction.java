@@ -19,7 +19,7 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import java.util.*;
+import java.util.Objects;
 
 /**
  * Represents the different cascade actions for the <code>onDelete</code> and
@@ -57,14 +57,12 @@ public enum CascadeAction {
    */
   NONE("none", 5);
 
-  private final String name;
-
-  private final int value;
-
   /**
    * Version id for this class as relevant for serialization.
    */
   private static final long serialVersionUID = -6378050861446415790L;
+  private final String name;
+  private final int value;
 
   /**
    * Creates a new enum object.

@@ -24,7 +24,6 @@ import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ public class ColumnOrderChange extends TableChangeImplBase {
   /**
    * The map containing the new positions keyed by the source columns.
    */
-  private Map _newPositions;
+  private final Map<String, Integer> _newPositions;
 
   /**
    * Creates a new change object.
@@ -44,7 +43,7 @@ public class ColumnOrderChange extends TableChangeImplBase {
    * @param tableName    The name of the table whose primary key is to be changed
    * @param newPositions The map containing the new positions keyed by the source column names
    */
-  public ColumnOrderChange(String tableName, Map newPositions) {
+  public ColumnOrderChange(String tableName, Map<String, Integer> newPositions) {
     super(tableName);
     _newPositions = newPositions;
   }
@@ -60,27 +59,26 @@ public class ColumnOrderChange extends TableChangeImplBase {
     Integer newPos = null;
 
     if (caseSensitive) {
-      newPos = (Integer) _newPositions.get(sourceColumnName);
+      newPos = _newPositions.get(sourceColumnName);
     } else {
-      for (Iterator it = _newPositions.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry entry = (Map.Entry) it.next();
-
-        if (sourceColumnName.equalsIgnoreCase((String) entry.getKey())) {
-          newPos = (Integer) entry.getValue();
+      for (Map.Entry<String, Integer> entry : _newPositions.entrySet()) {
+        if (sourceColumnName.equalsIgnoreCase(entry.getKey())) {
+          newPos = entry.getValue();
           break;
         }
       }
     }
 
-    return newPos == null ? -1 : newPos.intValue();
+    return newPos == null ? -1 : newPos;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database database, boolean caseSensitive) {
     Table table = findChangedTable(database, caseSensitive);
-    ArrayList newColumns = new ArrayList();
+    ArrayList<Column> newColumns = new ArrayList<>();
 
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       newColumns.add(table.getColumn(idx));

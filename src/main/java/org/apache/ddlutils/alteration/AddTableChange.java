@@ -33,7 +33,7 @@ public class AddTableChange implements ModelChange {
   /**
    * The new table.
    */
-  private Table _newTable;
+  private final Table _newTable;
 
   /**
    * Creates a new change object.
@@ -59,6 +59,7 @@ public class AddTableChange implements ModelChange {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database database, boolean caseSensitive) {
     Table table = new CloneHelper().clone(_newTable, true, false, database, caseSensitive);
 

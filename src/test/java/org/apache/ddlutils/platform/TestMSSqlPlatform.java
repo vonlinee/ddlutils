@@ -34,6 +34,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return MSSqlPlatform.DATABASENAME;
   }
@@ -46,7 +47,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
 
     // Since we have no way of knowing the auto-generated variables in the SQL,
     // we simply try to extract it from the SQL
-    Pattern declarePattern = Pattern.compile("DECLARE @([\\S]+) [^@]+@([\\S]+)");
+    Pattern declarePattern = Pattern.compile("DECLARE @(\\S+) [^@]+@(\\S+)");
     Matcher matcher = declarePattern.matcher(sql);
     String tableNameVar = "tablename";
     String constraintNameVar = "constraintname";
@@ -122,7 +123,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
 
     // Since we have no way of knowing the auto-generated variables in the SQL,
     // we simply try to extract it from the SQL
-    Pattern declarePattern = Pattern.compile("DECLARE @([\\S]+) [^@]+@([\\S]+)");
+    Pattern declarePattern = Pattern.compile("DECLARE @(\\S+) [^@]+@(\\S+)");
     Matcher matcher = declarePattern.matcher(sql);
     String tableNameVar = "tablename";
     String constraintNameVar = "constraintname";
@@ -174,7 +175,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
 
     // Since we have no way of knowing the auto-generated variables in the SQL,
     // we simply try to extract it from the SQL
-    Pattern declarePattern = Pattern.compile("DECLARE @([\\S]+) [^@]+@([\\S]+)");
+    Pattern declarePattern = Pattern.compile("DECLARE @(\\S+) [^@]+@(\\S+)");
     Matcher matcher = declarePattern.matcher(sql);
     int startPos = 0;
     String[] tableNameVars = {"tablename", "tablename", "tablename"};
@@ -287,7 +288,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
 
     // Since we have no way of knowing the auto-generated variables in the SQL,
     // we simply try to extract it from the SQL
-    Pattern declarePattern = Pattern.compile("DECLARE @([\\S]+) [^@]+@([\\S]+)");
+    Pattern declarePattern = Pattern.compile("DECLARE @(\\S+) [^@]+@(\\S+)");
     Matcher matcher = declarePattern.matcher(sql);
     String tableNameVar = "tablename";
     String constraintNameVar = "constraintname";
@@ -320,7 +321,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
       "CREATE TABLE \"escapedcharacters\"\n" +
       "(\n" +
       "    \"COL_PK\"   INT,\n" +
-      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '\'\'',\n" +
+      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '''',\n" +
       "    PRIMARY KEY (\"COL_PK\")\n" +
       ");\n",
       sql);

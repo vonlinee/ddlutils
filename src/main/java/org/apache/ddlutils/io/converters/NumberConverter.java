@@ -33,6 +33,7 @@ public class NumberConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     if (textRep == null) {
       return null;

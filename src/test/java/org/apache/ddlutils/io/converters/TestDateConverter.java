@@ -39,6 +39,7 @@ public class TestDateConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     _dateConverter = new DateConverter();
@@ -47,6 +48,7 @@ public class TestDateConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     _dateConverter = null;
     super.tearDown();
@@ -61,7 +63,7 @@ public class TestDateConverter extends TestCase {
 
     cal.setLenient(false);
     cal.clear();
-    cal.set(2005, 11, 19);
+    cal.set(2005, Calendar.DECEMBER, 19);
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
@@ -78,7 +80,7 @@ public class TestDateConverter extends TestCase {
 
     cal.setLenient(false);
     cal.clear();
-    cal.set(2005, 11, 1);
+    cal.set(2005, Calendar.DECEMBER, 1);
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
@@ -94,7 +96,7 @@ public class TestDateConverter extends TestCase {
     Calendar cal = Calendar.getInstance();
 
     cal.clear();
-    cal.set(2005, 0, 1);
+    cal.set(2005, Calendar.JANUARY, 1);
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
@@ -110,7 +112,7 @@ public class TestDateConverter extends TestCase {
     Calendar cal = Calendar.getInstance();
 
     cal.clear();
-    cal.set(2005, 5, 7);
+    cal.set(2005, Calendar.JUNE, 7);
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
@@ -134,9 +136,7 @@ public class TestDateConverter extends TestCase {
    * Tests handling of null.
    */
   public void testConvertFromStringWithNullTextRep() {
-    String textRep = null;
-    Object result = _dateConverter.convertFromString(textRep, Types.DATE);
-
+    Object result = _dateConverter.convertFromString(null, Types.DATE);
     assertNull(result);
   }
 
@@ -176,7 +176,7 @@ public class TestDateConverter extends TestCase {
 
     cal.setLenient(false);
     cal.clear();
-    cal.set(2005, 11, 19);
+    cal.set(2005, Calendar.DECEMBER, 19);
 
     Date date = new Date(cal.getTimeInMillis());
     String result = _dateConverter.convertToString(date, Types.DATE);
@@ -189,8 +189,7 @@ public class TestDateConverter extends TestCase {
    * Tests converting a null.
    */
   public void testConvertToStringWithNullDate() {
-    Date date = null;
-    String result = _dateConverter.convertToString(date, Types.DATE);
+    String result = _dateConverter.convertToString(null, Types.DATE);
 
     assertNull(result);
   }

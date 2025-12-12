@@ -33,7 +33,7 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
   /**
    * The column's name.
    */
-  private String _columnName;
+  private final String _columnName;
 
   /**
    * Creates a new change object.
@@ -49,6 +49,7 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getChangedColumn() {
     return _columnName;
   }
@@ -56,6 +57,7 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
   /**
    * {@inheritDoc}
    */
+  @Override
   public Column findChangedColumn(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 

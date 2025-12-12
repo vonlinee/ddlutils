@@ -33,7 +33,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -83,6 +82,7 @@ public class DerbyPlatform extends CloudscapePlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -90,32 +90,31 @@ public class DerbyPlatform extends CloudscapePlatform {
   /**
    * {@inheritDoc}
    */
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException {
+  @Override
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // For Derby, you create databases by simply appending ";create=true" to the connection url
     if (JDBC_DRIVER.equals(jdbcDriverClassName) ||
         JDBC_DRIVER_EMBEDDED.equals(jdbcDriverClassName)) {
-      StringBuffer creationUrl = new StringBuffer();
+      StringBuilder creationUrl = new StringBuilder();
       Connection connection = null;
 
       creationUrl.append(connectionUrl);
       creationUrl.append(";create=true");
       if ((parameters != null) && !parameters.isEmpty()) {
-        for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-          Map.Entry entry = (Map.Entry) it.next();
-
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
           // no need to specify create twice (and create=false wouldn't help anyway)
-          if (!"create".equalsIgnoreCase(entry.getKey().toString())) {
+          if (!"create".equalsIgnoreCase(entry.getKey())) {
             creationUrl.append(";");
-            creationUrl.append(entry.getKey().toString());
+            creationUrl.append(entry.getKey());
             creationUrl.append("=");
             if (entry.getValue() != null) {
-              creationUrl.append(entry.getValue().toString());
+              creationUrl.append(entry.getValue());
             }
           }
         }
       }
       if (getLog().isDebugEnabled()) {
-        getLog().debug("About to create database using this URL: " + creationUrl.toString());
+        getLog().debug("About to create database using this URL: " + creationUrl);
       }
       try {
         Class.forName(jdbcDriverClassName);
@@ -140,8 +139,10 @@ public class DerbyPlatform extends CloudscapePlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         // Derby cannot add IDENTITY columns
         if ((change instanceof AddColumnChange) &&

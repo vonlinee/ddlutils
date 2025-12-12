@@ -31,6 +31,7 @@ public class TestAxionPlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return AxionPlatform.DATABASENAME;
   }
@@ -145,7 +146,7 @@ public class TestAxionPlatform extends TestPlatformBase {
       "CREATE TABLE escapedcharacters\n" +
       "(\n" +
       "    COL_PK   INTEGER,\n" +
-      "    COL_TEXT VARCHAR(128) DEFAULT '\'\'',\n" +
+      "    COL_TEXT VARCHAR(128) DEFAULT '''',\n" +
       "    PRIMARY KEY (COL_PK)\n" +
       ");\n",
       getCharEscapingTestDatabaseCreationSql());

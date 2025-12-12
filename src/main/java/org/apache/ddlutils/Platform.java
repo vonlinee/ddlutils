@@ -20,6 +20,7 @@ package org.apache.ddlutils;
  */
 
 import org.apache.commons.beanutils.DynaBean;
+import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
@@ -45,70 +46,70 @@ public interface Platform {
    *
    * @return The name
    */
-  public String getName();
+  String getName();
 
   /**
    * Returns the info object for this platform.
    *
    * @return The info object
    */
-  public PlatformInfo getPlatformInfo();
+  PlatformInfo getPlatformInfo();
 
   /**
    * Returns the sql builder for the this platform.
    *
    * @return The sql builder
    */
-  public SqlBuilder getSqlBuilder();
+  SqlBuilder getSqlBuilder();
 
   /**
    * Returns the model reader (which reads a database model from a live database) for this platform.
    *
    * @return The model reader
    */
-  public JdbcModelReader getModelReader();
+  JdbcModelReader getModelReader();
 
   /**
    * Returns the data source that this platform uses to access the database.
    *
    * @return The data source
    */
-  public DataSource getDataSource();
+  DataSource getDataSource();
 
   /**
    * Sets the data source that this platform shall use to access the database.
    *
    * @param dataSource The data source
    */
-  public void setDataSource(DataSource dataSource);
+  void setDataSource(DataSource dataSource);
 
   /**
    * Returns the username that this platform shall use to access the database.
    *
    * @return The username
    */
-  public String getUsername();
+  String getUsername();
 
   /**
    * Sets the username that this platform shall use to access the database.
    *
    * @param username The username
    */
-  public void setUsername(String username);
+  void setUsername(String username);
 
   /**
    * Returns the password that this platform shall use to access the database.
    *
    * @return The password
    */
-  public String getPassword();
+  String getPassword();
 
   /**
    * Sets the password that this platform shall use to access the database.
    *
    * @param password The password
    */
-  public void setPassword(String password);
+  void setPassword(String password);
 
   // runtime properties
 
@@ -119,7 +120,7 @@ public interface Platform {
    *
    * @return <code>true</code> if script mode is on
    */
-  public boolean isScriptModeOn();
+  boolean isScriptModeOn();
 
   /**
    * Specifies whether script mode is on. This means that the generated SQL is not
@@ -128,7 +129,7 @@ public interface Platform {
    *
    * @param scriptModeOn <code>true</code> if script mode is on
    */
-  public void setScriptModeOn(boolean scriptModeOn);
+  void setScriptModeOn(boolean scriptModeOn);
 
   /**
    * Determines whether delimited identifiers are used or normal SQL92 identifiers
@@ -138,28 +139,28 @@ public interface Platform {
    *
    * @return <code>true</code> if delimited identifiers are used
    */
-  public boolean isDelimitedIdentifierModeOn();
+  boolean isDelimitedIdentifierModeOn();
 
   /**
    * Specifies whether delimited identifiers are used or normal SQL92 identifiers.
    *
    * @param delimitedIdentifierModeOn <code>true</code> if delimited identifiers shall be used
    */
-  public void setDelimitedIdentifierModeOn(boolean delimitedIdentifierModeOn);
+  void setDelimitedIdentifierModeOn(boolean delimitedIdentifierModeOn);
 
   /**
    * Determines whether SQL comments are generated.
    *
    * @return <code>true</code> if SQL comments shall be generated
    */
-  public boolean isSqlCommentsOn();
+  boolean isSqlCommentsOn();
 
   /**
    * Specifies whether SQL comments shall be generated.
    *
    * @param sqlCommentsOn <code>true</code> if SQL comments shall be generated
    */
-  public void setSqlCommentsOn(boolean sqlCommentsOn);
+  void setSqlCommentsOn(boolean sqlCommentsOn);
 
   /**
    * Determines whether SQL insert statements can specify values for identity columns.
@@ -169,7 +170,7 @@ public interface Platform {
    *
    * @return <code>true</code> if identity override is enabled (the default)
    */
-  public boolean isIdentityOverrideOn();
+  boolean isIdentityOverrideOn();
 
   /**
    * Specifies whether SQL insert statements can specify values for identity columns.
@@ -179,7 +180,7 @@ public interface Platform {
    *
    * @param identityOverrideOn <code>true</code> if identity override is enabled (the default)
    */
-  public void setIdentityOverrideOn(boolean identityOverrideOn);
+  void setIdentityOverrideOn(boolean identityOverrideOn);
 
   /**
    * Determines whether foreign keys of a table read from a live database
@@ -187,7 +188,7 @@ public interface Platform {
    *
    * @return <code>true</code> if read foreign keys are sorted
    */
-  public boolean isForeignKeysSorted();
+  boolean isForeignKeysSorted();
 
   /**
    * Specifies whether foreign keys read from a live database, shall be
@@ -195,7 +196,7 @@ public interface Platform {
    *
    * @param foreignKeysSorted <code>true</code> if read foreign keys shall be sorted
    */
-  public void setForeignKeysSorted(boolean foreignKeysSorted);
+  void setForeignKeysSorted(boolean foreignKeysSorted);
 
   /**
    * Determines whether the default action for ON UPDATE is used if the specified one is not supported by the platform.
@@ -204,7 +205,7 @@ public interface Platform {
    *
    * @return <code>true</code> if the default action is used
    */
-  public boolean isDefaultOnUpdateActionUsedIfUnsupported();
+  boolean isDefaultOnUpdateActionUsedIfUnsupported();
 
   /**
    * Specifies whether the default action for ON UPDATE shall be used if the specified one is not supported by the platform.
@@ -213,7 +214,7 @@ public interface Platform {
    *
    * @param useDefault If <code>true</code> then the default action will be used
    */
-  public void setDefaultOnUpdateActionUsedIfUnsupported(boolean useDefault);
+  void setDefaultOnUpdateActionUsedIfUnsupported(boolean useDefault);
 
   /**
    * Determines whether the default action for ON DELETE is used if the specified one is not supported by the platform.
@@ -222,7 +223,7 @@ public interface Platform {
    *
    * @return <code>true</code> if the default action is used
    */
-  public boolean isDefaultOnDeleteActionUsedIfUnsupported();
+  boolean isDefaultOnDeleteActionUsedIfUnsupported();
 
   /**
    * Specifies whether the default action for ON DELETE shall be used if the specified one is not supported by the platform.
@@ -231,7 +232,7 @@ public interface Platform {
    *
    * @param useDefault If <code>true</code> then the default action will be used
    */
-  public void setDefaultOnDeleteActionUsedIfUnsupported(boolean useDefault);
+  void setDefaultOnDeleteActionUsedIfUnsupported(boolean useDefault);
 
   // functionality
 
@@ -240,14 +241,14 @@ public interface Platform {
    *
    * @return The connection
    */
-  public Connection borrowConnection() throws DatabaseOperationException;
+  Connection borrowConnection() throws DatabaseOperationException;
 
   /**
    * Closes the given JDBC connection (returns it back to the pool if the datasource is poolable).
    *
    * @param connection The connection
    */
-  public void returnConnection(Connection connection);
+  void returnConnection(Connection connection);
 
   /**
    * Executes a series of sql statements which must be seperated by the delimiter
@@ -258,7 +259,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @return The number of errors
    */
-  public int evaluateBatch(String sql, boolean continueOnError) throws DatabaseOperationException;
+  int evaluateBatch(String sql, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Executes a series of sql statements which must be seperated by the delimiter
@@ -273,14 +274,14 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @return The number of errors
    */
-  public int evaluateBatch(Connection connection, String sql, boolean continueOnError) throws DatabaseOperationException;
+  int evaluateBatch(Connection connection, String sql, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Performs a shutdown at the database. This is necessary for some embedded databases which otherwise
    * would be locked and thus would refuse other connections. Note that this does not change the database
    * structure or data in it in any way.
    */
-  public void shutdownDatabase() throws DatabaseOperationException;
+  void shutdownDatabase() throws DatabaseOperationException;
 
   /**
    * Performs a shutdown at the database. This is necessary for some embedded databases which otherwise
@@ -289,7 +290,7 @@ public interface Platform {
    *
    * @param connection The connection to the database
    */
-  public void shutdownDatabase(Connection connection) throws DatabaseOperationException;
+  void shutdownDatabase(Connection connection) throws DatabaseOperationException;
 
   /**
    * Creates the database specified by the given parameters. Please note that this method does not
@@ -306,7 +307,7 @@ public interface Platform {
    * @param password            The password for creating the database
    * @param parameters          Additional parameters relevant to database creation (which are platform specific)
    */
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException;
+  void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException;
 
   /**
    * Drops the database specified by the given parameters. Please note that this method does not
@@ -318,7 +319,7 @@ public interface Platform {
    * @param username            The username for creating the database
    * @param password            The password for creating the database
    */
-  public void dropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password) throws DatabaseOperationException, UnsupportedOperationException;
+  void dropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password) throws DatabaseOperationException, UnsupportedOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -328,7 +329,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #createModel(Database, boolean, boolean)} instead.
    */
-  public void createTables(Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createTables(Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -339,7 +340,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #createModel(Connection, Database, boolean, boolean)} instead.
    */
-  public void createTables(Connection connection, Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createTables(Connection connection, Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -350,7 +351,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #createModel(Database, CreationParameters, boolean, boolean)} instead.
    */
-  public void createTables(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createTables(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -362,7 +363,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #createModel(Connection, Database, CreationParameters, boolean, boolean)} instead.
    */
-  public void createTables(Connection connection, Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createTables(Connection connection, Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for creating the tables defined in the database model.
@@ -373,7 +374,7 @@ public interface Platform {
    * @return The SQL statements
    * @deprecated Use {@link #getCreateModelSql(Database, boolean, boolean)} instead.
    */
-  public String getCreateTablesSql(Database model, boolean dropTablesFirst, boolean continueOnError);
+  String getCreateTablesSql(Database model, boolean dropTablesFirst, boolean continueOnError);
 
   /**
    * Returns the SQL for creating the tables defined in the database model.
@@ -385,7 +386,7 @@ public interface Platform {
    * @return The SQL statements
    * @deprecated Use {@link #getCreateModelSql(Database, CreationParameters, boolean, boolean)} instead.
    */
-  public String getCreateTablesSql(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError);
+  String getCreateTablesSql(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError);
 
   /**
    * Creates the tables defined in the database model.
@@ -394,7 +395,7 @@ public interface Platform {
    * @param dropTablesFirst Whether to drop the tables prior to creating them (anew)
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void createModel(Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createModel(Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -404,7 +405,7 @@ public interface Platform {
    * @param dropTablesFirst Whether to drop the tables prior to creating them (anew)
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void createModel(Connection connection, Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createModel(Connection connection, Database model, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -414,7 +415,7 @@ public interface Platform {
    * @param dropTablesFirst Whether to drop the tables prior to creating them (anew)
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void createModel(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createModel(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Creates the tables defined in the database model.
@@ -425,7 +426,7 @@ public interface Platform {
    * @param dropTablesFirst Whether to drop the tables prior to creating them (anew)
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void createModel(Connection connection, Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
+  void createModel(Connection connection, Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for creating the tables defined in the database model.
@@ -435,7 +436,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @return The SQL statements
    */
-  public String getCreateModelSql(Database model, boolean dropTablesFirst, boolean continueOnError);
+  String getCreateModelSql(Database model, boolean dropTablesFirst, boolean continueOnError);
 
   /**
    * Returns the SQL for creating the tables defined in the database model.
@@ -446,7 +447,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @return The SQL statements
    */
-  public String getCreateModelSql(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError);
+  String getCreateModelSql(Database model, CreationParameters params, boolean dropTablesFirst, boolean continueOnError);
 
   /**
    * Returns the necessary changes to apply to the current database to make it the desired one.
@@ -456,7 +457,7 @@ public interface Platform {
    * @param desiredModel The desired model
    * @return The list of changes, adjusted to the platform and sorted for execution
    */
-  public List getChanges(Database currentModel, Database desiredModel);
+  List<ModelChange> getChanges(Database currentModel, Database desiredModel);
 
   /**
    * Alters the database schema so that it match the given model.
@@ -466,7 +467,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Database, Database, boolean)} together with
    * {@link #readModelFromDatabase(String)} instead.
    */
-  public void alterTables(Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -477,7 +478,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Database, Database, CreationParameters, boolean)} together with
    * {@link #readModelFromDatabase(String)} instead.
    */
-  public void alterTables(Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -493,7 +494,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Database, Database, boolean)} together with
    * {@link #readModelFromDatabase(String, String, String, String[])} instead.
    */
-  public void alterTables(String catalog, String schema, String[] tableTypes, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(String catalog, String schema, String[] tableTypes, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -510,7 +511,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Database, Database, CreationParameters, boolean)} together with
    * {@link #readModelFromDatabase(String, String, String, String[])} instead.
    */
-  public void alterTables(String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -521,7 +522,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Connection, Database, Database, boolean)} together with
    * {@link #readModelFromDatabase(Connection, String)} instead.
    */
-  public void alterTables(Connection connection, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Connection connection, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -533,7 +534,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Connection, Database, Database, CreationParameters, boolean)} together with
    * {@link #readModelFromDatabase(Connection, String)} instead.
    */
-  public void alterTables(Connection connection, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Connection connection, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -550,7 +551,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Connection, Database, Database, boolean)} together with
    * {@link #readModelFromDatabase(Connection, String, String, String, String[])} instead.
    */
-  public void alterTables(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the database schema so that it match the given model.
@@ -568,7 +569,7 @@ public interface Platform {
    * @deprecated Use {@link #alterModel(Connection, Database, Database, CreationParameters, boolean)} together with
    * {@link #readModelFromDatabase(Connection, String, String, String, String[])} instead.
    */
-  public void alterTables(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterTables(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -578,7 +579,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database)} together with
    * {@link #readModelFromDatabase(String)} instead.
    */
-  public String getAlterTablesSql(Database desiredDb) throws DatabaseOperationException;
+  String getAlterTablesSql(Database desiredDb) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -589,7 +590,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database, CreationParameters)} together with
    * {@link #readModelFromDatabase(String)} instead.
    */
-  public String getAlterTablesSql(Database desiredDb, CreationParameters params) throws DatabaseOperationException;
+  String getAlterTablesSql(Database desiredDb, CreationParameters params) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -605,7 +606,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database)} together with
    * {@link #readModelFromDatabase(String, String, String, String[])} instead.
    */
-  public String getAlterTablesSql(String catalog, String schema, String[] tableTypes, Database desiredDb) throws DatabaseOperationException;
+  String getAlterTablesSql(String catalog, String schema, String[] tableTypes, Database desiredDb) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -622,7 +623,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database, CreationParameters)} together with
    * {@link #readModelFromDatabase(String, String, String, String[])} instead.
    */
-  public String getAlterTablesSql(String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
+  String getAlterTablesSql(String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -633,7 +634,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database)} together with
    * {@link #readModelFromDatabase(Connection, String)} instead.
    */
-  public String getAlterTablesSql(Connection connection, Database desiredDb) throws DatabaseOperationException;
+  String getAlterTablesSql(Connection connection, Database desiredDb) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -645,7 +646,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database, CreationParameters)} together with
    * {@link #readModelFromDatabase(Connection, String)} instead.
    */
-  public String getAlterTablesSql(Connection connection, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
+  String getAlterTablesSql(Connection connection, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -662,7 +663,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database)} together with
    * {@link #readModelFromDatabase(Connection, String, String, String, String[])} instead.
    */
-  public String getAlterTablesSql(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb) throws DatabaseOperationException;
+  String getAlterTablesSql(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the database schema so that it match the given model.
@@ -680,7 +681,7 @@ public interface Platform {
    * @deprecated Use {@link #getAlterModelSql(Database, Database, CreationParameters)} together with
    * {@link #readModelFromDatabase(Connection, String, String, String, String[])} instead.
    */
-  public String getAlterTablesSql(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
+  String getAlterTablesSql(Connection connection, String catalog, String schema, String[] tableTypes, Database desiredDb, CreationParameters params) throws DatabaseOperationException;
 
   /**
    * Alters the given live database model so that it match the desired model, using the default database conneciton.
@@ -689,7 +690,7 @@ public interface Platform {
    * @param desiredModel    The desired database model
    * @param continueOnError Whether to continue with the next sql statement when an error occurred
    */
-  public void alterModel(Database currentModel, Database desiredModel, boolean continueOnError) throws DatabaseOperationException;
+  void alterModel(Database currentModel, Database desiredModel, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the given live database model so that it match the desired model, using the default database conneciton.
@@ -699,7 +700,7 @@ public interface Platform {
    * @param params          The parameters used in the creation
    * @param continueOnError Whether to continue with the next sql statement when an error occurred
    */
-  public void alterModel(Database currentModel, Database desiredModel, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterModel(Database currentModel, Database desiredModel, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the given live database model so that it match the desired model.
@@ -709,7 +710,7 @@ public interface Platform {
    * @param desiredModel    The desired database model
    * @param continueOnError Whether to continue with the next sql statement when an error occurred
    */
-  public void alterModel(Connection connection, Database currentModel, Database desiredModel, boolean continueOnError) throws DatabaseOperationException;
+  void alterModel(Connection connection, Database currentModel, Database desiredModel, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Alters the given live database model so that it match the desired model.
@@ -720,7 +721,7 @@ public interface Platform {
    * @param params          The parameters used in the creation
    * @param continueOnError Whether to continue with the next sql statement when an error occurred
    */
-  public void alterModel(Connection connection, Database currentModel, Database desiredModel, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
+  void alterModel(Connection connection, Database currentModel, Database desiredModel, CreationParameters params, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the given current model so that it match the desired model.
@@ -729,7 +730,7 @@ public interface Platform {
    * @param desiredModel The desired database model
    * @return The SQL statements
    */
-  public String getAlterModelSql(Database currentModel, Database desiredModel) throws DatabaseOperationException;
+  String getAlterModelSql(Database currentModel, Database desiredModel) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for altering the given current model so that it match the desired model.
@@ -739,7 +740,7 @@ public interface Platform {
    * @param params       The parameters used in the creation of tables etc.
    * @return The SQL statements
    */
-  public String getAlterModelSql(Database currentModel, Database desiredModel, CreationParameters params) throws DatabaseOperationException;
+  String getAlterModelSql(Database currentModel, Database desiredModel, CreationParameters params) throws DatabaseOperationException;
 
   /**
    * Drops the specified table and all foreign keys pointing to it.
@@ -748,7 +749,7 @@ public interface Platform {
    * @param table           The table to drop
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void dropTable(Database model, Table table, boolean continueOnError) throws DatabaseOperationException;
+  void dropTable(Database model, Table table, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for dropping the given table and all foreign keys pointing to it.
@@ -758,7 +759,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @return The SQL statements
    */
-  public String getDropTableSql(Database model, Table table, boolean continueOnError);
+  String getDropTableSql(Database model, Table table, boolean continueOnError);
 
   /**
    * Drops the specified table and all foreign keys pointing to it.
@@ -768,7 +769,7 @@ public interface Platform {
    * @param table           The table to drop
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void dropTable(Connection connection, Database model, Table table, boolean continueOnError) throws DatabaseOperationException;
+  void dropTable(Connection connection, Database model, Table table, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for dropping the given model.
@@ -778,7 +779,7 @@ public interface Platform {
    * @return The SQL statements
    * @deprecated Use {@link #getDropModelSql(Database)} instead.
    */
-  public String getDropTablesSql(Database model, boolean continueOnError);
+  String getDropTablesSql(Database model, boolean continueOnError);
 
   /**
    * Drops the given model using the default database connection.
@@ -787,7 +788,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #dropModel(Database, boolean)} instead.
    */
-  public void dropTables(Database model, boolean continueOnError) throws DatabaseOperationException;
+  void dropTables(Database model, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Drops the given model.
@@ -797,7 +798,7 @@ public interface Platform {
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    * @deprecated Use {@link #dropModel(Connection, Database, boolean)} instead.
    */
-  public void dropTables(Connection connection, Database model, boolean continueOnError) throws DatabaseOperationException;
+  void dropTables(Connection connection, Database model, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Returns the SQL for dropping the given model.
@@ -805,7 +806,7 @@ public interface Platform {
    * @param model The database model
    * @return The SQL statements
    */
-  public String getDropModelSql(Database model);
+  String getDropModelSql(Database model);
 
   /**
    * Drops the given model using the default database connection.
@@ -813,7 +814,7 @@ public interface Platform {
    * @param model           The database model
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void dropModel(Database model, boolean continueOnError) throws DatabaseOperationException;
+  void dropModel(Database model, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Drops the given model.
@@ -822,7 +823,7 @@ public interface Platform {
    * @param model           The database model
    * @param continueOnError Whether to continue executing the sql commands when an error occurred
    */
-  public void dropModel(Connection connection, Database model, boolean continueOnError) throws DatabaseOperationException;
+  void dropModel(Connection connection, Database model, boolean continueOnError) throws DatabaseOperationException;
 
   /**
    * Performs the given SQL query returning an iterator over the results.
@@ -831,7 +832,7 @@ public interface Platform {
    * @param sql   The sql query to perform
    * @return An iterator for the dyna beans resulting from the query
    */
-  public Iterator query(Database model, String sql) throws DatabaseOperationException;
+  Iterator<DynaBean> query(Database model, String sql) throws DatabaseOperationException;
 
   /**
    * Performs the given parameterized SQL query returning an iterator over the results.
@@ -841,7 +842,7 @@ public interface Platform {
    * @param parameters The query parameter values
    * @return An iterator for the dyna beans resulting from the query
    */
-  public Iterator query(Database model, String sql, Collection parameters) throws DatabaseOperationException;
+  Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
 
   /**
    * Performs the given SQL query returning an iterator over the results.
@@ -851,7 +852,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return An iterator for the dyna beans resulting from the query
    */
-  public Iterator query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
+  Iterator<DynaBean> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Performs the given parameterized SQL query returning an iterator over the results.
@@ -862,7 +863,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return An iterator for the dyna beans resulting from the query
    */
-  public Iterator query(Database model, String sql, Collection parameters, Table[] queryHints) throws DatabaseOperationException;
+  Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -873,7 +874,7 @@ public interface Platform {
    * @param sql   The sql query
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -886,7 +887,7 @@ public interface Platform {
    * @param parameters The parameter values
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Collection parameters) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -898,7 +899,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -912,7 +913,7 @@ public interface Platform {
    * @param queryHints The tables that are queried (optional)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Collection parameters, Table[] queryHints) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -928,7 +929,7 @@ public interface Platform {
    * @param end   Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, int start, int end) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -945,7 +946,7 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Collection parameters, int start, int end) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -962,7 +963,7 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException;
 
   /**
    * Queries for a list of dyna beans representing rows of the given query.
@@ -980,7 +981,7 @@ public interface Platform {
    * @param end        Row number to stop at (inclusively; -1 for last row)
    * @return The dyna beans resulting from the query
    */
-  public List fetch(Database model, String sql, Collection parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException;
+  List<DynaBean> fetch(Database model, String sql, Collection<Object> parameters, Table[] queryHints, int start, int end) throws DatabaseOperationException;
 
   /**
    * Determines whether the given dyna bean is stored in the database. Note that this checks only
@@ -990,7 +991,7 @@ public interface Platform {
    * @param dynaBean The bean
    * @return <code>true</code> if a bean with this primary key exists in the database
    */
-  public boolean exists(Database model, DynaBean dynaBean);
+  boolean exists(Database model, DynaBean dynaBean);
 
   /**
    * Determines whether the given dyna bean is stored in the database. Note that this checks only
@@ -1001,7 +1002,7 @@ public interface Platform {
    * @param dynaBean   The bean
    * @return <code>true</code> if a bean with this primary key exists in the database
    */
-  public boolean exists(Connection connection, Database model, DynaBean dynaBean);
+  boolean exists(Connection connection, Database model, DynaBean dynaBean);
 
   /**
    * Stores the given bean in the database, inserting it if there is no primary key
@@ -1010,7 +1011,7 @@ public interface Platform {
    * @param model    The database model to use
    * @param dynaBean The bean to store
    */
-  public void store(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void store(Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Stores the given bean in the database, inserting it if there is no primary key
@@ -1020,7 +1021,7 @@ public interface Platform {
    * @param model      The database model to use
    * @param dynaBean   The bean to store
    */
-  public void store(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void store(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Returns the sql for inserting the given bean.
@@ -1029,7 +1030,7 @@ public interface Platform {
    * @param dynaBean The bean
    * @return The insert sql
    */
-  public String getInsertSql(Database model, DynaBean dynaBean);
+  String getInsertSql(Database model, DynaBean dynaBean);
 
   /**
    * Inserts the given DynaBean in the database, assuming the primary key values are specified.
@@ -1037,7 +1038,7 @@ public interface Platform {
    * @param model    The database model to use
    * @param dynaBean The bean to insert
    */
-  public void insert(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void insert(Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Inserts the bean. If one of the columns is an auto-incremented column, then the
@@ -1048,7 +1049,7 @@ public interface Platform {
    * @param model      The database model to use
    * @param dynaBean   The bean
    */
-  public void insert(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void insert(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Inserts the given beans in the database, assuming the primary key values are specified.
@@ -1060,7 +1061,7 @@ public interface Platform {
    * @param model     The database model to use
    * @param dynaBeans The beans to insert
    */
-  public void insert(Database model, Collection dynaBeans) throws DatabaseOperationException;
+  void insert(Database model, Collection<DynaBean> dynaBeans) throws DatabaseOperationException;
 
   /**
    * Inserts the given beans. Note that a batch insert is used for subsequent beans of the same type.
@@ -1073,7 +1074,7 @@ public interface Platform {
    * @param model      The database model to use
    * @param dynaBeans  The beans
    */
-  public void insert(Connection connection, Database model, Collection dynaBeans) throws DatabaseOperationException;
+  void insert(Connection connection, Database model, Collection<DynaBean> dynaBeans) throws DatabaseOperationException;
 
   /**
    * Returns the sql for updating the given bean in the database. Note that this method can not be used to
@@ -1083,7 +1084,7 @@ public interface Platform {
    * @param dynaBean The bean
    * @return The update sql
    */
-  public String getUpdateSql(Database model, DynaBean dynaBean);
+  String getUpdateSql(Database model, DynaBean dynaBean);
 
   /**
    * Returns the sql for updating the given bean in the database. Note that this method can not be used to
@@ -1094,7 +1095,7 @@ public interface Platform {
    * @param newDynaBean The bean containing the new values
    * @return The update sql
    */
-  public String getUpdateSql(Database model, DynaBean oldDynaBean, DynaBean newDynaBean);
+  String getUpdateSql(Database model, DynaBean oldDynaBean, DynaBean newDynaBean);
 
   /**
    * Updates the given bean in the database, assuming the primary key values are specified. Note that this means
@@ -1103,7 +1104,7 @@ public interface Platform {
    * @param model    The database model to use
    * @param dynaBean The bean
    */
-  public void update(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void update(Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Updates the row which maps to the given bean. Note that this means that this method will not update the
@@ -1113,7 +1114,7 @@ public interface Platform {
    * @param model      The database model to use
    * @param dynaBean   The bean
    */
-  public void update(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void update(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Updates the row identified by the given <code>oldDynaBean</code> in the database with the
@@ -1123,7 +1124,7 @@ public interface Platform {
    * @param oldDynaBean The bean identifying the row (which means the primary key fields need to be specified)
    * @param newDynaBean The bean containing the new data
    */
-  public void update(Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
+  void update(Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
 
   /**
    * Updates the row identified by the given <code>oldDynaBean</code> in the database with the
@@ -1134,7 +1135,7 @@ public interface Platform {
    * @param oldDynaBean The bean identifying the row (which means the primary key fields need to be specified)
    * @param newDynaBean The bean containing the new data
    */
-  public void update(Connection connection, Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
+  void update(Connection connection, Database model, DynaBean oldDynaBean, DynaBean newDynaBean) throws DatabaseOperationException;
 
   /**
    * Returns the sql for deleting the given bean from the database.
@@ -1143,7 +1144,7 @@ public interface Platform {
    * @param dynaBean The bean
    * @return The sql
    */
-  public String getDeleteSql(Database model, DynaBean dynaBean);
+  String getDeleteSql(Database model, DynaBean dynaBean);
 
   /**
    * Deletes the given bean from the database, assuming the primary key values are specified.
@@ -1151,7 +1152,7 @@ public interface Platform {
    * @param model    The database model to use
    * @param dynaBean The bean to delete
    */
-  public void delete(Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void delete(Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Deletes the row which maps to the given bean from the database.
@@ -1160,7 +1161,7 @@ public interface Platform {
    * @param dynaBean   The bean
    * @param connection The database connection
    */
-  public void delete(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
+  void delete(Connection connection, Database model, DynaBean dynaBean) throws DatabaseOperationException;
 
   /**
    * Reads the database model from the live database as specified by the data source set for
@@ -1171,7 +1172,7 @@ public interface Platform {
    * @return The database model
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
-  public Database readModelFromDatabase(String name) throws DatabaseOperationException;
+  Database readModelFromDatabase(String name) throws DatabaseOperationException;
 
   /**
    * Reads the database model from the live database as specified by the data source set for
@@ -1185,7 +1186,7 @@ public interface Platform {
    * @return The database model
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
-  public Database readModelFromDatabase(String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
+  Database readModelFromDatabase(String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
 
   /**
    * Reads the database model from the live database to which the given connection is pointing.
@@ -1196,7 +1197,7 @@ public interface Platform {
    * @return The database model
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
-  public Database readModelFromDatabase(Connection connection, String name) throws DatabaseOperationException;
+  Database readModelFromDatabase(Connection connection, String name) throws DatabaseOperationException;
 
   /**
    * Reads the database model from the live database to which the given connection is pointing.
@@ -1210,5 +1211,5 @@ public interface Platform {
    * @return The database model
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
-  public Database readModelFromDatabase(Connection connection, String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
+  Database readModelFromDatabase(Connection connection, String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
 }

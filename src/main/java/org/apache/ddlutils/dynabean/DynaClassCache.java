@@ -38,7 +38,7 @@ public class DynaClassCache {
   /**
    * A cache of the SqlDynaClasses per table name.
    */
-  private Map _dynaClassCache = new HashMap();
+  private final Map<String, SqlDynaClass> _dynaClassCache = new HashMap<>();
 
   /**
    * Creates a new dyna bean instance for the given table.
@@ -49,9 +49,7 @@ public class DynaClassCache {
   public DynaBean createNewInstance(Table table) throws SqlDynaException {
     try {
       return getDynaClass(table).newInstance();
-    } catch (InstantiationException ex) {
-      throw new SqlDynaException("Could not create a new dyna bean for table " + table.getName(), ex);
-    } catch (IllegalAccessException ex) {
+    } catch (InstantiationException | IllegalAccessException ex) {
       throw new SqlDynaException("Could not create a new dyna bean for table " + table.getName(), ex);
     }
   }
@@ -76,9 +74,7 @@ public class DynaClassCache {
     try {
       // copy all the properties from the source
       BeanUtils.copyProperties(answer, source);
-    } catch (InvocationTargetException ex) {
-      throw new SqlDynaException("Could not populate the bean", ex);
-    } catch (IllegalAccessException ex) {
+    } catch (InvocationTargetException | IllegalAccessException ex) {
       throw new SqlDynaException("Could not populate the bean", ex);
     }
 
@@ -93,7 +89,7 @@ public class DynaClassCache {
    * @return The <code>SqlDynaClass</code> for the indicated table
    */
   public SqlDynaClass getDynaClass(Table table) {
-    SqlDynaClass answer = (SqlDynaClass) _dynaClassCache.get(table.getName());
+    SqlDynaClass answer = _dynaClassCache.get(table.getName());
 
     if (answer == null) {
       answer = createDynaClass(table);

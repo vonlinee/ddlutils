@@ -119,6 +119,7 @@ public class Oracle8Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -126,10 +127,12 @@ public class Oracle8Platform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     // While Oracle has an ALTER TABLE MODIFY statement, it is somewhat limited
     // esp. if there is data in the table, so we don't use it
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof AddPrimaryKeyChange) ||
             (change instanceof RemovePrimaryKeyChange)) {

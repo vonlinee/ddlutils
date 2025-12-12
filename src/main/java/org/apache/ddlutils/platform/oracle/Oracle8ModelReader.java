@@ -23,6 +23,7 @@ import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
+import org.apache.ddlutils.model.Index;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
@@ -45,15 +46,15 @@ public class Oracle8ModelReader extends JdbcModelReader {
   /**
    * The regular expression pattern for the Oracle conversion of ISO dates.
    */
-  private Pattern _oracleIsoDatePattern;
+  private final Pattern _oracleIsoDatePattern;
   /**
    * The regular expression pattern for the Oracle conversion of ISO times.
    */
-  private Pattern _oracleIsoTimePattern;
+  private final Pattern _oracleIsoTimePattern;
   /**
    * The regular expression pattern for the Oracle conversion of ISO timestamps.
    */
-  private Pattern _oracleIsoTimestampPattern;
+  private final Pattern _oracleIsoTimestampPattern;
 
   /**
    * Creates a new model reader for Oracle 8 databases.
@@ -67,9 +68,9 @@ public class Oracle8ModelReader extends JdbcModelReader {
     setDefaultTablePattern("%");
 
     try {
-      _oracleIsoDatePattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'YYYY\\-MM\\-DD'\\)");
-      _oracleIsoTimePattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'HH24:MI:SS'\\)");
-      _oracleIsoTimestampPattern = Pattern.compile("TO_DATE\\('([^']*)'\\, 'YYYY\\-MM\\-DD HH24:MI:SS'\\)");
+      _oracleIsoDatePattern = Pattern.compile("TO_DATE\\('([^']*)', 'YYYY-MM-DD'\\)");
+      _oracleIsoTimePattern = Pattern.compile("TO_DATE\\('([^']*)', 'HH24:MI:SS'\\)");
+      _oracleIsoTimestampPattern = Pattern.compile("TO_DATE\\('([^']*)', 'YYYY-MM-DD HH24:MI:SS'\\)");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
@@ -78,7 +79,8 @@ public class Oracle8ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
     // system table ?
@@ -98,7 +100,8 @@ public class Oracle8ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getDefaultValue() != null) {
@@ -198,8 +201,8 @@ public class Oracle8ModelReader extends JdbcModelReader {
   protected void determineAutoIncrementColumns(Table table) throws SQLException {
     Column[] columns = table.getColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      columns[idx].setAutoIncrement(isAutoIncrement(table, columns[idx]));
+    for (Column column : columns) {
+      column.setAutoIncrement(isAutoIncrement(table, column));
     }
   }
 
@@ -251,7 +254,8 @@ public class Oracle8ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  @Override
+  protected Collection<Index> readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     // Oracle has a bug in the DatabaseMetaData#getIndexInfo method which fails when
     // delimited identifiers are being used
     // Therefore, we're rather accessing the user_indexes table which contains the same info
@@ -266,7 +270,7 @@ public class Oracle8ModelReader extends JdbcModelReader {
     final String queryWithSchema =
       query.substring(0, query.length() - 1) + " AND c.OWNER LIKE ?) AND a.TABLE_OWNER LIKE ?";
 
-    Map indices = new ListOrderedMap();
+    Map<String, Index> indices = new ListOrderedMap<>();
     PreparedStatement stmt = null;
 
     try {
@@ -281,14 +285,14 @@ public class Oracle8ModelReader extends JdbcModelReader {
       }
 
       ResultSet rs = stmt.executeQuery();
-      Map values = new HashMap();
+      Map<String, Object> values = new HashMap<>();
 
       while (rs.next()) {
         values.put("INDEX_NAME", rs.getString(1));
-        values.put("INDEX_TYPE", new Short(DatabaseMetaData.tableIndexOther));
+        values.put("INDEX_TYPE", DatabaseMetaData.tableIndexOther);
         values.put("NON_UNIQUE", "UNIQUE".equalsIgnoreCase(rs.getString(3)) ? Boolean.FALSE : Boolean.TRUE);
         values.put("COLUMN_NAME", rs.getString(4));
-        values.put("ORDINAL_POSITION", new Short(rs.getShort(5)));
+        values.put("ORDINAL_POSITION", rs.getShort(5));
 
         readIndex(metaData, values, indices);
       }

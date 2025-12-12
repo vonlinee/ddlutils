@@ -44,7 +44,10 @@ public class Database implements Serializable {
    * Unique ID for serialization purposes.
    */
   private static final long serialVersionUID = -3160443396757573868L;
-
+  /**
+   * The tables.
+   */
+  private final ArrayList<Table> _tables = new ArrayList<>();
   /**
    * The name of the database model.
    */
@@ -57,10 +60,6 @@ public class Database implements Serializable {
    * The version of the model.
    */
   private String _version;
-  /**
-   * The tables.
-   */
-  private ArrayList _tables = new ArrayList();
   /**
    * The dyna class cache for this model.
    */
@@ -182,7 +181,7 @@ public class Database implements Serializable {
    * @return The tables
    */
   public Table[] getTables() {
-    return (Table[]) _tables.toArray(new Table[_tables.size()]);
+    return _tables.toArray(new Table[0]);
   }
 
   /**
@@ -192,7 +191,7 @@ public class Database implements Serializable {
    * @return The table
    */
   public Table getTable(int idx) {
-    return (Table) _tables.get(idx);
+    return _tables.get(idx);
   }
 
   /**
@@ -223,9 +222,9 @@ public class Database implements Serializable {
    *
    * @param tables The tables to add
    */
-  public void addTables(Collection tables) {
-    for (Iterator it = tables.iterator(); it.hasNext(); ) {
-      addTable((Table) it.next());
+  public void addTables(Collection<Table> tables) {
+    for (Table table : tables) {
+      addTable(table);
     }
   }
 
@@ -265,8 +264,7 @@ public class Database implements Serializable {
    * @param tables The tables to keep
    */
   public void removeAllTablesExcept(Table[] tables) {
-    ArrayList allTables = new ArrayList(_tables);
-
+    ArrayList<Table> allTables = new ArrayList<>(_tables);
     allTables.removeAll(Arrays.asList(tables));
     _tables.removeAll(allTables);
   }
@@ -284,20 +282,20 @@ public class Database implements Serializable {
     // * columns in foreign key references
     // * columns in indices
     // * columns in uniques
-    HashSet namesOfProcessedTables = new HashSet();
-    HashSet namesOfProcessedColumns = new HashSet();
-    HashSet namesOfProcessedFks = new HashSet();
-    HashSet namesOfProcessedIndices = new HashSet();
+    HashSet<String> namesOfProcessedTables = new HashSet<>();
+    HashSet<String> namesOfProcessedColumns = new HashSet<>();
+    HashSet<String> namesOfProcessedFks = new HashSet<>();
+    HashSet<String> namesOfProcessedIndices = new HashSet<>();
     int tableIdx = 0;
 
-    if ((getName() == null) || (getName().length() == 0)) {
+    if ((getName() == null) || (getName().isEmpty())) {
       throw new ModelException("The database model has no name");
     }
 
-    for (Iterator tableIt = _tables.iterator(); tableIt.hasNext(); tableIdx++) {
-      Table curTable = (Table) tableIt.next();
+    for (Iterator<Table> tableIt = _tables.iterator(); tableIt.hasNext(); tableIdx++) {
+      Table curTable = tableIt.next();
 
-      if ((curTable.getName() == null) || (curTable.getName().length() == 0)) {
+      if ((curTable.getName() == null) || (curTable.getName().isEmpty())) {
         throw new ModelException("The table nr. " + tableIdx + " has no name");
       }
       if (namesOfProcessedTables.contains(curTable.getName())) {
@@ -312,7 +310,7 @@ public class Database implements Serializable {
       for (int idx = 0; idx < curTable.getColumnCount(); idx++) {
         Column column = curTable.getColumn(idx);
 
-        if ((column.getName() == null) || (column.getName().length() == 0)) {
+        if ((column.getName() == null) || (column.getName().isEmpty())) {
           throw new ModelException("The column nr. " + idx + " in table " + curTable.getName() + " has no name");
         }
         if (namesOfProcessedColumns.contains(column.getName())) {
@@ -320,7 +318,7 @@ public class Database implements Serializable {
         }
         namesOfProcessedColumns.add(column.getName());
 
-        if ((column.getType() == null) || (column.getType().length() == 0)) {
+        if ((column.getType() == null) || (column.getType().isEmpty())) {
           throw new ModelException("The column nr. " + idx + " in table " + curTable.getName() + " has no type");
         }
         if ((column.getTypeCode() == Types.OTHER) && !"OTHER".equalsIgnoreCase(column.getType())) {
@@ -332,9 +330,9 @@ public class Database implements Serializable {
       for (int idx = 0; idx < curTable.getForeignKeyCount(); idx++) {
         ForeignKey fk = curTable.getForeignKey(idx);
         String fkName = (fk.getName() == null ? "" : fk.getName());
-        String fkDesc = (fkName.length() == 0 ? "nr. " + idx : fkName);
+        String fkDesc = (fkName.isEmpty() ? "nr. " + idx : fkName);
 
-        if (fkName.length() > 0) {
+        if (!fkName.isEmpty()) {
           if (namesOfProcessedFks.contains(fkName)) {
             throw new ModelException("There are multiple foreign keys in table " + curTable.getName() + " with the name " + fkName);
           }
@@ -380,9 +378,9 @@ public class Database implements Serializable {
       for (int idx = 0; idx < curTable.getIndexCount(); idx++) {
         Index index = curTable.getIndex(idx);
         String indexName = (index.getName() == null ? "" : index.getName());
-        String indexDesc = (indexName.length() == 0 ? "nr. " + idx : indexName);
+        String indexDesc = (indexName.isEmpty() ? "nr. " + idx : indexName);
 
-        if (indexName.length() > 0) {
+        if (!indexName.isEmpty()) {
           if (namesOfProcessedIndices.contains(indexName)) {
             throw new ModelException("There are multiple indices in table " + curTable.getName() + " with the name " + indexName);
           }
@@ -407,7 +405,7 @@ public class Database implements Serializable {
   }
 
   /**
-   * Finds the table with the specified name, using case insensitive matching.
+   * Finds the table with the specified name, using case-insensitive matching.
    * Note that this method is not called getTable to avoid introspection
    * problems.
    *
@@ -419,7 +417,7 @@ public class Database implements Serializable {
   }
 
   /**
-   * Finds the table with the specified name, using case insensitive matching.
+   * Finds the table with the specified name, using case-insensitive matching.
    * Note that this method is not called getTable) to avoid introspection
    * problems.
    *
@@ -428,9 +426,7 @@ public class Database implements Serializable {
    * @return The table or <code>null</code> if there is no such table
    */
   public Table findTable(String name, boolean caseSensitive) {
-    for (Iterator iter = _tables.iterator(); iter.hasNext(); ) {
-      Table table = (Table) iter.next();
-
+    for (Table table : _tables) {
       if (caseSensitive) {
         if (table.getName().equals(name)) {
           return table;
@@ -452,18 +448,18 @@ public class Database implements Serializable {
    * @return The tables
    */
   public Table[] findTables(String[] tableNames, boolean caseSensitive) {
-    ArrayList tables = new ArrayList();
+    ArrayList<Table> tables = new ArrayList<>();
 
     if (tableNames != null) {
-      for (int idx = 0; idx < tableNames.length; idx++) {
-        Table table = findTable(tableNames[idx], caseSensitive);
+      for (String tableName : tableNames) {
+        Table table = findTable(tableName, caseSensitive);
 
         if (table != null) {
           tables.add(table);
         }
       }
     }
-    return (Table[]) tables.toArray(new Table[tables.size()]);
+    return tables.toArray(new Table[0]);
   }
 
   /**
@@ -476,13 +472,12 @@ public class Database implements Serializable {
    * @throws PatternSyntaxException If the regular expression is invalid
    */
   public Table[] findTables(String tableNameRegExp, boolean caseSensitive) throws PatternSyntaxException {
-    ArrayList tables = new ArrayList();
+    ArrayList<Table> tables = new ArrayList<>();
 
     if (tableNameRegExp != null) {
       Pattern pattern = Pattern.compile(tableNameRegExp);
 
-      for (Iterator tableIt = _tables.iterator(); tableIt.hasNext(); ) {
-        Table table = (Table) tableIt.next();
+      for (Table table : _tables) {
         String tableName = table.getName();
 
         if (!caseSensitive) {
@@ -493,7 +488,7 @@ public class Database implements Serializable {
         }
       }
     }
-    return (Table[]) tables.toArray(new Table[tables.size()]);
+    return tables.toArray(new Table[0]);
   }
 
   /**
@@ -565,11 +560,12 @@ public class Database implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof Database) {
       Database other = (Database) obj;
 
-      // Note that this compares case sensitive
+      // Note that this compares case-sensitive
       return new EqualsBuilder().append(_name, other._name)
         .append(_tables, other._tables)
         .isEquals();
@@ -581,6 +577,7 @@ public class Database implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_name)
       .append(_tables)
@@ -590,16 +587,14 @@ public class Database implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
 
-    result.append("Database [name=");
-    result.append(getName());
-    result.append("; ");
-    result.append(getTableCount());
-    result.append(" tables]");
-
-    return result.toString();
+    return "Database [name=" +
+           getName() +
+           "; " +
+           getTableCount() +
+           " tables]";
   }
 
   /**
@@ -608,7 +603,7 @@ public class Database implements Serializable {
    * @return The string representation
    */
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("Database [");
     result.append(getName());

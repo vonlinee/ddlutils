@@ -74,11 +74,9 @@ public class MySqlPlatform extends PlatformImplBase {
     info.setCommentPrefix("#");
     // Double quotes are only allowed for delimiting identifiers if the server SQL mode includes ANSI_QUOTES
     info.setDelimiterToken("`");
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
-      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL});
     info.setDefaultOnUpdateAction(CascadeAction.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
-      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL});
     info.setDefaultOnDeleteAction(CascadeAction.RESTRICT);
 
     info.addNativeTypeMapping(Types.ARRAY, "LONGBLOB", Types.LONGVARBINARY);
@@ -117,6 +115,7 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -124,6 +123,7 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     return new MySqlModelComparator(getPlatformInfo(), getTableDefinitionChangesPredicate(), isDelimitedIdentifierModeOn());
   }
@@ -131,25 +131,22 @@ public class MySqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if (change instanceof AddColumnChange) {
           AddColumnChange addColumnChange = (AddColumnChange) change;
 
-          return !addColumnChange.getNewColumn().isAutoIncrement() &&
-                 (!addColumnChange.getNewColumn().isRequired() || (addColumnChange.getNewColumn().getDefaultValue() != null));
+          return !addColumnChange.getNewColumn().isAutoIncrement() && (!addColumnChange.getNewColumn().isRequired() || (addColumnChange.getNewColumn().getDefaultValue() != null));
         } else if (change instanceof ColumnDefinitionChange) {
           ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
           Column sourceColumn = intermediateTable.findColumn(colDefChange.getChangedColumn(), isDelimitedIdentifierModeOn());
 
-          return !ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn()) &&
-                 !ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn());
+          return !ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn()) && !ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, colDefChange.getNewColumn());
         } else {
-          return (change instanceof RemoveColumnChange) ||
-                 (change instanceof AddPrimaryKeyChange) ||
-                 (change instanceof PrimaryKeyChange) ||
-                 (change instanceof RemovePrimaryKeyChange);
+          return (change instanceof RemoveColumnChange) || (change instanceof AddPrimaryKeyChange) || (change instanceof PrimaryKeyChange) || (change instanceof RemovePrimaryKeyChange);
         }
       }
     };
@@ -163,9 +160,8 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
-  public void processChange(Database currentModel,
-                            CreationParameters params,
-                            AddColumnChange change) throws IOException {
+  @Override
+  public void processChange(Database currentModel, CreationParameters params, AddColumnChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
     Column prevColumn = null;
 
@@ -184,9 +180,7 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
-  public void processChange(Database currentModel,
-                            CreationParameters params,
-                            ColumnDefinitionChange change) throws IOException {
+  public void processChange(Database currentModel, CreationParameters params, ColumnDefinitionChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
 
     ((MySqlBuilder) getSqlBuilder()).recreateColumn(changedTable, change.getNewColumn());
@@ -200,9 +194,7 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
-  public void processChange(Database currentModel,
-                            CreationParameters params,
-                            RemoveColumnChange change) throws IOException {
+  public void processChange(Database currentModel, CreationParameters params, RemoveColumnChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
     Column removedColumn = changedTable.findColumn(change.getChangedColumn(), isDelimitedIdentifierModeOn());
 
@@ -218,9 +210,7 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
-  public void processChange(Database currentModel,
-                            CreationParameters params,
-                            RemovePrimaryKeyChange change) throws IOException {
+  public void processChange(Database currentModel, CreationParameters params, RemovePrimaryKeyChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
 
     ((MySqlBuilder) getSqlBuilder()).dropPrimaryKey(changedTable);
@@ -235,9 +225,7 @@ public class MySqlPlatform extends PlatformImplBase {
    *                     tables, the parameters won't be applied
    * @param change       The change object
    */
-  public void processChange(Database currentModel,
-                            CreationParameters params,
-                            PrimaryKeyChange change) throws IOException {
+  public void processChange(Database currentModel, CreationParameters params, PrimaryKeyChange change) throws IOException {
     Table changedTable = findChangedTable(currentModel, change);
     String[] newPKColumnNames = change.getNewPrimaryKeyColumns();
     Column[] newPKColumns = new Column[newPKColumnNames.length];

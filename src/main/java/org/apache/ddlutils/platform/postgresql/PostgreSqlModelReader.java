@@ -50,13 +50,14 @@ public class PostgreSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Table table = super.readTable(metaData, values);
 
     if (table != null) {
       // PostgreSQL also returns unique indexes for pk and non-pk auto-increment columns
       // which are of the form "[table]_[column]_key"
-      HashMap uniquesByName = new HashMap();
+      HashMap<String, Index> uniquesByName = new HashMap<>();
 
       for (int indexIdx = 0; indexIdx < table.getIndexCount(); indexIdx++) {
         Index index = table.getIndex(indexIdx);
@@ -72,7 +73,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
           String indexName = table.getName() + "_" + column.getName() + "_key";
 
           if (uniquesByName.containsKey(indexName)) {
-            table.removeIndex((Index) uniquesByName.get(indexName));
+            table.removeIndex(uniquesByName.get(indexName));
             uniquesByName.remove(indexName);
           }
         }
@@ -84,7 +85,8 @@ public class PostgreSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getSize() != null) {
@@ -113,7 +115,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
 
     String defaultValue = column.getDefaultValue();
 
-    if ((defaultValue != null) && (defaultValue.length() > 0)) {
+    if ((defaultValue != null) && (!defaultValue.isEmpty())) {
       // If the default value looks like "nextval('ROUNDTRIP_VALUE_seq'::text)"
       // then it is an auto-increment column
       if (defaultValue.startsWith("nextval(")) {

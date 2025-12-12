@@ -79,7 +79,7 @@ public class PlatformFactory {
    * @return The platform or <code>null</code> if the database is not supported
    */
   public static synchronized Platform createNewPlatformInstance(String databaseName) throws DdlUtilsException {
-    Class<?> platformClass = (Class<?>) getPlatforms().get(databaseName.toLowerCase());
+    Class<?> platformClass = getPlatforms().get(databaseName.toLowerCase());
 
     try {
       return platformClass != null ? (Platform) platformClass.newInstance() : null;
@@ -144,7 +144,7 @@ public class PlatformFactory {
    * @return The names of the currently registered platforms
    */
   public static synchronized String[] getSupportedPlatforms() {
-    return (String[]) getPlatforms().keySet().toArray(new String[0]);
+    return getPlatforms().keySet().toArray(new String[0]);
   }
 
   /**

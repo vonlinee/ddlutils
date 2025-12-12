@@ -33,7 +33,7 @@ public interface ColumnChange extends TableChange {
    *
    * @return The name of the affected column
    */
-  public String getChangedColumn();
+  String getChangedColumn();
 
   /**
    * Finds the column object corresponding to the changed column in the given database model.
@@ -42,5 +42,5 @@ public interface ColumnChange extends TableChange {
    * @param caseSensitive Whether identifiers are case sensitive
    * @return The column object or <code>null</code> if it could not be found
    */
-  public Column findChangedColumn(Database model, boolean caseSensitive);
+  Column findChangedColumn(Database model, boolean caseSensitive);
 }

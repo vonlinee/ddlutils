@@ -42,241 +42,196 @@ public class PlatformInfo {
   private final Log _log = LogFactory.getLog(PlatformInfo.class);
 
   // properties influencing the definition of columns
-
-  /**
-   * Whether the database requires the explicit stating of NULL as the default value.
-   */
-  private boolean _nullAsDefaultValueRequired = false;
-
-  /**
-   * Whether default values can be defined for LONGVARCHAR/LONGVARBINARY columns.
-   */
-  private boolean _defaultValuesForLongTypesSupported = true;
-
-  // properties influencing the specification of table constraints
-
-  /**
-   * Whether primary key constraints are embedded inside the creation of table statement.
-   */
-  private boolean _primaryKeyEmbedded = true;
-
-  /**
-   * Whether primary key columns have to be required, too.
-   */
-  private boolean _primaryKeyColumnsHaveToBeRequired = false;
-
-  /**
-   * Whether mixed identity and non-identity columns in a primary key is supported.
-   */
-  private boolean _mixingIdentityAndNormalPrimaryKeyColumnsSupported = true;
-
-  /**
-   * Whether foreign key constraints are embedded inside the creation of table statement.
-   */
-  private boolean _foreignKeysEmbedded = false;
-
-  /**
-   * Whether embedded foreign key constraints are explicitly named.
-   */
-  private boolean _embeddedForeignKeysNamed = false;
-
-  /**
-   * Whether non-unique indices are supported.
-   */
-  private boolean _indicesSupported = true;
-
-  /**
-   * Whether indices are embedded inside the creation of table statement.
-   */
-  private boolean _indicesEmbedded = false;
-
-  /**
-   * Whether identity specification is supported for non-primary key columns.
-   */
-  private boolean _nonPrimaryKeyIdentityColumnsSupported = true;
-
-  /**
-   * Whether multiple identity columns in the same table are supported.
-   */
-  private boolean _multipleIdentityColumnsSupported = true;
-
-  /**
-   * Whether the auto-increment definition is done via the DEFAULT part of the column definition.
-   */
-  private boolean _defaultValueUsedForIdentitySpec = false;
-
-  // properties influencing the reading of models from live databases
-
-  /**
-   * Whether primary key columns are automatically required.
-   */
-  private boolean _primaryKeyColumnAutomaticallyRequired = false;
-
-  /**
-   * Whether identity columns are automatically required.
-   */
-  private boolean _identityColumnAutomaticallyRequired = false;
-
-  /**
-   * Whether system indices (database-generated indices for primary and foreign keys) are returned when
-   * reading a model from a database.
-   */
-  private boolean _systemIndicesReturned = true;
-
-  /**
-   * Whether system indices for foreign keys are always non-unique or can be
-   * unique (i.e. if a primary key column is used to establish the foreign key).
-   */
-  private boolean _systemForeignKeyIndicesAlwaysNonUnique = false;
-
-  /**
-   * Whether the database returns a synthetic default value for non-identity required columns.
-   */
-  private boolean _syntheticDefaultValueForRequiredReturned = false;
-
-  /**
-   * Whether the platform is able to determine auto increment status from an existing database.
-   */
-  private boolean _identityStatusReadingSupported = true;
-
-  // other DDL/DML properties
-
-  /**
-   * Whether comments are supported.
-   */
-  private boolean _sqlCommentsSupported = true;
-
-  /**
-   * Whether delimited identifiers are supported or not.
-   */
-  private boolean _delimitedIdentifiersSupported = true;
-
-  /**
-   * Whether an ALTER TABLE is needed to drop indexes.
-   */
-  private boolean _alterTableForDropUsed = false;
-
-  /**
-   * Whether the platform allows for the explicit specification of values for identity columns in INSERT
-   * and UPDATE statements.
-   */
-  private boolean _identityOverrideAllowed = true;
-
-  /**
-   * Whether the values of identity columns can be read back from the database after insertion.
-   */
-  private boolean _lastIdentityValueReadable = true;
-
-  /**
-   * Whether auto-commit mode for the reading of the values of identity columns after insertion
-   * shall be used.
-   */
-  private boolean _autoCommitModeForLastIdentityValueReading = true;
-
-  /**
-   * Specifies the maximum length that a table name can have for this database (-1 if there is no limit).
-   */
-  private int _maxTableNameLength = -1;
-
-  /**
-   * Specifies the maximum length that a column name can have for this database (-1 if there is no limit).
-   */
-  private int _maxColumnNameLength = -1;
-
-  /**
-   * Specifies the maximum length that a constraint name can have for this database (-1 if there is no limit).
-   */
-  private int _maxConstraintNameLength = -1;
-
-  /**
-   * Specifies the maximum length that a foreign key name can have for this database (-1 if there is no limit).
-   */
-  private int _maxForeignKeyNameLength = -1;
-
-  /**
-   * The string used for delimiting SQL identifiers, eg. table names, column names etc.
-   */
-  private String _delimiterToken = "\"";
-
-  /**
-   * The string used for escaping values when generating textual SQL statements.
-   */
-  private String _valueQuoteToken = "'";
-
-  /**
-   * The string that starts a comment.
-   */
-  private String _commentPrefix = "--";
-
-  /**
-   * The string that ends a comment.
-   */
-  private String _commentSuffix = "";
-
-  /**
-   * The text separating individual sql commands.
-   */
-  private String _sqlCommandDelimiter = ";";
-
   /**
    * Contains non-default mappings from jdbc to native types.
    */
   private final HashMap<Integer, String> _nativeTypes = new HashMap<>();
-
   /**
    * Contains the jdbc types corresponding to the native types for non-default mappings.
    */
   private final HashMap<Integer, Integer> _targetJdbcTypes = new HashMap<>();
 
+  // properties influencing the specification of table constraints
   /**
    * Contains those JDBC types whose corresponding native types have a null value as the default value.
    */
   private final HashSet<Integer> _typesWithNullDefault = new HashSet<>();
-
   /**
    * Contains those JDBC types whose corresponding native types are types that have a size on this platform.
    */
   private final HashSet<Integer> _typesWithSize = new HashSet<>();
-
   /**
    * Contains the default sizes for those JDBC types whose corresponding native types require a size.
    */
   private final HashMap<Integer, Integer> _typesDefaultSizes = new HashMap<>();
-
   /**
    * Contains those JDBC types whose corresponding native types are types that have precision and scale on this platform.
    */
   private final HashSet<Integer> _typesWithPrecisionAndScale = new HashSet<>();
-
-  /**
-   * The default ON UPDATE action.
-   */
-  private CascadeAction _defaultOnUpdateAction = CascadeAction.NONE;
-
-  /**
-   * The default ON DELETE action.
-   */
-  private CascadeAction _defaultOnDeleteAction = CascadeAction.NONE;
-
   /**
    * Contains the supported ON UPDATE actions.
    */
   private final HashSet<CascadeAction> _supportedOnUpdateActions = new HashSet<>();
-
   /**
    * Contains the supported ON DELETE actions.
    */
   private final HashSet<CascadeAction> _supportedOnDeleteActions = new HashSet<>();
-
   /**
    * Contains for each ON UPDATE action the list of equivalent actions.
    */
   private final HashMap<CascadeAction, Set<CascadeAction>> _equivalentOnUpdateActions = new HashMap<>();
-
   /**
    * Contains for each ON DELETE action the list of equivalent actions.
    */
   private final HashMap<CascadeAction, Set<CascadeAction>> _equivalentOnDeleteActions = new HashMap<>();
+  /**
+   * Whether the database requires the explicit stating of NULL as the default value.
+   */
+  private boolean _nullAsDefaultValueRequired = false;
+  /**
+   * Whether default values can be defined for LONGVARCHAR/LONGVARBINARY columns.
+   */
+  private boolean _defaultValuesForLongTypesSupported = true;
+
+  // properties influencing the reading of models from live databases
+  /**
+   * Whether primary key constraints are embedded inside the creation of table statement.
+   */
+  private boolean _primaryKeyEmbedded = true;
+  /**
+   * Whether primary key columns have to be required, too.
+   */
+  private boolean _primaryKeyColumnsHaveToBeRequired = false;
+  /**
+   * Whether mixed identity and non-identity columns in a primary key is supported.
+   */
+  private boolean _mixingIdentityAndNormalPrimaryKeyColumnsSupported = true;
+  /**
+   * Whether foreign key constraints are embedded inside the creation of table statement.
+   */
+  private boolean _foreignKeysEmbedded = false;
+  /**
+   * Whether embedded foreign key constraints are explicitly named.
+   */
+  private boolean _embeddedForeignKeysNamed = false;
+  /**
+   * Whether non-unique indices are supported.
+   */
+  private boolean _indicesSupported = true;
+
+  // other DDL/DML properties
+  /**
+   * Whether indices are embedded inside the creation of table statement.
+   */
+  private boolean _indicesEmbedded = false;
+  /**
+   * Whether identity specification is supported for non-primary key columns.
+   */
+  private boolean _nonPrimaryKeyIdentityColumnsSupported = true;
+  /**
+   * Whether multiple identity columns in the same table are supported.
+   */
+  private boolean _multipleIdentityColumnsSupported = true;
+  /**
+   * Whether the auto-increment definition is done via the DEFAULT part of the column definition.
+   */
+  private boolean _defaultValueUsedForIdentitySpec = false;
+  /**
+   * Whether primary key columns are automatically required.
+   */
+  private boolean _primaryKeyColumnAutomaticallyRequired = false;
+  /**
+   * Whether identity columns are automatically required.
+   */
+  private boolean _identityColumnAutomaticallyRequired = false;
+  /**
+   * Whether system indices (database-generated indices for primary and foreign keys) are returned when
+   * reading a model from a database.
+   */
+  private boolean _systemIndicesReturned = true;
+  /**
+   * Whether system indices for foreign keys are always non-unique or can be
+   * unique (i.e. if a primary key column is used to establish the foreign key).
+   */
+  private boolean _systemForeignKeyIndicesAlwaysNonUnique = false;
+  /**
+   * Whether the database returns a synthetic default value for non-identity required columns.
+   */
+  private boolean _syntheticDefaultValueForRequiredReturned = false;
+  /**
+   * Whether the platform is able to determine auto increment status from an existing database.
+   */
+  private boolean _identityStatusReadingSupported = true;
+  /**
+   * Whether comments are supported.
+   */
+  private boolean _sqlCommentsSupported = true;
+  /**
+   * Whether delimited identifiers are supported or not.
+   */
+  private boolean _delimitedIdentifiersSupported = true;
+  /**
+   * Whether an ALTER TABLE is needed to drop indexes.
+   */
+  private boolean _alterTableForDropUsed = false;
+  /**
+   * Whether the platform allows for the explicit specification of values for identity columns in INSERT
+   * and UPDATE statements.
+   */
+  private boolean _identityOverrideAllowed = true;
+  /**
+   * Whether the values of identity columns can be read back from the database after insertion.
+   */
+  private boolean _lastIdentityValueReadable = true;
+  /**
+   * Whether auto-commit mode for the reading of the values of identity columns after insertion
+   * shall be used.
+   */
+  private boolean _autoCommitModeForLastIdentityValueReading = true;
+  /**
+   * Specifies the maximum length that a table name can have for this database (-1 if there is no limit).
+   */
+  private int _maxTableNameLength = -1;
+  /**
+   * Specifies the maximum length that a column name can have for this database (-1 if there is no limit).
+   */
+  private int _maxColumnNameLength = -1;
+  /**
+   * Specifies the maximum length that a constraint name can have for this database (-1 if there is no limit).
+   */
+  private int _maxConstraintNameLength = -1;
+  /**
+   * Specifies the maximum length that a foreign key name can have for this database (-1 if there is no limit).
+   */
+  private int _maxForeignKeyNameLength = -1;
+  /**
+   * The string used for delimiting SQL identifiers, eg. table names, column names etc.
+   */
+  private String _delimiterToken = "\"";
+  /**
+   * The string used for escaping values when generating textual SQL statements.
+   */
+  private String _valueQuoteToken = "'";
+  /**
+   * The string that starts a comment.
+   */
+  private String _commentPrefix = "--";
+  /**
+   * The string that ends a comment.
+   */
+  private String _commentSuffix = "";
+  /**
+   * The text separating individual sql commands.
+   */
+  private String _sqlCommandDelimiter = ";";
+  /**
+   * The default ON UPDATE action.
+   */
+  private CascadeAction _defaultOnUpdateAction = CascadeAction.NONE;
+  /**
+   * The default ON DELETE action.
+   */
+  private CascadeAction _defaultOnDeleteAction = CascadeAction.NONE;
 
   /**
    * Creates a new platform info object.
@@ -975,7 +930,7 @@ public class PlatformInfo {
    * @return The native type or <code>null</code> if there isn't one defined
    */
   public String getNativeType(int typeCode) {
-    return (String) _nativeTypes.get(typeCode);
+    return _nativeTypes.get(typeCode);
   }
 
   /**
@@ -989,7 +944,7 @@ public class PlatformInfo {
    * @return The target jdbc type
    */
   public int getTargetJdbcType(int typeCode) {
-    Integer targetJdbcType = (Integer) _targetJdbcTypes.get(typeCode);
+    Integer targetJdbcType = _targetJdbcTypes.get(typeCode);
 
     return targetJdbcType == null ? typeCode : targetJdbcType.intValue();
   }
@@ -1057,9 +1012,7 @@ public class PlatformInfo {
       Field sourceType = Types.class.getField(jdbcTypeName);
       Field targetType = Types.class.getField(targetJdbcTypeName);
 
-      if ((sourceType != null) && (targetType != null)) {
-        addNativeTypeMapping(sourceType.getInt(null), nativeType, targetType.getInt(null));
-      }
+      addNativeTypeMapping(sourceType.getInt(null), nativeType, targetType.getInt(null));
     } catch (Exception ex) {
       // ignore -> won't be defined
       _log.warn("Cannot add native type mapping for undefined jdbc type " + jdbcTypeName + ", target jdbc type " + targetJdbcTypeName, ex);

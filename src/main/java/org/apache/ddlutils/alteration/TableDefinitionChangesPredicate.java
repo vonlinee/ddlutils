@@ -40,5 +40,5 @@ public interface TableDefinitionChangesPredicate {
    * @param changes           The non-empty list of changes
    * @return <code>true</code> if the current plaform supports them
    */
-  public boolean areSupported(Table intermediateTable, List changes);
+  boolean areSupported(Table intermediateTable, List<TableChange> changes);
 }

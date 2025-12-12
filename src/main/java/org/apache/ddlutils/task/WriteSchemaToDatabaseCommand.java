@@ -85,6 +85,7 @@ public class WriteSchemaToDatabaseCommand extends DatabaseCommandWithCreationPar
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     if (getDataSource() == null) {
       throw new BuildException("No database specified.");

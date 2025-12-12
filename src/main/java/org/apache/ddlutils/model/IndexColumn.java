@@ -153,6 +153,7 @@ public class IndexColumn implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof IndexColumn) {
       IndexColumn other = (IndexColumn) obj;
@@ -180,6 +181,7 @@ public class IndexColumn implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_name)
       .append(_size)
@@ -189,15 +191,13 @@ public class IndexColumn implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
 
-    result.append("Index column [name=");
-    result.append(getName());
-    result.append("; size=");
-    result.append(getSize());
-    result.append("]");
-
-    return result.toString();
+    return "Index column [name=" +
+           getName() +
+           "; size=" +
+           getSize() +
+           "]";
   }
 }

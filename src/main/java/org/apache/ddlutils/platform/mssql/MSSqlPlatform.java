@@ -19,7 +19,6 @@ package org.apache.ddlutils.platform.mssql;
  * under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
@@ -30,6 +29,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -117,6 +117,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -136,6 +137,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       MSSqlBuilder builder = (MSSqlBuilder) getSqlBuilder();
@@ -147,6 +149,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterInsert(Connection connection, Table table) throws SQLException {
     if (useIdentityOverrideFor(table)) {
       MSSqlBuilder builder = (MSSqlBuilder) getSqlBuilder();
@@ -158,6 +161,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void beforeUpdate(Connection connection, Table table) throws SQLException {
     beforeInsert(connection, table);
   }
@@ -165,6 +169,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void afterUpdate(Connection connection, Table table) throws SQLException {
     afterInsert(connection, table);
   }
@@ -172,6 +177,7 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     return new MSSqlModelComparator(getPlatformInfo(), getTableDefinitionChangesPredicate(), isDelimitedIdentifierModeOn());
   }
@@ -179,8 +185,10 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if ((change instanceof RemoveColumnChange) ||
             (change instanceof AddPrimaryKeyChange) ||
@@ -195,7 +203,7 @@ public class MSSqlPlatform extends PlatformImplBase {
           return (addColumnChange.getNextColumn() == null) &&
                  (!addColumnChange.getNewColumn().isRequired() ||
                   addColumnChange.getNewColumn().isAutoIncrement() ||
-                  !StringUtils.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
+                  !StringUtilsExt.isEmpty(addColumnChange.getNewColumn().getDefaultValue()));
         } else if (change instanceof ColumnDefinitionChange) {
           ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
           Column curColumn = intermediateTable.findColumn(colDefChange.getChangedColumn(), isDelimitedIdentifierModeOn());
@@ -216,7 +224,8 @@ public class MSSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  protected Database processChanges(Database model, Collection changes, CreationParameters params) throws IOException, DdlUtilsException {
+  @Override
+  protected Database processChanges(Database model, Collection<ModelChange> changes, CreationParameters params) throws IOException, DdlUtilsException {
     if (!changes.isEmpty()) {
       ((MSSqlBuilder) getSqlBuilder()).turnOnQuotation();
     }

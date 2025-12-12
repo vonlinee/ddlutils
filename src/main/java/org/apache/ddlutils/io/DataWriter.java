@@ -47,7 +47,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
   /**
    * The converters.
    */
-  private ConverterConfiguration _converterConf = new ConverterConfiguration();
+  private final ConverterConfiguration _converterConf = new ConverterConfiguration();
 
   /**
    * Creates a data writer instance using UTF-8 encoding.
@@ -124,7 +124,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
     SqlDynaClass dynaClass = (SqlDynaClass) bean.getDynaClass();
     Table table = dynaClass.getTable();
     TableXmlWriter tableWriter = new TableXmlWriter(table);
-    List columnWriters = new ArrayList();
+    List<ColumnXmlWriter> columnWriters = new ArrayList<>();
 
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       Column column = table.getColumn(idx);
@@ -152,9 +152,9 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans iterator
    */
-  public void write(Iterator beans) throws DataWriterException {
+  public void write(Iterator<DynaBean> beans) throws DataWriterException {
     while (beans.hasNext()) {
-      DynaBean bean = (DynaBean) beans.next();
+      DynaBean bean = beans.next();
 
       if (bean instanceof SqlDynaBean) {
         write((SqlDynaBean) bean);
@@ -169,7 +169,7 @@ public class DataWriter extends PrettyPrintingXmlWriter {
    *
    * @param beans The beans
    */
-  public void write(Collection beans) throws DataWriterException {
+  public void write(Collection<DynaBean> beans) throws DataWriterException {
     write(beans.iterator());
   }
 }

@@ -35,7 +35,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * The target column definition.
    */
-  private Column _newColumnDef;
+  private final Column _newColumnDef;
 
   /**
    * Creates a new change object.
@@ -97,13 +97,9 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
 
     if (sizeMatters && !StringUtilsExt.equals(sourceColumn.getSize(), targetColumn.getSize())) {
       return true;
-    } else if (scaleMatters &&
-               ((sourceColumn.getPrecisionRadix() != targetColumn.getPrecisionRadix()) ||
-                (sourceColumn.getScale() != targetColumn.getScale()))) {
-      return true;
-    } else {
-      return false;
-    }
+    } else return scaleMatters &&
+                  ((sourceColumn.getPrecisionRadix() != targetColumn.getPrecisionRadix()) ||
+                   (sourceColumn.getScale() != targetColumn.getScale()));
   }
 
   /**
@@ -126,13 +122,9 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
 
     if (sizeMatters && (sourceColumn.getSizeAsInt() > targetColumn.getSizeAsInt())) {
       return true;
-    } else if (scaleMatters &&
-               ((sourceColumn.getPrecisionRadix() > targetColumn.getPrecisionRadix()) ||
-                (sourceColumn.getScale() > targetColumn.getScale()))) {
-      return true;
-    } else {
-      return false;
-    }
+    } else return scaleMatters &&
+                  ((sourceColumn.getPrecisionRadix() > targetColumn.getPrecisionRadix()) ||
+                   (sourceColumn.getScale() > targetColumn.getScale()));
   }
 
   /**
@@ -185,6 +177,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Column column = findChangedColumn(model, caseSensitive);
 

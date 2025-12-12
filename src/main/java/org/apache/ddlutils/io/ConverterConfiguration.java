@@ -36,11 +36,11 @@ public class ConverterConfiguration {
   /**
    * The converters per type.
    */
-  private HashMap _convertersPerType = new HashMap();
+  private final HashMap<Integer, SqlTypeConverter> _convertersPerType = new HashMap<>();
   /**
    * The converters per table-column path.
    */
-  private HashMap _convertersPerPath = new HashMap();
+  private final HashMap<String, SqlTypeConverter> _convertersPerPath = new HashMap<>();
 
   /**
    * Creates a new configuration object with the default converters.
@@ -76,7 +76,7 @@ public class ConverterConfiguration {
    * @param converter   The converter
    */
   public void registerConverter(int sqlTypeCode, SqlTypeConverter converter) {
-    _convertersPerType.put(new Integer(sqlTypeCode), converter);
+    _convertersPerType.put(sqlTypeCode, converter);
   }
 
   /**
@@ -98,10 +98,10 @@ public class ConverterConfiguration {
    * @return The converter
    */
   public SqlTypeConverter getRegisteredConverter(Table table, Column column) {
-    SqlTypeConverter result = (SqlTypeConverter) _convertersPerPath.get(table.getName() + "/" + column.getName());
+    SqlTypeConverter result = _convertersPerPath.get(table.getName() + "/" + column.getName());
 
     if (result == null) {
-      result = (SqlTypeConverter) _convertersPerType.get(new Integer(column.getTypeCode()));
+      result = _convertersPerType.get(column.getTypeCode());
     }
     return result;
   }

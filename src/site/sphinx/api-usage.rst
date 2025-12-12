@@ -190,7 +190,7 @@ to stdout::
 	                      Database   database)
 	{
 	    Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
-	    ArrayList params   = new ArrayList();
+	    ArrayList params   = new ArrayList<>();
     
 	    params.add("Some title");
     
@@ -241,7 +241,7 @@ on the safe side, then you could write the above statement like this::
 	                      Database   database)
 	{
 	    Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
-	    ArrayList params   = new ArrayList();
+	    ArrayList params   = new ArrayList<>();
 	    String    sql;
     
 	    params.add("Some title");

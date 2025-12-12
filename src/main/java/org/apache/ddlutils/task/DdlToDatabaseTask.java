@@ -71,7 +71,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
   /**
    * The input files.
    */
-  private ArrayList _fileSets = new ArrayList();
+  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
   /**
    * Whether XML input files are validated against the internal or an external DTD.
    */
@@ -189,6 +189,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Database readModel() {
     DatabaseIO reader = new DatabaseIO();
     Database model = null;
@@ -201,8 +202,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
     if (_singleSchemaFile != null) {
       model = readSingleSchemaFile(reader, _singleSchemaFile);
     } else {
-      for (Iterator it = _fileSets.iterator(); it.hasNext(); ) {
-        FileSet fileSet = (FileSet) it.next();
+      for (FileSet fileSet : _fileSets) {
         File fileSetDir = fileSet.getDir(getProject());
         DirectoryScanner scanner = fileSet.getDirectoryScanner(getProject());
         String[] files = scanner.getIncludedFiles();

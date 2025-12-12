@@ -70,6 +70,14 @@ public abstract class SqlBuilder {
    */
   private final Platform _platform;
   /**
+   * Helper object for dealing with default values.
+   */
+  private final DefaultValueHelper _defaultValueHelper = new DefaultValueHelper();
+  /**
+   * The character sequences that need escaping.
+   */
+  private final Map<String, String> _charSequencesToEscape = new ListOrderedMap<>();
+  /**
    * The current Writer used to output the SQL to.
    */
   private Writer _writer;
@@ -93,14 +101,6 @@ public abstract class SqlBuilder {
    * The number formatter.
    */
   private NumberFormat _valueNumberFormat;
-  /**
-   * Helper object for dealing with default values.
-   */
-  private final DefaultValueHelper _defaultValueHelper = new DefaultValueHelper();
-  /**
-   * The character sequences that need escaping.
-   */
-  private final Map<String, String> _charSequencesToEscape = new ListOrderedMap<>();
 
   //
   // Configuration
@@ -402,7 +402,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void createTemporaryTable(Database database, Table table, Map parameters) throws IOException {
+  protected void createTemporaryTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     createTable(database, table, parameters);
   }
 
@@ -508,7 +508,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     writeTableCreationStmt(database, table, parameters);
     writeTableCreationStmtEnding(table, parameters);
 
@@ -771,7 +771,7 @@ public abstract class SqlBuilder {
    *                        prepared statement
    * @return The insertion sql
    */
-  public String getInsertSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("INSERT INTO ");
     boolean addComma = false;
 
@@ -830,7 +830,7 @@ public abstract class SqlBuilder {
    *                        prepared statement (both for the pk values and the object values)
    * @return The update sql
    */
-  public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
@@ -948,7 +948,7 @@ public abstract class SqlBuilder {
    *                        prepared statement
    * @return The delete sql
    */
-  public String getDeleteSql(Table table, Map pkValues, boolean genPlaceholders) {
+  public String getDeleteSql(Table table, Map<String, Object> pkValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("DELETE FROM ");
     boolean addSep = false;
 
@@ -1138,7 +1138,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void writeTableCreationStmt(Database database, Table table, Map parameters) throws IOException {
+  protected void writeTableCreationStmt(Database database, Table table, Map<String, Object> parameters) throws IOException {
     print("CREATE TABLE ");
     printlnIdentifier(getTableName(table));
     println("(");
@@ -1166,7 +1166,7 @@ public abstract class SqlBuilder {
    * @param table      The table
    * @param parameters Additional platform-specific parameters for the table creation
    */
-  protected void writeTableCreationStmtEnding(Table table, Map parameters) throws IOException {
+  protected void writeTableCreationStmtEnding(Table table, Map<String, Object> parameters) throws IOException {
     printEndOfStatement();
   }
 

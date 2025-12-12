@@ -56,7 +56,7 @@ public class TestPlatformImplBase extends TestBase {
 
     db.set("name", "name");
 
-    Map map = platform.toColumnValues(clz.getSqlDynaProperties(), db);
+    Map<String, Object> map = platform.toColumnValues(clz.getSqlDynaProperties(), db);
 
     assertEquals("name",
       map.get("name"));

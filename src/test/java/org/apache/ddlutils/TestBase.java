@@ -83,7 +83,7 @@ public abstract class TestBase extends TestCase {
    * @return The resulting string
    */
   private String compressWhitespaces(String original) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     char oldChar = ' ';
     char curChar;
 

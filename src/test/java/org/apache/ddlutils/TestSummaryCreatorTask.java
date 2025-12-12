@@ -34,10 +34,14 @@ import org.xml.sax.InputSource;
 
 import javax.sql.DataSource;
 import java.io.*;
+import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * Creates a test summary snippet that can be put onto the DdlUtils web site.
@@ -46,6 +50,10 @@ import java.util.*;
  */
 public class TestSummaryCreatorTask extends Task {
   /**
+   * The input files.
+   */
+  private final ArrayList<FileSet> _fileSets = new ArrayList<>();
+  /**
    * The DdlUtils version.
    */
   private String _version;
@@ -53,10 +61,6 @@ public class TestSummaryCreatorTask extends Task {
    * The file to write the snippet to.
    */
   private File _outputFile;
-  /**
-   * The input files.
-   */
-  private ArrayList _fileSets = new ArrayList();
 
   /**
    * Set the DdlUtils version used to run the tests.
@@ -91,11 +95,10 @@ public class TestSummaryCreatorTask extends Task {
    *
    * @return The input files
    */
-  private List getInputFiles() {
-    ArrayList result = new ArrayList();
+  private List<File> getInputFiles() {
+    ArrayList<File> result = new ArrayList<File>();
 
-    for (Iterator it = _fileSets.iterator(); it.hasNext(); ) {
-      FileSet fileSet = (FileSet) it.next();
+    for (FileSet fileSet : _fileSets) {
       File fileSetDir = fileSet.getDir(getProject());
       DirectoryScanner scanner = fileSet.getDirectoryScanner(getProject());
       String[] files = scanner.getIncludedFiles();
@@ -121,8 +124,8 @@ public class TestSummaryCreatorTask extends Task {
 
     summaryDoc.addElement("summary");
 
-    for (Iterator it = getInputFiles().iterator(); it.hasNext(); ) {
-      processInputFile(summaryDoc, (File) it.next());
+    for (File file : getInputFiles()) {
+      processInputFile(summaryDoc, file);
     }
     return summaryDoc;
   }
@@ -214,8 +217,8 @@ public class TestSummaryCreatorTask extends Task {
         String testSuiteName = testSuiteNode.attributeValue("name");
 
         // since tests have failed, we add it to the summary
-        for (Iterator it = testSuiteNode.selectNodes("testcase[failure or error]").iterator(); it.hasNext(); ) {
-          Element failedTestElement = (Element) it.next();
+        for (Node node : testSuiteNode.selectNodes("testcase[failure or error]")) {
+          Element failedTestElement = (Element) node;
           Element newTestElement = summaryDoc.getRootElement().addElement("failedTest");
 
           // Test setup failure, so the test was not actually run ?
@@ -249,8 +252,7 @@ public class TestSummaryCreatorTask extends Task {
       String dataSourceClass = props.getProperty(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX + "class", BasicDataSource.class.getName());
       DataSource dataSource = (DataSource) Class.forName(dataSourceClass).newInstance();
 
-      for (Iterator it = props.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry entry = (Map.Entry) it.next();
+      for (Map.Entry<Object, Object> entry : props.entrySet()) {
         String propName = (String) entry.getKey();
 
         if (propName.startsWith(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX) && !propName.equals(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX + "class")) {
@@ -342,7 +344,7 @@ public class TestSummaryCreatorTask extends Task {
         File propFile = new File(baseDir, jdbcPropertiesFile);
 
         if (propFile.exists() && propFile.isFile() && propFile.canRead()) {
-          propStream = new FileInputStream(propFile);
+          propStream = Files.newInputStream(propFile.toPath());
         } else {
           throw new BuildException("Cannot load test jdbc properties from file " + jdbcPropertiesFile);
         }
@@ -368,6 +370,7 @@ public class TestSummaryCreatorTask extends Task {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute() throws BuildException {
     try {
       log("Processing test results", Project.MSG_INFO);

@@ -43,6 +43,7 @@ public class Oracle9Platform extends Oracle8Platform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }

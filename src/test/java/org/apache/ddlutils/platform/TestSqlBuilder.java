@@ -49,10 +49,10 @@ public class TestSqlBuilder extends TestBase {
     TestPlatform platform = new TestPlatform();
     SqlBuilder sqlBuilder = platform.getSqlBuilder();
     Database database = parseDatabaseFromString(modelXml);
-    Map map = new HashMap();
+    Map<String, Object> map = new HashMap<>();
 
     map.put("name", "ddlutils");
-    map.put("id", new Integer(0));
+    map.put("id", 0);
 
     platform.setDelimitedIdentifierModeOn(true);
 
@@ -78,13 +78,13 @@ public class TestSqlBuilder extends TestBase {
     TestPlatform platform = new TestPlatform();
     SqlBuilder sqlBuilder = platform.getSqlBuilder();
     Database database = parseDatabaseFromString(modelXml);
-    Map oldMap = new HashMap();
-    Map newMap = new HashMap();
+    Map<String, Object> oldMap = new HashMap<>();
+    Map<String, Object> newMap = new HashMap<>();
 
-    oldMap.put("id", new Integer(0));
+    oldMap.put("id", 0);
 
     newMap.put("name", "ddlutils");
-    newMap.put("id", new Integer(1));
+    newMap.put("id", 1);
 
     platform.setDelimitedIdentifierModeOn(true);
 

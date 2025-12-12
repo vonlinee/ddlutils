@@ -19,11 +19,11 @@ package org.apache.ddlutils.platform.mssql;
  * under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.alteration.ColumnDefinitionChange;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.platform.SqlBuilder;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.sql.Types;
@@ -40,11 +40,11 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * We use a generic date format.
    */
-  private DateFormat _genericDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+  private final DateFormat _genericDateFormat = new SimpleDateFormat("yyyy-MM-dd");
   /**
    * We use a generic date format.
    */
-  private DateFormat _genericTimeFormat = new SimpleDateFormat("HH:mm:ss");
+  private final DateFormat _genericTimeFormat = new SimpleDateFormat("HH:mm:ss");
 
   /**
    * Creates a new builder instance.
@@ -59,7 +59,8 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     turnOnQuotation();
     super.createTable(database, table, parameters);
   }
@@ -67,6 +68,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     String tableName = getTableName(table);
     String tableNameVar = "tn" + createUniqueIdentifier();
@@ -101,6 +103,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKeys(Table table) throws IOException {
     turnOnQuotation();
     super.dropForeignKeys(table);
@@ -109,6 +112,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected DateFormat getValueDateFormat() {
     return _genericDateFormat;
   }
@@ -116,6 +120,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected DateFormat getValueTimeFormat() {
     return _genericTimeFormat;
   }
@@ -123,12 +128,13 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getValueAsString(Column column, Object value) {
     if (value == null) {
       return "NULL";
     }
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     switch (column.getTypeCode()) {
       case Types.REAL:
@@ -140,7 +146,7 @@ public class MSSqlBuilder extends SqlBuilder {
         if (!(value instanceof String) && (getValueNumberFormat() != null)) {
           result.append(getValueNumberFormat().format(value));
         } else {
-          result.append(value.toString());
+          result.append(value);
         }
         break;
       case Types.DATE:
@@ -160,7 +166,7 @@ public class MSSqlBuilder extends SqlBuilder {
       case Types.TIMESTAMP:
         result.append("CAST(");
         result.append(getPlatformInfo().getValueQuoteToken());
-        result.append(value.toString());
+        result.append(value);
         result.append(getPlatformInfo().getValueQuoteToken());
         result.append(" AS datetime)");
         break;
@@ -171,6 +177,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getNativeDefaultValue(Column column) {
     // Sql Server wants BIT default values as 0 or 1
     if ((column.getTypeCode() == Types.BIT) || (column.getTypeCode() == Types.BOOLEAN)) {
@@ -183,6 +190,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     print("IDENTITY (1,1) ");
   }
@@ -190,6 +198,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropIndex(Table table, Index index) throws IOException {
     print("DROP INDEX ");
     printIdentifier(getTableName(table));
@@ -201,6 +210,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKey(Table table, ForeignKey foreignKey) throws IOException {
     String constraintName = getForeignKeyName(table, foreignKey);
 
@@ -238,6 +248,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     return "SELECT @@IDENTITY";
   }
@@ -249,15 +260,12 @@ public class MSSqlBuilder extends SqlBuilder {
    * @return The SQL
    */
   protected String getEnableIdentityOverrideSql(Table table) {
-    StringBuffer result = new StringBuffer();
 
-    result.append(getQuotationOnStatement());
-    result.append("SET IDENTITY_INSERT ");
-    result.append(getDelimitedIdentifier(getTableName(table)));
-    result.append(" ON");
-    result.append(getPlatformInfo().getSqlCommandDelimiter());
-
-    return result.toString();
+    return getQuotationOnStatement() +
+           "SET IDENTITY_INSERT " +
+           getDelimitedIdentifier(getTableName(table)) +
+           " ON" +
+           getPlatformInfo().getSqlCommandDelimiter();
   }
 
   /**
@@ -267,35 +275,33 @@ public class MSSqlBuilder extends SqlBuilder {
    * @return The SQL
    */
   protected String getDisableIdentityOverrideSql(Table table) {
-    StringBuffer result = new StringBuffer();
 
-    result.append(getQuotationOnStatement());
-    result.append("SET IDENTITY_INSERT ");
-    result.append(getDelimitedIdentifier(getTableName(table)));
-    result.append(" OFF");
-    result.append(getPlatformInfo().getSqlCommandDelimiter());
-
-    return result.toString();
+    return getQuotationOnStatement() +
+           "SET IDENTITY_INSERT " +
+           getDelimitedIdentifier(getTableName(table)) +
+           " OFF" +
+           getPlatformInfo().getSqlCommandDelimiter();
   }
 
   /**
    * {@inheritDoc}
    */
-  public String getDeleteSql(Table table, Map pkValues, boolean genPlaceholders) {
+  @Override
+  public String getDeleteSql(Table table, Map<String, Object> pkValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getDeleteSql(table, pkValues, genPlaceholders);
   }
 
   /**
    * {@inheritDoc}
    */
-  public String getInsertSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getInsertSql(table, columnValues, genPlaceholders);
   }
 
   /**
    * {@inheritDoc}
    */
-  public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
+  public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getUpdateSql(table, columnValues, genPlaceholders);
   }
 
@@ -361,7 +367,7 @@ public class MSSqlBuilder extends SqlBuilder {
    * @param column The column to drop
    */
   public void dropColumn(Table table, Column column) throws IOException {
-    if (!StringUtils.isEmpty(column.getDefaultValue())) {
+    if (!StringUtilsExt.isEmpty(column.getDefaultValue())) {
       writeDropConstraintStatement(table, column, "D");
     }
     print("ALTER TABLE ");

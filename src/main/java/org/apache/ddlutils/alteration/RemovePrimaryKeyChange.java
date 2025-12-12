@@ -41,12 +41,13 @@ public class RemovePrimaryKeyChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
     Column[] pkCols = table.getPrimaryKeyColumns();
 
-    for (int idx = 0; idx < pkCols.length; idx++) {
-      pkCols[idx].setPrimaryKey(false);
+    for (Column pkCol : pkCols) {
+      pkCol.setPrimaryKey(false);
     }
   }
 }

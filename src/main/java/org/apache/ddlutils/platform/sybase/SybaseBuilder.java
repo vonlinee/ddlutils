@@ -26,7 +26,6 @@ import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.sql.Types;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -48,7 +47,8 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     turnOnQuotation();
     super.createTable(database, table, parameters);
   }
@@ -56,7 +56,8 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  protected void writeTableCreationStmtEnding(Table table, Map parameters) throws IOException {
+  @Override
+  protected void writeTableCreationStmtEnding(Table table, Map<String, Object> parameters) throws IOException {
     if (parameters != null) {
       // We support
       // - 'lock'
@@ -77,9 +78,8 @@ public class SybaseBuilder extends SqlBuilder {
 
       boolean writtenWithParameters = false;
 
-      for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-        Map.Entry entry = (Map.Entry) it.next();
-        String name = entry.getKey().toString();
+      for (Map.Entry<String, Object> entry : parameters.entrySet()) {
+        String name = entry.getKey();
 
         if (!"lock".equals(name) && !"at".equals(name) && !"external table at".equals(name) && !"on".equals(name)) {
           if (!writtenWithParameters) {
@@ -115,6 +115,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumn(Table table, Column column) throws IOException {
     printIdentifier(getColumnName(column));
     print(" ");
@@ -138,6 +139,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getNativeDefaultValue(Column column) {
     if ((column.getTypeCode() == Types.BIT) || (column.getTypeCode() == Types.BOOLEAN)) {
       return getDefaultValueHelper().convert(column.getDefaultValue(), column.getTypeCode(), Types.SMALLINT);
@@ -149,6 +151,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     turnOnQuotation();
     print("IF EXISTS (SELECT 1 FROM sysobjects WHERE type = 'U' AND name = ");
@@ -165,6 +168,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKey(Table table, ForeignKey foreignKey) throws IOException {
     String constraintName = getForeignKeyName(table, foreignKey);
 
@@ -182,6 +186,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropIndex(Table table, Index index) throws IOException {
     print("DROP INDEX ");
     printIdentifier(getTableName(table));
@@ -193,6 +198,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKeys(Table table) throws IOException {
     turnOnQuotation();
     super.dropForeignKeys(table);
@@ -201,6 +207,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     return "SELECT @@IDENTITY";
   }
@@ -212,13 +219,10 @@ public class SybaseBuilder extends SqlBuilder {
    * @return The SQL
    */
   protected String getEnableIdentityOverrideSql(Table table) {
-    StringBuffer result = new StringBuffer();
 
-    result.append("SET IDENTITY_INSERT ");
-    result.append(getDelimitedIdentifier(getTableName(table)));
-    result.append(" ON");
-
-    return result.toString();
+    return "SET IDENTITY_INSERT " +
+           getDelimitedIdentifier(getTableName(table)) +
+           " ON";
   }
 
   /**
@@ -228,13 +232,10 @@ public class SybaseBuilder extends SqlBuilder {
    * @return The SQL
    */
   protected String getDisableIdentityOverrideSql(Table table) {
-    StringBuffer result = new StringBuffer();
 
-    result.append("SET IDENTITY_INSERT ");
-    result.append(getDelimitedIdentifier(getTableName(table)));
-    result.append(" OFF");
-
-    return result.toString();
+    return "SET IDENTITY_INSERT " +
+           getDelimitedIdentifier(getTableName(table)) +
+           " OFF";
   }
 
   /**
@@ -297,17 +298,15 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
     // We need to turn on identity override except when the identity column was added to the column
     Column[] targetAutoIncrCols = targetTable.getAutoIncrementColumns();
     boolean needIdentityOverride = false;
 
     if (targetAutoIncrCols.length > 0) {
-      needIdentityOverride = true;
       // Sybase only allows for one identity column per table
-      if (sourceTable.findColumn(targetAutoIncrCols[0].getName(), getPlatform().isDelimitedIdentifierModeOn()) == null) {
-        needIdentityOverride = false;
-      }
+      needIdentityOverride = sourceTable.findColumn(targetAutoIncrCols[0].getName(), getPlatform().isDelimitedIdentifierModeOn()) != null;
     }
     if (needIdentityOverride) {
       print(getEnableIdentityOverrideSql(targetTable));
@@ -323,6 +322,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     String sourceNativeType = getBareNativeType(sourceColumn);
     String targetNativeType = getBareNativeType(targetColumn);
@@ -341,6 +341,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addColumn(Database model, Table table, Column newColumn) throws IOException {
     print("ALTER TABLE ");
     printlnIdentifier(getTableName(table));

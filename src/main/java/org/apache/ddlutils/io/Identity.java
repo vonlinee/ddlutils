@@ -36,15 +36,15 @@ public class Identity {
   /**
    * The table.
    */
-  private Table _table;
+  private final Table _table;
+  /**
+   * The identity columns and their values.
+   */
+  private final HashMap<String, Object> _columnValues = new HashMap<>();
   /**
    * The optional foreign key name whose referenced object this identity represents.
    */
   private String _fkName;
-  /**
-   * The identity columns and their values.
-   */
-  private HashMap _columnValues = new HashMap();
 
   /**
    * Creates a new identity object for the given table.
@@ -109,6 +109,7 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (!(obj instanceof Identity)) {
       return false;
@@ -119,11 +120,10 @@ public class Identity {
     if (!_table.equals(otherIdentity._table)) {
       return false;
     }
-    if (_columnValues.keySet().size() != otherIdentity._columnValues.keySet().size()) {
+    if (_columnValues.size() != otherIdentity._columnValues.size()) {
       return false;
     }
-    for (Iterator it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Map.Entry<String, Object> entry : _columnValues.entrySet()) {
       Object otherValue = otherIdentity._columnValues.get(entry.getKey());
 
       if (entry.getValue() == null) {
@@ -143,6 +143,7 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return toString().hashCode();
   }
@@ -150,13 +151,14 @@ public class Identity {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer buffer = new StringBuffer();
+    StringBuilder buffer = new StringBuilder();
 
     buffer.append(_table.getName());
     buffer.append(":");
-    for (Iterator it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
+    for (Iterator<Map.Entry<String, Object>> it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
+      Map.Entry<String, Object> entry = it.next();
 
       buffer.append(entry.getKey());
       buffer.append("=");

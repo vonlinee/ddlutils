@@ -57,7 +57,7 @@ public abstract class JdbcSupport {
   /**
    * The names of the currently borrowed connections (for debugging).
    */
-  private HashSet _openConnectionNames = new HashSet();
+  private final HashSet _openConnectionNames = new HashSet();
 
   // Properties
   //-------------------------------------------------------------------------

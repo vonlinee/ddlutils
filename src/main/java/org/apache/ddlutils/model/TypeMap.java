@@ -156,15 +156,15 @@ public abstract class TypeMap {
   /**
    * Maps type names to the corresponding {@link java.sql.Types} constants.
    */
-  private static HashMap _typeNameToTypeCode = new HashMap();
+  private static final HashMap<String, Integer> _typeNameToTypeCode = new HashMap<>();
   /**
    * Maps {@link java.sql.Types} type code constants to the corresponding type names.
    */
-  private static HashMap _typeCodeToTypeName = new HashMap();
+  private static final HashMap<Integer, String> _typeCodeToTypeName = new HashMap<>();
   /**
    * Conatins the types per category.
    */
-  private static HashMap _typesPerCategory = new HashMap();
+  private static final HashMap<JdbcTypeCategory, Set<Integer>> _typesPerCategory = new HashMap<>();
 
   static {
     registerJdbcType(Types.ARRAY, ARRAY, JdbcTypeCategory.SPECIAL);
@@ -199,8 +199,8 @@ public abstract class TypeMap {
     registerJdbcType(Types.VARCHAR, VARCHAR, JdbcTypeCategory.TEXTUAL);
 
     // Torque/Turbine extensions which we only support when reading from an XML schema
-    _typeNameToTypeCode.put("BOOLEANINT", new Integer(Types.TINYINT));
-    _typeNameToTypeCode.put("BOOLEANCHAR", new Integer(Types.CHAR));
+    _typeNameToTypeCode.put("BOOLEANINT", Types.TINYINT);
+    _typeNameToTypeCode.put("BOOLEANCHAR", Types.CHAR);
   }
 
   /**
@@ -212,8 +212,8 @@ public abstract class TypeMap {
     int[] typeCodes = new int[_typeCodeToTypeName.size()];
     int idx = 0;
 
-    for (Iterator it = _typeCodeToTypeName.keySet().iterator(); it.hasNext(); idx++) {
-      typeCodes[idx] = ((Integer) it.next()).intValue();
+    for (Iterator<Integer> it = _typeCodeToTypeName.keySet().iterator(); it.hasNext(); idx++) {
+      typeCodes[idx] = it.next();
     }
     return typeCodes;
   }
@@ -226,7 +226,7 @@ public abstract class TypeMap {
    * @return The type code or <code>null</code> if the type is unknown
    */
   public static Integer getJdbcTypeCode(String typeName) {
-    return (Integer) _typeNameToTypeCode.get(typeName.toUpperCase());
+    return _typeNameToTypeCode.get(typeName.toUpperCase());
   }
 
   /**
@@ -238,7 +238,7 @@ public abstract class TypeMap {
    * <code>null</code> if the type is unknown
    */
   public static String getJdbcTypeName(int typeCode) {
-    return (String) _typeCodeToTypeName.get(new Integer(typeCode));
+    return _typeCodeToTypeName.get(typeCode);
   }
 
   /**
@@ -249,18 +249,9 @@ public abstract class TypeMap {
    * @param category The type category
    */
   protected static void registerJdbcType(int typeCode, String typeName, JdbcTypeCategory category) {
-    Integer typeId = new Integer(typeCode);
-
-    _typeNameToTypeCode.put(typeName.toUpperCase(), typeId);
-    _typeCodeToTypeName.put(typeId, typeName.toUpperCase());
-
-    Set typesInCategory = (Set) _typesPerCategory.get(category);
-
-    if (typesInCategory == null) {
-      typesInCategory = new HashSet();
-      _typesPerCategory.put(category, typesInCategory);
-    }
-    typesInCategory.add(typeId);
+    _typeNameToTypeCode.put(typeName.toUpperCase(), typeCode);
+    _typeCodeToTypeName.put(typeCode, typeName.toUpperCase());
+    _typesPerCategory.computeIfAbsent(category, k -> new HashSet<>()).add(typeCode);
   }
 
   /**
@@ -271,9 +262,8 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a numeric one
    */
   public static boolean isNumericType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.NUMERIC);
-
-    return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
+    Set<Integer> typesInCategory = _typesPerCategory.get(JdbcTypeCategory.NUMERIC);
+    return typesInCategory != null && typesInCategory.contains(jdbcTypeCode);
   }
 
   /**
@@ -284,9 +274,8 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a numeric one
    */
   public static boolean isDateTimeType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.DATETIME);
-
-    return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
+    Set<Integer> typesInCategory = _typesPerCategory.get(JdbcTypeCategory.DATETIME);
+    return typesInCategory != null && typesInCategory.contains(jdbcTypeCode);
   }
 
   /**
@@ -297,9 +286,8 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a text one
    */
   public static boolean isTextType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.TEXTUAL);
-
-    return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
+    Set<Integer> typesInCategory = _typesPerCategory.get(JdbcTypeCategory.TEXTUAL);
+    return typesInCategory != null && typesInCategory.contains(jdbcTypeCode);
   }
 
   /**
@@ -310,9 +298,8 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a binary one
    */
   public static boolean isBinaryType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.BINARY);
-
-    return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
+    Set<Integer> typesInCategory = _typesPerCategory.get(JdbcTypeCategory.BINARY);
+    return typesInCategory != null && typesInCategory.contains(jdbcTypeCode);
   }
 
   /**
@@ -323,8 +310,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a special one
    */
   public static boolean isSpecialType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.SPECIAL);
-
-    return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
+    Set<Integer> typesInCategory = _typesPerCategory.get(JdbcTypeCategory.SPECIAL);
+    return typesInCategory != null && typesInCategory.contains(jdbcTypeCode);
   }
 }

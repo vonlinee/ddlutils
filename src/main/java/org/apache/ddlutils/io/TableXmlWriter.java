@@ -21,7 +21,6 @@ package org.apache.ddlutils.io;
 
 import org.apache.ddlutils.model.Table;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -60,7 +59,7 @@ public class TableXmlWriter extends ModelXmlWriter {
    * @param columnXmlWriters A list of column xml writers for writing out the bean's values to XML
    * @param writer           The writer to write to
    */
-  public void write(List columnXmlWriters, DataWriter writer) {
+  public void write(List<ColumnXmlWriter> columnXmlWriters, DataWriter writer) {
     writer.indentIfPrettyPrinting(1);
     if (formattingMethod == AS_TAG_NAME) {
       writer.writeElementStart(null, tableName);
@@ -70,8 +69,8 @@ public class TableXmlWriter extends ModelXmlWriter {
     if (formattingMethod == AS_ATTRIBUTE) {
       writer.writeAttribute(null, "table-name", tableName);
     }
-    for (Iterator it = columnXmlWriters.iterator(); it.hasNext(); ) {
-      ((ColumnXmlWriter) it.next()).writeAttribute(writer);
+    for (ColumnXmlWriter columnXmlWriter : columnXmlWriters) {
+      columnXmlWriter.writeAttribute(writer);
     }
 
     boolean hasSubTags = false;
@@ -84,8 +83,8 @@ public class TableXmlWriter extends ModelXmlWriter {
       writer.writeElementEnd();
       hasSubTags = true;
     }
-    for (Iterator it = columnXmlWriters.iterator(); it.hasNext(); ) {
-      hasSubTags = ((ColumnXmlWriter) it.next()).writeSubElement(writer) || hasSubTags;
+    for (ColumnXmlWriter columnXmlWriter : columnXmlWriters) {
+      hasSubTags = columnXmlWriter.writeSubElement(writer) || hasSubTags;
     }
     if (hasSubTags) {
       writer.printlnIfPrettyPrinting();

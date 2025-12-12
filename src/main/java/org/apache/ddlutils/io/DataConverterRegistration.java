@@ -88,7 +88,7 @@ public class DataConverterRegistration {
     if (typeCode == null) {
       throw new BuildException("Unknown jdbc type " + jdbcTypeName);
     } else {
-      _typeCode = typeCode.intValue();
+      _typeCode = typeCode;
     }
   }
 
@@ -107,7 +107,7 @@ public class DataConverterRegistration {
    * @param column The column
    */
   public void setColumn(String column) throws BuildException {
-    if ((column == null) || (column.length() == 0)) {
+    if ((column == null) || (column.isEmpty())) {
       throw new BuildException("Please specify a non-empty column name");
     }
     _column = column;
@@ -128,7 +128,7 @@ public class DataConverterRegistration {
    * @param table The table
    */
   public void setTable(String table) throws BuildException {
-    if ((table == null) || (table.length() == 0)) {
+    if ((table == null) || (table.isEmpty())) {
       throw new BuildException("Please specify a non-empty table name");
     }
     _table = table;

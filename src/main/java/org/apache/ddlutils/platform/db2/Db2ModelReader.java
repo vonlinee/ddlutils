@@ -51,11 +51,11 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * The regular expression pattern for the time values that Db2 returns.
    */
-  private Pattern _db2TimePattern;
+  private final Pattern _db2TimePattern;
   /**
    * The regular expression pattern for the timestamp values that Db2 returns.
    */
-  private Pattern _db2TimestampPattern;
+  private final Pattern _db2TimestampPattern;
 
   /**
    * Creates a new model reader for Db2 databases.
@@ -78,7 +78,7 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
     for (int idx = 0; idx < KNOWN_SYSTEM_TABLES.length; idx++) {
@@ -99,7 +99,8 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
     if (column.getDefaultValue() != null) {
@@ -108,27 +109,26 @@ public class Db2ModelReader extends JdbcModelReader {
 
         // Db2 returns "HH24.MI.SS"
         if (matcher.matches()) {
-          StringBuffer newDefault = new StringBuffer();
 
-          newDefault.append("'");
-          // the hour
-          newDefault.append(matcher.group(1));
-          newDefault.append(":");
-          // the minute
-          newDefault.append(matcher.group(2));
-          newDefault.append(":");
-          // the second
-          newDefault.append(matcher.group(3));
-          newDefault.append("'");
+          String newDefault = "'" +
+                              // the hour
+                              matcher.group(1) +
+                              ":" +
+                              // the minute
+                              matcher.group(2) +
+                              ":" +
+                              // the second
+                              matcher.group(3) +
+                              "'";
 
-          column.setDefaultValue(newDefault.toString());
+          column.setDefaultValue(newDefault);
         }
       } else if (column.getTypeCode() == Types.TIMESTAMP) {
         Matcher matcher = _db2TimestampPattern.matcher(column.getDefaultValue());
 
         // Db2 returns "YYYY-MM-DD-HH24.MI.SS.FF"
         if (matcher.matches()) {
-          StringBuffer newDefault = new StringBuffer();
+          StringBuilder newDefault = new StringBuilder();
 
           newDefault.append("'");
           // group 1 is the date which has the correct format
@@ -189,6 +189,7 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) throws SQLException {
     // Db2 uses the form "SQL060205225246220" if the primary key was defined during table creation
     // When the ALTER TABLE way was used however, the index has the name of the primary key
@@ -204,14 +205,14 @@ public class Db2ModelReader extends JdbcModelReader {
       // we'll compare the index name to the names of all primary keys
       // TODO: Once primary key names are supported, this can be done easier via the table object
       ResultSet pkData = null;
-      HashSet pkNames = new HashSet();
+      HashSet<String> pkNames = new HashSet<>();
 
       try {
         pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(table.getName()));
         while (pkData.next()) {
-          Map values = readColumns(pkData, getColumnsForPK());
+          Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
-          pkNames.add(values.get("PK_NAME"));
+          pkNames.add((String) values.get("PK_NAME"));
         }
       } finally {
         closeResultSet(pkData);

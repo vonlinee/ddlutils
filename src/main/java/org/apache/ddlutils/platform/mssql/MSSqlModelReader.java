@@ -47,11 +47,11 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * The regular expression pattern for the ISO dates.
    */
-  private Pattern _isoDatePattern;
+  private final Pattern _isoDatePattern;
   /**
    * The regular expression pattern for the ISO times.
    */
-  private Pattern _isoTimePattern;
+  private final Pattern _isoTimePattern;
 
   /**
    * Creates a new model reader for Microsoft Sql Server databases.
@@ -65,7 +65,7 @@ public class MSSqlModelReader extends JdbcModelReader {
     setDefaultTablePattern("%");
 
     try {
-      _isoDatePattern = Pattern.compile("'(\\d{4}\\-\\d{2}\\-\\d{2})'");
+      _isoDatePattern = Pattern.compile("'(\\d{4}-\\d{2}-\\d{2})'");
       _isoTimePattern = Pattern.compile("'(\\d{2}:\\d{2}:\\d{2})'");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
@@ -76,11 +76,12 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
-    for (int idx = 0; idx < KNOWN_SYSTEM_TABLES.length; idx++) {
-      if (KNOWN_SYSTEM_TABLES[idx].equals(tableName)) {
+    for (String knownSystemTable : KNOWN_SYSTEM_TABLES) {
+      if (knownSystemTable.equals(tableName)) {
         return null;
       }
     }
@@ -109,15 +110,15 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     // Sql Server generates an index "PK__[table name]__[hex number]"
-    StringBuffer pkIndexName = new StringBuffer();
 
-    pkIndexName.append("PK__");
-    pkIndexName.append(table.getName());
-    pkIndexName.append("__");
+    String pkIndexName = "PK__" +
+                         table.getName() +
+                         "__";
 
-    return index.getName().toUpperCase().startsWith(pkIndexName.toString().toUpperCase());
+    return index.getName().toUpperCase().startsWith(pkIndexName.toUpperCase());
   }
 
   /**
@@ -148,7 +149,8 @@ public class MSSqlModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
     String defaultValue = column.getDefaultValue();
 

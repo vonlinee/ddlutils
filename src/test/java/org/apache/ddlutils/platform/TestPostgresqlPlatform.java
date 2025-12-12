@@ -32,6 +32,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return PostgreSqlPlatform.DATABASENAME;
   }
@@ -160,7 +161,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
       "CREATE TABLE \"escapedcharacters\"\n" +
       "(\n" +
       "    \"COL_PK\"   INTEGER,\n" +
-      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '\\\' \\t \\n \\r \\\\',\n" +
+      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '\\' \\t \\n \\r \\\\',\n" +
       "    PRIMARY KEY (\"COL_PK\")\n" +
       ");\n",
       getDatabaseCreationSql(schema));

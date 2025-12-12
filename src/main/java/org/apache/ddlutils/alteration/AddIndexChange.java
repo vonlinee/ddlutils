@@ -30,7 +30,7 @@ public class AddIndexChange extends TableChangeImplBase {
   /**
    * The new index.
    */
-  private Index _newIndex;
+  private final Index _newIndex;
 
   /**
    * Creates a new change object.
@@ -55,6 +55,7 @@ public class AddIndexChange extends TableChangeImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 

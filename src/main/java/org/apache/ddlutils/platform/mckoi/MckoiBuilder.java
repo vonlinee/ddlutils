@@ -50,13 +50,14 @@ public class MckoiBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     // we use sequences instead of the UNIQUEKEY function because this way
     // we can read their values back
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      createAutoIncrementSequence(table, columns[idx]);
+    for (Column column : columns) {
+      createAutoIncrementSequence(table, column);
     }
 
     super.createTable(database, table, parameters);
@@ -65,6 +66,7 @@ public class MckoiBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     print("DROP TABLE IF EXISTS ");
     printIdentifier(getTableName(table));
@@ -72,8 +74,8 @@ public class MckoiBuilder extends SqlBuilder {
 
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      dropAutoIncrementSequence(table, columns[idx]);
+    for (Column column : columns) {
+      dropAutoIncrementSequence(table, column);
     }
   }
 
@@ -112,6 +114,7 @@ public class MckoiBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnDefaultValue(Table table, Column column) throws IOException {
     if (column.isAutoIncrement()) {
       // we start at value 1 to avoid issues with jdbc
@@ -126,11 +129,12 @@ public class MckoiBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     Column[] columns = table.getAutoIncrementColumns();
 
     if (columns.length > 0) {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       result.append("SELECT ");
       for (int idx = 0; idx < columns.length; idx++) {
@@ -154,7 +158,7 @@ public class MckoiBuilder extends SqlBuilder {
    * @param table      The table to recreate
    * @param parameters The table creation parameters
    */
-  protected void writeRecreateTableStmt(Database model, Table table, Map parameters) throws IOException {
+  protected void writeRecreateTableStmt(Database model, Table table, Map<String, Object> parameters) throws IOException {
     print("ALTER ");
     super.createTable(model, table, parameters);
   }

@@ -33,7 +33,6 @@ import org.apache.ddlutils.platform.PlatformImplBase;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -102,6 +101,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -116,7 +116,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * @param parameters          Additional parameters for the operation
    * @param createDb            Whether to create or drop the database
    */
-  private void createOrDropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters, boolean createDb) throws DatabaseOperationException, UnsupportedOperationException {
+  private void createOrDropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters, boolean createDb) throws DatabaseOperationException, UnsupportedOperationException {
     if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
       int slashPos = connectionUrl.lastIndexOf('/');
 
@@ -129,17 +129,15 @@ public class PostgreSqlPlatform extends PlatformImplBase {
       String dbName = (paramPos > slashPos ? connectionUrl.substring(slashPos + 1, paramPos) : connectionUrl.substring(slashPos + 1));
       Connection connection = null;
       Statement stmt = null;
-      StringBuffer sql = new StringBuffer();
+      StringBuilder sql = new StringBuilder();
 
       sql.append(createDb ? "CREATE" : "DROP");
       sql.append(" DATABASE ");
       sql.append(dbName);
       if ((parameters != null) && !parameters.isEmpty()) {
-        for (Iterator it = parameters.entrySet().iterator(); it.hasNext(); ) {
-          Map.Entry entry = (Map.Entry) it.next();
-
+        for (Map.Entry<String, Object> entry : parameters.entrySet()) {
           sql.append(" ");
-          sql.append(entry.getKey().toString());
+          sql.append(entry.getKey());
           if (entry.getValue() != null) {
             sql.append(" ");
             sql.append(entry.getValue().toString());
@@ -147,7 +145,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
         }
       }
       if (getLog().isDebugEnabled()) {
-        getLog().debug("About to create database via " + baseDb + " using this SQL: " + sql.toString());
+        getLog().debug("About to create database via " + baseDb + " using this SQL: " + sql);
       }
       try {
         Class.forName(jdbcDriverClassName);
@@ -162,13 +160,13 @@ public class PostgreSqlPlatform extends PlatformImplBase {
         if (stmt != null) {
           try {
             stmt.close();
-          } catch (SQLException ex) {
+          } catch (SQLException ignored) {
           }
         }
         if (connection != null) {
           try {
             connection.close();
-          } catch (SQLException ex) {
+          } catch (SQLException ignored) {
           }
         }
       }
@@ -180,7 +178,8 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
-  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map parameters) throws DatabaseOperationException, UnsupportedOperationException {
+  @Override
+  public void createDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters) throws DatabaseOperationException, UnsupportedOperationException {
     // With PostgreSQL, you create a database by executing "CREATE DATABASE" in an existing database (usually
     // the template1 database because it usually exists)
     createOrDropDatabase(jdbcDriverClassName, connectionUrl, username, password, parameters, true);
@@ -189,6 +188,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password) throws DatabaseOperationException, UnsupportedOperationException {
     // With PostgreSQL, you create a database by executing "DROP DATABASE" in an existing database (usually
     // the template1 database because it usually exists)
@@ -198,6 +198,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setObject(PreparedStatement statement, int sqlIndex, DynaBean dynaBean, SqlDynaProperty property) throws SQLException {
     int typeCode = property.getColumn().getTypeCode();
     Object value = dynaBean.get(property.getName());
@@ -223,6 +224,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected ModelComparator getModelComparator() {
     ModelComparator comparator = super.getModelComparator();
 
@@ -233,8 +235,10 @@ public class PostgreSqlPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected TableDefinitionChangesPredicate getTableDefinitionChangesPredicate() {
     return new DefaultTableDefinitionChangesPredicate() {
+      @Override
       protected boolean isSupported(Table intermediateTable, TableChange change) {
         if (change instanceof RemoveColumnChange) {
           return true;

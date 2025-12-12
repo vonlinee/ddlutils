@@ -41,6 +41,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setUp() throws Exception {
     _platform = new TestPlatform();
     _platform.setSqlCommentsOn(false);
@@ -50,6 +51,7 @@ public class TestAlterationAlgorithm extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     _platform = null;
   }

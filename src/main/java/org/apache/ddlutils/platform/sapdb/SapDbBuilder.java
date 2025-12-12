@@ -46,6 +46,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     print("DROP TABLE ");
     printIdentifier(getTableName(table));
@@ -56,6 +57,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     print("DEFAULT SERIAL(1)");
   }
@@ -63,6 +65,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void createPrimaryKey(Table table, Column[] primaryKeyColumns) throws IOException {
     // Note that SapDB does not support the addition of named primary keys
     if ((primaryKeyColumns.length > 0) && shouldGeneratePrimaryKeys(primaryKeyColumns)) {
@@ -78,6 +81,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeForeignKeyOnDeleteAction(Table table, ForeignKey foreignKey) throws IOException {
     if (foreignKey.getOnDelete() != CascadeAction.NONE) {
       super.writeForeignKeyOnDeleteAction(table, foreignKey);
@@ -87,6 +91,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropForeignKey(Table table, ForeignKey foreignKey) throws IOException {
     writeTableAlterStmt(table);
     print("DROP FOREIGN KEY ");
@@ -97,18 +102,18 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
-    StringBuffer result = new StringBuffer();
 
-    result.append("SELECT ");
-    result.append(getDelimitedIdentifier(getTableName(table)));
-    result.append(".CURRVAL FROM DUAL");
-    return result.toString();
+    return "SELECT " +
+           getDelimitedIdentifier(getTableName(table)) +
+           ".CURRVAL FROM DUAL";
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addColumn(Database model, Table table, Column newColumn) throws IOException {
     print("ALTER TABLE ");
     printlnIdentifier(getTableName(table));
@@ -200,6 +205,7 @@ public class SapDbBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     boolean charSizeChanged = TypeMap.isTextType(targetColumn.getTypeCode()) &&
                               TypeMap.isTextType(targetColumn.getTypeCode()) &&

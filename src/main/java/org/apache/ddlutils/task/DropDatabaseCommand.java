@@ -37,6 +37,7 @@ public class DropDatabaseCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isRequiringModel() {
     return false;
   }
@@ -44,6 +45,7 @@ public class DropDatabaseCommand extends DatabaseCommand {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void execute(DatabaseTaskBase task, Database model) throws BuildException {
     BasicDataSource dataSource = getDataSource();
 

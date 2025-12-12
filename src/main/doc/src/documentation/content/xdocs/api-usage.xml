@@ -206,7 +206,7 @@ public void dumpBooks(DataSource dataSource,
                       Database   database)
 {
     Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
-    ArrayList params   = new ArrayList();
+    ArrayList params   = new ArrayList<>();
 
     params.add("Some title");
 
@@ -260,7 +260,7 @@ public void dumpBooks(DataSource dataSource,
                       Database   database)
 {
     Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
-    ArrayList params   = new ArrayList();
+    ArrayList params   = new ArrayList<>();
     String    sql;
 
     params.add("Some title");

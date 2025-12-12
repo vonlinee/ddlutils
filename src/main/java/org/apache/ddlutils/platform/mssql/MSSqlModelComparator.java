@@ -24,7 +24,6 @@ import org.apache.ddlutils.alteration.*;
 import org.apache.ddlutils.model.*;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -39,7 +38,7 @@ public class MSSqlModelComparator extends ModelComparator {
    * @param platformInfo            The platform info
    * @param tableDefChangePredicate The predicate that defines whether tables changes are supported
    *                                by the platform or not; all changes are supported if this is null
-   * @param caseSensitive           Whether comparison is case sensitive
+   * @param caseSensitive           Whether comparison is case-sensitive
    */
   public MSSqlModelComparator(PlatformInfo platformInfo,
                               TableDefinitionChangesPredicate tableDefChangePredicate,
@@ -52,22 +51,21 @@ public class MSSqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForPrimaryKeyChanges(Database sourceModel,
-                                           Table sourceTable,
-                                           Database intermediateModel,
-                                           Table intermediateTable,
-                                           Database targetModel,
-                                           Table targetTable) {
-    List changes = super.checkForPrimaryKeyChanges(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+  @Override
+  protected List<TableChange> checkForPrimaryKeyChanges(Database sourceModel,
+                                                        Table sourceTable,
+                                                        Database intermediateModel,
+                                                        Table intermediateTable,
+                                                        Database targetModel,
+                                                        Table targetTable) {
+    List<TableChange> changes = super.checkForPrimaryKeyChanges(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
 
     // now we add pk changes if one of the pk columns was changed
     // we only need to do this if there is no other pk change (which can only be a remove or add change or both)
     if (changes.isEmpty()) {
-      List columns = getRelevantChangedColumns(sourceTable, targetTable);
+      List<Column> columns = getRelevantChangedColumns(sourceTable, targetTable);
 
-      for (Iterator it = columns.iterator(); it.hasNext(); ) {
-        Column targetColumn = (Column) it.next();
-
+      for (Column targetColumn : columns) {
         if (targetColumn.isPrimaryKey()) {
           changes.add(new RemovePrimaryKeyChange(sourceTable.getName()));
           changes.add(new AddPrimaryKeyChange(sourceTable.getName(), sourceTable.getPrimaryKeyColumnNames()));
@@ -81,37 +79,36 @@ public class MSSqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForRemovedIndexes(Database sourceModel,
-                                        Table sourceTable,
-                                        Database intermediateModel,
-                                        Table intermediateTable,
-                                        Database targetModel,
-                                        Table targetTable) {
-    List changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+  @Override
+  protected List<TableChange> checkForRemovedIndexes(Database sourceModel,
+                                                     Table sourceTable,
+                                                     Database intermediateModel,
+                                                     Table intermediateTable,
+                                                     Database targetModel,
+                                                     Table targetTable) {
+    List<TableChange> changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
     Index[] targetIndexes = targetTable.getIndices();
-    List additionalChanges = new ArrayList();
+    List<RemoveIndexChange> additionalChanges = new ArrayList<>();
 
     // removing all indexes that are maintained and that use a changed column
     if (targetIndexes.length > 0) {
-      List columns = getRelevantChangedColumns(sourceTable, targetTable);
+      List<Column> columns = getRelevantChangedColumns(sourceTable, targetTable);
 
       if (!columns.isEmpty()) {
-        for (int indexIdx = 0; indexIdx < targetIndexes.length; indexIdx++) {
-          Index sourceIndex = findCorrespondingIndex(sourceTable, targetIndexes[indexIdx]);
+        for (Index targetIndex : targetIndexes) {
+          Index sourceIndex = findCorrespondingIndex(sourceTable, targetIndex);
 
           if (sourceIndex != null) {
-            for (Iterator columnIt = columns.iterator(); columnIt.hasNext(); ) {
-              Column targetColumn = (Column) columnIt.next();
-
-              if (targetIndexes[indexIdx].hasColumn(targetColumn)) {
-                additionalChanges.add(new RemoveIndexChange(intermediateTable.getName(), targetIndexes[indexIdx]));
+            for (Column targetColumn : columns) {
+              if (targetIndex.hasColumn(targetColumn)) {
+                additionalChanges.add(new RemoveIndexChange(intermediateTable.getName(), targetIndex));
                 break;
               }
             }
           }
         }
-        for (Iterator changeIt = additionalChanges.iterator(); changeIt.hasNext(); ) {
-          ((RemoveIndexChange) changeIt.next()).apply(intermediateModel, isCaseSensitive());
+        for (RemoveIndexChange additionalChange : additionalChanges) {
+          additionalChange.apply(intermediateModel, isCaseSensitive());
         }
         changes.addAll(additionalChanges);
       }
@@ -122,28 +119,29 @@ public class MSSqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForAddedIndexes(Database sourceModel,
-                                      Table sourceTable,
-                                      Database intermediateModel,
-                                      Table intermediateTable,
-                                      Database targetModel,
-                                      Table targetTable) {
-    List changes = super.checkForAddedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+  @Override
+  protected List<AddIndexChange> checkForAddedIndexes(Database sourceModel,
+                                                      Table sourceTable,
+                                                      Database intermediateModel,
+                                                      Table intermediateTable,
+                                                      Database targetModel,
+                                                      Table targetTable) {
+    List<AddIndexChange> changes = super.checkForAddedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
     Index[] targetIndexes = targetTable.getIndices();
-    List additionalChanges = new ArrayList();
+    List<AddIndexChange> additionalChanges = new ArrayList<>();
 
     // re-adding all indexes that are maintained and that use a changed column
     if (targetIndexes.length > 0) {
-      for (int indexIdx = 0; indexIdx < targetIndexes.length; indexIdx++) {
-        Index sourceIndex = findCorrespondingIndex(sourceTable, targetIndexes[indexIdx]);
-        Index intermediateIndex = findCorrespondingIndex(intermediateTable, targetIndexes[indexIdx]);
+      for (Index targetIndex : targetIndexes) {
+        Index sourceIndex = findCorrespondingIndex(sourceTable, targetIndex);
+        Index intermediateIndex = findCorrespondingIndex(intermediateTable, targetIndex);
 
         if ((sourceIndex != null) && (intermediateIndex == null)) {
-          additionalChanges.add(new AddIndexChange(intermediateTable.getName(), targetIndexes[indexIdx]));
+          additionalChanges.add(new AddIndexChange(intermediateTable.getName(), targetIndex));
         }
       }
-      for (Iterator changeIt = additionalChanges.iterator(); changeIt.hasNext(); ) {
-        ((AddIndexChange) changeIt.next()).apply(intermediateModel, isCaseSensitive());
+      for (AddIndexChange additionalChange : additionalChanges) {
+        additionalChange.apply(intermediateModel, isCaseSensitive());
       }
       changes.addAll(additionalChanges);
     }
@@ -153,11 +151,12 @@ public class MSSqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForRemovedForeignKeys(Database sourceModel,
-                                            Database intermediateModel,
-                                            Database targetModel) {
-    List changes = super.checkForRemovedForeignKeys(sourceModel, intermediateModel, targetModel);
-    List additionalChanges = new ArrayList();
+  @Override
+  protected List<RemoveForeignKeyChange> checkForRemovedForeignKeys(Database sourceModel,
+                                                                    Database intermediateModel,
+                                                                    Database targetModel) {
+    List<RemoveForeignKeyChange> changes = super.checkForRemovedForeignKeys(sourceModel, intermediateModel, targetModel);
+    List<RemoveForeignKeyChange> additionalChanges = new ArrayList<>();
 
     // removing all foreign keys that are maintained and that use a changed column
     for (int tableIdx = 0; tableIdx < targetModel.getTableCount(); tableIdx++) {
@@ -165,7 +164,7 @@ public class MSSqlModelComparator extends ModelComparator {
       Table sourceTable = sourceModel.findTable(targetTable.getName(), isCaseSensitive());
 
       if (sourceTable != null) {
-        List columns = getRelevantChangedColumns(sourceTable, targetTable);
+        List<Column> columns = getRelevantChangedColumns(sourceTable, targetTable);
 
         if (!columns.isEmpty()) {
           for (int fkIdx = 0; fkIdx < targetTable.getForeignKeyCount(); fkIdx++) {
@@ -173,9 +172,7 @@ public class MSSqlModelComparator extends ModelComparator {
             ForeignKey sourceFk = findCorrespondingForeignKey(sourceTable, targetFk);
 
             if (sourceFk != null) {
-              for (Iterator columnIt = columns.iterator(); columnIt.hasNext(); ) {
-                Column targetColumn = (Column) columnIt.next();
-
+              for (Column targetColumn : columns) {
                 if (targetFk.hasLocalColumn(targetColumn) || targetFk.hasForeignColumn(targetColumn)) {
                   additionalChanges.add(new RemoveForeignKeyChange(sourceTable.getName(), targetFk));
                   break;
@@ -186,8 +183,8 @@ public class MSSqlModelComparator extends ModelComparator {
         }
       }
     }
-    for (Iterator changeIt = additionalChanges.iterator(); changeIt.hasNext(); ) {
-      ((RemoveForeignKeyChange) changeIt.next()).apply(intermediateModel, isCaseSensitive());
+    for (RemoveForeignKeyChange additionalChange : additionalChanges) {
+      additionalChange.apply(intermediateModel, isCaseSensitive());
     }
     changes.addAll(additionalChanges);
     return changes;
@@ -196,11 +193,12 @@ public class MSSqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForAddedForeignKeys(Database sourceModel,
-                                          Database intermediateModel,
-                                          Database targetModel) {
-    List changes = super.checkForAddedForeignKeys(sourceModel, intermediateModel, targetModel);
-    List additionalChanges = new ArrayList();
+  @Override
+  protected List<AddForeignKeyChange> checkForAddedForeignKeys(Database sourceModel,
+                                                               Database intermediateModel,
+                                                               Database targetModel) {
+    List<AddForeignKeyChange> changes = super.checkForAddedForeignKeys(sourceModel, intermediateModel, targetModel);
+    List<AddForeignKeyChange> additionalChanges = new ArrayList<>();
 
     // re-adding all foreign keys that are maintained and that use a changed column
     for (int tableIdx = 0; tableIdx < targetModel.getTableCount(); tableIdx++) {
@@ -220,8 +218,8 @@ public class MSSqlModelComparator extends ModelComparator {
         }
       }
     }
-    for (Iterator changeIt = additionalChanges.iterator(); changeIt.hasNext(); ) {
-      ((AddForeignKeyChange) changeIt.next()).apply(intermediateModel, isCaseSensitive());
+    for (AddForeignKeyChange additionalChange : additionalChanges) {
+      additionalChange.apply(intermediateModel, isCaseSensitive());
     }
     changes.addAll(additionalChanges);
     return changes;
@@ -235,8 +233,8 @@ public class MSSqlModelComparator extends ModelComparator {
    * @param targetTable The target table
    * @return The columns (from the target table)
    */
-  private List getRelevantChangedColumns(Table sourceTable, Table targetTable) {
-    List result = new ArrayList();
+  private List<Column> getRelevantChangedColumns(Table sourceTable, Table targetTable) {
+    List<Column> result = new ArrayList<>();
 
     for (int columnIdx = 0; columnIdx < targetTable.getColumnCount(); columnIdx++) {
       Column targetColumn = targetTable.getColumn(columnIdx);

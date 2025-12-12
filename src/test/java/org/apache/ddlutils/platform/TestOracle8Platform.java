@@ -31,6 +31,7 @@ public class TestOracle8Platform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return Oracle8Platform.DATABASENAME;
   }
@@ -153,7 +154,7 @@ public class TestOracle8Platform extends TestPlatformBase {
       "CREATE TABLE \"escapedcharacters\"\n" +
       "(\n" +
       "    \"COL_PK\"   INTEGER,\n" +
-      "    \"COL_TEXT\" VARCHAR2(128) DEFAULT '\'\'',\n" +
+      "    \"COL_TEXT\" VARCHAR2(128) DEFAULT '''',\n" +
       "    PRIMARY KEY (\"COL_PK\")\n" +
       ");\n",
       getCharEscapingTestDatabaseCreationSql());

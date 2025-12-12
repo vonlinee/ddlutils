@@ -33,7 +33,7 @@ public interface TableChange extends ModelChange {
    *
    * @return The name of the affected table
    */
-  public String getChangedTable();
+  String getChangedTable();
 
   /**
    * Finds the table object corresponding to the changed table in the given database model.
@@ -42,5 +42,5 @@ public interface TableChange extends ModelChange {
    * @param caseSensitive Whether identifiers are case sensitive
    * @return The table object or <code>null</code> if it could not be found
    */
-  public Table findChangedTable(Database model, boolean caseSensitive);
+  Table findChangedTable(Database model, boolean caseSensitive);
 }

@@ -20,12 +20,12 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.*;
 import java.text.Collator;
@@ -45,32 +45,32 @@ public class JdbcModelReader {
   /**
    * The descriptors for the relevant columns in the table meta data.
    */
-  private final List _columnsForTable;
+  private final List<MetaDataColumnDescriptor> _columnsForTable;
   /**
    * The descriptors for the relevant columns in the table column meta data.
    */
-  private final List _columnsForColumn;
+  private final List<MetaDataColumnDescriptor> _columnsForColumn;
   /**
    * The descriptors for the relevant columns in the primary key meta data.
    */
-  private final List _columnsForPK;
+  private final List<MetaDataColumnDescriptor> _columnsForPK;
   /**
    * The descriptors for the relevant columns in the foreign key meta data.
    */
-  private final List _columnsForFK;
+  private final List<MetaDataColumnDescriptor> _columnsForFK;
   /**
    * The descriptors for the relevant columns in the index meta data.
    */
-  private final List _columnsForIndex;
+  private final List<MetaDataColumnDescriptor> _columnsForIndex;
 
   /**
    * The platform that this model reader belongs to.
    */
-  private Platform _platform;
+  private final Platform _platform;
   /**
    * Contains default column sizes (minimum sizes that a JDBC-compliant db must support).
    */
-  private HashMap<Integer, String> _defaultSizes = new HashMap<>();
+  private final HashMap<Integer, String> _defaultSizes = new HashMap<>();
   /**
    * The default database catalog to read.
    */
@@ -160,8 +160,8 @@ public class JdbcModelReader {
    *
    * @return The descriptors for the result set columns
    */
-  protected List initColumnsForTable() {
-    List result = new ArrayList();
+  protected List<MetaDataColumnDescriptor> initColumnsForTable() {
+    List<MetaDataColumnDescriptor> result = new ArrayList<>();
 
     result.add(new MetaDataColumnDescriptor("TABLE_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("TABLE_TYPE", Types.VARCHAR, "UNKNOWN"));
@@ -180,8 +180,8 @@ public class JdbcModelReader {
    *
    * @return The map column name -> descriptor for the result set columns
    */
-  protected List initColumnsForColumn() {
-    List result = new ArrayList();
+  protected List<MetaDataColumnDescriptor> initColumnsForColumn() {
+    List<MetaDataColumnDescriptor> result = new ArrayList<>();
 
     // As suggested by Alexandre Borgoltz, we're reading the COLUMN_DEF first because Oracle
     // has problems otherwise (it seemingly requires a LONG column to be the first to be read)
@@ -208,8 +208,8 @@ public class JdbcModelReader {
    *
    * @return The map column name -> descriptor for the result set columns
    */
-  protected List initColumnsForPK() {
-    List result = new ArrayList();
+  protected List<MetaDataColumnDescriptor> initColumnsForPK() {
+    List<MetaDataColumnDescriptor> result = new ArrayList<>();
 
     result.add(new MetaDataColumnDescriptor("COLUMN_NAME", Types.VARCHAR));
     // we're also reading the table name so that a model reader impl can filter manually
@@ -228,8 +228,8 @@ public class JdbcModelReader {
    *
    * @return The map column name -> descriptor for the result set columns
    */
-  protected List initColumnsForFK() {
-    List result = new ArrayList();
+  protected List<MetaDataColumnDescriptor> initColumnsForFK() {
+    List<MetaDataColumnDescriptor> result = new ArrayList<>();
 
     result.add(new MetaDataColumnDescriptor("PKTABLE_NAME", Types.VARCHAR));
     // we're also reading the table name so that a model reader impl can filter manually
@@ -252,8 +252,8 @@ public class JdbcModelReader {
    *
    * @return The map column name -> descriptor for the result set columns
    */
-  protected List initColumnsForIndex() {
-    List result = new ArrayList();
+  protected List<MetaDataColumnDescriptor> initColumnsForIndex() {
+    List<MetaDataColumnDescriptor> result = new ArrayList<>();
 
     result.add(new MetaDataColumnDescriptor("INDEX_NAME", Types.VARCHAR));
     // we're also reading the table name so that a model reader impl can filter manually
@@ -375,7 +375,7 @@ public class JdbcModelReader {
    *
    * @return The column descriptors
    */
-  protected List getColumnsForTable() {
+  protected List<MetaDataColumnDescriptor> getColumnsForTable() {
     return _columnsForTable;
   }
 
@@ -384,7 +384,7 @@ public class JdbcModelReader {
    *
    * @return The column descriptors
    */
-  protected List getColumnsForColumn() {
+  protected List<MetaDataColumnDescriptor> getColumnsForColumn() {
     return _columnsForColumn;
   }
 
@@ -393,7 +393,7 @@ public class JdbcModelReader {
    *
    * @return The column descriptors
    */
-  protected List getColumnsForPK() {
+  protected List<MetaDataColumnDescriptor> getColumnsForPK() {
     return _columnsForPK;
   }
 
@@ -402,7 +402,7 @@ public class JdbcModelReader {
    *
    * @return The column descriptors
    */
-  protected List getColumnsForFK() {
+  protected List<MetaDataColumnDescriptor> getColumnsForFK() {
     return _columnsForFK;
   }
 
@@ -411,7 +411,7 @@ public class JdbcModelReader {
    *
    * @return The column descriptors
    */
-  protected List getColumnsForIndex() {
+  protected List<MetaDataColumnDescriptor> getColumnsForIndex() {
     return _columnsForIndex;
   }
 
@@ -486,7 +486,7 @@ public class JdbcModelReader {
    * @param tableTypes    The table types to process; use <code>null</code> or an empty list for the default ones
    * @return The tables
    */
-  protected Collection readTables(String catalog, String schemaPattern, String[] tableTypes) throws SQLException {
+  protected Collection<Table> readTables(String catalog, String schemaPattern, String[] tableTypes) throws SQLException {
     ResultSet tableData = null;
 
     try {
@@ -499,10 +499,10 @@ public class JdbcModelReader {
 
       tableData = metaData.getTables(getDefaultTablePattern());
 
-      List tables = new ArrayList();
+      List<Table> tables = new ArrayList<>();
 
       while (tableData.next()) {
-        Map values = readColumns(tableData, getColumnsForTable());
+        Map<String, Object> values = readColumns(tableData, getColumnsForTable());
         Table table = readTable(metaData, values);
 
         if (table != null) {
@@ -511,12 +511,7 @@ public class JdbcModelReader {
       }
 
       final Collator collator = Collator.getInstance();
-
-      Collections.sort(tables, new Comparator() {
-        public int compare(Object obj1, Object obj2) {
-          return collator.compare(((Table) obj1).getName().toUpperCase(), ((Table) obj2).getName().toUpperCase());
-        }
-      });
+      tables.sort((obj1, obj2) -> collator.compare(obj1.getName().toUpperCase(), obj2.getName().toUpperCase()));
       return tables;
     } finally {
       closeResultSet(tableData);
@@ -530,11 +525,11 @@ public class JdbcModelReader {
    * @param values   The table metadata values as defined by {@link #getColumnsForTable()}
    * @return The table or <code>null</code> if the result set row did not contain a valid table
    */
-  protected Table readTable(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
     Table table = null;
 
-    if ((tableName != null) && (tableName.length() > 0)) {
+    if ((tableName != null) && (!tableName.isEmpty())) {
       table = new Table();
 
       table.setName(tableName);
@@ -584,10 +579,10 @@ public class JdbcModelReader {
    */
   protected void removeInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table) throws SQLException {
     Column[] pks = table.getPrimaryKeyColumns();
-    List columnNames = new ArrayList();
+    List<String> columnNames = new ArrayList<>();
 
-    for (int columnIdx = 0; columnIdx < pks.length; columnIdx++) {
-      columnNames.add(pks[columnIdx].getName());
+    for (Column pk : pks) {
+      columnNames.add(pk.getName());
     }
 
     for (int indexIdx = 0; indexIdx < table.getIndexCount(); ) {
@@ -610,7 +605,7 @@ public class JdbcModelReader {
    * @param fk       The foreign key
    */
   protected void removeInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk) throws SQLException {
-    List columnNames = new ArrayList();
+    List<String> columnNames = new ArrayList<>();
     boolean mustBeUnique = !getPlatformInfo().isSystemForeignKeyIndicesAlwaysNonUnique();
 
     for (int columnIdx = 0; columnIdx < fk.getReferenceCount(); columnIdx++) {
@@ -644,7 +639,7 @@ public class JdbcModelReader {
    * @param columnsToSearchFor The names of the columns that the index should be for
    * @return <code>true</code> if the index matches the columns
    */
-  protected boolean matches(Index index, List columnsToSearchFor) {
+  protected boolean matches(Index index, List<String> columnsToSearchFor) {
     if (index.getColumnCount() != columnsToSearchFor.size()) {
       return false;
     }
@@ -696,16 +691,16 @@ public class JdbcModelReader {
    * @param tableName The name of the table
    * @return The columns
    */
-  protected Collection readColumns(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  protected Collection<Column> readColumns(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     ResultSet columnData = null;
 
     try {
       columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
 
-      List columns = new ArrayList();
+      List<Column> columns = new ArrayList<>();
 
       while (columnData.next()) {
-        Map values = readColumns(columnData, getColumnsForColumn());
+        Map<String, Object> values = readColumns(columnData, getColumnsForColumn());
 
         columns.add(readColumn(metaData, values));
       }
@@ -722,23 +717,23 @@ public class JdbcModelReader {
    * @param values   The column meta data values as defined by {@link #getColumnsForColumn()}
    * @return The column
    */
-  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = new Column();
 
     column.setName((String) values.get("COLUMN_NAME"));
     column.setDefaultValue((String) values.get("COLUMN_DEF"));
-    column.setTypeCode(((Integer) values.get("DATA_TYPE")).intValue());
+    column.setTypeCode((Integer) values.get("DATA_TYPE"));
 
     Integer precision = (Integer) values.get("NUM_PREC_RADIX");
 
     if (precision != null) {
-      column.setPrecisionRadix(precision.intValue());
+      column.setPrecisionRadix(precision);
     }
 
     String size = (String) values.get("COLUMN_SIZE");
 
     if (size == null) {
-      size = (String) _defaultSizes.get(column.getTypeCode());
+      size = _defaultSizes.get(column.getTypeCode());
     }
     // we're setting the size after the precision and radix in case
     // the database prefers to return them in the size value
@@ -749,13 +744,13 @@ public class JdbcModelReader {
     if (scale != null) {
       // if there is a scale value, set it after the size (which probably did not contain
       // a scale specification)
-      column.setScale(scale.intValue());
+      column.setScale(scale);
     }
     column.setRequired("NO".equalsIgnoreCase(((String) values.get("IS_NULLABLE")).trim()));
 
     String description = (String) values.get("REMARKS");
 
-    if (!org.apache.ddlutils.util.StringUtilsExt.isEmpty(description)) {
+    if (!StringUtilsExt.isEmpty(description)) {
       column.setDescription(description);
     }
     return column;
@@ -768,14 +763,14 @@ public class JdbcModelReader {
    * @param tableName The name of the table from which to retrieve PK information
    * @return The primary key column names
    */
-  protected Collection readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    List pks = new ArrayList();
+  protected Collection<String> readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    List<String> pks = new ArrayList<>();
     ResultSet pkData = null;
 
     try {
       pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(tableName));
       while (pkData.next()) {
-        Map values = readColumns(pkData, getColumnsForPK());
+        Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
         pks.add(readPrimaryKeyName(metaData, values));
       }
@@ -792,7 +787,7 @@ public class JdbcModelReader {
    * @param values   The primary key meta data values as defined by {@link #getColumnsForPK()}
    * @return The primary key name
    */
-  protected String readPrimaryKeyName(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+  protected String readPrimaryKeyName(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     return (String) values.get("COLUMN_NAME");
   }
 
@@ -803,15 +798,15 @@ public class JdbcModelReader {
    * @param tableName The name of the table from which to retrieve FK information
    * @return The foreign keys
    */
-  protected Collection readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map fks = new ListOrderedMap();
+  protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    Map<String, ForeignKey> fks = new ListOrderedMap<>();
     ResultSet fkData = null;
 
     try {
       fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
 
       while (fkData.next()) {
-        Map values = readColumns(fkData, getColumnsForFK());
+        Map<String, Object> values = readColumns(fkData, getColumnsForFK());
 
         readForeignKey(metaData, values, fks);
       }
@@ -828,9 +823,9 @@ public class JdbcModelReader {
    * @param values   The foreign key meta data as defined by {@link #getColumnsForFK()}
    * @param knownFks The already read foreign keys for the current table
    */
-  protected void readForeignKey(DatabaseMetaDataWrapper metaData, Map values, Map knownFks) throws SQLException {
+  protected void readForeignKey(DatabaseMetaDataWrapper metaData, Map<String, Object> values, Map<String, ForeignKey> knownFks) throws SQLException {
     String fkName = (String) values.get("FK_NAME");
-    ForeignKey fk = (ForeignKey) knownFks.get(fkName);
+    ForeignKey fk = knownFks.get(fkName);
 
     if (fk == null) {
       fk = new ForeignKey(fkName);
@@ -872,7 +867,7 @@ public class JdbcModelReader {
     CascadeAction action = null;
 
     if (jdbcActionValue != null) {
-      switch (jdbcActionValue.shortValue()) {
+      switch (jdbcActionValue) {
         case DatabaseMetaData.importedKeyCascade:
           action = CascadeAction.CASCADE;
           break;
@@ -897,15 +892,15 @@ public class JdbcModelReader {
    * @param tableName The name of the table
    * @return The list of indices
    */
-  protected Collection readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    Map indices = new ListOrderedMap();
+  protected Collection<Index> readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    Map<String, Index> indices = new ListOrderedMap<>();
     ResultSet indexData = null;
 
     try {
       indexData = metaData.getIndices(metaData.escapeForSearch(tableName), false, false);
 
       while (indexData.next()) {
-        Map values = readColumns(indexData, getColumnsForIndex());
+        Map<String, Object> values = readColumns(indexData, getColumnsForIndex());
 
         readIndex(metaData, values, indices);
       }
@@ -922,21 +917,21 @@ public class JdbcModelReader {
    * @param values       The index meta data as defined by {@link #getColumnsForIndex()}
    * @param knownIndices The already read indices for the current table
    */
-  protected void readIndex(DatabaseMetaDataWrapper metaData, Map values, Map knownIndices) throws SQLException {
+  protected void readIndex(DatabaseMetaDataWrapper metaData, Map<String, Object> values, Map<String, Index> knownIndices) throws SQLException {
     Short indexType = (Short) values.get("TYPE");
 
     // we're ignoring statistic indices
-    if ((indexType != null) && (indexType.shortValue() == DatabaseMetaData.tableIndexStatistic)) {
+    if ((indexType != null) && (indexType == DatabaseMetaData.tableIndexStatistic)) {
       return;
     }
 
     String indexName = (String) values.get("INDEX_NAME");
 
     if (indexName != null) {
-      Index index = (Index) knownIndices.get(indexName);
+      Index index = knownIndices.get(indexName);
 
       if (index == null) {
-        if (((Boolean) values.get("NON_UNIQUE")).booleanValue()) {
+        if ((Boolean) values.get("NON_UNIQUE")) {
           index = new NonUniqueIndex();
         } else {
           index = new UniqueIndex();
@@ -963,12 +958,10 @@ public class JdbcModelReader {
    * @param columnDescriptors The dscriptors of the columns to read
    * @return The read values keyed by the column name
    */
-  protected Map readColumns(ResultSet resultSet, List columnDescriptors) throws SQLException {
-    HashMap values = new HashMap();
+  protected Map<String, Object> readColumns(ResultSet resultSet, List<MetaDataColumnDescriptor> columnDescriptors) throws SQLException {
+    HashMap<String, Object> values = new HashMap<>();
 
-    for (Iterator it = columnDescriptors.iterator(); it.hasNext(); ) {
-      MetaDataColumnDescriptor descriptor = (MetaDataColumnDescriptor) it.next();
-
+    for (MetaDataColumnDescriptor descriptor : columnDescriptors) {
       values.put(descriptor.getName(), descriptor.readColumn(resultSet));
     }
     return values;
@@ -986,7 +979,7 @@ public class JdbcModelReader {
       return;
     }
 
-    StringBuffer query = new StringBuffer();
+    StringBuilder query = new StringBuilder();
 
     query.append("SELECT ");
     for (int idx = 0; idx < columnsToCheck.length; idx++) {
@@ -1056,12 +1049,12 @@ public class JdbcModelReader {
     if (result != null) {
       if (escaped.equals("''")) {
         if ((result.length() > 2) && result.startsWith("'") && result.endsWith("'")) {
-          result = "'" + StringUtils.replace(result.substring(1, result.length() - 1), escaped, unescaped) + "'";
+          result = "'" + StringUtilsExt.replace(result.substring(1, result.length() - 1), escaped, unescaped) + "'";
         } else {
-          result = StringUtils.replace(result, escaped, unescaped);
+          result = StringUtilsExt.replace(result, escaped, unescaped);
         }
       } else {
-        result = StringUtils.replace(result, escaped, unescaped);
+        result = StringUtilsExt.replace(result, escaped, unescaped);
       }
     }
     return result;
@@ -1101,10 +1094,10 @@ public class JdbcModelReader {
       String schema = null;
 
       while (!found && tableData.next()) {
-        Map values = readColumns(tableData, getColumnsForTable());
+        Map<String, Object> values = readColumns(tableData, getColumnsForTable());
         String tableName = (String) values.get("TABLE_NAME");
 
-        if ((tableName != null) && (tableName.length() > 0)) {
+        if ((tableName != null) && (!tableName.isEmpty())) {
           schema = (String) values.get("TABLE_SCHEM");
           columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
           found = true;

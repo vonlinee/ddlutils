@@ -35,5 +35,5 @@ public interface IndexChange extends TableChange {
    * @param caseSensitive Whether identifiers are case sensitive
    * @return The index object or <code>null</code> if it could not be found
    */
-  public Index findChangedIndex(Database model, boolean caseSensitive);
+  Index findChangedIndex(Database model, boolean caseSensitive);
 }

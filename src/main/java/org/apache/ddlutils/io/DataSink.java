@@ -30,17 +30,17 @@ public interface DataSink {
   /**
    * Notifies the sink that beans will be added.
    */
-  public void start() throws DataSinkException;
+  void start() throws DataSinkException;
 
   /**
    * Adds a dyna bean.
    *
    * @param bean The dyna bean to add
    */
-  public void addBean(DynaBean bean) throws DataSinkException;
+  void addBean(DynaBean bean) throws DataSinkException;
 
   /**
    * Notifies the sink that all beans have been added.
    */
-  public void end() throws DataSinkException;
+  void end() throws DataSinkException;
 }

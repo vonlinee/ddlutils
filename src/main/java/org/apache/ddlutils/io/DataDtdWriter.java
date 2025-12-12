@@ -93,12 +93,12 @@ public class DataDtdWriter {
       writer.print(" auto increment,");
     }
     writer.print(" JDBC type: " + column.getType());
-    if ((column.getSize() != null) && (column.getSize().length() > 0)) {
+    if ((column.getSize() != null) && (!column.getSize().isEmpty())) {
       writer.print("(" + column.getSize() + ")");
     }
     writer.println(" -->");
     writer.print("    " + column.getName() + " CDATA ");
-    if ((column.getDefaultValue() != null) && (column.getDefaultValue().length() > 0)) {
+    if ((column.getDefaultValue() != null) && (!column.getDefaultValue().isEmpty())) {
       writer.println("\"" + column.getDefaultValue() + "\"");
     } else {
       writer.println(column.isRequired() ? "#REQUIRED" : "#IMPLIED");

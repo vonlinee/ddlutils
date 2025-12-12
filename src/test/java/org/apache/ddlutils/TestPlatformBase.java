@@ -44,6 +44,7 @@ public abstract class TestPlatformBase extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setUp() throws Exception {
     _writer = new StringWriter();
     _platform = PlatformFactory.createNewPlatformInstance(getDatabaseName());
@@ -56,6 +57,7 @@ public abstract class TestPlatformBase extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     _platform = null;
     _writer = null;

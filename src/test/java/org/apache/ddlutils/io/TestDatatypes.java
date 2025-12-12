@@ -20,6 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.Test;
+import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
@@ -96,10 +97,10 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
    */
   protected void performDataTypeTest(String modelXml, Object inserted1, Object inserted2, Object expected1, Object expected2) {
     createDatabase(modelXml);
-    insertRow("roundtrip", new Object[]{new Integer(1), inserted1});
-    insertRow("roundtrip", new Object[]{new Integer(2), inserted2});
+    insertRow("roundtrip", new Object[]{1, inserted1});
+    insertRow("roundtrip", new Object[]{2, inserted2});
 
-    List beans = getRows("roundtrip");
+    List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(expected1, beans.get(0), "avalue");
     assertEquals(expected2, beans.get(1), "avalue");
@@ -121,9 +122,9 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
 
     String dataSql = stringWriter.toString();
 
-    assertTrue((dataSql != null) && (dataSql.length() > 0));
+    assertTrue((dataSql != null) && (!dataSql.isEmpty()));
 
-    getPlatform().dropTables(getModel(), false);
+    getPlatform().dropModel(getModel(), false);
 
     createDatabase(modelXml);
 
@@ -212,7 +213,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Integer(254), new Integer(-254));
+    performDataTypeTest(modelXml, 254, -254);
   }
 
   /**
@@ -228,7 +229,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Integer(128), null, new Integer(-200));
+    performDataTypeTest(modelXml, 128, null, -200);
   }
 
   /**
@@ -244,7 +245,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Integer(Short.MIN_VALUE), new Integer(Short.MAX_VALUE));
+    performDataTypeTest(modelXml, (int) Short.MIN_VALUE, (int) Short.MAX_VALUE);
   }
 
   /**
@@ -260,7 +261,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Integer(256), null, new Integer(-30000));
+    performDataTypeTest(modelXml, 256, null, -30000);
   }
 
   /**
@@ -276,7 +277,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Integer(0), new Integer(-2147483648));
+    performDataTypeTest(modelXml, 0, -2147483648);
   }
 
   /**
@@ -292,7 +293,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, null, new Integer(2147483646), new Integer(2147483647));
+    performDataTypeTest(modelXml, null, 2147483646, 2147483647);
   }
 
   /**
@@ -308,7 +309,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Long(Long.MAX_VALUE), new Long(0l));
+    performDataTypeTest(modelXml, Long.MAX_VALUE, 0L);
   }
 
   /**
@@ -324,7 +325,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, null, new Long(-1l), new Long(-9000000000000000000l));
+    performDataTypeTest(modelXml, null, -1L, -9000000000000000000L);
   }
 
   /**
@@ -340,7 +341,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Float(12345.6f), new Float(0.0f));
+    performDataTypeTest(modelXml, 12345.6f, 0.0f);
   }
 
   /**
@@ -356,7 +357,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Float(1e+20f), null, new Float(-1.01234f));
+    performDataTypeTest(modelXml, 1e+20f, null, -1.01234f);
   }
 
   /**
@@ -372,7 +373,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Double(-1.0), new Double(1e-45));
+    performDataTypeTest(modelXml, -1.0, 1e-45);
   }
 
   /**
@@ -388,7 +389,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, null, new Double(1e+25), new Double(12345678.9012345));
+    performDataTypeTest(modelXml, null, 1e+25, 12345678.9012345);
   }
 
   /**
@@ -404,7 +405,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Double(1e+38), new Double(1.01));
+    performDataTypeTest(modelXml, 1e+38, 1.01);
   }
 
   /**
@@ -420,7 +421,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    performDataTypeTest(modelXml, new Double(-1e+25), null, new Double(-987654321.098765));
+    performDataTypeTest(modelXml, -1e+25, null, -987654321.098765);
   }
 
   /**
@@ -743,7 +744,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "</database>";
 
     // we would use Calendar but that might give Locale problems
-    performDataTypeTest(modelXml, new Time(03, 47, 15), null);
+    performDataTypeTest(modelXml, new Time(3, 47, 15), null);
   }
 
   /**
@@ -814,8 +815,8 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    HashMap value1 = new HashMap();
-    ArrayList value2 = new ArrayList();
+    HashMap<String, Object> value1 = new HashMap<>();
+    ArrayList<Object> value2 = new ArrayList<>();
 
     value1.put("test", "some value");
     value2.add("some other value");
@@ -840,7 +841,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    TreeSet value1 = new TreeSet();
+    TreeSet<String> value1 = new TreeSet<>();
     String value2 = "a value, nothing special";
 
     value1.add("o look, a value !");
@@ -865,7 +866,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    HashMap value = new HashMap();
+    HashMap<String, Object> value = new HashMap<>();
 
     value.put("test1", "some value");
     value.put(null, "some other value");
@@ -890,7 +891,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
       "  </table>\n" +
       "</database>";
 
-    HashMap value = new HashMap();
+    HashMap<String, Object> value = new HashMap<>();
 
     value.put("test1", "some value");
     value.put(null, "some other value");

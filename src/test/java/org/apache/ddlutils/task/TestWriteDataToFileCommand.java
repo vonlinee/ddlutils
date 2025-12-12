@@ -55,7 +55,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
    * @param task         The task
    * @param expectedData A map table name -> list of dyna beans sorted by the pk value that is expected
    */
-  private void runTask(DatabaseToDdlTask task, Map expectedData) throws IOException {
+  private void runTask(DatabaseToDdlTask task, Map<String, Object> expectedData) throws IOException {
     WriteDataToFileCommand subTask = new WriteDataToFileCommand();
     File tmpFile = File.createTempFile("data", ".xml");
 
@@ -66,24 +66,21 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
       task.execute();
 
       DataReader dataReader = new DataReader();
-      final Map readData = new HashMap();
+      final Map<String, List<DynaBean>> readData = new HashMap<>();
 
       dataReader.setModel(getAdjustedModel());
       dataReader.setSink(new DataSink() {
         public void addBean(DynaBean bean) throws DataSinkException {
           String key = ((SqlDynaClass) bean.getDynaClass()).getTableName();
-          List beans = (List) readData.get(key);
-
-          if (beans == null) {
-            beans = new ArrayList();
-            readData.put(key, beans);
-          }
+          List<DynaBean> beans = readData.computeIfAbsent(key, k -> new ArrayList<>());
           beans.add(bean);
         }
 
+        @Override
         public void end() throws DataSinkException {
         }
 
+        @Override
         public void start() throws DataSinkException {
         }
       });
@@ -101,7 +98,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
    * Tests the task against an empty database.
    */
   public void testEmptyDatabase() throws IOException {
-    runTask(getDatabaseToDdlTaskInstance(), new HashMap());
+    runTask(getDatabaseToDdlTaskInstance(), new HashMap<>());
   }
 
   /**
@@ -119,12 +116,12 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
 
     createDatabase(modelXml);
 
-    List beans = new ArrayList();
+    List<DynaBean> beans = new ArrayList<>();
 
-    beans.add(insertRow("roundtrip", new Object[]{"test1", new Integer(1)}));
+    beans.add(insertRow("roundtrip", new Object[]{"test1", 1}));
     beans.add(insertRow("roundtrip", new Object[]{"test2", null}));
 
-    Map expected = new HashMap();
+    Map<String, Object> expected = new HashMap<>();
 
     expected.put("roundtrip", beans);
     runTask(getDatabaseToDdlTaskInstance(), expected);
@@ -162,22 +159,22 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
 
     createDatabase(modelXml);
 
-    List beans1 = new ArrayList();
-    List beans2 = new ArrayList();
-    List beans3 = new ArrayList();
+    List<DynaBean> beans1 = new ArrayList<>();
+    List<DynaBean> beans2 = new ArrayList<>();
+    List<DynaBean> beans3 = new ArrayList<>();
 
     beans1.add(insertRow("Roundtrip_1", new Object[]{"test1", null}));
-    beans2.add(insertRow("Roundtrip_2", new Object[]{new Integer(3), null}));
-    beans3.add(insertRow("Roundtrip_3", new Object[]{new Integer(1), "test1"}));
-    beans2.add(insertRow("Roundtrip_2", new Object[]{new Integer(2), new Integer(1)}));
-    beans1.add(insertRow("Roundtrip_1", new Object[]{"test2", new Integer(1)}));
-    beans3.add(insertRow("Roundtrip_3", new Object[]{new Integer(3), null}));
-    beans3.add(insertRow("Roundtrip_3", new Object[]{new Integer(4), "test2"}));
-    beans1.add(insertRow("Roundtrip_1", new Object[]{"test3", new Integer(3)}));
-    beans3.add(insertRow("Roundtrip_3", new Object[]{new Integer(2), "test3"}));
-    beans2.add(insertRow("Roundtrip_2", new Object[]{new Integer(1), new Integer(2)}));
+    beans2.add(insertRow("Roundtrip_2", new Object[]{3, null}));
+    beans3.add(insertRow("Roundtrip_3", new Object[]{1, "test1"}));
+    beans2.add(insertRow("Roundtrip_2", new Object[]{2, 1}));
+    beans1.add(insertRow("Roundtrip_1", new Object[]{"test2", 1}));
+    beans3.add(insertRow("Roundtrip_3", new Object[]{3, null}));
+    beans3.add(insertRow("Roundtrip_3", new Object[]{4, "test2"}));
+    beans1.add(insertRow("Roundtrip_1", new Object[]{"test3", 3}));
+    beans3.add(insertRow("Roundtrip_3", new Object[]{2, "test3"}));
+    beans2.add(insertRow("Roundtrip_2", new Object[]{1, 2}));
 
-    Map expected = new HashMap();
+    Map<String, Object> expected = new HashMap<>();
 
     expected.put("Roundtrip_1", beans1);
     expected.put("Roundtrip_2", beans2);

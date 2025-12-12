@@ -38,18 +38,18 @@ public class DateConverter implements SqlTypeConverter {
   /**
    * The regular expression pattern for the parsing of ISO dates.
    */
-  private Pattern _datePattern;
+  private final Pattern _datePattern;
   /**
    * The calendar object to convert to/from dates.
    */
-  private Calendar _calendar;
+  private final Calendar _calendar;
 
   /**
    * Creates a new date converter object.
    */
   public DateConverter() {
     try {
-      _datePattern = Pattern.compile("(\\d{2,4})(?:\\-(\\d{2}))?(?:\\-(\\d{2}))?.*");
+      _datePattern = Pattern.compile("(\\d{2,4})(?:-(\\d{2}))?(?:-(\\d{2}))?.*");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
@@ -61,6 +61,7 @@ public class DateConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     if (sqlTypeCode != Types.DATE) {
       return textRep;
@@ -104,6 +105,7 @@ public class DateConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String convertToString(Object obj, int sqlTypeCode) throws ConversionException {
     String result = null;
 

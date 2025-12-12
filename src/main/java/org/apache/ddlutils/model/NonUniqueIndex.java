@@ -38,6 +38,7 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean isUnique() {
     return false;
   }
@@ -45,18 +46,18 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Index getClone() throws ModelException {
     NonUniqueIndex result = new NonUniqueIndex();
-
     result._name = _name;
-    result._columns = (ArrayList) _columns.clone();
-
+    result._columns = new ArrayList<>(this._columns);
     return result;
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof NonUniqueIndex) {
       NonUniqueIndex other = (NonUniqueIndex) obj;
@@ -72,12 +73,13 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equalsIgnoreCase(Index other) {
     if (other instanceof NonUniqueIndex) {
       NonUniqueIndex otherIndex = (NonUniqueIndex) other;
 
-      boolean checkName = (_name != null) && (_name.length() > 0) &&
-                          (otherIndex._name != null) && (otherIndex._name.length() > 0);
+      boolean checkName = (_name != null) && (!_name.isEmpty()) &&
+                          (otherIndex._name != null) && (!otherIndex._name.isEmpty());
 
       if ((!checkName || _name.equalsIgnoreCase(otherIndex._name)) &&
           (getColumnCount() == otherIndex.getColumnCount())) {
@@ -95,6 +97,7 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_name)
       .append(_columns)
@@ -104,23 +107,22 @@ public class NonUniqueIndex extends IndexImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
 
-    result.append("Index [name=");
-    result.append(getName());
-    result.append("; ");
-    result.append(getColumnCount());
-    result.append(" columns]");
-
-    return result.toString();
+    return "Index [name=" +
+           getName() +
+           "; " +
+           getColumnCount() +
+           " columns]";
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("Index [");
     result.append(getName());

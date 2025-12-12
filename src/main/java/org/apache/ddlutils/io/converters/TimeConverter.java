@@ -61,6 +61,7 @@ public class TimeConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Object convertFromString(String textRep, int sqlTypeCode) throws ConversionException {
     if (sqlTypeCode != Types.TIME) {
       return textRep;
@@ -106,6 +107,7 @@ public class TimeConverter implements SqlTypeConverter {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String convertToString(Object obj, int sqlTypeCode) throws ConversionException {
     String result = null;
 

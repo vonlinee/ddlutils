@@ -49,20 +49,22 @@ public class InterbaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
-  public void createTable(Database database, Table table, Map parameters) throws IOException {
+  @Override
+  public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
     super.createTable(database, table, parameters);
 
     // creating generator and trigger for auto-increment
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      writeAutoIncrementCreateStmts(database, table, columns[idx]);
+    for (Column column : columns) {
+      writeAutoIncrementCreateStmts(database, table, column);
     }
   }
 
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getNativeDefaultValue(Column column) {
     if ((column.getTypeCode() == Types.BIT) || (column.getTypeCode() == Types.BOOLEAN)) {
       return getDefaultValueHelper().convert(column.getDefaultValue(), column.getTypeCode(), Types.SMALLINT);
@@ -74,12 +76,13 @@ public class InterbaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     // dropping generators for auto-increment
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      writeAutoIncrementDropStmts(table, columns[idx]);
+    for (Column column : columns) {
+      writeAutoIncrementDropStmts(table, column);
     }
     super.dropTable(table);
   }
@@ -87,6 +90,7 @@ public class InterbaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropIndex(Table table, Index index) throws IOException {
     // Index names in Interbase are unique to a schema and hence we do not
     // need the ON <tablename> clause
@@ -163,6 +167,7 @@ public class InterbaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeColumnAutoIncrementStmt(Table table, Column column) throws IOException {
     // we're using a generator
   }
@@ -170,18 +175,19 @@ public class InterbaseBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getSelectLastIdentityValues(Table table) {
     Column[] columns = table.getAutoIncrementColumns();
 
     if (columns.length == 0) {
       return null;
     } else {
-      StringBuffer result = new StringBuffer();
+      StringBuilder result = new StringBuilder();
 
       result.append("SELECT ");
-      for (int idx = 0; idx < columns.length; idx++) {
+      for (Column column : columns) {
         result.append("GEN_ID(");
-        result.append(getDelimitedIdentifier(getGeneratorName(table, columns[idx])));
+        result.append(getDelimitedIdentifier(getGeneratorName(table, column)));
         result.append(", 0)");
       }
       result.append(" FROM RDB$DATABASE");

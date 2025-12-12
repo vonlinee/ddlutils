@@ -246,7 +246,7 @@ public class Column implements Serializable {
     if (typeCode == null) {
       throw new ModelException("Unknown JDBC type " + type);
     } else {
-      _typeCode = typeCode.intValue();
+      _typeCode = typeCode;
       // we get the corresponding string value from the TypeMap in order
       // to detect extension types which we don't want in the model
       _type = TypeMap.getJdbcTypeName(_typeCode);
@@ -330,7 +330,7 @@ public class Column implements Serializable {
    * @return The size as an integer
    */
   public int getSizeAsInt() {
-    return _sizeAsInt == null ? 0 : _sizeAsInt.intValue();
+    return _sizeAsInt == null ? 0 : _sizeAsInt;
   }
 
   /**
@@ -358,7 +358,7 @@ public class Column implements Serializable {
    * @param scale The scale
    */
   public void setSizeAndScale(int size, int scale) {
-    _sizeAsInt = new Integer(size);
+    _sizeAsInt = size;
     _scale = scale;
     _size = String.valueOf(size);
     if (scale > 0) {
@@ -381,7 +381,7 @@ public class Column implements Serializable {
    * @param precisionRadix The precision radix
    */
   public void setPrecisionRadix(int precisionRadix) {
-    _sizeAsInt = new Integer(precisionRadix);
+    _sizeAsInt = precisionRadix;
     _size = String.valueOf(precisionRadix);
   }
 
@@ -413,7 +413,7 @@ public class Column implements Serializable {
    * @return The parsed default value
    */
   public Object getParsedDefaultValue() {
-    if ((_defaultValue != null) && (_defaultValue.length() > 0)) {
+    if ((_defaultValue != null) && (!_defaultValue.isEmpty())) {
       try {
         switch (_typeCode) {
           case Types.TINYINT:
@@ -441,8 +441,6 @@ public class Column implements Serializable {
           case Types.BOOLEAN:
             return ConvertUtils.convert(_defaultValue, Boolean.class);
         }
-      } catch (NumberFormatException ex) {
-        return null;
       } catch (IllegalArgumentException ex) {
         return null;
       }
@@ -453,6 +451,7 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof Column) {
       Column other = (Column) obj;
@@ -484,6 +483,7 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     HashCodeBuilder builder = new HashCodeBuilder(17, 37);
 
@@ -505,16 +505,13 @@ public class Column implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
-
-    result.append("Column [name=");
-    result.append(getName());
-    result.append("; type=");
-    result.append(getType());
-    result.append("]");
-
-    return result.toString();
+    return "Column [name=" +
+           getName() +
+           "; type=" +
+           getType() +
+           "]";
   }
 
   /**
@@ -523,32 +520,28 @@ public class Column implements Serializable {
    * @return The string representation
    */
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
-
-    result.append("Column [name=");
-    result.append(getName());
-    result.append("; javaName=");
-    result.append(getJavaName());
-    result.append("; type=");
-    result.append(getType());
-    result.append("; typeCode=");
-    result.append(getTypeCode());
-    result.append("; size=");
-    result.append(getSize());
-    result.append("; required=");
-    result.append(isRequired());
-    result.append("; primaryKey=");
-    result.append(isPrimaryKey());
-    result.append("; autoIncrement=");
-    result.append(isAutoIncrement());
-    result.append("; defaultValue=");
-    result.append(getDefaultValue());
-    result.append("; precisionRadix=");
-    result.append(getPrecisionRadix());
-    result.append("; scale=");
-    result.append(getScale());
-    result.append("]");
-
-    return result.toString();
+    return "Column [name=" +
+           getName() +
+           "; javaName=" +
+           getJavaName() +
+           "; type=" +
+           getType() +
+           "; typeCode=" +
+           getTypeCode() +
+           "; size=" +
+           getSize() +
+           "; required=" +
+           isRequired() +
+           "; primaryKey=" +
+           isPrimaryKey() +
+           "; autoIncrement=" +
+           isAutoIncrement() +
+           "; defaultValue=" +
+           getDefaultValue() +
+           "; precisionRadix=" +
+           getPrecisionRadix() +
+           "; scale=" +
+           getScale() +
+           "]";
   }
 }

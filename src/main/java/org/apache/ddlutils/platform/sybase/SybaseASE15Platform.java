@@ -40,6 +40,7 @@ public class SybaseASE15Platform extends SybasePlatform {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }

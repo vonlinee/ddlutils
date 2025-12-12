@@ -43,14 +43,15 @@ public class Oracle10Builder extends Oracle8Builder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void dropTable(Table table) throws IOException {
     // The only difference to the Oracle 8/9 variant is the purge which prevents the
     // table from being moved to the recycle bin (which is new in Oracle 10)
     Column[] columns = table.getAutoIncrementColumns();
 
-    for (int idx = 0; idx < columns.length; idx++) {
-      dropAutoIncrementTrigger(table, columns[idx]);
-      dropAutoIncrementSequence(table, columns[idx]);
+    for (Column column : columns) {
+      dropAutoIncrementTrigger(table, column);
+      dropAutoIncrementSequence(table, column);
     }
 
     print("DROP TABLE ");

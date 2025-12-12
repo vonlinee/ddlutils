@@ -33,15 +33,15 @@ public class MetaDataColumnDescriptor {
   /**
    * The name of the column.
    */
-  private String _columnName;
+  private final String _columnName;
   /**
    * The jdbc type to read from the result set.
    */
-  private int _jdbcType;
+  private final int _jdbcType;
   /**
    * The default value if the column is not present in the result set.
    */
-  private Object _defaultValue;
+  private final Object _defaultValue;
 
   /**
    * Creates a new descriptor instance.
@@ -102,18 +102,18 @@ public class MetaDataColumnDescriptor {
    * @return The column value or the default value if the column is not present in the result set
    */
   public Object readColumn(ResultSet resultSet) throws SQLException {
-    Object result = null;
+    Object result;
 
     try {
       switch (_jdbcType) {
         case Types.BIT:
-          result = new Boolean(resultSet.getBoolean(_columnName));
+          result = resultSet.getBoolean(_columnName);
           break;
         case Types.INTEGER:
-          result = new Integer(resultSet.getInt(_columnName));
+          result = resultSet.getInt(_columnName);
           break;
         case Types.TINYINT:
-          result = new Short(resultSet.getShort(_columnName));
+          result = resultSet.getShort(_columnName);
           break;
         default:
           result = resultSet.getString(_columnName);

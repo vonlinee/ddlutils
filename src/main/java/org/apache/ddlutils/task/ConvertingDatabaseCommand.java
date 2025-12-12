@@ -32,7 +32,7 @@ public abstract class ConvertingDatabaseCommand extends DatabaseCommand {
   /**
    * The database data io object.
    */
-  private DatabaseDataIO _dataIO = new DatabaseDataIO();
+  private final DatabaseDataIO _dataIO = new DatabaseDataIO();
 
   /**
    * Returns the database data io object.

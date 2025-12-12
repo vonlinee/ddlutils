@@ -20,8 +20,8 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -57,7 +57,7 @@ public class TestDatabaseIO extends TestCase {
     StringWriter writer = new StringWriter();
 
     new DatabaseIO().write(model, writer);
-    return StringUtils.replace(writer.toString(), "\r\n", "\n");
+    return StringUtilsExt.replace(writer.toString(), "\r\n", "\n");
   }
 
   /**
@@ -126,7 +126,7 @@ public class TestDatabaseIO extends TestCase {
     } else if (scale == 0) {
       assertEquals("" + size, column.getSize());
     } else {
-      assertEquals("" + size + "," + scale, column.getSize());
+      assertEquals(size + "," + scale, column.getSize());
     }
     assertEquals(defaultValue, column.getDefaultValue());
     assertEquals(description, column.getDescription());
@@ -386,7 +386,7 @@ public class TestDatabaseIO extends TestCase {
         "</database>");
 
       fail();
-    } catch (DdlUtilsXMLException ex) {
+    } catch (DdlUtilsXMLException ignored) {
     }
   }
 
@@ -394,7 +394,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests a database model columns of all possible datatypes.
    */
   public void testColumnTypes() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+    StringBuilder modelXml = new StringBuilder();
     int[] types = TypeMap.getSuportedJdbcTypes();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");

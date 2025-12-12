@@ -60,7 +60,7 @@ public enum JdbcTypeCategory {
    * @param defaultTextRep The textual representation
    * @param value          The corresponding integer value
    */
-   JdbcTypeCategory(String defaultTextRep, int value) {
+  JdbcTypeCategory(String defaultTextRep, int value) {
     this.name = defaultTextRep;
     this.value = value;
   }

@@ -24,7 +24,10 @@ import org.apache.ddlutils.alteration.*;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.StringUtilsExt;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * A model comparator customized for MySql.
@@ -38,7 +41,7 @@ public class MySqlModelComparator extends ModelComparator {
    * @param platformInfo            The platform info
    * @param tableDefChangePredicate The predicate that defines whether tables changes are supported
    *                                by the platform or not; all changes are supported if this is null
-   * @param caseSensitive           Whether comparison is case sensitive
+   * @param caseSensitive           Whether comparison is case-sensitive
    */
   public MySqlModelComparator(PlatformInfo platformInfo,
                               TableDefinitionChangesPredicate tableDefChangePredicate,
@@ -49,23 +52,24 @@ public class MySqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List checkForRemovedIndexes(Database sourceModel,
-                                        Table sourceTable,
-                                        Database intermediateModel,
-                                        Table intermediateTable,
-                                        Database targetModel,
-                                        Table targetTable) {
+  @Override
+  protected List<TableChange> checkForRemovedIndexes(Database sourceModel,
+                                                     Table sourceTable,
+                                                     Database intermediateModel,
+                                                     Table intermediateTable,
+                                                     Database targetModel,
+                                                     Table targetTable) {
     // Handling for http://bugs.mysql.com/bug.php?id=21395: we need to drop and then recreate FKs that reference columns
     // included in indexes that will be dropped
-    List changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
-    Set columnNames = new HashSet();
+    List<TableChange> changes = super.checkForRemovedIndexes(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+    Set<String> columnNames = new HashSet<>();
 
-    for (Iterator it = changes.iterator(); it.hasNext(); ) {
-      RemoveIndexChange change = (RemoveIndexChange) it.next();
-      Index index = change.findChangedIndex(sourceModel, isCaseSensitive());
-
-      for (int colIdx = 0; colIdx < index.getColumnCount(); colIdx++) {
-        columnNames.add(index.getColumn(colIdx).getName());
+    for (TableChange change : changes) {
+      if (change instanceof RemoveIndexChange) {
+        Index index = ((RemoveIndexChange) change).findChangedIndex(sourceModel, isCaseSensitive());
+        for (int colIdx = 0; colIdx < index.getColumnCount(); colIdx++) {
+          columnNames.add(index.getColumn(colIdx).getName());
+        }
       }
     }
     if (!columnNames.isEmpty()) {
@@ -78,18 +82,17 @@ public class MySqlModelComparator extends ModelComparator {
   /**
    * {@inheritDoc}
    */
-  protected List compareTables(Database sourceModel,
-                               Table sourceTable,
-                               Database intermediateModel,
-                               Table intermediateTable,
-                               Database targetModel, Table targetTable) {
+  @Override
+  protected List<TableChange> compareTables(Database sourceModel,
+                                            Table sourceTable,
+                                            Database intermediateModel,
+                                            Table intermediateTable,
+                                            Database targetModel, Table targetTable) {
     // we need to drop and recreate foreign keys that reference columns whose data type will be changed (but not size)
-    List changes = super.compareTables(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
-    Set columnNames = new HashSet();
+    List<TableChange> changes = super.compareTables(sourceModel, sourceTable, intermediateModel, intermediateTable, targetModel, targetTable);
+    Set<String> columnNames = new HashSet<>();
 
-    for (Iterator it = changes.iterator(); it.hasNext(); ) {
-      Object change = it.next();
-
+    for (Object change : changes) {
       if (change instanceof ColumnDefinitionChange) {
         ColumnDefinitionChange colDefChange = (ColumnDefinitionChange) change;
         Column sourceColumn = sourceTable.findColumn(colDefChange.getChangedColumn(), isCaseSensitive());
@@ -115,8 +118,8 @@ public class MySqlModelComparator extends ModelComparator {
    * @param columnNames       The names of the columns to look for
    * @return The additional changes
    */
-  private List getForeignKeyRecreationChanges(Table intermediateTable, Table targetTable, Set columnNames) {
-    List newChanges = new ArrayList();
+  private List<TableChange> getForeignKeyRecreationChanges(Table intermediateTable, Table targetTable, Set<String> columnNames) {
+    List<TableChange> newChanges = new ArrayList<>();
 
     for (int fkIdx = 0; fkIdx < targetTable.getForeignKeyCount(); fkIdx++) {
       ForeignKey targetFk = targetTable.getForeignKey(fkIdx);
@@ -126,8 +129,8 @@ public class MySqlModelComparator extends ModelComparator {
         for (int refIdx = 0; refIdx < intermediateFk.getReferenceCount(); refIdx++) {
           Reference ref = intermediateFk.getReference(refIdx);
 
-          for (Iterator colNameIt = columnNames.iterator(); colNameIt.hasNext(); ) {
-            if (StringUtilsExt.equals(ref.getLocalColumnName(), (String) colNameIt.next(), isCaseSensitive())) {
+          for (String columnName : columnNames) {
+            if (StringUtilsExt.equals(ref.getLocalColumnName(), columnName, isCaseSensitive())) {
               newChanges.add(new RemoveForeignKeyChange(intermediateTable.getName(), intermediateFk));
               newChanges.add(new AddForeignKeyChange(intermediateTable.getName(), intermediateFk));
             }

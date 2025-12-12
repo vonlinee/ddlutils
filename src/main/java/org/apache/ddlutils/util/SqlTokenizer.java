@@ -31,11 +31,11 @@ public class SqlTokenizer {
   /**
    * The SQL to tokenize.
    */
-  private String _sql;
+  private final String _sql;
   /**
    * The index of the last character in the string.
    */
-  private int _lastCharIdx;
+  private final int _lastCharIdx;
   /**
    * The last delimiter position in the string.
    */

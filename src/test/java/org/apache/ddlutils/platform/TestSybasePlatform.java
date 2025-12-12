@@ -31,6 +31,7 @@ public class TestSybasePlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return SybasePlatform.DATABASENAME;
   }
@@ -184,7 +185,7 @@ public class TestSybasePlatform extends TestPlatformBase {
       "CREATE TABLE \"escapedcharacters\"\n" +
       "(\n" +
       "    \"COL_PK\"   INT NULL,\n" +
-      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '\'\'' NULL,\n" +
+      "    \"COL_TEXT\" VARCHAR(128) DEFAULT '''' NULL,\n" +
       "    PRIMARY KEY (\"COL_PK\")\n" +
       ");\n",
       getCharEscapingTestDatabaseCreationSql());

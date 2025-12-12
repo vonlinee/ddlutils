@@ -33,6 +33,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected String getDatabaseName() {
     return MySqlPlatform.DATABASENAME;
   }
@@ -218,7 +219,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
       "CREATE TABLE `escapedcharacters`\n" +
       "(\n" +
       "    `COL_PK`   INTEGER,\n" +
-      "    `COL_TEXT` VARCHAR(128) DEFAULT '\\_ \\\' \\\" \\n \\r \\t \\\\ \\%' NULL,\n" +
+      "    `COL_TEXT` VARCHAR(128) DEFAULT '\\_ \\' \\\" \\n \\r \\t \\\\ \\%' NULL,\n" +
       "    PRIMARY KEY (`COL_PK`)\n" +
       ");\n",
       getDatabaseCreationSql(schema));

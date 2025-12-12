@@ -35,5 +35,5 @@ public interface ForeignKeyChange extends TableChange {
    * @param caseSensitive Whether identifiers are case sensitive
    * @return The foreign key object or <code>null</code> if it could not be found
    */
-  public ForeignKey findChangedForeignKey(Database model, boolean caseSensitive);
+  ForeignKey findChangedForeignKey(Database model, boolean caseSensitive);
 }

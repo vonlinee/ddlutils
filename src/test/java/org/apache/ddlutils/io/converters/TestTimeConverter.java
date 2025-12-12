@@ -39,6 +39,7 @@ public class TestTimeConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void setUp() throws Exception {
     super.setUp();
     _timeConverter = new TimeConverter();
@@ -47,6 +48,7 @@ public class TestTimeConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void tearDown() throws Exception {
     _timeConverter = null;
     super.tearDown();
@@ -140,9 +142,7 @@ public class TestTimeConverter extends TestCase {
    * Tests converting a null.
    */
   public void testConvertFromStringWithNullTextRep() {
-    String textRep = null;
-    Object result = _timeConverter.convertFromString(textRep, Types.TIME);
-
+    Object result = _timeConverter.convertFromString(null, Types.TIME);
     assertNull(result);
   }
 
@@ -151,7 +151,6 @@ public class TestTimeConverter extends TestCase {
    */
   public void testConvertFromStringWithInvalidTextRep() {
     String textRep = "99:99:99";
-
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
       fail("ConversionException expected");
@@ -165,7 +164,6 @@ public class TestTimeConverter extends TestCase {
    */
   public void testConvertFromStringWithAlphaTextRep() {
     String textRep = "aa:bb:cc";
-
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
       fail("ConversionException expected");
@@ -197,9 +195,7 @@ public class TestTimeConverter extends TestCase {
    * Tests converting a null time.
    */
   public void testConvertToStringWithNullTime() {
-    Time time = null;
-    String result = _timeConverter.convertToString(time, Types.TIME);
-
+    String result = _timeConverter.convertToString(null, Types.TIME);
     assertNull(result);
   }
 
