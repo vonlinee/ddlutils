@@ -18,14 +18,16 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>Oracle</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
-      DdlUtils has support for the <a href="ext:oracle">Oracle database</a> for versions <strong>8.1.7</strong>
-      and above.<br/>
+      DdlUtils has support for the <a href="ext:oracle">Oracle database</a> for versions
+      <strong>8.1.7</strong>
+      and above.
+      <br/>
       Info about the datatypes and SQL elements supported in this version can be found in the
       <strong>Oracle SQL Reference</strong>. You can access this documentation from the
       <a href="ext:oracle/otn">Oracle Technology Network</a>. Registration to this area is free.
@@ -33,7 +35,8 @@
     <p>
       DdlUtils provides different platforms for Oracle v8, v9, and v10. The v9 platform adds support for
       the native <code>TIMESTAMP</code> type, and the v10 platform handles the recycle bin that was
-      introduced in version 10 of the Oracle database.<br/>
+      introduced in version 10 of the Oracle database.
+      <br/>
       Note that DdlUtils currently does not automatically detect the database version, so it will always
       choose the v8 version. If you want to make use of the additional features, then you have to
       specify the platform identifier manually.
@@ -43,26 +46,42 @@
       Platform identifiers:
     </p>
     <ul>
-      <li><code>Oracle</code></li>
-      <li><code>Oracle9</code></li>
-      <li><code>Oracle10</code></li>
+      <li>
+        <code>Oracle</code>
+      </li>
+      <li>
+        <code>Oracle9</code>
+      </li>
+      <li>
+        <code>Oracle10</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC drivers:
     </p>
     <ul>
-      <li><code>oracle.jdbc.driver.OracleDriver</code></li>
-      <li><code>oracle.jdbc.dnlddriver.OracleDriver</code></li>
+      <li>
+        <code>oracle.jdbc.driver.OracleDriver</code>
+      </li>
+      <li>
+        <code>oracle.jdbc.dnlddriver.OracleDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocols:
     </p>
     <ul>
-      <li><code>jdbc:oracle:thin</code></li>
-      <li><code>jdbc:oracle:oci8</code></li>
-      <li><code>jdbc:oracle:dnldthin</code></li>
+      <li>
+        <code>jdbc:oracle:thin</code>
+      </li>
+      <li>
+        <code>jdbc:oracle:oci8</code>
+      </li>
+      <li>
+        <code>jdbc:oracle:dnldthin</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -79,7 +98,8 @@
         <td class="platformPropValue">30</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -91,7 +111,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -132,8 +153,10 @@
         <td>BINARY</td>
         <td>RAW</td>
         <td>Oracle requires the specification of the size for <code>RAW</code> columns.
-            If no size was specified, then 254 is used.<br/>
-            Will be read back as VARBINARY</td>
+          If no size was specified, then 254 is used.
+          <br/>
+          Will be read back as VARBINARY
+        </td>
       </tr>
       <tr>
         <td>BIT</td>
@@ -148,8 +171,10 @@
       <tr>
         <td>BOOLEAN</td>
         <td>NUMBER(1)</td>
-        <td>Oracle has no native boolean type.<br/>
-            Will be read back as BIT</td>
+        <td>Oracle has no native boolean type.
+          <br/>
+          Will be read back as BIT
+        </td>
       </tr>
       <tr>
         <td>CHAR</td>
@@ -253,7 +278,8 @@
       </tr>
       <tr>
         <td>TIMESTAMP</td>
-        <td>Oracle8 platform: DATE<br/>Oracle9/10 platforms: TIMESTAMP</td>
+        <td>Oracle8 platform: DATE<br/>Oracle9/10 platforms: TIMESTAMP
+        </td>
         <td>The TIMESTAMP native type is only supported in Oracle 9 and above.</td>
       </tr>
       <tr>
@@ -265,7 +291,8 @@
         <td>VARBINARY</td>
         <td>RAW</td>
         <td>Oracle requires the specification of the size for <code>RAW</code> columns.
-            If no size was specified, then 254 is used.</td>
+          If no size was specified, then 254 is used.
+        </td>
       </tr>
       <tr>
         <td>VARCHAR</td>

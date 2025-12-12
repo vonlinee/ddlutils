@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>Firebird</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       DdlUtils supports <a href="ext:firebird">Firebird</a>, version <strong>1</strong> and above.
     </p>
@@ -31,21 +31,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>Firebird</code></li>
+      <li>
+        <code>Firebird</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>org.firebirdsql.jdbc.FBDriver</code></li>
+      <li>
+        <code>org.firebirdsql.jdbc.FBDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:firebirdsql</code></li>
+      <li>
+        <code>jdbc:firebirdsql</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -62,7 +68,8 @@
         <td class="platformPropValue">31</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -74,7 +81,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -119,8 +127,10 @@
       <tr>
         <td>BIT</td>
         <td>SMALLINT</td>
-        <td>Firebird has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>Firebird has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>BLOB</td>
@@ -130,8 +140,10 @@
       <tr>
         <td>BOOLEAN</td>
         <td>SMALLINT</td>
-        <td>Firebird has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>Firebird has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>CHAR</td>

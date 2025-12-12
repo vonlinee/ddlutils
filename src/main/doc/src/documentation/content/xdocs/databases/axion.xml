@@ -18,15 +18,16 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
-  <title>Axion</title>
-  </header> 
+<document>
+  <header>
+    <title>Axion</title>
+  </header>
   <body>
     <p>
       Database support for Axion is legacy in DdlUtils because Axion does not appear to
       be actively developed anymore. Also, support for fundamential JDBC functionality necessary
-      for DdlUtils (such as database metadata) is lacking to a certain degree in Axion.<br/>
+      for DdlUtils (such as database metadata) is lacking to a certain degree in Axion.
+      <br/>
     </p>
     <p>
       Info about the datatypes supported by <a href="ext:axion">Axion</a> can be found
@@ -37,21 +38,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>Axion</code></li>
+      <li>
+        <code>Axion</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>org.axiondb.jdbc.AxionDriver</code></li>
+      <li>
+        <code>org.axiondb.jdbc.AxionDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:axiondb</code></li>
+      <li>
+        <code>jdbc:axiondb</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -68,7 +75,8 @@
         <td class="platformPropValue">unlimited</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -80,7 +88,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -160,7 +169,10 @@
       <tr>
         <td>DECIMAL</td>
         <td>DECIMAL</td>
-        <td><code>scale</code> is currently fixed to 2 in Axion (though a different one can be specified)</td>
+        <td>
+          <code>scale</code>
+          is currently fixed to 2 in Axion (though a different one can be specified)
+        </td>
       </tr>
       <tr>
         <td>DISTINCT</td>
@@ -205,7 +217,10 @@
       <tr>
         <td>NUMERIC</td>
         <td>NUMERIC</td>
-        <td><code>scale</code> is currently fixed to 2 (though a different one can be specified)</td>
+        <td>
+          <code>scale</code>
+          is currently fixed to 2 (though a different one can be specified)
+        </td>
       </tr>
       <tr>
         <td>OTHER</td>

@@ -19,130 +19,116 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import java.util.ArrayList;
-
 import org.apache.ddlutils.util.StringUtilsExt;
+
+import java.util.ArrayList;
 
 /**
  * Base class for indexes.
- * 
+ *
  * @version $Revision: $
  */
-public abstract class IndexImplBase implements Index
-{
-    /** The name of the index. */
-    protected String    _name;
-    /** The columns making up the index. */
-    protected ArrayList _columns = new ArrayList();
+public abstract class IndexImplBase implements Index {
+  /**
+   * The name of the index.
+   */
+  protected String _name;
+  /**
+   * The columns making up the index.
+   */
+  protected ArrayList _columns = new ArrayList();
 
-    /**
-     * {@inheritDoc}
-     */
-    public String getName()
-    {
-        return _name;
+  /**
+   * {@inheritDoc}
+   */
+  public String getName() {
+    return _name;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public void setName(String name) {
+    _name = name;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public int getColumnCount() {
+    return _columns.size();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public IndexColumn getColumn(int idx) {
+    return (IndexColumn) _columns.get(idx);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public IndexColumn[] getColumns() {
+    return (IndexColumn[]) _columns.toArray(new IndexColumn[_columns.size()]);
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasColumn(Column column) {
+    for (int idx = 0; idx < _columns.size(); idx++) {
+      IndexColumn curColumn = getColumn(idx);
+
+      if (column.equals(curColumn.getColumn())) {
+        return true;
+      }
     }
+    return false;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setName(String name)
-    {
-        _name = name;
+  /**
+   * {@inheritDoc}
+   */
+  public boolean hasColumn(String columnName, boolean caseSensitive) {
+    for (int idx = 0; idx < _columns.size(); idx++) {
+      IndexColumn curColumn = getColumn(idx);
+
+      if (StringUtilsExt.equals(columnName, curColumn.getName(), caseSensitive)) {
+        return true;
+      }
     }
+    return false;
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int getColumnCount()
-    {
-        return _columns.size();
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public void addColumn(IndexColumn column) {
+    if (column != null) {
+      for (int idx = 0; idx < _columns.size(); idx++) {
+        IndexColumn curColumn = getColumn(idx);
 
-    /**
-     * {@inheritDoc}
-     */
-    public IndexColumn getColumn(int idx)
-    {
-        return (IndexColumn)_columns.get(idx);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public IndexColumn[] getColumns()
-    {
-        return (IndexColumn[])_columns.toArray(new IndexColumn[_columns.size()]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public boolean hasColumn(Column column)
-    {
-        for (int idx = 0; idx < _columns.size(); idx++)
-        {
-            IndexColumn curColumn = getColumn(idx);
-
-            if (column.equals(curColumn.getColumn()))
-            {
-                return true;
-            }
+        if (curColumn.getOrdinalPosition() > column.getOrdinalPosition()) {
+          _columns.add(idx, column);
+          return;
         }
-        return false;
+      }
+      _columns.add(column);
     }
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean hasColumn(String columnName, boolean caseSensitive)
-    {
-        for (int idx = 0; idx < _columns.size(); idx++)
-        {
-            IndexColumn curColumn = getColumn(idx);
+  /**
+   * {@inheritDoc}
+   */
+  public void removeColumn(IndexColumn column) {
+    _columns.remove(column);
+  }
 
-            if (StringUtilsExt.equals(columnName, curColumn.getName(), caseSensitive))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void addColumn(IndexColumn column)
-    {
-        if (column != null)
-        {
-            for (int idx = 0; idx < _columns.size(); idx++)
-            {
-                IndexColumn curColumn = getColumn(idx);
-
-                if (curColumn.getOrdinalPosition() > column.getOrdinalPosition())
-                {
-                    _columns.add(idx, column);
-                    return;
-                }
-            }
-            _columns.add(column);
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeColumn(IndexColumn column)
-    {
-        _columns.remove(column);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void removeColumn(int idx)
-    {
-        _columns.remove(idx);
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public void removeColumn(int idx) {
+    _columns.remove(idx);
+  }
 }

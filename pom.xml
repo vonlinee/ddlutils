@@ -18,14 +18,14 @@
   under the License.
 -->
 
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-   <groupId>org.apache</groupId>
-   <artifactId>apache</artifactId>
-   <version>9</version>
+    <groupId>org.apache</groupId>
+    <artifactId>apache</artifactId>
+    <version>9</version>
   </parent>
   <groupId>org.apache.ddlutils</groupId>
   <artifactId>ddlutils</artifactId>
@@ -191,44 +191,44 @@
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
-<!--
-    <dependency>
-      <groupId>axion</groupId>
-      <artifactId>axion</artifactId>
-      <version>1.0-M3-dev</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.derby</groupId>
-      <artifactId>derbyclient</artifactId>
-      <version>10.1.2.1</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>hsqldb</groupId>
-      <artifactId>hsqldb</artifactId>
-      <version>1.8.0.4</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>mckoi</groupId>
-      <artifactId>mckoi</artifactId>
-      <version>1.0.2</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>3.1.12</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>postgresql</groupId>
-      <artifactId>postgresql</artifactId>
-      <version>8.1-404.jdbc3</version>
-      <scope>test</scope>
-    </dependency>
- -->
+    <!--
+        <dependency>
+          <groupId>axion</groupId>
+          <artifactId>axion</artifactId>
+          <version>1.0-M3-dev</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.apache.derby</groupId>
+          <artifactId>derbyclient</artifactId>
+          <version>10.1.2.1</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>hsqldb</groupId>
+          <artifactId>hsqldb</artifactId>
+          <version>1.8.0.4</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>mckoi</groupId>
+          <artifactId>mckoi</artifactId>
+          <version>1.0.2</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>mysql</groupId>
+          <artifactId>mysql-connector-java</artifactId>
+          <version>3.1.12</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>postgresql</groupId>
+          <artifactId>postgresql</artifactId>
+          <version>8.1-404.jdbc3</version>
+          <scope>test</scope>
+        </dependency>
+     -->
     <!-- NB: No public driver for DB2, interbase, sapdb, oracle, sqlserver -->
   </dependencies>
 
@@ -237,10 +237,10 @@
       <id>checkstyle</id>
       <build>
         <defaultGoal>checkstyle:checkstyle</defaultGoal>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-checkstyle-plugin</artifactId>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
             <configuration>
               <consoleOutput>true</consoleOutput>
               <failsOnError>true</failsOnError>
@@ -248,9 +248,9 @@
               <configLocation>src/main/checkstyle/ddlutils-checks.xml</configLocation>
               <headerLocation>src/main/checkstyle/license-check.txt</headerLocation>
             </configuration>
-	      </plugin>
-	      </plugins>
-	  </build>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
 
     <profile>
@@ -269,22 +269,22 @@
           <scope>test</scope>
         </dependency>
       </dependencies>
-	  <build>
-	    <plugins>
-	      <plugin>
-	        <groupId>org.apache.maven.plugins</groupId>
-	        <artifactId>maven-surefire-plugin</artifactId>
-	        <configuration>
-	          <systemProperties>
-	            <property>
-	              <name>jdbc.properties.file</name>
-	              <value>/jdbc.properties.hsqldb</value>
-	            </property>
-	          </systemProperties>
-	        </configuration>
-	      </plugin>
-	    </plugins>
-	  </build>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <systemProperties>
+                <property>
+                  <name>jdbc.properties.file</name>
+                  <value>/jdbc.properties.hsqldb</value>
+                </property>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
     </profile>
   </profiles>
 
@@ -306,7 +306,7 @@
         <version>2.9</version>
         <reportSets>
           <reportSet>
-            <reports />
+            <reports/>
           </reportSet>
         </reportSets>
       </plugin>

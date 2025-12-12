@@ -27,213 +27,204 @@ import org.apache.tools.ant.BuildException;
 
 /**
  * Encloses the platform configuration for the Ant tasks.
- * 
+ *
  * @version $Revision: 329426 $
  * @ant.type ignore="true"
  */
-public class PlatformConfiguration
-{
-    /** The type of the database. */
-    private String _databaseType;
-    /** The data source to use for accessing the database. */
-    private BasicDataSource _dataSource;
-    /** Whether to use delimited SQL identifiers. */
-    private boolean _useDelimitedSqlIdentifiers;
-    /** Whether read foreign keys shall be sorted. */
-    private boolean _sortForeignKeys;
-    /** Whether to shutdown the database after the task has finished. */
-    private boolean _shutdownDatabase;
-    /** The catalog pattern. */
-    private String _catalogPattern;
-    /** The schema pattern. */
-    private String _schemaPattern;
-    /** The platform object. */
-    private Platform _platform;
+public class PlatformConfiguration {
+  /**
+   * The type of the database.
+   */
+  private String _databaseType;
+  /**
+   * The data source to use for accessing the database.
+   */
+  private BasicDataSource _dataSource;
+  /**
+   * Whether to use delimited SQL identifiers.
+   */
+  private boolean _useDelimitedSqlIdentifiers;
+  /**
+   * Whether read foreign keys shall be sorted.
+   */
+  private boolean _sortForeignKeys;
+  /**
+   * Whether to shutdown the database after the task has finished.
+   */
+  private boolean _shutdownDatabase;
+  /**
+   * The catalog pattern.
+   */
+  private String _catalogPattern;
+  /**
+   * The schema pattern.
+   */
+  private String _schemaPattern;
+  /**
+   * The platform object.
+   */
+  private Platform _platform;
 
-    /**
-     * Returns the database type.
-     * 
-     * @return The database type
-     */
-    public String getDatabaseType()
-    {
-        return _databaseType;
-    }
+  /**
+   * Returns the database type.
+   *
+   * @return The database type
+   */
+  public String getDatabaseType() {
+    return _databaseType;
+  }
 
-    /**
-     * Sets the database type.
-     * 
-     * @param type The database type
-     */
-    public void setDatabaseType(String type)
-    {
-        _databaseType = type;
-    }
+  /**
+   * Sets the database type.
+   *
+   * @param type The database type
+   */
+  public void setDatabaseType(String type) {
+    _databaseType = type;
+  }
 
-    /**
-     * Returns the data source to use for accessing the database.
-     * 
-     * @return The data source
-     */
-    public BasicDataSource getDataSource()
-    {
-        return _dataSource;
-    }
+  /**
+   * Returns the data source to use for accessing the database.
+   *
+   * @return The data source
+   */
+  public BasicDataSource getDataSource() {
+    return _dataSource;
+  }
 
-    /**
-     * Sets the data source to use for accessing the database.
-     * 
-     * @param dataSource The data source pointing to the database
-     */
-    public void setDataSource(BasicDataSource dataSource)
-    {
-        _dataSource = dataSource;
-    }
+  /**
+   * Sets the data source to use for accessing the database.
+   *
+   * @param dataSource The data source pointing to the database
+   */
+  public void setDataSource(BasicDataSource dataSource) {
+    _dataSource = dataSource;
+  }
 
-    /**
-     * Returns the catalog pattern if any.
-     * 
-     * @return The catalog pattern
-     */
-    public String getCatalogPattern()
-    {
-        return _catalogPattern;
-    }
+  /**
+   * Returns the catalog pattern if any.
+   *
+   * @return The catalog pattern
+   */
+  public String getCatalogPattern() {
+    return _catalogPattern;
+  }
 
-    /**
-     * Sets the catalog pattern.
-     * 
-     * @param catalogPattern The catalog pattern
-     */
-    public void setCatalogPattern(String catalogPattern)
-    {
-        _catalogPattern = catalogPattern;
-    }
+  /**
+   * Sets the catalog pattern.
+   *
+   * @param catalogPattern The catalog pattern
+   */
+  public void setCatalogPattern(String catalogPattern) {
+    _catalogPattern = catalogPattern;
+  }
 
-    /**
-     * Returns the schema pattern if any.
-     * 
-     * @return The schema pattern
-     */
-    public String getSchemaPattern()
-    {
-        return _schemaPattern;
-    }
+  /**
+   * Returns the schema pattern if any.
+   *
+   * @return The schema pattern
+   */
+  public String getSchemaPattern() {
+    return _schemaPattern;
+  }
 
-    /**
-     * Sets the schema pattern.
-     * 
-     * @param schemaPattern The schema pattern
-     */
-    public void setSchemaPattern(String schemaPattern)
-    {
-        _schemaPattern = schemaPattern;
-    }
+  /**
+   * Sets the schema pattern.
+   *
+   * @param schemaPattern The schema pattern
+   */
+  public void setSchemaPattern(String schemaPattern) {
+    _schemaPattern = schemaPattern;
+  }
 
-    /**
-     * Determines whether delimited SQL identifiers shall be used (the default).
-     *
-     * @return <code>true</code> if delimited SQL identifiers shall be used
-     */
-    public boolean isUseDelimitedSqlIdentifiers()
-    {
-        return _useDelimitedSqlIdentifiers;
-    }
+  /**
+   * Determines whether delimited SQL identifiers shall be used (the default).
+   *
+   * @return <code>true</code> if delimited SQL identifiers shall be used
+   */
+  public boolean isUseDelimitedSqlIdentifiers() {
+    return _useDelimitedSqlIdentifiers;
+  }
 
-    /**
-     * Specifies whether delimited SQL identifiers shall be used.
-     *
-     * @param useDelimitedSqlIdentifiers <code>true</code> if delimited SQL identifiers shall be used
-     */
-    public void setUseDelimitedSqlIdentifiers(boolean useDelimitedSqlIdentifiers)
-    {
-        _useDelimitedSqlIdentifiers = useDelimitedSqlIdentifiers;
-    }
+  /**
+   * Specifies whether delimited SQL identifiers shall be used.
+   *
+   * @param useDelimitedSqlIdentifiers <code>true</code> if delimited SQL identifiers shall be used
+   */
+  public void setUseDelimitedSqlIdentifiers(boolean useDelimitedSqlIdentifiers) {
+    _useDelimitedSqlIdentifiers = useDelimitedSqlIdentifiers;
+  }
 
-    /**
-     * Determines whether a table's foreign keys read from a live database
-     * shall be sorted alphabetically. Is <code>false</code> by default.
-     *
-     * @return <code>true</code> if the foreign keys shall be sorted
-     */
-    public boolean isSortForeignKeys()
-    {
-        return _sortForeignKeys;
-    }
+  /**
+   * Determines whether a table's foreign keys read from a live database
+   * shall be sorted alphabetically. Is <code>false</code> by default.
+   *
+   * @return <code>true</code> if the foreign keys shall be sorted
+   */
+  public boolean isSortForeignKeys() {
+    return _sortForeignKeys;
+  }
 
-    /**
-     * Specifies whether a table's foreign keys read from a live database
-     * shall be sorted alphabetically.
-     *
-     * @param sortForeignKeys <code>true</code> if the foreign keys shall be sorted
-     */
-    public void setSortForeignKeys(boolean sortForeignKeys)
-    {
-        _sortForeignKeys = sortForeignKeys;
-    }
+  /**
+   * Specifies whether a table's foreign keys read from a live database
+   * shall be sorted alphabetically.
+   *
+   * @param sortForeignKeys <code>true</code> if the foreign keys shall be sorted
+   */
+  public void setSortForeignKeys(boolean sortForeignKeys) {
+    _sortForeignKeys = sortForeignKeys;
+  }
 
-    /**
-     * Determines whether the database shall be shut down after the task has finished.
-     *
-     * @return <code>true</code> if the database shall be shut down
-     */
-    public boolean isShutdownDatabase()
-    {
-        return _shutdownDatabase;
-    }
+  /**
+   * Determines whether the database shall be shut down after the task has finished.
+   *
+   * @return <code>true</code> if the database shall be shut down
+   */
+  public boolean isShutdownDatabase() {
+    return _shutdownDatabase;
+  }
 
-    /**
-     * Specifies whether the database shall be shut down after the task has finished.
-     *
-     * @param shutdownDatabase <code>true</code> if the database shall be shut down
-     */
-    public void setShutdownDatabase(boolean shutdownDatabase)
-    {
-        _shutdownDatabase = shutdownDatabase;
-    }
+  /**
+   * Specifies whether the database shall be shut down after the task has finished.
+   *
+   * @param shutdownDatabase <code>true</code> if the database shall be shut down
+   */
+  public void setShutdownDatabase(boolean shutdownDatabase) {
+    _shutdownDatabase = shutdownDatabase;
+  }
 
-    /**
-     * Creates the platform for the configured database.
-     * 
-     * @return The platform
-     */
-    public Platform getPlatform() throws BuildException
-    {
-        if (_platform == null)
-        {
-            if (_databaseType == null)
-            {
-                if (_dataSource == null)
-                {
-                    throw new BuildException("No database specified.");
-                }
-                if (_databaseType == null)
-                {
-                    _databaseType = new PlatformUtils().determineDatabaseType(_dataSource.getDriverClassName(),
-                                                                              _dataSource.getUrl());
-                }
-                if (_databaseType == null)
-                {
-                    _databaseType = new PlatformUtils().determineDatabaseType(_dataSource);
-                }
-            }
-            try
-            {
-                _platform = PlatformFactory.createNewPlatformInstance(_databaseType);
-            }
-            catch (Exception ex)
-            {
-                throw new BuildException("Database type "+_databaseType+" is not supported.", ex);
-            }
-            if (_platform == null)
-            {
-                throw new BuildException("Database type "+_databaseType+" is not supported.");
-            }
-            _platform.setDataSource(_dataSource);
-            _platform.setDelimitedIdentifierModeOn(isUseDelimitedSqlIdentifiers());
-            _platform.setForeignKeysSorted(isSortForeignKeys());
+  /**
+   * Creates the platform for the configured database.
+   *
+   * @return The platform
+   */
+  public Platform getPlatform() throws BuildException {
+    if (_platform == null) {
+      if (_databaseType == null) {
+        if (_dataSource == null) {
+          throw new BuildException("No database specified.");
         }
-
-        return _platform;
+        if (_databaseType == null) {
+          _databaseType = new PlatformUtils().determineDatabaseType(_dataSource.getDriverClassName(),
+            _dataSource.getUrl());
+        }
+        if (_databaseType == null) {
+          _databaseType = new PlatformUtils().determineDatabaseType(_dataSource);
+        }
+      }
+      try {
+        _platform = PlatformFactory.createNewPlatformInstance(_databaseType);
+      } catch (Exception ex) {
+        throw new BuildException("Database type " + _databaseType + " is not supported.", ex);
+      }
+      if (_platform == null) {
+        throw new BuildException("Database type " + _databaseType + " is not supported.");
+      }
+      _platform.setDataSource(_dataSource);
+      _platform.setDelimitedIdentifierModeOn(isUseDelimitedSqlIdentifiers());
+      _platform.setForeignKeysSorted(isSortForeignKeys());
     }
+
+    return _platform;
+  }
 }

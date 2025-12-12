@@ -19,42 +19,38 @@ package org.apache.ddlutils.platform.mysql;
  * under the License.
  */
 
-import java.sql.SQLException;
-import java.util.Map;
-
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
+
+import java.sql.SQLException;
+import java.util.Map;
 
 /**
  * Reads a database model from a MySql 5 database.
  *
  * @version $Revision: $
  */
-public class MySql50ModelReader extends MySqlModelReader
-{
-    /**
-     * Creates a new model reader for MySql 5 databases.
-     * 
-     * @param platform The platform that this model reader belongs to
-     */
-    public MySql50ModelReader(Platform platform)
-    {
-        super(platform);
-    }
+public class MySql50ModelReader extends MySqlModelReader {
+  /**
+   * Creates a new model reader for MySql 5 databases.
+   *
+   * @param platform The platform that this model reader belongs to
+   */
+  public MySql50ModelReader(Platform platform) {
+    super(platform);
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException
-    {
-        Column column = super.readColumn(metaData, values);
+  /**
+   * {@inheritDoc}
+   */
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map values) throws SQLException {
+    Column column = super.readColumn(metaData, values);
 
-        // make sure the defaultvalue is null when an empty is returned.
-        if ("".equals(column.getDefaultValue()))
-        {
-            column.setDefaultValue(null);
-        }
-        return column;
+    // make sure the defaultvalue is null when an empty is returned.
+    if ("".equals(column.getDefaultValue())) {
+      column.setDefaultValue(null);
     }
+    return column;
+  }
 }

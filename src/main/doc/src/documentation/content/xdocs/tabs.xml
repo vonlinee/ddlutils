@@ -17,12 +17,13 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<!DOCTYPE tabs PUBLIC "-//APACHE//DTD Cocoon Documentation Tab V1.1//EN" "http://forrest.apache.org/dtd/tab-cocoon-v11.dtd">
+<!DOCTYPE tabs PUBLIC "-//APACHE//DTD Cocoon Documentation Tab V1.1//EN"
+  "http://forrest.apache.org/dtd/tab-cocoon-v11.dtd">
 
 <tabs software="DdlUtils"
-  title="Apache DB - DdlUtils"
-  copyright="@year@ The Apache Foundation"
-  xmlns:xlink="http://www.w3.org/1999/xlink">
+      title="Apache DB - DdlUtils"
+      copyright="@year@ The Apache Foundation"
+>
 
   <!-- The rules for tabs are:
     @dir will always have '/@indexfile' added.
@@ -31,8 +32,8 @@
     directory (ends in '/'), in which case /index.html will be added
     If @id's are present, site.xml entries with a matching @tab will be in that tab.
 
-   Tabs can be embedded to a depth of two. The second level of tabs will only 
-    be displayed when their parent tab is selected.    
+   Tabs can be embedded to a depth of two. The second level of tabs will only
+    be displayed when their parent tab is selected.
   -->
 
   <tab id="" label="Home" dir="" indexfile="index.html"/>

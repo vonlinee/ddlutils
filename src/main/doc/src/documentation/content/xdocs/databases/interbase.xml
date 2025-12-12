@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>Interbase</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       DdlUtils supports <a href="ext:interbase">Interbase</a> version <strong>7.0</strong> and above.
     </p>
@@ -31,21 +31,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>Interbase</code></li>
+      <li>
+        <code>Interbase</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>interbase.interclient.Driver</code></li>
+      <li>
+        <code>interbase.interclient.Driver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:interbase</code></li>
+      <li>
+        <code>jdbc:interbase</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -62,7 +68,8 @@
         <td class="platformPropValue">31</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -74,7 +81,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -115,14 +123,18 @@
         <td>BINARY</td>
         <td>BLOB</td>
         <td>We could use <code>CHAR(n) CHARACTER SET OCTETS</code> but the JDBC driver
-            cannot handle these types properly.<br/>
-            Will be read back as LONGVARBINARY</td>
+          cannot handle these types properly.
+          <br/>
+          Will be read back as LONGVARBINARY
+        </td>
       </tr>
       <tr>
         <td>BIT</td>
         <td>SMALLINT</td>
-        <td>Interbase has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>Interbase has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>BLOB</td>
@@ -132,8 +144,10 @@
       <tr>
         <td>BOOLEAN</td>
         <td>SMALLINT</td>
-        <td>Interbase has no native boolean type<br/>
-            Will be read back as SMALLINT</td>
+        <td>Interbase has no native boolean type
+          <br/>
+          Will be read back as SMALLINT
+        </td>
       </tr>
       <tr>
         <td>CHAR</td>
@@ -249,8 +263,10 @@
         <td>VARBINARY</td>
         <td>BLOB</td>
         <td>We could use <code>VARCHAR(n) CHARACTER SET OCTETS</code> but the JDBC driver
-            cannot handle these types properly.<br/>
-            Will be read back as LONGVARBINARY</td>
+          cannot handle these types properly.
+          <br/>
+          Will be read back as LONGVARBINARY
+        </td>
       </tr>
       <tr>
         <td>VARCHAR</td>

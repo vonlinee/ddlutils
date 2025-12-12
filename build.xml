@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
   distributed with this work for additional information
@@ -19,8 +19,8 @@
 -->
 
 <project default="dist"
-	     name="DdlUtils"
-	     basedir=".">
+         name="DdlUtils"
+         basedir=".">
   <!-- Allow values set at the commandline or in the environment to override the defaults -->
   <property environment="env"/>
   <!-- Load the build properties -->
@@ -29,8 +29,8 @@
   <!-- The classpath used for compiling and generating the documentation -->
   <path id="compilation-classpath">
     <fileset dir="${lib.dir}">
-        <include name="**/*.jar"/>
-        <include name="**/*.zip"/>
+      <include name="**/*.jar"/>
+      <include name="**/*.zip"/>
     </fileset>
     <pathelement path="${build.java.dir}"/>
     <pathelement path="${build.test.dir}"/>
@@ -38,10 +38,10 @@
 
   <target name="init"
           description="Initializes the build process">
-      <tstamp/>
-      <mkdir dir="${build.dir}"/>
-      <mkdir dir="${build.java.dir}"/>
-      <mkdir dir="${dist.dir}"/>
+    <tstamp/>
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${build.java.dir}"/>
+    <mkdir dir="${dist.dir}"/>
   </target>
 
   <target name="compile"
@@ -69,9 +69,9 @@
       <fileset dir="${src.java.dir}"
                excludes="**/*.java"/>
     </copy>
-  	<mkdir dir="${build.java.dir}/META-INF"/>
+    <mkdir dir="${build.java.dir}/META-INF"/>
     <copy todir="${build.java.dir}/META-INF"
-  	      file="${basedir}/LICENSE.txt"/>
+          file="${basedir}/LICENSE.txt"/>
     <jar jarfile="${dist.dir}/${dist.filename.prefix}.jar"
          basedir="${build.java.dir}"
          excludes="**/package.html">
@@ -101,7 +101,8 @@
   <!-- ================================================================== -->
   <target name="doc"
           description="Builds the complete documentation">
-    <fail message="Please set the FORREST_HOME environment variable to the 'src/core' subdirectory of your Forrest installation. If you don't have yet installed Forrest, you can get it from http://forrest.apache.org.">
+    <fail
+      message="Please set the FORREST_HOME environment variable to the 'src/core' subdirectory of your Forrest installation. If you don't have yet installed Forrest, you can get it from http://forrest.apache.org.">
       <condition>
         <not>
           <isset property="env.FORREST_HOME"/>
@@ -109,10 +110,11 @@
       </condition>
     </fail>
     <available classname="org.apache.xml.resolver.Resolver" property="commons.resolver.available"/>
-    <fail unless="commons.resolver.available" message="Please make the Apache XML Commons Resolver library available in the classpath, e.g. by copying the xml-commons-resolver jar file from the 'tools/ant/lib' subdirectory of your Forrest installation (${env.FORREST_HOME}/tools/ant/lib) into the lib subdirectory of your Ant installation (${env.ANT_HOME}/lib)."/>
+    <fail unless="commons.resolver.available"
+          message="Please make the Apache XML Commons Resolver library available in the classpath, e.g. by copying the xml-commons-resolver jar file from the 'tools/ant/lib' subdirectory of your Forrest installation (${env.FORREST_HOME}/tools/ant/lib) into the lib subdirectory of your Ant installation (${env.ANT_HOME}/lib)."/>
 
     <delete dir="${build.doc.dir}"
-    	    failonerror="false"/>
+            failonerror="false"/>
     <mkdir dir="${build.doc.dir}"/>
 
     <!-- Copy all forrest src stuff to a temporary directoy -->
@@ -183,12 +185,12 @@
       <tag name="ant.task" scope="types" description="Marks an ant task"/>
       <tag name="ant.required" scope="methods" description="Marks a required task property"/>
       <tag name="ant.not-required" scope="methods" description="Marks an optional task property"/>
-      <link href="http://java.sun.com/j2se/1.4.2/docs/api/"/> 
+      <link href="http://java.sun.com/j2se/1.4.2/docs/api/"/>
       <link href="http://jakarta.apache.org/commons/lang/apidocs/"/>
       <link href="http://jakarta.apache.org/commons/beanutils/apidocs/"/>
       <link href="http://jakarta.apache.org/commons/digester/apidocs/"/>
       <link href="http://jakarta.apache.org/commons/betwixt/apidocs/"/>
-    </javadoc> 
+    </javadoc>
   </target>
 
   <!-- ================================================================== -->
@@ -199,7 +201,8 @@
     <available classname="DTDDoc.DTDDocTask"
                classpathref="compilation-classpath"
                property="dtddoc.available"/>
-    <fail unless="dtddoc.available" message="For building the XML Schema documentaion, you'll need DTDDoc which can be downloaded from http://sourceforge.net/projects/dtddoc. Please make the DTDDoc and dtdparser jars available in the classpath."/>
+    <fail unless="dtddoc.available"
+          message="For building the XML Schema documentaion, you'll need DTDDoc which can be downloaded from http://sourceforge.net/projects/dtddoc. Please make the DTDDoc and dtdparser jars available in the classpath."/>
     <taskdef name="dtddoc"
              classname="DTDDoc.DTDDocTask"
              classpathref="compilation-classpath"/>
@@ -216,7 +219,8 @@
     <available classname="com.neuroning.antdoclet.AntDoclet"
                classpathref="compilation-classpath"
                property="antdoc.available"/>
-    <fail unless="antdoc.available" message="For building the Ant task documentaion, you'll need AntDoc which can be downloaded from http://antdoclet.neuroning.com/. Please make the AntDoc libraries available in the classpath."/>
+    <fail unless="antdoc.available"
+          message="For building the Ant task documentaion, you'll need AntDoc which can be downloaded from http://antdoclet.neuroning.com/. Please make the AntDoc libraries available in the classpath."/>
     <mkdir dir="${build.antdoc.dir}"/>
     <javadoc sourcepath="${src.java.dir}"
              classpathref="compilation-classpath"
@@ -229,7 +233,7 @@
       <doclet name="com.neuroning.antdoclet.AntDoclet"
               pathref="compilation-classpath">
         <param name="-templatesdir" value="${antdoc.templates.dir}"/>
-        <param name="-templates" value="html/main.vm" />
+        <param name="-templates" value="html/main.vm"/>
       </doclet>
     </javadoc>
     <copy todir="${build.antdoc.dir}">
@@ -275,7 +279,7 @@
     <zip zipfile="${dist.dir}/${dist.src.filename.prefix}.zip"
          basedir="."
          includes="${dist.src.includes}"
-  	     excludes="${dist.src.excludes}"/>
+         excludes="${dist.src.excludes}"/>
   </target>
 
 
@@ -304,10 +308,10 @@
     <javac srcdir="${src.test.dir}"
            destdir="${build.test.dir}"
            deprecation="true"
-    	   debug="true"
-    	   source="1.2"
-    	   target="1.2"
-    	   optimize="false">
+           debug="true"
+           source="1.2"
+           target="1.2"
+           optimize="false">
       <classpath refid="compilation-classpath"/>
     </javac>
   </target>
@@ -317,7 +321,7 @@
   <!-- ================================================================== -->
   <target name="create-test-database"
           description="Can be used to create the testdatabase if the platform supports it">
-    <property file="${jdbc.properties.file}"/> 
+    <property file="${jdbc.properties.file}"/>
 
     <taskdef name="ddl2Database"
              classname="org.apache.ddlutils.task.DdlToDatabaseTask"
@@ -326,10 +330,10 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
       <createdatabase failonerror="true"/>
     </ddl2Database>
-  </target> 
+  </target>
 
   <!-- ================================================================== -->
   <!-- Runs the test cases                                                -->
@@ -371,7 +375,7 @@
   <!-- ================================================================== -->
   <target name="junit-mysql"
           description="Runs the test cases against MySql">
-  	<property name="jdbc.properties.file" value="/jdbc.properties.mysql"/>
+    <property name="jdbc.properties.file" value="/jdbc.properties.mysql"/>
     <antcall target="-junit-internal"/>
   </target>
 
@@ -390,16 +394,16 @@
            printSummary="yes"
            fork="true"
            haltonerror="false">
-      <sysproperty key="jdbc.properties.file" value="${jdbc.properties.file}"/> 
+      <sysproperty key="jdbc.properties.file" value="${jdbc.properties.file}"/>
       <formatter type="xml"/>
       <formatter type="plain"/>
       <classpath refid="compilation-classpath"/>
       <batchtest todir="${build.test.dir}">
-          <fileset dir="${src.test.dir}" includes="**/Test*.java">
-    	    <exclude name="**/Test*Base.java"/>
-  	        <exclude name="**/TestPlatform.java"/>
-  	        <exclude name="**/TestSummaryCreatorTask.java"/>
-          </fileset>
+        <fileset dir="${src.test.dir}" includes="**/Test*.java">
+          <exclude name="**/Test*Base.java"/>
+          <exclude name="**/TestPlatform.java"/>
+          <exclude name="**/TestSummaryCreatorTask.java"/>
+        </fileset>
       </batchtest>
     </junit>
   </target>
@@ -411,7 +415,7 @@
           description="Creates a test report in html form">
     <junitreport todir="${build.test.dir}">
       <fileset dir="${build.test.dir}" casesensitive="false">
-          <include name="test*.xml"/>
+        <include name="test*.xml"/>
       </fileset>
       <report format="frames"
               todir="${build.test.dir}"/>
@@ -422,7 +426,7 @@
   <!-- Creates the test summary                                           -->
   <!-- ================================================================== -->
   <target name="junit-summary"
-  	      depends="compile-tests"
+          depends="compile-tests"
           description="Creates a test summary">
     <taskdef name="testSummary"
              classname="org.apache.ddlutils.TestSummaryCreatorTask"
@@ -430,8 +434,8 @@
     <testSummary version="${dist.version}"
                  outputfile="${build.test.dir}/summary.xml">
       <fileset dir="${build.test.dir}"
-      	       casesensitive="false">
-          <include name="test*.xml"/>
+               casesensitive="false">
+        <include name="test*.xml"/>
       </fileset>
     </testSummary>
     <property name="test.summary.stylesheet" value="${test.summary.dir}/moinmoin.xsl"/>
@@ -445,7 +449,8 @@
   <!-- ================================================================== -->
   <target name="checkstyle"
           description="Checks the sourcecode via Checkstyle">
-    <fail message="Due to licensing issues, DdlUtils is not distributed with Checkstyle. If you want to use this task, then please put the checkstyle jar into the lib subdirectory.">
+    <fail
+      message="Due to licensing issues, DdlUtils is not distributed with Checkstyle. If you want to use this task, then please put the checkstyle jar into the lib subdirectory.">
       <condition>
         <not>
           <available classpathref="compilation-classpath"

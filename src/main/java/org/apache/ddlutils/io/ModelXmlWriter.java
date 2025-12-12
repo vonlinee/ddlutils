@@ -23,42 +23,32 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Base class providing helper functions for writing model elements to XML.  
+ * Base class providing helper functions for writing model elements to XML.
  */
-public abstract class ModelXmlWriter
-{
-    protected void writeText(DataWriter writer, String value, boolean isBase64Encoded)
-    {
-        if (isBase64Encoded)
-        {
-            writer.writeAttribute(null, "base64", "true");
-            writer.writeCharacters(value);
+public abstract class ModelXmlWriter {
+  protected void writeText(DataWriter writer, String value, boolean isBase64Encoded) {
+    if (isBase64Encoded) {
+      writer.writeAttribute(null, "base64", "true");
+      writer.writeCharacters(value);
+    } else {
+      List cutPoints = XMLUtils.findCDataCutPoints(value);
+
+      // if the content contains special characters, we have to apply base64 encoding to it
+      if (cutPoints.isEmpty()) {
+        writer.writeCharacters(value);
+      } else {
+        int lastPos = 0;
+
+        for (Iterator cutPointIt = cutPoints.iterator(); cutPointIt.hasNext(); ) {
+          int curPos = ((Integer) cutPointIt.next()).intValue();
+
+          writer.writeCData(value.substring(lastPos, curPos));
+          lastPos = curPos;
         }
-        else
-        {
-            List cutPoints = XMLUtils.findCDataCutPoints(value);
-    
-            // if the content contains special characters, we have to apply base64 encoding to it
-            if (cutPoints.isEmpty())
-            {
-                writer.writeCharacters(value);
-            }
-            else
-            {
-                int lastPos = 0;
-    
-                for (Iterator cutPointIt = cutPoints.iterator(); cutPointIt.hasNext();)
-                {
-                    int curPos = ((Integer)cutPointIt.next()).intValue();
-    
-                    writer.writeCData(value.substring(lastPos, curPos));
-                    lastPos = curPos;
-                }
-                if (lastPos < value.length())
-                {
-                    writer.writeCData(value.substring(lastPos));
-                }
-            }
+        if (lastPos < value.length()) {
+          writer.writeCData(value.substring(lastPos));
         }
+      }
     }
+  }
 }

@@ -23,7 +23,8 @@ Skin configuration file. This file contains details of your project,
 which will be used to configure the chosen Forrest skin.
 -->
 
-<!DOCTYPE skinconfig PUBLIC "-//APACHE//DTD Skin Configuration V0.7-1//EN" "http://forrest.apache.org/dtd/skinconfig-v07-1.dtd">
+<!DOCTYPE skinconfig PUBLIC "-//APACHE//DTD Skin Configuration V0.7-1//EN"
+  "http://forrest.apache.org/dtd/skinconfig-v07-1.dtd">
 <skinconfig>
   <!-- To enable lucene search add provider="lucene" (default is google).
     Add box-location="alt" to move the search box to an alternate location
@@ -35,7 +36,7 @@ which will be used to configure the chosen Forrest skin.
   <search name="DdlUtils" domain="http://db.apache.org/ddlutils" provider="google"/>
 
   <!-- Disable the print link? If enabled, invalid HTML 4.0.1 -->
-  <disable-print-link>true</disable-print-link>  
+  <disable-print-link>true</disable-print-link>
   <!-- Disable the PDF link? -->
   <disable-pdf-link>false</disable-pdf-link>
   <!-- Disable the POD link? -->
@@ -53,8 +54,8 @@ which will be used to configure the chosen Forrest skin.
   <!-- Disable navigation icons on all external links? -->
   <disable-external-link-image>false</disable-external-link-image>
 
-  <!-- Disable w3c compliance links? 
-    Use e.g. align="center" to move the compliance links logos to 
+  <!-- Disable w3c compliance links?
+    Use e.g. align="center" to move the compliance links logos to
     an alternate location default is left.
     (if the skin supports it) -->
   <disable-compliance-links>false</disable-compliance-links>
@@ -70,7 +71,8 @@ which will be used to configure the chosen Forrest skin.
        default skin: renders it at the top -->
   <project-name>DdlUtils</project-name>
   <project-description>DdlUtils provides functionality to work with database definition (DDL) files,
-  e.g. create and setup database schemas or create DDL from existing databases.</project-description>
+    e.g. create and setup database schemas or create DDL from existing databases.
+  </project-description>
   <project-url>http://db.apache.org/ddlutils</project-url>
   <project-logo></project-logo>
   <!-- Alternative static image:
@@ -107,9 +109,9 @@ which will be used to configure the chosen Forrest skin.
     Omit the location attribute to display the trail in the default location.
     Use location="none" to not display the trail (if the skin supports it).
     For some skins just set the attributes to blank.
-    
+
     NOTE: If a breadcrumb entry points at a local file the href must
-    be complete, that is it must point to the file itself, not to a 
+    be complete, that is it must point to the file itself, not to a
     directory.
   -->
   <trail>
@@ -121,7 +123,7 @@ which will be used to configure the chosen Forrest skin.
   <!-- Configure the TOC, i.e. the Table of Contents.
   @max-depth
    how many "section" levels need to be included in the
-   generated Table of Contents (TOC). 
+   generated Table of Contents (TOC).
   @min-sections
    Minimum required to create a TOC.
   @location ("page","menu","page,menu", "none")
@@ -131,7 +133,7 @@ which will be used to configure the chosen Forrest skin.
 
   <!-- Heading types can be clean|underlined|boxed  -->
   <headings type="boxed"/>
-  
+
   <!-- The optional feedback element will be used to construct a
     feedback link in the footer with the page pathname appended:
     <a href="@href">{@to}</a>
@@ -154,251 +156,251 @@ which will be used to configure the chosen Forrest skin.
       alt : at the bottom of the left-hand navigation panel
       both : both
     -->
-<!--
-  <motd>
-    <motd-option pattern="docs_0_80">
-      <motd-title>v0.8-dev</motd-title>
-      <motd-page location="both">
-        This is documentation for development version v0.8
-      </motd-page>
-      <motd-page-url>/versions/index.html</motd-page-url>
-    </motd-option>
-    <motd-option pattern="docs_0_70">
-      <motd-title>v0.7</motd-title>
-      <motd-page location="both">
-        This is documentation for current version v0.7
-      </motd-page>
-      <motd-page-url>/versions/index.html</motd-page-url>
-    </motd-option>
-  </motd>
--->
+  <!--
+    <motd>
+      <motd-option pattern="docs_0_80">
+        <motd-title>v0.8-dev</motd-title>
+        <motd-page location="both">
+          This is documentation for development version v0.8
+        </motd-page>
+        <motd-page-url>/versions/index.html</motd-page-url>
+      </motd-option>
+      <motd-option pattern="docs_0_70">
+        <motd-title>v0.7</motd-title>
+        <motd-page location="both">
+          This is documentation for current version v0.7
+        </motd-page>
+        <motd-page-url>/versions/index.html</motd-page-url>
+      </motd-option>
+    </motd>
+  -->
 
   <!--
-    extra-css - here you can define custom css-elements that are 
-    A) overriding the fallback elements or 
-    B) adding the css definition from new elements that you may have 
+    extra-css - here you can define custom css-elements that are
+    A) overriding the fallback elements or
+    B) adding the css definition from new elements that you may have
        used in your documentation.
     -->
   <extra-css>
     <!--Example of reason B:
         To define the css definition of a new element that you may have used
-        in the class attribute of a <p> node. 
+        in the class attribute of a <p> node.
         e.g. <p class="quote"/>
     -->
 
-body #banner td a, .app h3 a, .app h4 a {
+    body #banner td a, .app h3 a, .app h4 a {
     color: #000 !important;
     font-size: 2.5em;
-}
+    }
 
-    p { 
-      line-height: 1.4
+    p {
+    line-height: 1.4
     }
-    dl { 
-      line-height: 1.4
+    dl {
+    line-height: 1.4
     }
-    dd { 
-      line-height: 1.4
+    dd {
+    line-height: 1.4
     }
-    ol { 
-      line-height: 1.4
+    ol {
+    line-height: 1.4
     }
-    ul { 
-      line-height: 1.4
+    ul {
+    line-height: 1.4
     }
-    li { 
-      line-height: 1.4
+    li {
+    line-height: 1.4
     }
     p.quote {
-      margin-left: 2em;
-      padding: .5em;
-      background-color: #f0f0f0;
-      font-family: monospace;
+    margin-left: 2em;
+    padding: .5em;
+    background-color: #f0f0f0;
+    font-family: monospace;
     }
 
-      .code {
-	border-style: none;
-	border-width: 1px;
-	font-size : 90%;
-	padding: 1em 1.33em 1em 1.33em;
-	background : #EEEEEE;}
-.codefrag   {font-family: "Courier New", Courier, monospace; font-size : 100%;}
-.warningmessage {font-size : 90%;}
-.infomessage {font-size : 90%;}
-.errormessage {font-size : 90%;}
+    .code {
+    border-style: none;
+    border-width: 1px;
+    font-size : 90%;
+    padding: 1em 1.33em 1em 1.33em;
+    background : #EEEEEE;}
+    .codefrag {font-family: "Courier New", Courier, monospace; font-size : 100%;}
+    .warningmessage {font-size : 90%;}
+    .infomessage {font-size : 90%;}
+    .errormessage {font-size : 90%;}
 
     td.platformPropName {
-      width : 50%;
+    width : 50%;
     }
     td.platformPropValue {
-      width : 50%;
+    width : 50%;
     }
     th.typeMappingJdbcType {
-      width : 25%;
+    width : 25%;
     }
     th.typeMappingNativeType {
-      width : 25%;
+    width : 25%;
     }
     th.typeMappingComments {
-      width : 50%;
+    width : 50%;
     }
   </extra-css>
 
   <colors>
-  <!-- These values are used for the generated CSS files.
-    They essentially "override" the default colors defined in the chosen skin.
-    There are four duplicate "groups" of colors below, denoted by comments:
-      Color group: Forrest, Krysalis, Collabnet, and Lenya using Pelt.
-    They are provided for example only. To customize the colors of any skin,
-    uncomment one of these groups of color elements and change the values
-    of the particular color elements that you wish to change.
-    Note that by default, all color groups are commented-out which means that
-    the default colors provided by the skin are being used.
-  -->
+    <!-- These values are used for the generated CSS files.
+      They essentially "override" the default colors defined in the chosen skin.
+      There are four duplicate "groups" of colors below, denoted by comments:
+        Color group: Forrest, Krysalis, Collabnet, and Lenya using Pelt.
+      They are provided for example only. To customize the colors of any skin,
+      uncomment one of these groups of color elements and change the values
+      of the particular color elements that you wish to change.
+      Note that by default, all color groups are commented-out which means that
+      the default colors provided by the skin are being used.
+    -->
 
-  <!-- Color group: Forrest: example colors similar to forrest.apache.org
-    Some of the element names are obscure, so comments are added to show how
-    the "pelt" skin uses them, other skins might use these elements in a different way.
-    Tip: temporarily change the value of an element to red (#ff0000) and see the effect.
-     pelt: breadtrail: the strip at the top of the page and the second strip under the tabs
-     pelt: header: top strip containing project and group logos
-     pelt: heading|subheading: section headings within the content
-     pelt: navstrip: the strip under the tabs which contains the published date
-     pelt: menu: the left-hand navigation panel
-     pelt: toolbox: the selected menu item
-     pelt: searchbox: the background of the searchbox
-     pelt: border: line border around selected menu item
-     pelt: body: any remaining parts, e.g. the bottom of the page
-     pelt: footer: the second from bottom strip containing credit logos and published date
-     pelt: feedback: the optional bottom strip containing feedback link
-  -->
-<!--
-    <color name="breadtrail" value="#cedfef" font="#0F3660" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="header" value="#294563"/>
-    <color name="tab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="tab-unselected" value="#b5c7e7" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="subtab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="subtab-unselected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="heading" value="#294563"/>
-    <color name="subheading" value="#4a6d8c"/>
-    <color name="published" value="#4C6C8F" font="#FFFFFF"/>
-    <color name="feedback" value="#4C6C8F" font="#FFFFFF" align="center"/>
-    <color name="navstrip" value="#4a6d8c" font="#ffffff" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
-    <color name="menu" value="#4a6d8c" font="#cedfef" link="#ffffff" vlink="#ffffff" hlink="#ffcf00"/>    
-    <color name="toolbox" value="#4a6d8c"/>
-    <color name="border" value="#294563"/>
-    <color name="dialog" value="#4a6d8c"/>
-    <color name="searchbox" value="#4a6d8c" font="#000000"/>
-    <color name="body" value="#ffffff" link="#0F3660" vlink="#009999" hlink="#000066"/>
-    <color name="table" value="#7099C5"/>    
-    <color name="table-cell" value="#f0f0ff"/>    
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#CFDCED"/>
-    <color name="footer" value="#cedfef"/>
--->
+    <!-- Color group: Forrest: example colors similar to forrest.apache.org
+      Some of the element names are obscure, so comments are added to show how
+      the "pelt" skin uses them, other skins might use these elements in a different way.
+      Tip: temporarily change the value of an element to red (#ff0000) and see the effect.
+       pelt: breadtrail: the strip at the top of the page and the second strip under the tabs
+       pelt: header: top strip containing project and group logos
+       pelt: heading|subheading: section headings within the content
+       pelt: navstrip: the strip under the tabs which contains the published date
+       pelt: menu: the left-hand navigation panel
+       pelt: toolbox: the selected menu item
+       pelt: searchbox: the background of the searchbox
+       pelt: border: line border around selected menu item
+       pelt: body: any remaining parts, e.g. the bottom of the page
+       pelt: footer: the second from bottom strip containing credit logos and published date
+       pelt: feedback: the optional bottom strip containing feedback link
+    -->
+    <!--
+        <color name="breadtrail" value="#cedfef" font="#0F3660" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="header" value="#294563"/>
+        <color name="tab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="tab-unselected" value="#b5c7e7" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="subtab-selected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="subtab-unselected" value="#4a6d8c" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="heading" value="#294563"/>
+        <color name="subheading" value="#4a6d8c"/>
+        <color name="published" value="#4C6C8F" font="#FFFFFF"/>
+        <color name="feedback" value="#4C6C8F" font="#FFFFFF" align="center"/>
+        <color name="navstrip" value="#4a6d8c" font="#ffffff" link="#0F3660" vlink="#0F3660" hlink="#000066"/>
+        <color name="menu" value="#4a6d8c" font="#cedfef" link="#ffffff" vlink="#ffffff" hlink="#ffcf00"/>
+        <color name="toolbox" value="#4a6d8c"/>
+        <color name="border" value="#294563"/>
+        <color name="dialog" value="#4a6d8c"/>
+        <color name="searchbox" value="#4a6d8c" font="#000000"/>
+        <color name="body" value="#ffffff" link="#0F3660" vlink="#009999" hlink="#000066"/>
+        <color name="table" value="#7099C5"/>
+        <color name="table-cell" value="#f0f0ff"/>
+        <color name="highlight" value="#ffff00"/>
+        <color name="fixme" value="#cc6600"/>
+        <color name="note" value="#006699"/>
+        <color name="warning" value="#990000"/>
+        <color name="code" value="#CFDCED"/>
+        <color name="footer" value="#cedfef"/>
+    -->
 
-  <!-- Color group: Krysalis -->
-<!--
-    <color name="header"    value="#FFFFFF"/>
+    <!-- Color group: Krysalis -->
+    <!--
+        <color name="header"    value="#FFFFFF"/>
 
-    <color name="tab-selected" value="#a5b6c6" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="tab-unselected" value="#F7F7F7"  link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-selected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-unselected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="tab-selected" value="#a5b6c6" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="tab-unselected" value="#F7F7F7"  link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="subtab-selected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="subtab-unselected" value="#a5b6c6"  link="#000000" vlink="#000000" hlink="#000000"/>
 
-    <color name="heading" value="#a5b6c6"/>
-    <color name="subheading" value="#CFDCED"/>
-        
-    <color name="navstrip" value="#CFDCED" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="toolbox" value="#a5b6c6"/>
-    <color name="border" value="#a5b6c6"/>
-        
-    <color name="menu" value="#F7F7F7" link="#000000" vlink="#000000" hlink="#000000"/>    
-    <color name="dialog" value="#F7F7F7"/>
-            
-    <color name="body"    value="#ffffff" link="#0F3660" vlink="#009999" hlink="#000066"/>
-    
-    <color name="table" value="#a5b6c6"/>    
-    <color name="table-cell" value="#ffffff"/>    
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#a5b6c6"/>
-        
-    <color name="footer" value="#a5b6c6"/>
--->
+        <color name="heading" value="#a5b6c6"/>
+        <color name="subheading" value="#CFDCED"/>
 
-  <!-- Color group: Collabnet --> 
-<!--
-    <color name="header"    value="#003366"/>
+        <color name="navstrip" value="#CFDCED" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="toolbox" value="#a5b6c6"/>
+        <color name="border" value="#a5b6c6"/>
 
-    <color name="tab-selected" value="#dddddd" link="#555555" vlink="#555555" hlink="#555555"/>
-    <color name="tab-unselected" value="#999999" link="#ffffff" vlink="#ffffff" hlink="#ffffff"/>
-    <color name="subtab-selected" value="#cccccc" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-unselected" value="#cccccc" link="#555555" vlink="#555555" hlink="#555555"/>
+        <color name="menu" value="#F7F7F7" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="dialog" value="#F7F7F7"/>
 
-    <color name="heading" value="#003366"/>
-    <color name="subheading" value="#888888"/>
-    
-    <color name="navstrip" value="#dddddd" font="#555555"/>
-    <color name="toolbox" value="#dddddd" font="#555555"/>
-    <color name="border" value="#999999"/>
-    
-    <color name="menu" value="#ffffff"/>    
-    <color name="dialog" value="#eeeeee"/>
-            
-    <color name="body"      value="#ffffff"/>
-    
-    <color name="table" value="#ccc"/>    
-    <color name="table-cell" value="#ffffff"/>   
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#003366"/>
-        
-    <color name="footer" value="#ffffff"/>
--->
- <!-- Color group: Lenya using pelt-->
-<!--
+        <color name="body"    value="#ffffff" link="#0F3660" vlink="#009999" hlink="#000066"/>
 
-    <color name="header" value="#ffffff"/>
+        <color name="table" value="#a5b6c6"/>
+        <color name="table-cell" value="#ffffff"/>
+        <color name="highlight" value="#ffff00"/>
+        <color name="fixme" value="#cc6600"/>
+        <color name="note" value="#006699"/>
+        <color name="warning" value="#990000"/>
+        <color name="code" value="#a5b6c6"/>
 
-    <color name="tab-selected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="tab-unselected" value="#F5F4E9" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-selected" value="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="subtab-unselected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="footer" value="#a5b6c6"/>
+    -->
 
-    <color name="heading" value="#E5E4D9"/>
-    <color name="subheading" value="#000000"/>
-    <color name="published" value="#000000"/>
-    <color name="navstrip" value="#E5E4D9" font="#000000"/>
-    <color name="toolbox" value="#CFDCED" font="#000000"/>
-    <color name="border" value="#999999"/>
+    <!-- Color group: Collabnet -->
+    <!--
+        <color name="header"    value="#003366"/>
 
-    <color name="menu" value="#E5E4D9" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
-    <color name="dialog" value="#CFDCED"/>
-    <color name="body" value="#ffffff" />
+        <color name="tab-selected" value="#dddddd" link="#555555" vlink="#555555" hlink="#555555"/>
+        <color name="tab-unselected" value="#999999" link="#ffffff" vlink="#ffffff" hlink="#ffffff"/>
+        <color name="subtab-selected" value="#cccccc" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="subtab-unselected" value="#cccccc" link="#555555" vlink="#555555" hlink="#555555"/>
 
-    <color name="table" value="#ccc"/>
-    <color name="table-cell" value="#ffffff"/>
-    <color name="highlight" value="#ffff00"/>
-    <color name="fixme" value="#cc6600"/>
-    <color name="note" value="#006699"/>
-    <color name="warning" value="#990000"/>
-    <color name="code" value="#003366"/>
+        <color name="heading" value="#003366"/>
+        <color name="subheading" value="#888888"/>
 
-    <color name="footer" value="#E5E4D9"/>
--->
+        <color name="navstrip" value="#dddddd" font="#555555"/>
+        <color name="toolbox" value="#dddddd" font="#555555"/>
+        <color name="border" value="#999999"/>
+
+        <color name="menu" value="#ffffff"/>
+        <color name="dialog" value="#eeeeee"/>
+
+        <color name="body"      value="#ffffff"/>
+
+        <color name="table" value="#ccc"/>
+        <color name="table-cell" value="#ffffff"/>
+        <color name="highlight" value="#ffff00"/>
+        <color name="fixme" value="#cc6600"/>
+        <color name="note" value="#006699"/>
+        <color name="warning" value="#990000"/>
+        <color name="code" value="#003366"/>
+
+        <color name="footer" value="#ffffff"/>
+    -->
+    <!-- Color group: Lenya using pelt-->
+    <!--
+
+        <color name="header" value="#ffffff"/>
+
+        <color name="tab-selected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="tab-unselected" value="#F5F4E9" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="subtab-selected" value="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="subtab-unselected" value="#E5E4D9" link="#000000" vlink="#000000" hlink="#000000"/>
+
+        <color name="heading" value="#E5E4D9"/>
+        <color name="subheading" value="#000000"/>
+        <color name="published" value="#000000"/>
+        <color name="navstrip" value="#E5E4D9" font="#000000"/>
+        <color name="toolbox" value="#CFDCED" font="#000000"/>
+        <color name="border" value="#999999"/>
+
+        <color name="menu" value="#E5E4D9" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
+        <color name="dialog" value="#CFDCED"/>
+        <color name="body" value="#ffffff" />
+
+        <color name="table" value="#ccc"/>
+        <color name="table-cell" value="#ffffff"/>
+        <color name="highlight" value="#ffff00"/>
+        <color name="fixme" value="#cc6600"/>
+        <color name="note" value="#006699"/>
+        <color name="warning" value="#990000"/>
+        <color name="code" value="#003366"/>
+
+        <color name="footer" value="#E5E4D9"/>
+    -->
   </colors>
- 
+
   <!-- Settings specific to PDF output. -->
   <pdf>
-    <!-- 
+    <!--
        Supported page sizes are a0, a1, a2, a3, a4, a5, executive,
        folio, legal, ledger, letter, quarto, tabloid (default letter).
        Supported page orientations are portrait, landscape (default
@@ -407,7 +409,7 @@ body #banner td a, .app h3 a, .app h4 a {
     -->
     <page size="a4" orientation="portrait" text-align="left"/>
 
-    <!-- 
+    <!--
        Pattern of the page numbering in the footer - Default is "Page x".
        first occurrence of '1' digit represents the current page number,
        second occurrence of '1' digit represents the total page number,
@@ -450,10 +452,10 @@ body #banner td a, .app h3 a, .app h4 a {
     <disable-copyright-footer>false</disable-copyright-footer>
   </pdf>
 
-  <!-- 
+  <!--
     Credits are typically rendered as a set of small clickable
     images in the page footer.
-    
+
     Use box-location="alt" to move the credits to an alternate location
     (if the skin supports it).
 
@@ -466,24 +468,24 @@ body #banner td a, .app h3 a, .app h4 a {
       at the bottom of the screen.
 
     Comment out the whole <credit>-element if you want no credits in the
-    web pages  
+    web pages
    -->
   <credits>
-      <credit box-location="alt">
-            <name>Ant</name>
-            <url>http://ant.apache.org/</url>
-            <image>images/ant.gif</image>
-            <width>80</width>
-            <height>30</height>
-        </credit>
+    <credit box-location="alt">
+      <name>Ant</name>
+      <url>http://ant.apache.org/</url>
+      <image>images/ant.gif</image>
+      <width>80</width>
+      <height>30</height>
+    </credit>
 
-        <credit box-location="alt">
-            <name>JUnit</name>
-            <url>http://www.junit.org/</url>
-            <image>images/junit.gif</image>
-            <width>80</width>
-            <height>30</height>
-        </credit>
+    <credit box-location="alt">
+      <name>JUnit</name>
+      <url>http://www.junit.org/</url>
+      <image>images/junit.gif</image>
+      <width>80</width>
+      <height>30</height>
+    </credit>
 
     <credit box-location="alt">
       <name>Built with Apache Forrest</name>

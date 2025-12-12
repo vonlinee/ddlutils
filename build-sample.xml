@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 
+<!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
   distributed with this work for additional information
@@ -18,8 +18,8 @@
   under the License.
 -->
 <project default="writeSchemaSqlToFile"
-	     name="DdlUtils"
-	     basedir=".">
+         name="DdlUtils"
+         basedir=".">
   <!-- Allow values set at the commandline or in the environment to override the defaults -->
   <property environment="env"/>
   <!-- Load the jdbc properties as specified by the jdbc.properties.file variable-->
@@ -27,7 +27,7 @@
   <!-- Load the build properties -->
   <property file="build.properties"/>
 
-  <!-- These properties can be overriden on the commandline using -D --> 
+  <!-- These properties can be overriden on the commandline using -D -->
   <property name="schemafiles" value="testmodel.xml"/>
   <property name="schemafile" value="testmodel.xml"/>
   <property name="datafile" value="testdata.xml"/>
@@ -39,12 +39,12 @@
   <property name="delimitedsqlidentifiers" value="false"/>
   <property name="verbosity" value="info"/>
   <property name="useexplicitidentityvalues" value="false"/>
-  
+
   <!-- The classpath used for running the tasks -->
   <path id="project-classpath">
     <fileset dir="${lib.dir}">
-        <include name="**/*.jar"/>
-        <include name="**/*.zip"/>
+      <include name="**/*.jar"/>
+      <include name="**/*.zip"/>
     </fileset>
     <pathelement path="${build.java.dir}"/>
   </path>
@@ -55,7 +55,7 @@
   <taskdef classname="org.apache.ddlutils.task.DatabaseToDdlTask"
            name="databaseToDdl"
            classpathref="project-classpath"/>
-	
+
   <target name="createDb">
     <ddlToDatabase usedelimitedsqlidentifiers="${delimitedsqlidentifiers}"
                    catalogpattern="${catalogpattern}"
@@ -65,13 +65,13 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
-      <createdatabase failonerror="false"/> 
-    </ddlToDatabase> 
+                password="${datasource.password}"/>
+      <createdatabase failonerror="false"/>
+    </ddlToDatabase>
   </target>
 
   <target name="writeSchemaToDb">
-    <ddlToDatabase validatexml="false" 
+    <ddlToDatabase validatexml="false"
                    usedelimitedsqlidentifiers="${delimitedsqlidentifiers}"
                    catalogpattern="${catalogpattern}"
                    schemapattern="${schemapattern}"
@@ -80,15 +80,15 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
       <fileset dir=".">
-        <include name="${schemafiles}"/> 
-      </fileset> 
+        <include name="${schemafiles}"/>
+      </fileset>
 
       <writeschematodatabase alterdatabase="${alterdatabase}"
                              dodrops="true"
-                             failonerror="false"/> 
-    </ddlToDatabase> 
+                             failonerror="false"/>
+    </ddlToDatabase>
   </target>
 
   <target name="readSchemaFromDb">
@@ -100,14 +100,14 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
 
       <writeschematofile outputfile="${schemafile}"/>
-    </databaseToDdl> 
+    </databaseToDdl>
   </target>
 
   <target name="writeSchemaSqlToFile">
-    <ddlToDatabase validatexml="false" 
+    <ddlToDatabase validatexml="false"
                    usedelimitedsqlidentifiers="${delimitedsqlidentifiers}"
                    catalogpattern="${catalogpattern}"
                    schemapattern="${schemapattern}"
@@ -116,20 +116,20 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
       <fileset dir=".">
-        <include name="${schemafiles}"/> 
-      </fileset> 
+        <include name="${schemafiles}"/>
+      </fileset>
 
       <writeschemasqltofile alterdatabase="${alterdatabase}"
                             dodrops="true"
                             failonerror="false"
-                            outputfile="${sqloutputfile}"/> 
-    </ddlToDatabase> 
+                            outputfile="${sqloutputfile}"/>
+    </ddlToDatabase>
   </target>
 
   <target name="writeDataToDb">
-    <ddlToDatabase validatexml="false" 
+    <ddlToDatabase validatexml="false"
                    usedelimitedsqlidentifiers="${delimitedsqlidentifiers}"
                    catalogpattern="${catalogpattern}"
                    schemapattern="${schemapattern}"
@@ -138,15 +138,15 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
       <fileset dir=".">
-        <include name="${schemafiles}"/> 
-      </fileset> 
+        <include name="${schemafiles}"/>
+      </fileset>
 
       <writedatatodatabase datafile="${datafile}"
                            usebatchmode="false"
                            useexplicitidentityvalues="${useexplicitidentityvalues}"/>
-    </ddlToDatabase> 
+    </ddlToDatabase>
   </target>
 
   <target name="readDataFromDb">
@@ -158,9 +158,9 @@
       <database driverclassname="${datasource.driverClassName}"
                 url="${datasource.url}"
                 username="${datasource.username}"
-                password="${datasource.password}"/> 
+                password="${datasource.password}"/>
 
       <writedatatofile outputfile="${datafile}"/>
-    </databaseToDdl> 
+    </databaseToDdl>
   </target>
 </project>

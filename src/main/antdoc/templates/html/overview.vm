@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-##
-## Licensed to the Apache Software Foundation (ASF) under one
-## or more contributor license agreements.  See the NOTICE file
-## distributed with this work for additional information
-## regarding copyright ownership.  The ASF licenses this file
-## to you under the Apache License, Version 2.0 (the
-## "License"); you may not use this file except in compliance
-## with the License.  You may obtain a copy of the License at
-##
-##   http://www.apache.org/licenses/LICENSE-2.0
-##
-## Unless required by applicable law or agreed to in writing,
-## software distributed under the License is distributed on an
-## "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-## KIND, either express or implied.  See the License for the
-## specific language governing permissions and limitations
-## under the License.
-##
-##
-## This is an Velocity template for generating the overview page
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    ##
+    ## Licensed to the Apache Software Foundation (ASF) under one
+    ## or more contributor license agreements.  See the NOTICE file
+    ## distributed with this work for additional information
+    ## regarding copyright ownership.  The ASF licenses this file
+    ## to you under the Apache License, Version 2.0 (the
+    ## "License"); you may not use this file except in compliance
+    ## with the License.  You may obtain a copy of the License at
+    ##
+    ##   http://www.apache.org/licenses/LICENSE-2.0
+    ##
+    ## Unless required by applicable law or agreed to in writing,
+    ## software distributed under the License is distributed on an
+    ## "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    ## KIND, either express or implied.  See the License for the
+    ## specific language governing permissions and limitations
+    ## under the License.
+    ##
+    ##
+    ## This is an Velocity template for generating the overview page
 <html>
 <head>
-<title>$title</title>
-<link href="styles.css" type="text/css" rel="stylesheet">
+    <title>$title</title>
+    <link href="styles.css" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h2>$title - Documentation</h2>
 <p>
-DdlUtils comes with two <a href="http://ant.apache.org/">Ant</a> tasks that allow you to manipulate the
-database structure, insert data into the database, dump the database structure and data contained in it,
-to XML, etc.
+    DdlUtils comes with two <a href="http://ant.apache.org/">Ant</a> tasks that allow you to manipulate the
+    database structure, insert data into the database, dump the database structure and data contained in it,
+    to XML, etc.
 </p>
 <h3>Using the Tasks</h3>
 <p>
-Lets see examples for how to use them:
+    Lets see examples for how to use them:
 </p>
 <pre class="code">
 &lt;path id="runtime-classpath"&gt;
@@ -69,26 +70,26 @@ Lets see examples for how to use them:
   &lt;/ddlToDatabase&gt;
 &lt;/target&gt;</pre>
 <p>
-This snippet essentially uses the <code>DdlToDatabaseTask</code> task to create a PostgreSQL
-database at <code>//localhost/test</code>, establish the database structure (tables, foreign keys
-etc.) defined in the file <code>src/schema/project-schema.xml</code> in this new database,
-and then insert the data contained in <code>src/data/data.xml</code>.
+    This snippet essentially uses the <code>DdlToDatabaseTask</code> task to create a PostgreSQL
+    database at <code>//localhost/test</code>, establish the database structure (tables, foreign keys
+    etc.) defined in the file <code>src/schema/project-schema.xml</code> in this new database,
+    and then insert the data contained in <code>src/data/data.xml</code>.
 </p>
 <p>
-In order for this to work, both DdlUtils and the JDBC driver have to be available
-in the path specified by <code>runtime-classpath</code>. In the above snippet, this path
-contains all JARs and ZIPs in sub-directory <code>lib</code>.
+    In order for this to work, both DdlUtils and the JDBC driver have to be available
+    in the path specified by <code>runtime-classpath</code>. In the above snippet, this path
+    contains all JARs and ZIPs in sub-directory <code>lib</code>.
 </p>
 <fieldset class="note">
-<legend>Note</legend>
-<p>
-Not every database platform supports creation of new databases via JDBC. Please refer to the
-documentation <a href="../database-support.html">here</a> for details of what is supported
-with individual databases.
-</p>
+    <legend>Note</legend>
+    <p>
+        Not every database platform supports creation of new databases via JDBC. Please refer to the
+        documentation <a href="../database-support.html">here</a> for details of what is supported
+        with individual databases.
+    </p>
 </fieldset>
 <p>
-The opposite direction is achieved via the <code>DatabaseToDdlTask</code> task:
+    The opposite direction is achieved via the <code>DatabaseToDdlTask</code> task:
 </p>
 <pre class="code">
 &lt;path id="runtime-classpath"&gt;
@@ -117,9 +118,9 @@ The opposite direction is achieved via the <code>DatabaseToDdlTask</code> task:
 
 &lt;/target&gt;</pre>
 <p>
-Here, the database schema is retrieved using the specified JDBC driver, and then written
-to the file <code>db-schema.xml</code>. Likewise, the data in the database is written
-to the file <code>data.xml</code>.
+    Here, the database schema is retrieved using the specified JDBC driver, and then written
+    to the file <code>db-schema.xml</code>. Likewise, the data in the database is written
+    to the file <code>data.xml</code>.
 </p>
 <h3>Requirements</h3>
 <p>The DdlUtils tasks require Ant version 1.5 or newer.</p>

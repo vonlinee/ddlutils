@@ -27,7 +27,7 @@ This file contains an outline of the site's information content.  It is used to:
 <link href="site:changes"> links to changes.html (or ../changes.html if in
   subdir).
 - Provide aliases for external URLs in the external-refs section.  Eg, <link
-  href="ext:cocoon"> links to http://cocoon.apache.org/ 
+  href="ext:cocoon"> links to http://cocoon.apache.org/
 
 See http://forrest.apache.org/docs/linking.html for more info
 -->
@@ -36,33 +36,42 @@ See http://forrest.apache.org/docs/linking.html for more info
 
   <about label="About">
     <index label="Home" href="index.html" description="Welcome to DdlUtils"/>
-    <changes label="Release Notes" href="ext:ddlutils/jira-changelog" description="Release Notes" />
+    <changes label="Release Notes" href="ext:ddlutils/jira-changelog" description="Release Notes"/>
     <mail-lists label="Mailing lists" href="mail-lists.html" description="Info about DdlUtils' mailing lists"/>
     <jira label="Bug database (JIRA)" href="ext:ddlutils/jira"/>
   </about>
 
   <download label="How to get">
     <binaries label="Binaries &amp; Source" href="download.html" description="Where to get binaries and source"/>
-    <svn-view label="View source repository" href="ext:ddlutils/svn-view" description="View the source repository (SVN)) online"/>
-    <svn-info label="Source repository info" href="svn-info.html" description="Info about getting DdlUtils from the source repository"/>
+    <svn-view label="View source repository" href="ext:ddlutils/svn-view"
+              description="View the source repository (SVN)) online"/>
+    <svn-info label="Source repository info" href="svn-info.html"
+              description="Info about getting DdlUtils from the source repository"/>
   </download>
 
   <documentation label="Documentation">
     <index label="Summary" href="documentation.html"/>
     <database-support label="Support for databases">
-      <general-info label="General info" href="database-support.html" description="General info about database support"/>
+      <general-info label="General info" href="database-support.html"
+                    description="General info about database support"/>
       <axion-support label="Axion" href="databases/axion.html" description="Support for the Axion database"/>
       <db2-support label="DB2" href="databases/db2.html" description="Support for the DB2 database"/>
-      <derby-support label="Derby/Cloudscape" href="databases/derby.html" description="Support for the Derby/Cloudscape databases"/>
-      <firebird-support label="Firebird" href="databases/firebird.html" description="Support for the Firebird database"/>
+      <derby-support label="Derby/Cloudscape" href="databases/derby.html"
+                     description="Support for the Derby/Cloudscape databases"/>
+      <firebird-support label="Firebird" href="databases/firebird.html"
+                        description="Support for the Firebird database"/>
       <hsqldb-support label="HSQLDB" href="databases/hsqldb.html" description="Support for the HSQLDB database"/>
-      <interbase-support label="Interbase" href="databases/interbase.html" description="Support for the Interbase database"/>
-      <maxdb-support label="MaxDB/SapDB" href="databases/maxdb.html" description="Support for the MaxDB/SapDB databases"/>
+      <interbase-support label="Interbase" href="databases/interbase.html"
+                         description="Support for the Interbase database"/>
+      <maxdb-support label="MaxDB/SapDB" href="databases/maxdb.html"
+                     description="Support for the MaxDB/SapDB databases"/>
       <mckoi-support label="McKoi" href="databases/mckoi.html" description="Support for the McKoi database"/>
       <mysql-support label="MySql" href="databases/mysql.html" description="Support for the MySQL database"/>
       <oracle-support label="Oracle" href="databases/oracle.html" description="Support for the Oracle database"/>
-      <postgresql-support label="PostgreSQL" href="databases/postgresql.html" description="Support for the PostgreSQL database"/>
-      <sqlserver-support label="SQL Server" href="databases/sqlserver.html" description="Support for the SQL Server database"/>
+      <postgresql-support label="PostgreSQL" href="databases/postgresql.html"
+                          description="Support for the PostgreSQL database"/>
+      <sqlserver-support label="SQL Server" href="databases/sqlserver.html"
+                         description="Support for the SQL Server database"/>
       <sybase-support label="Sybase" href="databases/sybase.html" description="Support for the Sybase database"/>
     </database-support>
     <schema label="The XML schema format" href="ext:ddlutils/schemadoc/" description="The schema format"/>
@@ -71,16 +80,17 @@ See http://forrest.apache.org/docs/linking.html for more info
     <api-usage label="Using the API" href="api-usage.html" description="How to use DdlUtils in your code"/>
     <javadoc label="Javadoc" href="ext:ddlutils/javadoc" description="The API documentation"/>
   </documentation>
-<!-- 
-  <all label="Whole site">
-    <all_site label="Full HTML" href="wholesite.html"/>
-    <all_sitePDF label="Full PDF" href="wholesite.pdf"/>
-  </all>
--->
+  <!--
+    <all label="Whole site">
+      <all_site label="Full HTML" href="wholesite.html"/>
+      <all_sitePDF label="Full PDF" href="wholesite.pdf"/>
+    </all>
+  -->
   <external-refs>
     <ddlutils>
       <jira href="http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10731"/>
-      <jira-changelog href="http://issues.apache.org/jira/browse/DDLUTILS?report=com.atlassian.jira.plugin.system.project:changelog-panel"/>
+      <jira-changelog
+        href="http://issues.apache.org/jira/browse/DDLUTILS?report=com.atlassian.jira.plugin.system.project:changelog-panel"/>
       <javadoc href="api/">
         <model href="index.html?org/apache/ddlutils/model/package-summary.html"/>
         <converter href="org/apache/ddlutils/io/converters/SqlTypeConverter.html"/>
@@ -118,7 +128,8 @@ See http://forrest.apache.org/docs/linking.html for more info
     </cloudscape>
     <db2 href="http://www-130.ibm.com/developerworks/db2/">
       <manual href="ftp://ftp.software.ibm.com/ps/products/db2/info/vr7/pdf/letter/db2s0e70.pdf"/>
-      <jdbc-mappings href="http://publib.boulder.ibm.com/infocenter/db2luw/v8/topic/com.ibm.db2.udb.doc/ad/rjvjdata.htm"/>
+      <jdbc-mappings
+        href="http://publib.boulder.ibm.com/infocenter/db2luw/v8/topic/com.ibm.db2.udb.doc/ad/rjvjdata.htm"/>
     </db2>
     <derby href="http://db.apache.org/derby/">
       <manual href="manuals/index.html"/>
@@ -145,7 +156,8 @@ See http://forrest.apache.org/docs/linking.html for more info
         <spec href="http://java.sun.com/products/jdbc/download.html"/>
       </jdbc>
       <api href="j2se/1.4.2/docs/api/">
-        <databaseMetaData-getTables href="java/sql/DatabaseMetaData.html#getTables(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.String[])"/>
+        <databaseMetaData-getTables
+          href="java/sql/DatabaseMetaData.html#getTables(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.String[])"/>
       </api>
     </java>
     <maxdb href="http://www.mysql.com/products/maxdb/">

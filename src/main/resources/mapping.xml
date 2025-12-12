@@ -1,5 +1,5 @@
 <?xml version='1.0'?>
-<!-- 
+<!--
 Licensed to the Apache Software Foundation (ASF) under one
 or more contributor license agreements.  See the NOTICE file
 distributed with this work for additional information
@@ -20,9 +20,9 @@ under the License.
 <betwixt-config>
   <class name="org.apache.ddlutils.model.Database">
     <element name="database">
-      <attribute name="name"            property="name"/>
+      <attribute name="name" property="name"/>
       <attribute name="defaultIdMethod" property="idMethod"/>
-      <attribute name="version"         property="version"/>
+      <attribute name="version" property="version"/>
 
       <element property="tables" updater="addTable"/>
     </element>
@@ -30,33 +30,33 @@ under the License.
 
   <class name="org.apache.ddlutils.model.Table">
     <element name="table">
-      <attribute name="name"        property="name"/>
+      <attribute name="name" property="name"/>
       <attribute name="description" property="description"/>
 
-      <element property="columns"     updater="addColumn"/>
+      <element property="columns" updater="addColumn"/>
       <element property="foreignKeys" updater="addForeignKey"/>
-      <element property="indices"     updater="addIndex"/>
+      <element property="indices" updater="addIndex"/>
     </element>
   </class>
 
   <class name="org.apache.ddlutils.model.Column">
     <element name="column">
-      <attribute name="name"          property="name"/>
-      <attribute name="primaryKey"    property="primaryKey"/>
-      <attribute name="required"      property="required"/>
-      <attribute name="type"          property="type"/>
-      <attribute name="size"          property="size"/>
-      <attribute name="default"       property="defaultValue"/>
+      <attribute name="name" property="name"/>
+      <attribute name="primaryKey" property="primaryKey"/>
+      <attribute name="required" property="required"/>
+      <attribute name="type" property="type"/>
+      <attribute name="size" property="size"/>
+      <attribute name="default" property="defaultValue"/>
       <attribute name="autoIncrement" property="autoIncrement"/>
-      <attribute name="description"   property="description"/>
-      <attribute name="javaName"      property="javaName"/>
+      <attribute name="description" property="description"/>
+      <attribute name="javaName" property="javaName"/>
     </element>
   </class>
 
   <class name="org.apache.ddlutils.model.ForeignKey">
     <element name="foreign-key">
       <attribute name="foreignTable" property="foreignTableName"/>
-      <attribute name="name"         property="name"/>
+      <attribute name="name" property="name"/>
 
       <element property="references" updater="addReference"/>
     </element>
@@ -64,7 +64,7 @@ under the License.
 
   <class name="org.apache.ddlutils.model.Reference">
     <element name="reference">
-      <attribute name="local"   property="localColumnName"/>
+      <attribute name="local" property="localColumnName"/>
       <attribute name="foreign" property="foreignColumnName"/>
     </element>
   </class>

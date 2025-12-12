@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
-    <title>DdlUtils' mailing lists</title> 
-  </header> 
-  <body> 
+<document>
+  <header>
+    <title>DdlUtils' mailing lists</title>
+  </header>
+  <body>
     <section>
       <title>Information about the mailing lists for DdlUtils</title>
       <p>
@@ -31,16 +31,32 @@
       </p>
       <table>
         <tr>
-          <td>User mailing list <code>ddlutils-user &lt;at&gt; db.apache.org</code></td>
-          <td><a href="ext:ddlutils/user-list/subscribe">Subscribe</a></td>
-          <td><a href="ext:ddlutils/user-list/unsubscribe">Unsubscribe</a></td>
-          <td><a href="ext:ddlutils/user-list/archive">Archive</a></td>
+          <td>User mailing list
+            <code>ddlutils-user &lt;at&gt; db.apache.org</code>
+          </td>
+          <td>
+            <a href="ext:ddlutils/user-list/subscribe">Subscribe</a>
+          </td>
+          <td>
+            <a href="ext:ddlutils/user-list/unsubscribe">Unsubscribe</a>
+          </td>
+          <td>
+            <a href="ext:ddlutils/user-list/archive">Archive</a>
+          </td>
         </tr>
         <tr>
-          <td>Developer mailing list <code>ddlutils-dev &lt;at&gt; db.apache.org</code></td>
-          <td><a href="ext:ddlutils/dev-list/subscribe">Subscribe</a></td>
-          <td><a href="ext:ddlutils/dev-list/unsubscribe">Unsubscribe</a></td>
-          <td><a href="ext:ddlutils/dev-list/archive">Archive</a></td>
+          <td>Developer mailing list
+            <code>ddlutils-dev &lt;at&gt; db.apache.org</code>
+          </td>
+          <td>
+            <a href="ext:ddlutils/dev-list/subscribe">Subscribe</a>
+          </td>
+          <td>
+            <a href="ext:ddlutils/dev-list/unsubscribe">Unsubscribe</a>
+          </td>
+          <td>
+            <a href="ext:ddlutils/dev-list/archive">Archive</a>
+          </td>
         </tr>
       </table>
     </section>

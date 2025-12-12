@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
+<document>
+  <header>
     <title>Mckoi</title>
-  </header> 
-  <body> 
+  </header>
+  <body>
     <p>
       The open source database <a href="ext:mckoi">McKoi</a> is supported in version <strong>1.0.3</strong>.
       Details on the supported SQL and datatypes can be found in Chapter 2 of the
@@ -33,21 +33,27 @@
       Platform identifier:
     </p>
     <ul>
-      <li><code>McKoi</code></li>
+      <li>
+        <code>McKoi</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC driver:
     </p>
     <ul>
-      <li><code>com.mckoi.JDBCDriver</code></li>
+      <li>
+        <code>com.mckoi.JDBCDriver</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <p>
       Recognized JDBC sub protocol:
     </p>
     <ul>
-      <li><code>jdbc:mckoi</code></li>
+      <li>
+        <code>jdbc:mckoi</code>
+      </li>
     </ul>
     <p>&nbsp;</p>
     <table>
@@ -64,7 +70,8 @@
         <td class="platformPropValue">unlimited</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database supports default values for <code>LONG</code> types</td>
+        <td class="platformPropName">The database supports default values for <code>LONG</code> types
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
@@ -76,7 +83,8 @@
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>
-        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns</td>
+        <td class="platformPropName">The database allows INSERT/UPDATE statements to set values for identity columns
+        </td>
         <td class="platformPropValue">yes</td>
       </tr>
       <tr>

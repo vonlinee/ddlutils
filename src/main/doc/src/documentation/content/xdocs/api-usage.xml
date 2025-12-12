@@ -18,11 +18,11 @@
   under the License.
 -->
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
-<document> 
-  <header> 
-    <title>Using DdlUtils' API</title> 
-  </header> 
-  <body> 
+<document>
+  <header>
+    <title>Using DdlUtils' API</title>
+  </header>
+  <body>
     <section>
       <title>The model</title>
       <p>
@@ -127,7 +127,7 @@ public void changeDatabase(DataSource dataSource,
                            boolean    alterDb)
 {
     Platform platform = PlatformFactory.createNewPlatformInstance(dataSource);
-    
+
     if (alterDb)
     {
         platform.alterTables(targetModel, false);
@@ -139,7 +139,7 @@ public void changeDatabase(DataSource dataSource,
 }]]></source>
       <note>
         Databases like Oracle allow for more than one separate schema in one database. To cater
-        for these databases, there are variants of these methods where you can specify the 
+        for these databases, there are variants of these methods where you can specify the
         catalog and schema.
       </note>
     </section>
@@ -147,7 +147,8 @@ public void changeDatabase(DataSource dataSource,
       <title>Inserting data into a database</title>
       <p>
         DdlUtils provides a simple way to insert data into the database. For this it uses
-        <a href="ext:beanutils/dynabean">DynaBeans</a> which are essentially dynamically
+        <a href="ext:beanutils/dynabean">DynaBeans</a>
+        which are essentially dynamically
         created beans with variable properties. For each table defined by the database
         model, a so-called dyna class is created that represents the table with its
         columns. Of this dyna class, instances - the dyna beans - are then created
@@ -166,14 +167,14 @@ public void insertData(DataSource dataSource,
                        Database   database)
 {
     Platform platform = PlatformFactory.createNewPlatformInstance(dataSource);
-    
+
     // "author" is a table of the model
     DynaBean author = database.createDynaBeanFor("author", false);
-    
+
     // "name" and "whatever" are columns of table "author"
     author.set("name",     "James");
     author.set("whatever", new Integer(1234));
-    
+
     platform.insert(database, author);
 }]]></source>
     </section>
@@ -206,18 +207,18 @@ public void dumpBooks(DataSource dataSource,
 {
     Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
     ArrayList params   = new ArrayList();
-    
+
     params.add("Some title");
-    
+
     Iterator it = platform.query(database,
                                  "select * from book where title = ?",
                                  params,
                                  new Table[] { database.findTable("book") });
-    
+
     while (it.hasNext())
     {
         DynaBean book = (DynaBean)it.next();
-        
+
         System.out.println(book.get("title"));
     }
 }]]></source>
@@ -261,7 +262,7 @@ public void dumpBooks(DataSource dataSource,
     Platform  platform = PlatformFactory.createNewPlatformInstance(dataSource);
     ArrayList params   = new ArrayList();
     String    sql;
-    
+
     params.add("Some title");
 
     if (platform.isDelimitedIdentifierModeOn())
@@ -277,11 +278,11 @@ public void dumpBooks(DataSource dataSource,
                                  sql,
                                  params,
                                  new Table[] { database.findTable("book") });
-    
+
     while (it.hasNext())
     {
         DynaBean book = (DynaBean)it.next();
-        
+
         System.out.println(book.get("title"));
     }
 }]]></source>
