@@ -21,6 +21,7 @@ package org.apache.ddlutils;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;
@@ -37,7 +38,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -239,14 +239,14 @@ public class TestSummaryCreatorTask extends Task {
    * @param element            The element to add the relevant database properties to
    * @param jdbcPropertiesFile The path of the properties file
    */
-  protected void addTargetDatabaseInfo(Element element, String jdbcPropertiesFile) throws IOException, BuildException {
+  protected void addTargetDatabaseInfo(Element element, String jdbcPropertiesFile) throws BuildException {
     if (jdbcPropertiesFile == null) {
       return;
     }
 
     Properties props = readProperties(jdbcPropertiesFile);
     Connection conn = null;
-    DatabaseMetaData metaData = null;
+    DatabaseMetaData metaData;
 
     try {
       String dataSourceClass = props.getProperty(TestAgainstLiveDatabaseBase.DATASOURCE_PROPERTY_PREFIX + "class", BasicDataSource.class.getName());
@@ -316,13 +316,7 @@ public class TestSummaryCreatorTask extends Task {
     } catch (Exception ex) {
       throw new BuildException(ex);
     } finally {
-      if (conn != null) {
-        try {
-          conn.close();
-        } catch (SQLException ex) {
-          // we ignore it
-        }
-      }
+      JdbcUtils.closeSilently(conn);
     }
   }
 
@@ -376,7 +370,7 @@ public class TestSummaryCreatorTask extends Task {
       log("Processing test results", Project.MSG_INFO);
 
       Document doc = processInputFiles();
-      XMLWriter writer = null;
+      XMLWriter writer;
 
       if (_outputFile != null) {
         writer = new XMLWriter(new FileWriter(_outputFile), OutputFormat.createPrettyPrint());

@@ -46,8 +46,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A factory of {@link org.apache.ddlutils.Platform} instances based on a case
- * insensitive database name. Note that this is a convenience class as the platforms
+ * A factory of {@link org.apache.ddlutils.Platform} instances based on a case-insensitive database name.
+ * Note that this is a convenience class as the platforms
  * can also simply be created via their constructors.
  *
  * @version $Revision: 209952 $
@@ -73,7 +73,7 @@ public class PlatformFactory {
   }
 
   /**
-   * Creates a new platform for the given (case insensitive) database name
+   * Creates a new platform for the given (case-insensitive) database name
    * or returns null if the database is not recognized.
    *
    * @param databaseName The name of the database (case is not important)

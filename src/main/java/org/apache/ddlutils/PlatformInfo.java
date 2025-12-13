@@ -360,8 +360,8 @@ public class PlatformInfo {
   }
 
   /**
-   * Determines whether foreign key constraints are embedded in the create
-   * table clause or as seperate alter table statements. Per default,
+   * Determines whether foreign key constraints are embedded in the creation
+   * table clause or as separate alter table statements. Per default,
    * foreign keys are external.
    *
    * @return <code>true</code> if fk constraints are embedded

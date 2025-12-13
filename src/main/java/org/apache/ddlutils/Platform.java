@@ -298,7 +298,7 @@ public interface Platform {
    * retrieve the connection information from it without establishing a connection.<br/>
    * The given connection url is the url that you'd use to connect to the already-created
    * database.<br/>
-   * On some platforms, this method suppurts additional parameters. These are documented in the
+   * On some platforms, this method supports additional parameters. These are documented in the
    * manual section for the individual platforms.
    *
    * @param jdbcDriverClassName The jdbc driver class name

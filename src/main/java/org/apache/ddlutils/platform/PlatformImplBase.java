@@ -64,7 +64,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   private final PlatformInfo _info = new PlatformInfo();
   /**
-   * The sql builder for this platform.
+   * The SQL builder for this platform.
    */
   private SqlBuilder _builder;
   /**
@@ -109,9 +109,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   }
 
   /**
-   * Sets the sql builder for this platform.
+   * Sets the SQL builder for this platform.
    *
-   * @param builder The sql builder
+   * @param builder The SQL builder
    */
   protected void setSqlBuilder(SqlBuilder builder) {
     _builder = builder;
@@ -351,7 +351,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           }
         }
 
-        // lets display any warnings
+        // let's display any warnings
         SQLWarning warning = connection.getWarnings();
 
         while (warning != null) {
@@ -1010,7 +1010,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * Processes the given changes in the specified order. Basically, this method finds the
    * appropriate handler method (one of the <code>processChange</code> methods) defined in
-   * the concrete sql builder for each change, and invokes it.
+   * the concrete SQL builder for each change, and invokes it.
    *
    * @param model   The database model; this object is not going to be changed by this method
    * @param changes The changes
@@ -1381,7 +1381,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public Iterator<DynaBean> query(Database model, String sql, Table[] queryHints) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     Statement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     Iterator<DynaBean> answer = null;
 
     try {
@@ -1408,7 +1408,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     PreparedStatement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     Iterator<DynaBean> answer = null;
 
     try {
@@ -1472,7 +1472,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException {
     Connection connection = borrowConnection();
     Statement statement = null;
-    ResultSet resultSet = null;
+    ResultSet resultSet;
     List<DynaBean> result = new ArrayList<>();
 
     try {
@@ -1735,7 +1735,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       closeStatement(statement);
     }
     if (queryIdentitySql != null) {
-      Statement queryStmt = null;
+      Statement queryStmt;
       ResultSet lastInsertedIds = null;
 
       try {
@@ -2531,14 +2531,14 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   protected Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
     Column column = (table == null ? null : table.findColumn(columnName, isDelimitedIdentifierModeOn()));
-    Object value = null;
+    Object value;
 
     if (column != null) {
       int originalJdbcType = column.getTypeCode();
       int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
       int jdbcType = originalJdbcType;
 
-      // in general we're trying to retrieve the value using the original type
+      // in general, we're trying to retrieve the value using the original type,
       // but sometimes we also need the target type:
       if ((originalJdbcType == Types.BLOB) && (targetJdbcType != Types.BLOB)) {
         // we should not use the Blob interface if the database doesn't map to this type
@@ -2568,9 +2568,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     int originalJdbcType = column.getTypeCode();
     int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
     int jdbcType = originalJdbcType;
-    Object value = null;
+    Object value;
 
-    // in general we're trying to retrieve the value using the original type
+    // in general, we're trying to retrieve the value using the original type,
     // but sometimes we also need the target type:
     if ((originalJdbcType == Types.BLOB) && (targetJdbcType != Types.BLOB)) {
       // we should not use the Blob interface if the database doesn't map to this type
@@ -2656,7 +2656,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           if (length > Integer.MAX_VALUE) {
             value = clob;
           } else if (length == 0) {
-            // the javadoc is not clear about whether Clob.getSubString
+            // the Javadoc is not clear about whether Clob.getSubString
             // can be used with a substring length of 0
             // thus we do the safe thing and handle it ourselves
             value = "";
@@ -2676,7 +2676,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           if (length > Integer.MAX_VALUE) {
             value = blob;
           } else if (length == 0) {
-            // the javadoc is not clear about whether Blob.getBytes
+            // the Javadoc is not clear about whether Blob.getBytes
             // can be used with for 0 bytes to be copied
             // thus we do the safe thing and handle it ourselves
             value = new byte[0];
