@@ -208,7 +208,7 @@ public abstract class TypeMap {
    *
    * @return The type codes ({@link java.sql.Types} constants)
    */
-  public static int[] getSuportedJdbcTypes() {
+  public static int[] getSupportedJdbcTypes() {
     int[] typeCodes = new int[_typeCodeToTypeName.size()];
     int idx = 0;
 
