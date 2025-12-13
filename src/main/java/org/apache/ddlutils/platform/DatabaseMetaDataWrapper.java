@@ -34,7 +34,7 @@ public class DatabaseMetaDataWrapper {
    */
   private final Pattern searchStringPattern = Pattern.compile("[_%]");
   /**
-   * The database meta data.
+   * The database metadata.
    */
   private DatabaseMetaData _metaData;
   /**
@@ -51,18 +51,18 @@ public class DatabaseMetaDataWrapper {
   private String[] _tableTypes;
 
   /**
-   * Returns the database meta data.
+   * Returns the database metadata.
    *
-   * @return The meta data
+   * @return The metadata
    */
   public DatabaseMetaData getMetaData() {
     return _metaData;
   }
 
   /**
-   * Sets the database meta data.
+   * Sets the database metadata.
    *
-   * @param metaData The meta data
+   * @param metaData The metadata
    */
   public void setMetaData(DatabaseMetaData metaData) {
     _metaData = metaData;
@@ -173,8 +173,8 @@ public class DatabaseMetaDataWrapper {
    * schema pattern and table types.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
-   * @return The table meta data
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @return The table metadata
+   * @throws SQLException If an error occurred retrieving the metadata
    * @see DatabaseMetaData#getTables(java.lang.String, java.lang.String, java.lang.String, java.lang.String[])
    */
   public ResultSet getTables(String tableNamePattern) throws SQLException {
@@ -187,8 +187,8 @@ public class DatabaseMetaDataWrapper {
    *
    * @param tableNamePattern  The pattern identifying for which tables to return info
    * @param columnNamePattern The pattern identifying for which columns to return info
-   * @return The column meta data
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @return The column metadata
+   * @throws SQLException If an error occurred retrieving the metadata
    * @see DatabaseMetaData#getColumns(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
    */
   public ResultSet getColumns(String tableNamePattern, String columnNamePattern) throws SQLException {
@@ -200,8 +200,8 @@ public class DatabaseMetaDataWrapper {
    * schema pattern.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
-   * @return The primary key meta data
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @return The primary key metadata
+   * @throws SQLException If an error occurred retrieving the metadata
    * @see DatabaseMetaData#getPrimaryKeys(java.lang.String, java.lang.String, java.lang.String)
    */
   public ResultSet getPrimaryKeys(String tableNamePattern) throws SQLException {
@@ -213,8 +213,8 @@ public class DatabaseMetaDataWrapper {
    * schema pattern.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
-   * @return The foreign key meta data
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @return The foreign key metadata
+   * @throws SQLException If an error occurred retrieving the metadata
    * @see DatabaseMetaData#getImportedKeys(java.lang.String, java.lang.String, java.lang.String)
    */
   public ResultSet getForeignKeys(String tableNamePattern) throws SQLException {
@@ -228,8 +228,8 @@ public class DatabaseMetaDataWrapper {
    * @param tableNamePattern The pattern identifying for which tables to return info
    * @param unique           Whether to return only indices for unique values
    * @param approximate      Whether the result is allowed to reflect approximate or out of data values
-   * @return The index meta data
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @return The index metadata
+   * @throws SQLException If an error occurred retrieving the metadata
    * @see DatabaseMetaData#getIndexInfo(java.lang.String, java.lang.String, java.lang.String, boolean, boolean)
    */
   public ResultSet getIndices(String tableNamePattern, boolean unique, boolean approximate) throws SQLException {
