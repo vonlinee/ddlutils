@@ -31,6 +31,7 @@ import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
+import org.apache.ddlutils.platform.mysql.MySql8Platform;
 import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.oracle.Oracle10Platform;
 import org.apache.ddlutils.platform.oracle.Oracle8Platform;
@@ -182,11 +183,18 @@ public class PlatformFactory {
     addPlatform(_platforms, MaxDbPlatform.DATABASENAME, MaxDbPlatform.class);
     addPlatform(_platforms, MckoiPlatform.DATABASENAME, MckoiPlatform.class);
     addPlatform(_platforms, MSSqlPlatform.DATABASENAME, MSSqlPlatform.class);
+
+    // mysql
     addPlatform(_platforms, MySqlPlatform.DATABASENAME, MySqlPlatform.class);
     addPlatform(_platforms, MySql50Platform.DATABASENAME, MySql50Platform.class);
+    addPlatform(_platforms, MySql8Platform.DATABASENAME, MySql8Platform.class);
+
+    // oracle
     addPlatform(_platforms, Oracle8Platform.DATABASENAME, Oracle8Platform.class);
     addPlatform(_platforms, Oracle9Platform.DATABASENAME, Oracle9Platform.class);
     addPlatform(_platforms, Oracle10Platform.DATABASENAME, Oracle10Platform.class);
+
+    // postgresql
     addPlatform(_platforms, PostgreSqlPlatform.DATABASENAME, PostgreSqlPlatform.class);
     addPlatform(_platforms, SapDbPlatform.DATABASENAME, SapDbPlatform.class);
     addPlatform(_platforms, SybasePlatform.DATABASENAME, SybasePlatform.class);
