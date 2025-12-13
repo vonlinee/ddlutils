@@ -37,4 +37,45 @@ public class StringUtilsExt extends org.apache.commons.lang3.StringUtils {
   public static boolean equals(String strA, String strB, boolean caseSensitive) {
     return caseSensitive ? equals(strA, strB) : equalsIgnoreCase(strA, strB);
   }
+
+  /**
+   * Compresses the whitespaces in the given string to a single space. Also
+   * recognizes special delimiter chars and removes whitespaces before them.
+   *
+   * @param original The original string
+   * @return The resulting string
+   */
+  public static String compressWhitespaces(String original) {
+    if (isEmpty(original)) {
+      return original;
+    }
+    StringBuilder result = new StringBuilder();
+    char oldChar = ' ';
+    char curChar;
+
+    for (int idx = 0; idx < original.length(); idx++) {
+      curChar = original.charAt(idx);
+      if (Character.isWhitespace(curChar)) {
+        if (oldChar != ' ') {
+          oldChar = ' ';
+          result.append(oldChar);
+        }
+      } else {
+        if ((curChar == ',') || (curChar == ';') ||
+            (curChar == '(') || (curChar == ')')) {
+          if ((oldChar == ' ') && (result.length() > 0)) {
+            // we're removing whitespaces before commas/semicolons
+            result.setLength(result.length() - 1);
+          }
+        }
+        if ((oldChar == ',') || (oldChar == ';')) {
+          // we're adding a space after commas/semicolons if necessary
+          result.append(' ');
+        }
+        result.append(curChar);
+        oldChar = curChar;
+      }
+    }
+    return result.toString();
+  }
 }

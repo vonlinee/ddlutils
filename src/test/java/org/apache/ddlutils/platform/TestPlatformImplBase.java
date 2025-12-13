@@ -48,7 +48,7 @@ public class TestPlatformImplBase extends TestBase {
       "  </table>\n" +
       "</database>";
 
-    Database database = parseDatabaseFromString(schema);
+    Database database = DatabaseIO.parseString(schema);
     PlatformImplBase platform = new TestPlatform();
     Table table = database.getTable(0);
     SqlDynaClass clz = SqlDynaClass.newInstance(table);

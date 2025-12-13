@@ -64,8 +64,8 @@ public class TestAlterationAlgorithm extends TestBase {
    * @return The sql
    */
   protected String getAlterModelSQL(String currentSchema, String desiredSchema) throws IOException {
-    Database currentModel = parseDatabaseFromString(currentSchema);
-    Database desiredModel = parseDatabaseFromString(desiredSchema);
+    Database currentModel = DatabaseIO.parseString(currentSchema);
+    Database desiredModel = DatabaseIO.parseString(desiredSchema);
 
     return _platform.getAlterModelSql(currentModel, desiredModel);
   }

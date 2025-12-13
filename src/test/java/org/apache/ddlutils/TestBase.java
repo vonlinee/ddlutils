@@ -22,10 +22,7 @@ package org.apache.ddlutils;
 import junit.framework.TestCase;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.ddlutils.io.DatabaseIO;
-import org.apache.ddlutils.model.Database;
-
-import java.io.StringReader;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 /**
  * Base class for DdlUtils tests.
@@ -48,20 +45,6 @@ public abstract class TestBase extends TestCase {
   }
 
   /**
-   * Parses the database defined in the given XML definition.
-   *
-   * @param dbDef The database XML definition
-   * @return The database model
-   */
-  protected Database parseDatabaseFromString(String dbDef) {
-    DatabaseIO dbIO = new DatabaseIO();
-
-    dbIO.setUseInternalDtd(true);
-    dbIO.setValidateXml(true);
-    return dbIO.read(new StringReader(dbDef));
-  }
-
-  /**
    * Compares the two strings but ignores any whitespace differences. It also
    * recognizes special delimiter chars.
    *
@@ -69,47 +52,8 @@ public abstract class TestBase extends TestCase {
    * @param actual   The actual string
    */
   protected void assertEqualsIgnoringWhitespaces(String expected, String actual) {
-    String processedExpected = compressWhitespaces(expected);
-    String processedActual = compressWhitespaces(actual);
-
+    String processedExpected = StringUtilsExt.compressWhitespaces(expected);
+    String processedActual = StringUtilsExt.compressWhitespaces(actual);
     assertEquals(processedExpected, processedActual);
-  }
-
-  /**
-   * Compresses the whitespaces in the given string to a single space. Also
-   * recognizes special delimiter chars and removes whitespaces before them.
-   *
-   * @param original The original string
-   * @return The resulting string
-   */
-  private String compressWhitespaces(String original) {
-    StringBuilder result = new StringBuilder();
-    char oldChar = ' ';
-    char curChar;
-
-    for (int idx = 0; idx < original.length(); idx++) {
-      curChar = original.charAt(idx);
-      if (Character.isWhitespace(curChar)) {
-        if (oldChar != ' ') {
-          oldChar = ' ';
-          result.append(oldChar);
-        }
-      } else {
-        if ((curChar == ',') || (curChar == ';') ||
-            (curChar == '(') || (curChar == ')')) {
-          if ((oldChar == ' ') && (result.length() > 0)) {
-            // we're removing whitespaces before commas/semicolons
-            result.setLength(result.length() - 1);
-          }
-        }
-        if ((oldChar == ',') || (oldChar == ';')) {
-          // we're adding a space after commas/semicolons if necessary
-          result.append(' ');
-        }
-        result.append(curChar);
-        oldChar = curChar;
-      }
-    }
-    return result.toString();
   }
 }

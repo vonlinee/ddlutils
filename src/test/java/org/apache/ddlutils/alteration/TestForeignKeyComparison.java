@@ -62,8 +62,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(2,
@@ -117,8 +117,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -186,8 +186,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(4,
@@ -266,8 +266,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(4,
@@ -348,8 +348,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(6,
@@ -443,8 +443,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
@@ -498,8 +498,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
@@ -556,8 +556,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(4,
@@ -642,8 +642,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(4,
@@ -723,8 +723,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(7,
@@ -837,8 +837,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -913,8 +913,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -985,8 +985,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertTrue(changes.isEmpty());
@@ -1036,8 +1036,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -1113,8 +1113,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -1188,8 +1188,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(3,
@@ -1261,8 +1261,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(5,
@@ -1330,8 +1330,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
@@ -1386,8 +1386,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
     assertEquals(1,
@@ -1434,8 +1434,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(2,
@@ -1494,8 +1494,8 @@ public class TestForeignKeyComparison extends TestComparisonBase {
       "  </table>\n" +
       "</database>";
 
-    Database model1 = parseDatabaseFromString(MODEL1);
-    Database model2 = parseDatabaseFromString(MODEL2);
+    Database model1 = DatabaseIO.parseString(MODEL1);
+    Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
     assertEquals(2,

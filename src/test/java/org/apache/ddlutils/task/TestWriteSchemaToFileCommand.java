@@ -170,7 +170,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setIncludeTables("ROUNDTRIP1");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -250,7 +250,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setIncludeTableFilter("ROUND.*1");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -347,7 +347,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setIncludeTables("ROUNDTRIP1,ROUNDTRIP3");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -454,7 +454,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setIncludeTableFilter(".*TRIP_[1|3]");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -541,7 +541,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setExcludeTables("ROUNDTRIP2");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -621,7 +621,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setExcludeTableFilter("ROUND.*_2");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -708,7 +708,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setExcludeTables("ROUNDTRIP1,ROUNDTRIP3");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -808,7 +808,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
     } else {
       task.setExcludeTableFilter(".*TRIP_[1|3]");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -911,7 +911,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
       task.setIncludeTables("ROUNDTRIP_1,ROUNDTRIP_3,ROUNDTRIP_4");
       task.setExcludeTables("ROUNDTRIP_1,ROUNDTRIP_3");
     }
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 
   /**
@@ -959,6 +959,6 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
 
     task.setIncludeTableFilter(".*[1|2|3]");
     task.setExcludeTableFilter(".*[1|3]");
-    runTask(task, parseDatabaseFromString(model2Xml));
+    runTask(task, DatabaseIO.parseString(model2Xml));
   }
 }

@@ -113,8 +113,7 @@ public abstract class TestPlatformBase extends TestBase {
    * @return The SQL
    */
   protected String getDatabaseCreationSql(String schema) throws IOException {
-    Database testDb = parseDatabaseFromString(schema);
-
+    Database testDb = DatabaseIO.parseString(schema);
     // we're turning the comment creation off to make testing easier
     getPlatform().setSqlCommentsOn(false);
     getPlatform().getSqlBuilder().createTables(testDb);

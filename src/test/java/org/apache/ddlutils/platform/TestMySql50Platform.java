@@ -171,7 +171,7 @@ public class TestMySql50Platform extends TestPlatformBase {
       "  </table>\n" +
       "</database>";
 
-    Database testDb = parseDatabaseFromString(schema);
+    Database testDb = DatabaseIO.parseString(schema);
     CreationParameters params = new CreationParameters();
 
     params.addParameter(testDb.getTable(0),

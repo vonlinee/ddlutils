@@ -157,6 +157,19 @@ public class DatabaseIO {
   private final Log _log = LogFactory.getLog(DatabaseIO.class);
 
   /**
+   * Parses the database defined in the given XML definition.
+   *
+   * @param dbDef The database XML definition
+   * @return The database model
+   */
+  public static Database parseString(String dbDef) {
+    DatabaseIO dbIO = new DatabaseIO();
+    dbIO.setUseInternalDtd(true);
+    dbIO.setValidateXml(true);
+    return dbIO.read(new StringReader(dbDef));
+  }
+
+  /**
    * Whether to validate the XML.
    */
   private boolean _validateXml = true;

@@ -301,7 +301,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.addDropTables(subTask);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       false);
   }
@@ -389,7 +389,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }
@@ -483,7 +483,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }
@@ -534,7 +534,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }
@@ -659,7 +659,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.addDropTables(subTask);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       false);
   }
@@ -710,7 +710,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }
@@ -764,7 +764,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }
@@ -822,7 +822,7 @@ public class TestDropTablesCommand extends TestTaskBase {
     task.setUseDelimitedSqlIdentifiers(true);
     task.execute();
 
-    assertEquals(adjustModel(parseDatabaseFromString(model2Xml)),
+    assertEquals(adjustModel(DatabaseIO.parseString(model2Xml)),
       readModelFromDatabase("roundtriptest"),
       true);
   }

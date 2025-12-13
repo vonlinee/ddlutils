@@ -1666,7 +1666,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     Properties props = getTestProperties();
     String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
-    Database model = parseDatabaseFromString(modelXml);
+    Database model = DatabaseIO.parseString(modelXml);
 
     getPlatform().setSqlCommentsOn(false);
 

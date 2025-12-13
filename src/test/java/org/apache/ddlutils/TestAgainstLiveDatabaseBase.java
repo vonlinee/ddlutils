@@ -398,7 +398,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @return The parsed database model
    */
   protected Database createDatabase(String schemaXml) throws DatabaseOperationException {
-    Database model = parseDatabaseFromString(schemaXml);
+    Database model = DatabaseIO.parseString(schemaXml);
 
     createDatabase(model);
     return model;
@@ -427,7 +427,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @return The model object
    */
   protected Database alterDatabase(String schemaXml) throws DatabaseOperationException {
-    Database model = parseDatabaseFromString(schemaXml);
+    Database model = DatabaseIO.parseString(schemaXml);
 
     alterDatabase(model);
     return model;

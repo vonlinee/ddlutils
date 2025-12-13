@@ -48,7 +48,7 @@ public class TestSqlBuilder extends TestBase {
 
     TestPlatform platform = new TestPlatform();
     SqlBuilder sqlBuilder = platform.getSqlBuilder();
-    Database database = parseDatabaseFromString(modelXml);
+    Database database = DatabaseIO.parseString(modelXml);
     Map<String, Object> map = new HashMap<>();
 
     map.put("name", "ddlutils");
@@ -77,7 +77,7 @@ public class TestSqlBuilder extends TestBase {
 
     TestPlatform platform = new TestPlatform();
     SqlBuilder sqlBuilder = platform.getSqlBuilder();
-    Database database = parseDatabaseFromString(modelXml);
+    Database database = DatabaseIO.parseString(modelXml);
     Map<String, Object> oldMap = new HashMap<>();
     Map<String, Object> newMap = new HashMap<>();
 
