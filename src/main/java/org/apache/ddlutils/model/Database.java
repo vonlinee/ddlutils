@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
 /**
- * Represents the database model, ie. the tables in the database. It also
+ * Represents the database model, i.e. the tables in the database. It also
  * contains the corresponding dyna classes for creating dyna beans for the
  * objects stored in the tables.
  *
@@ -273,11 +273,11 @@ public class Database implements Serializable {
 
   /**
    * Initializes the model by establishing the relationships between elements in this model encoded
-   * eg. in foreign keys etc. Also checks that the model elements are valid (table and columns have
-   * a name, foreign keys rference existing tables etc.)
+   * e.g. in foreign keys etc. Also checks that the model elements are valid (table and columns have
+   * a name, foreign keys reference existing tables etc.)
    */
   public void initialize() throws ModelException {
-    // we have to setup
+    // we have to set up
     // * target tables in foreign keys
     // * columns in foreign key references
     // * columns in indices
@@ -343,13 +343,13 @@ public class Database implements Serializable {
           Table targetTable = findTable(fk.getForeignTableName(), true);
 
           if (targetTable == null) {
-            throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined table " + fk.getForeignTableName());
+            throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined table " + fk.getForeignTableName());
           } else {
             fk.setForeignTable(targetTable);
           }
         }
         if (fk.getReferenceCount() == 0) {
-          throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " does not have any references");
+          throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " does not have any references");
         }
         for (int refIdx = 0; refIdx < fk.getReferenceCount(); refIdx++) {
           Reference ref = fk.getReference(refIdx);
@@ -358,7 +358,7 @@ public class Database implements Serializable {
             Column localColumn = curTable.findColumn(ref.getLocalColumnName(), true);
 
             if (localColumn == null) {
-              throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getLocalColumnName());
+              throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getLocalColumnName());
             } else {
               ref.setLocalColumn(localColumn);
             }
@@ -367,7 +367,7 @@ public class Database implements Serializable {
             Column foreignColumn = fk.getForeignTable().findColumn(ref.getForeignColumnName(), true);
 
             if (foreignColumn == null) {
-              throw new ModelException("The foreignkey " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getForeignColumnName() + " in table " + fk.getForeignTable().getName());
+              throw new ModelException("The foreign key " + fkDesc + " in table " + curTable.getName() + " references the undefined local column " + ref.getForeignColumnName() + " in table " + fk.getForeignTable().getName());
             } else {
               ref.setForeignColumn(foreignColumn);
             }
@@ -494,7 +494,7 @@ public class Database implements Serializable {
   /**
    * Returns the dyna class cache. If none is available yet, a new one will be created.
    *
-   * @return The dyna class cache
+   * @return The Dyna class cache
    */
   private DynaClassCache getDynaClassCache() {
     if (_dynaClassCache == null) {
@@ -512,7 +512,7 @@ public class Database implements Serializable {
   }
 
   /**
-   * Returns the {@link org.apache.ddlutils.dynabean.SqlDynaClass} for the given table name. If the it does not
+   * Returns the {@link org.apache.ddlutils.dynabean.SqlDynaClass} for the given table name. If it does not
    * exist yet, a new one will be created based on the Table definition.
    *
    * @param tableName The name of the table to create the bean for
@@ -528,7 +528,7 @@ public class Database implements Serializable {
   /**
    * Returns the {@link org.apache.ddlutils.dynabean.SqlDynaClass} for the given dyna bean.
    *
-   * @param bean The dyna bean
+   * @param bean The Dyna bean
    * @return The <code>SqlDynaClass</code> for the given bean
    */
   public SqlDynaClass getDynaClassFor(DynaBean bean) {
@@ -539,7 +539,7 @@ public class Database implements Serializable {
    * Creates a new dyna bean for the given table.
    *
    * @param table The table to create the bean for
-   * @return The new dyna bean
+   * @return The new Dyna bean
    */
   public DynaBean createDynaBeanFor(Table table) throws SqlDynaException {
     return getDynaClassCache().createNewInstance(table);
@@ -551,7 +551,7 @@ public class Database implements Serializable {
    *
    * @param tableName     The name of the table to create the bean for
    * @param caseSensitive Whether case matters for the names
-   * @return The new dyna bean
+   * @return The new Dyna bean
    */
   public DynaBean createDynaBeanFor(String tableName, boolean caseSensitive) throws SqlDynaException {
     return getDynaClassCache().createNewInstance(findTable(tableName, caseSensitive));
