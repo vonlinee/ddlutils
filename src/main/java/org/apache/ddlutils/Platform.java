@@ -1212,4 +1212,12 @@ public interface Platform {
    * @throws DatabaseOperationException If an error occurred during reading the model
    */
   Database readModelFromDatabase(Connection connection, String name, String catalog, String schema, String[] tableTypes) throws DatabaseOperationException;
+
+  default String asIdentifier(String name) {
+    if (isDelimitedIdentifierModeOn()) {
+      return getPlatformInfo().getDelimiterToken() + name + getPlatformInfo().getDelimiterToken();
+    } else {
+      return name;
+    }
+  }
 }

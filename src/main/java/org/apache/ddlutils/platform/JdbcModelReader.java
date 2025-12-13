@@ -434,6 +434,7 @@ public class JdbcModelReader {
 
   /**
    * Reads the database model from the given connection.
+   * <a href="https://stackoverflow.com/questions/7942520/relationship-between-catalog-schema-user-and-database-instance">...</a>
    *
    * @param connection The connection
    * @param name       The name of the resulting database; <code>null</code> when the default name (the catalog)
@@ -447,11 +448,7 @@ public class JdbcModelReader {
     Database db = new Database();
     final String databaseName = getDatabaseName(connection, name, catalog, schema, tableTypes);
     db.setName(databaseName);
-
-    String catalogToUse = null;
-    if (name == null && catalog == null) {
-      catalogToUse = databaseName;
-    }
+    final String catalogToUse = getCatalogToUse(connection, name, catalog, databaseName, schema, tableTypes);
     try {
       _connection = connection;
       db.addTables(readTables(catalogToUse, schema, tableTypes));
@@ -465,6 +462,14 @@ public class JdbcModelReader {
     }
     db.initialize();
     return db;
+  }
+
+  protected String getCatalogToUse(final Connection connection, final String name, final String catalog, final String databaseName, final String schema, final String[] tableTypes) {
+    String catalogToUse = null;
+    if (name == null && catalog == null) {
+      catalogToUse = databaseName;
+    }
+    return catalogToUse;
   }
 
   protected String getDatabaseName(Connection connection, String name, String catalog, String schema, String[] tableTypes) {
@@ -972,30 +977,16 @@ public class JdbcModelReader {
     if ((columnsToCheck == null) || (columnsToCheck.length == 0)) {
       return;
     }
-    final Platform platform = getPlatform();
-    final PlatformInfo platformInfo = getPlatformInfo();
     StringBuilder query = new StringBuilder();
     query.append("SELECT ");
     for (int idx = 0; idx < columnsToCheck.length; idx++) {
       if (idx > 0) {
         query.append(",");
       }
-      if (getPlatform().isDelimitedIdentifierModeOn()) {
-        query.append(platformInfo.getDelimiterToken());
-      }
-      query.append(columnsToCheck[idx].getName());
-      if (platform.isDelimitedIdentifierModeOn()) {
-        query.append(platformInfo.getDelimiterToken());
-      }
+      query.append(getPlatform().asIdentifier(columnsToCheck[idx].getName()));
     }
     query.append(" FROM ");
-    if (platform.isDelimitedIdentifierModeOn()) {
-      query.append(platformInfo.getDelimiterToken());
-    }
-    query.append(table.getName());
-    if (platform.isDelimitedIdentifierModeOn()) {
-      query.append(platformInfo.getDelimiterToken());
-    }
+    query.append(getPlatform().asIdentifier(table.getName()));
     query.append(" WHERE 1 = 0");
 
     Statement stmt = null;

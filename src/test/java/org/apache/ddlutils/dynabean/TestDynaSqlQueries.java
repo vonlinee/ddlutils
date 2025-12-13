@@ -53,11 +53,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
    * @return The identifier, wrapped if delimited identifier mode is turned on, or as-is if not
    */
   private String asIdentifier(String name) {
-    if (getPlatform().isDelimitedIdentifierModeOn()) {
-      return getPlatformInfo().getDelimiterToken() + name + getPlatformInfo().getDelimiterToken();
-    } else {
-      return name;
-    }
+    return getPlatform().asIdentifier(name);
   }
 
   /**
