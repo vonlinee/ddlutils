@@ -21,9 +21,9 @@ package org.apache.ddlutils.model;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.ddlutils.util.CollectionUtils;
 
 import java.io.Serializable;
-import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -707,16 +707,7 @@ public class Table implements Serializable {
    */
   public void sortForeignKeys(final boolean caseSensitive) {
     if (!_foreignKeys.isEmpty()) {
-      final Collator collator = Collator.getInstance();
-      _foreignKeys.sort((obj1, obj2) -> {
-        String fk1Name = obj1.getName();
-        String fk2Name = obj2.getName();
-        if (!caseSensitive) {
-          fk1Name = (fk1Name != null ? fk1Name.toLowerCase() : null);
-          fk2Name = (fk2Name != null ? fk2Name.toLowerCase() : null);
-        }
-        return collator.compare(fk1Name, fk2Name);
-      });
+      CollectionUtils.sortString(_foreignKeys, ForeignKey::getName, caseSensitive);
     }
   }
 

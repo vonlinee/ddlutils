@@ -25,11 +25,11 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.util.CollectionUtils;
 import org.apache.ddlutils.util.ObjectUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.*;
-import java.text.Collator;
 import java.util.*;
 
 /**
@@ -503,9 +503,7 @@ public class JdbcModelReader {
           tables.add(table);
         }
       }
-
-      final Collator collator = Collator.getInstance();
-      tables.sort((obj1, obj2) -> collator.compare(obj1.getName().toUpperCase(), obj2.getName().toUpperCase()));
+      CollectionUtils.sortString(tables, Table::getName);
       return tables;
     } finally {
       closeResultSet(tableData);
