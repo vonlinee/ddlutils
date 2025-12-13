@@ -169,6 +169,18 @@ public class DatabaseIO {
     return dbIO.read(new StringReader(dbDef));
   }
 
+  public static void writeToFile(Database database, String filepath) throws IOException {
+    try (Writer writer = new BufferedWriter(new FileWriter(filepath))) {
+      new DatabaseIO().write(database, writer);
+    }
+  }
+
+  public static void writeToFile(Database database, File file) throws IOException {
+    try (Writer writer = new BufferedWriter(new FileWriter(file))) {
+      new DatabaseIO().write(database, writer);
+    }
+  }
+
   /**
    * Whether to validate the XML.
    */
@@ -234,7 +246,6 @@ public class DatabaseIO {
    */
   public Database read(File file) throws DdlUtilsXMLException {
     FileReader reader = null;
-
     if (_validateXml) {
       try {
         reader = new FileReader(file);
@@ -242,14 +253,7 @@ public class DatabaseIO {
       } catch (IOException ex) {
         throw new DdlUtilsXMLException(ex);
       } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException ex) {
-            _log.warn("Could not close reader for file " + file.getAbsolutePath());
-          }
-          reader = null;
-        }
+        closeFileReader(reader, file);
       }
     }
 
@@ -259,12 +263,16 @@ public class DatabaseIO {
     } catch (XMLStreamException | IOException ex) {
       throw new DdlUtilsXMLException(ex);
     } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (IOException ex) {
-          _log.warn("Could not close reader for file " + file.getAbsolutePath());
-        }
+      closeFileReader(reader, file);
+    }
+  }
+
+  private void closeFileReader(Reader reader, File file) {
+    if (reader != null) {
+      try {
+        reader.close();
+      } catch (IOException ex) {
+        _log.warn("Could not close reader for file " + file.getAbsolutePath());
       }
     }
   }
@@ -282,7 +290,6 @@ public class DatabaseIO {
         StringBuilder tmpXml = new StringBuilder();
         char[] buf = new char[4096];
         int len;
-
         while ((len = reader.read(buf)) >= 0) {
           tmpXml.append(buf, 0, len);
         }
@@ -541,7 +548,6 @@ public class DatabaseIO {
    */
   private Reference readReferenceElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
     Reference reference = new Reference();
-
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
 
@@ -563,10 +569,8 @@ public class DatabaseIO {
    */
   private Index readIndexElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
     Index index = new NonUniqueIndex();
-
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
-
       if (isSameAs(attrQName, QNAME_ATTRIBUTE_NAME)) {
         index.setName(xmlReader.getAttributeValue(idx));
       }
@@ -606,7 +610,6 @@ public class DatabaseIO {
    */
   private void readIndexColumnElements(XMLStreamReader xmlReader, Index index) throws XMLStreamException, IOException {
     int eventType = XMLStreamReader.START_ELEMENT;
-
     while (eventType != XMLStreamReader.END_ELEMENT) {
       eventType = xmlReader.next();
       if (eventType == XMLStreamReader.START_ELEMENT) {
