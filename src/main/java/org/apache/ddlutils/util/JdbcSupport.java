@@ -28,12 +28,11 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * JdbcSupport is an abstract base class for objects which need to
  * perform JDBC operations. It contains a number of useful methods
- * for implementation inheritence..
+ * for implementation inheritance.
  *
  * @version $Revision$
  */
@@ -57,7 +56,7 @@ public abstract class JdbcSupport {
   /**
    * The names of the currently borrowed connections (for debugging).
    */
-  private final HashSet _openConnectionNames = new HashSet();
+  private final HashSet<String> _openConnectionNames = new HashSet<>();
 
   // Properties
   //-------------------------------------------------------------------------
@@ -127,8 +126,7 @@ public abstract class JdbcSupport {
    */
   public Connection borrowConnection() throws DatabaseOperationException {
     try {
-      Connection connection = null;
-
+      Connection connection;
       if (_username == null) {
         connection = getDataSource().getConnection();
       } else {
@@ -136,7 +134,6 @@ public abstract class JdbcSupport {
       }
       if (_log.isDebugEnabled()) {
         String connName = connection.toString();
-
         _log.debug("Borrowed connection " + connName + " from data source");
         _openConnectionNames.add(connName);
       }
@@ -159,17 +156,16 @@ public abstract class JdbcSupport {
 
           _openConnectionNames.remove(connName);
 
-          StringBuffer logMsg = new StringBuffer();
-
+          StringBuilder logMsg = new StringBuilder();
           logMsg.append("Returning connection ");
           logMsg.append(connName);
           logMsg.append(" to data source.\nRemaining connections:");
           if (_openConnectionNames.isEmpty()) {
             logMsg.append(" None");
           } else {
-            for (Iterator it = _openConnectionNames.iterator(); it.hasNext(); ) {
+            for (String openConnectionName : _openConnectionNames) {
               logMsg.append("\n    ");
-              logMsg.append(it.next().toString());
+              logMsg.append(openConnectionName);
             }
           }
           _log.debug(logMsg.toString());
