@@ -20,8 +20,10 @@ package org.apache.ddlutils.platform.mysql;
 
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
+import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -39,6 +41,17 @@ public class MySql8ModelReader extends MySqlModelReader {
   }
 
   @Override
+  protected String getCatalogToUse(Connection connection, String name, String catalog, String databaseName, String schema, String[] tableTypes) {
+    if (name != null) {
+      return name;
+    }
+    if (schema != null) {
+      return schema;
+    }
+    return super.getCatalogToUse(connection, null, catalog, databaseName, null, tableTypes);
+  }
+
+  @Override
   protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
@@ -47,5 +60,24 @@ public class MySql8ModelReader extends MySqlModelReader {
       column.setDefaultValue(null);
     }
     return column;
+  }
+
+  @Override
+  protected String getDetermineAutoIncrementFromResultSetMetaDataSql(Table table, Column[] columnsToCheck) {
+    boolean resetSchema = false;
+    if (table != null) {
+      if (table.getSchema() == null) {
+        // MySQL doesn't return the schema name in the result set, so we have to get it from the table name
+        // In MySQL, schema is the same as the database/catalog
+        table.setSchema(table.getCatalog());
+        resetSchema = true;
+      }
+    }
+    String sql = super.getDetermineAutoIncrementFromResultSetMetaDataSql(table, columnsToCheck);
+    if (resetSchema) {
+      // reset schema to null
+      table.setSchema(null);
+    }
+    return sql;
   }
 }
