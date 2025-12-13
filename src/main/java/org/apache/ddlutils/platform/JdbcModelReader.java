@@ -20,6 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.commons.collections4.map.ListOrderedMap;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
@@ -966,17 +967,7 @@ public class JdbcModelReader {
     return JdbcUtils.readColumnValues(resultSet, columnDescriptors);
   }
 
-  /**
-   * Helper method that determines the auto increment status for the given columns via the
-   * {@link ResultSetMetaData#isAutoIncrement(int)} method.
-   *
-   * @param table          The table
-   * @param columnsToCheck The columns to check (e.g. the primary key columns)
-   */
-  protected void determineAutoIncrementFromResultSetMetaData(Table table, Column[] columnsToCheck) throws SQLException {
-    if ((columnsToCheck == null) || (columnsToCheck.length == 0)) {
-      return;
-    }
+  protected String getDetermineAutoIncrementFromResultSetMetaDataSql(Table table, Column[] columnsToCheck) {
     StringBuilder query = new StringBuilder();
     query.append("SELECT ");
     for (int idx = 0; idx < columnsToCheck.length; idx++) {
@@ -988,11 +979,25 @@ public class JdbcModelReader {
     query.append(" FROM ");
     query.append(getPlatform().asIdentifier(table.getName()));
     query.append(" WHERE 1 = 0");
+    return query.toString();
+  }
 
+  /**
+   * Helper method that determines the auto increment status for the given columns via the
+   * {@link ResultSetMetaData#isAutoIncrement(int)} method.
+   *
+   * @param table          The table
+   * @param columnsToCheck The columns to check (e.g. the primary key columns)
+   */
+  protected void determineAutoIncrementFromResultSetMetaData(Table table, Column[] columnsToCheck) throws SQLException {
+    if (ArrayUtils.isEmpty(columnsToCheck)) {
+      return;
+    }
+    final String querySql = getDetermineAutoIncrementFromResultSetMetaDataSql(table, columnsToCheck);
     Statement stmt = null;
     try {
       stmt = getConnection().createStatement();
-      ResultSet rs = stmt.executeQuery(query.toString());
+      ResultSet rs = stmt.executeQuery(querySql);
       ModelUtils.setAutoIncrement(rs, columnsToCheck);
     } finally {
       closeStatement(stmt);
