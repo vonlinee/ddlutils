@@ -28,7 +28,7 @@ import java.util.ArrayList;
  *
  * @version $Revision: $
  */
-public abstract class IndexImplBase implements Index {
+abstract class IndexImplBase implements Index {
   /**
    * The name of the index.
    */
