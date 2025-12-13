@@ -25,6 +25,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
@@ -44,6 +45,8 @@ import javax.sql.DataSource;
 import java.io.*;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -59,6 +62,9 @@ import java.util.Properties;
  * @version $Revision: 289996 $
  */
 public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
+
+  protected static final Log log = LogFactory.getLog(TestAgainstLiveDatabaseBase.class);
+
   /**
    * The name of the property that specifies properties file with the settings for the connection to test against.
    */
@@ -123,25 +129,21 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     }
 
     TestSuite suite = new TestSuite();
-    Properties props = readTestProperties();
-
+    String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
+    Properties props = readTestProperties(propFile);
     if (props == null) {
       return suite;
     }
-
     DataSource dataSource = initDataSourceFromProperties(props);
     String databaseName = determineDatabaseName(props, dataSource);
-
     try {
       Method[] methods = testedClass.getMethods();
       PlatformInfo info = null;
       TestAgainstLiveDatabaseBase newTest;
-
-      for (int idx = 0; (methods != null) && (idx < methods.length); idx++) {
-        if (methods[idx].getName().startsWith("test") &&
-            ((methods[idx].getParameterTypes() == null) || (methods[idx].getParameterTypes().length == 0))) {
+      for (Method method : methods) {
+        if (method.getName().startsWith("test") && method.getParameterTypes().length == 0) {
           newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-          newTest.setName(methods[idx].getName());
+          newTest.setName(method.getName());
           newTest.setTestProperties(props);
           newTest.setDataSource(dataSource);
           newTest.setDatabaseName(databaseName);
@@ -149,11 +151,15 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
           suite.addTest(newTest);
 
           if (info == null) {
-            info = PlatformFactory.createNewPlatformInstance(newTest.getDatabaseName()).getPlatformInfo();
+            Platform platform = PlatformFactory.createNewPlatformInstance(newTest.getDatabaseName());
+            if (platform == null) {
+              throw new DdlUtilsException("platform is null");
+            }
+            info = platform.getPlatformInfo();
           }
           if (info.isDelimitedIdentifiersSupported()) {
             newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-            newTest.setName(methods[idx].getName());
+            newTest.setName(method.getName());
             newTest.setTestProperties(props);
             newTest.setDataSource(dataSource);
             newTest.setDatabaseName(databaseName);
@@ -165,7 +171,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     } catch (Exception ex) {
       throw new DdlUtilsException(ex);
     }
-
     return suite;
   }
 
@@ -174,24 +179,17 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    *
    * @return The properties or <code>null</code> if no properties have been specified
    */
-  protected static Properties readTestProperties() {
-    String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
-
+  protected static Properties readTestProperties(String propFile) {
     if (propFile == null) {
       return null;
     }
-
     InputStream propStream = null;
-
     try {
       propStream = TestAgainstLiveDatabaseBase.class.getResourceAsStream(propFile);
-
       if (propStream == null) {
-        propStream = new FileInputStream(propFile);
+        propStream = Files.newInputStream(Paths.get(propFile));
       }
-
       Properties props = new Properties();
-
       props.load(propStream);
       return props;
     } catch (Exception ex) {
@@ -201,10 +199,18 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         try {
           propStream.close();
         } catch (IOException ex) {
-          LogFactory.getLog(TestAgainstLiveDatabaseBase.class).error("Could not close the stream used to read the test jdbc properties", ex);
+          log.error("Could not close the stream used to read the test jdbc properties", ex);
         }
       }
     }
+  }
+
+  public static DataSource getLiveDataSource(String propFile) {
+    Properties props = readTestProperties(propFile);
+    if (props == null) {
+      throw new RuntimeException("failed to load properties file");
+    }
+    return initDataSourceFromProperties(props);
   }
 
   /**
