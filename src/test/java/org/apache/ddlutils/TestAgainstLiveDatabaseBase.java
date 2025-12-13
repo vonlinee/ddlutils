@@ -115,7 +115,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   private boolean _useDelimitedIdentifiers;
 
   /**
-   * Creates the test suite for the given test class which must be a sub class of
+   * Creates the test suite for the given test class which must be a subclass of
    * {@link RoundtripTestBase}. If the platform supports it, it will be tested
    * with both delimited and undelimited identifiers.
    *
@@ -483,7 +483,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * Inserts a row into the designated table.
    *
-   * @param tableName    The name of the table (case insensitive)
+   * @param tableName    The name of the table (case-insensitive)
    * @param columnValues The values for the columns in order of definition
    * @return The dyna bean for the row
    */
@@ -503,7 +503,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * Updates the row in the designated table.
    *
-   * @param tableName    The name of the table (case insensitive)
+   * @param tableName    The name of the table (case-insensitive)
    * @param oldBean      The bean representing the current row
    * @param columnValues The values for the columns in order of definition
    * @return The dyna bean for the new row
@@ -524,7 +524,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * Deletes the specified row from the table.
    *
-   * @param tableName      The name of the table (case insensitive)
+   * @param tableName      The name of the table (case-insensitive)
    * @param pkColumnValues The values for the pk columns in order of definition
    */
   protected void deleteRow(String tableName, Object[] pkColumnValues) {
@@ -744,7 +744,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
 
     for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
       Table table = model.getTable(tableIdx);
-
       for (int columnIdx = 0; columnIdx < table.getColumnCount(); columnIdx++) {
         Column column = table.getColumn(columnIdx);
         int origType = column.getTypeCode();
@@ -802,11 +801,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         }
       }
       // we also add the default names to foreign keys that are initially unnamed
-      for (int fkIdx = 0; fkIdx < table.getForeignKeyCount(); fkIdx++) {
-        ForeignKey fk = table.getForeignKey(fkIdx);
-
-        if (fk.getName() == null) {
-          fk.setName(getPlatform().getSqlBuilder().getForeignKeyName(table, fk));
+      for (ForeignKey foreignKey : table.getForeignKeys()) {
+        if (foreignKey.getName() == null) {
+          foreignKey.setName(getPlatform().getSqlBuilder().getForeignKeyName(table, foreignKey));
         }
       }
     }
@@ -935,11 +932,10 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * Compares the specified attribute value of the given bean with the expected object.
    *
    * @param expected The expected object
-   * @param bean     The bean
+   * @param dynaBean     The bean
    * @param attrName The attribute name
    */
-  protected void assertEquals(Object expected, Object bean, String attrName) {
-    DynaBean dynaBean = (DynaBean) bean;
+  protected void assertEquals(Object expected, DynaBean dynaBean, String attrName) {
     Object value = dynaBean.get(attrName);
 
     if ((value instanceof byte[]) && !(expected instanceof byte[]) && (dynaBean instanceof SqlDynaBean)) {
