@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform.db2;
 
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -86,8 +86,8 @@ public class Db2Platform extends PlatformImplBase {
     info.setIdentityColumnAutomaticallyRequired(true);
     info.setPrimaryKeyColumnsHaveToBeRequired(true);
     info.setMultipleIdentityColumnsSupported(false);
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.RESTRICT, CascadeActionEnum.NONE});
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.RESTRICT, CascadeActionEnum.CASCADE, CascadeActionEnum.SET_NULL, CascadeActionEnum.NONE});
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.RESTRICT, CascadeAction.NONE});
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE});
 
     // the BINARY types are also handled by Db2Builder.getSqlType(Column)
     info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.BLOB);

@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.model.*;
@@ -719,9 +719,9 @@ public class DatabaseIO {
    * @param attributeIdx The index of the attribute
    * @return The attribute's value as a boolean
    */
-  private CascadeActionEnum getAttributeValueAsCascadeEnum(XMLStreamReader xmlReader, int attributeIdx) throws DdlUtilsXMLException {
+  private CascadeAction getAttributeValueAsCascadeEnum(XMLStreamReader xmlReader, int attributeIdx) throws DdlUtilsXMLException {
     String value = xmlReader.getAttributeValue(attributeIdx);
-    CascadeActionEnum enumValue = value == null ? null : CascadeActionEnum.getEnum(value.toLowerCase());
+    CascadeAction enumValue = value == null ? null : CascadeAction.getEnum(value.toLowerCase());
 
     if (enumValue == null) {
       throw new DdlUtilsXMLException("Illegal boolean value '" + value + "' for attribute " + xmlReader.getAttributeLocalName(attributeIdx));
@@ -901,10 +901,10 @@ public class DatabaseIO {
     writeElementStart(xmlWriter, QNAME_ELEMENT_FOREIGN_KEY);
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_FOREIGN_TABLE, foreignKey.getForeignTableName());
     writeAttribute(xmlWriter, QNAME_ATTRIBUTE_NAME, foreignKey.getName());
-    if (foreignKey.getOnUpdate() != CascadeActionEnum.NONE) {
+    if (foreignKey.getOnUpdate() != CascadeAction.NONE) {
       writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_UPDATE, foreignKey.getOnUpdate().getName());
     }
-    if (foreignKey.getOnDelete() != CascadeActionEnum.NONE) {
+    if (foreignKey.getOnDelete() != CascadeAction.NONE) {
       writeAttribute(xmlWriter, QNAME_ATTRIBUTE_ON_DELETE, foreignKey.getOnDelete().getName());
     }
     if (foreignKey.getReferenceCount() > 0) {

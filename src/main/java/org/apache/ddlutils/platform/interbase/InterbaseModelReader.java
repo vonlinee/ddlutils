@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform.interbase;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;

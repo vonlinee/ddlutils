@@ -19,7 +19,7 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.CloneHelper;
 import org.apache.ddlutils.model.Database;

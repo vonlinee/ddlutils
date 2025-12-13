@@ -19,8 +19,7 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.DdlUtilsException;
@@ -69,7 +68,7 @@ public abstract class SqlBuilder {
   /**
    * The platform that this builder belongs to.
    */
-  private Platform _platform;
+  private final Platform _platform;
   /**
    * The current Writer used to output the SQL to.
    */
@@ -97,11 +96,11 @@ public abstract class SqlBuilder {
   /**
    * Helper object for dealing with default values.
    */
-  private DefaultValueHelper _defaultValueHelper = new DefaultValueHelper();
+  private final DefaultValueHelper _defaultValueHelper = new DefaultValueHelper();
   /**
    * The character sequences that need escaping.
    */
-  private Map _charSequencesToEscape = new ListOrderedMap();
+  private final Map<String, String> _charSequencesToEscape = new ListOrderedMap<>();
 
   //
   // Configuration
@@ -216,23 +215,21 @@ public abstract class SqlBuilder {
       } else {
         language = localeStr;
       }
-      if (language != null) {
-        Locale locale = null;
+      Locale locale = null;
 
-        if (variant != null) {
-          locale = new Locale(language, country, variant);
-        } else if (country != null) {
-          locale = new Locale(language, country);
-        } else {
-          locale = new Locale(language);
-        }
-
-        _valueLocale = localeStr;
-        setValueDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, locale));
-        setValueTimeFormat(DateFormat.getTimeInstance(DateFormat.SHORT, locale));
-        setValueNumberFormat(NumberFormat.getNumberInstance(locale));
-        return;
+      if (variant != null) {
+        locale = new Locale(language, country, variant);
+      } else if (country != null) {
+        locale = new Locale(language, country);
+      } else {
+        locale = new Locale(language);
       }
+
+      _valueLocale = localeStr;
+      setValueDateFormat(DateFormat.getDateInstance(DateFormat.SHORT, locale));
+      setValueTimeFormat(DateFormat.getTimeInstance(DateFormat.SHORT, locale));
+      setValueNumberFormat(NumberFormat.getNumberInstance(locale));
+      return;
     }
     _valueLocale = null;
     setValueDateFormat(null);
@@ -430,7 +427,7 @@ public abstract class SqlBuilder {
    * @param targetTable The target table
    */
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
-    ListOrderedMap columns = new ListOrderedMap();
+    ListOrderedMap<Column, Column> columns = new ListOrderedMap<>();
 
     for (int idx = 0; idx < sourceTable.getColumnCount(); idx++) {
       Column sourceColumn = sourceTable.getColumn(idx);
@@ -446,15 +443,15 @@ public abstract class SqlBuilder {
     print("INSERT INTO ");
     printIdentifier(getTableName(targetTable));
     print(" (");
-    for (Iterator columnIt = columns.keySet().iterator(); columnIt.hasNext(); ) {
+    for (Iterator<Column> columnIt = columns.keySet().iterator(); columnIt.hasNext(); ) {
       printIdentifier(getColumnName((Column) columnIt.next()));
       if (columnIt.hasNext()) {
         print(",");
       }
     }
     print(") SELECT ");
-    for (Iterator columnsIt = columns.entrySet().iterator(); columnsIt.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) columnsIt.next();
+    for (Iterator<Map.Entry<Column, Column>> columnsIt = columns.entrySet().iterator(); columnsIt.hasNext(); ) {
+      Map.Entry<Column, Column> entry = columnsIt.next();
 
       writeCastExpression((Column) entry.getKey(),
         (Column) entry.getValue());
@@ -775,7 +772,7 @@ public abstract class SqlBuilder {
    * @return The insertion sql
    */
   public String getInsertSql(Table table, Map columnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("INSERT INTO ");
+    StringBuilder buffer = new StringBuilder("INSERT INTO ");
     boolean addComma = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -834,7 +831,7 @@ public abstract class SqlBuilder {
    * @return The update sql
    */
   public String getUpdateSql(Table table, Map columnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("UPDATE ");
+    StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -892,7 +889,7 @@ public abstract class SqlBuilder {
    * @return The update sql
    */
   public String getUpdateSql(Table table, Map oldColumnValues, Map newColumnValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("UPDATE ");
+    StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -952,7 +949,7 @@ public abstract class SqlBuilder {
    * @return The delete sql
    */
   public String getDeleteSql(Table table, Map pkValues, boolean genPlaceholders) {
-    StringBuffer buffer = new StringBuffer("DELETE FROM ");
+    StringBuilder buffer = new StringBuilder("DELETE FROM ");
     boolean addSep = false;
 
     buffer.append(getDelimitedIdentifier(getTableName(table)));
@@ -994,7 +991,7 @@ public abstract class SqlBuilder {
       return "NULL";
     }
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     // TODO: Handle binary types (BINARY, VARBINARY, LONGVARBINARY, BLOB)
     switch (column.getTypeCode()) {
@@ -1004,7 +1001,7 @@ public abstract class SqlBuilder {
           // TODO: Can the format method handle java.sql.Date properly ?
           result.append(getValueDateFormat().format(value));
         } else {
-          result.append(value.toString());
+          result.append(value);
         }
         result.append(getPlatformInfo().getValueQuoteToken());
         break;
@@ -1014,7 +1011,7 @@ public abstract class SqlBuilder {
           // TODO: Can the format method handle java.sql.Date properly ?
           result.append(getValueTimeFormat().format(value));
         } else {
-          result.append(value.toString());
+          result.append(value);
         }
         result.append(getPlatformInfo().getValueQuoteToken());
         break;
@@ -1022,7 +1019,7 @@ public abstract class SqlBuilder {
         result.append(getPlatformInfo().getValueQuoteToken());
         // TODO: SimpleDateFormat does not support nano seconds so we would
         //       need a custom date formatter for timestamps
-        result.append(value.toString());
+        result.append(value);
         result.append(getPlatformInfo().getValueQuoteToken());
         break;
       case Types.REAL:
@@ -1034,7 +1031,7 @@ public abstract class SqlBuilder {
         if (!(value instanceof String) && (getValueNumberFormat() != null)) {
           result.append(getValueNumberFormat().format(value));
         } else {
-          result.append(value.toString());
+          result.append(value);
         }
         result.append(getPlatformInfo().getValueQuoteToken());
         break;
@@ -1087,16 +1084,16 @@ public abstract class SqlBuilder {
     int delta = originalLength - desiredLength;
     int startCut = desiredLength / 2;
 
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
-    result.append(name.substring(0, startCut));
+    result.append(name, 0, startCut);
     if (((startCut == 0) || (name.charAt(startCut - 1) != '_')) &&
         ((startCut + delta + 1 == originalLength) || (name.charAt(startCut + delta + 1) != '_'))) {
       // just to make sure that there isn't already a '_' right before or right
       // after the cutting place (which would look odd with an aditional one)
       result.append("_");
     }
-    result.append(name.substring(startCut + delta + 1, originalLength));
+    result.append(name, startCut + delta + 1, originalLength);
     return result.toString();
   }
 
@@ -1248,7 +1245,7 @@ public abstract class SqlBuilder {
    */
   protected String getSqlType(Column column, String nativeType) {
     int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
-    StringBuffer sqlType = new StringBuffer();
+    StringBuilder sqlType = new StringBuilder();
 
     sqlType.append(sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType);
 
@@ -1271,7 +1268,7 @@ public abstract class SqlBuilder {
    * @return The native type
    */
   protected String getNativeType(Column column) {
-    String nativeType = (String) getPlatformInfo().getNativeType(column.getTypeCode());
+    String nativeType = getPlatformInfo().getNativeType(column.getTypeCode());
 
     return nativeType == null ? column.getType() : nativeType;
   }
@@ -1298,7 +1295,7 @@ public abstract class SqlBuilder {
    * @return The size spec
    */
   protected String getSizeSpec(Column column) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
     Object sizeSpec = column.getSize();
 
     if (sizeSpec == null) {
@@ -1306,7 +1303,7 @@ public abstract class SqlBuilder {
     }
     if (sizeSpec != null) {
       if (getPlatformInfo().hasSize(column.getTypeCode())) {
-        result.append(sizeSpec.toString());
+        result.append(sizeSpec);
       } else if (getPlatformInfo().hasPrecisionAndScale(column.getTypeCode())) {
         result.append(column.getSizeAsInt());
         result.append(",");
@@ -1338,7 +1335,7 @@ public abstract class SqlBuilder {
     for (Iterator it = _charSequencesToEscape.entrySet().iterator(); it.hasNext(); ) {
       Map.Entry entry = (Map.Entry) it.next();
 
-      result = StringUtils.replace(result, (String) entry.getKey(), (String) entry.getValue());
+      result = StringUtilsExt.replace(result, (String) entry.getKey(), (String) entry.getValue());
     }
     return result;
   }
@@ -1469,14 +1466,10 @@ public abstract class SqlBuilder {
 
     // We're comparing the jdbc type that corresponds to the native type for the
     // desired type, in order to avoid repeated altering of a perfectly valid column
-    if ((getPlatformInfo().getTargetJdbcType(desiredColumn.getTypeCode()) != currentColumn.getTypeCode()) ||
-        (desiredColumn.isRequired() != currentColumn.isRequired()) ||
-        (sizeMatters && !StringUtils.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
-        !defaultsEqual) {
-      return true;
-    } else {
-      return false;
-    }
+    return (getPlatformInfo().getTargetJdbcType(desiredColumn.getTypeCode()) != currentColumn.getTypeCode()) ||
+           (desiredColumn.isRequired() != currentColumn.isRequired()) ||
+           (sizeMatters && !StringUtilsExt.equals(desiredColumn.getSize(), currentColumn.getSize())) ||
+           !defaultsEqual;
   }
 
   /**
@@ -1490,10 +1483,10 @@ public abstract class SqlBuilder {
    */
   public String getForeignKeyName(Table table, ForeignKey fk) {
     String fkName = fk.getName();
-    boolean needsName = (fkName == null) || (fkName.length() == 0);
+    boolean needsName = (fkName == null) || (fkName.isEmpty());
 
     if (needsName) {
-      StringBuffer name = new StringBuffer();
+      StringBuilder name = new StringBuilder();
 
       for (int idx = 0; idx < fk.getReferenceCount(); idx++) {
         name.append(fk.getReference(idx).getLocalColumnName());
@@ -1522,7 +1515,7 @@ public abstract class SqlBuilder {
    * @return The constraint name
    */
   public String getConstraintName(String prefix, Table table, String secondPart, String suffix) {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     if (prefix != null) {
       result.append(prefix);
@@ -1726,7 +1719,7 @@ public abstract class SqlBuilder {
    * @param foreignKey The foreignkey
    */
   protected void writeForeignKeyOnDeleteAction(Table table, ForeignKey foreignKey) throws IOException {
-    CascadeActionEnum action = foreignKey.getOnDelete();
+    CascadeAction action = foreignKey.getOnDelete();
 
     if (!getPlatformInfo().isActionSupportedForOnDelete(action)) {
       if (getPlatform().isDefaultOnDeleteActionUsedIfUnsupported()) {
@@ -1739,20 +1732,25 @@ public abstract class SqlBuilder {
     }
     if (action != getPlatformInfo().getDefaultOnDeleteAction()) {
       print(" ON DELETE ");
-      switch (action.getValue()) {
-        case CascadeActionEnum.VALUE_CASCADE:
+      CascadeAction cascadeAction = CascadeAction.getEnum(action.getValue());
+      if (cascadeAction == null) {
+        throw new ModelException("Unsupported cascade value '" + action +
+                                 "' for onDelete in foreign key in table " + table.getName());
+      }
+      switch (action) {
+        case CASCADE:
           print("CASCADE");
           break;
-        case CascadeActionEnum.VALUE_SET_NULL:
+        case SET_NULL:
           print("SET NULL");
           break;
-        case CascadeActionEnum.VALUE_SET_DEFAULT:
+        case SET_DEFAULT:
           print("SET DEFAULT");
           break;
-        case CascadeActionEnum.VALUE_RESTRICT:
+        case RESTRICT:
           print("RESTRICT");
           break;
-        case CascadeActionEnum.VALUE_NONE:
+        case NONE:
           print("NO ACTION");
           break;
         default:
@@ -1769,7 +1767,7 @@ public abstract class SqlBuilder {
    * @param foreignKey The foreignkey
    */
   protected void writeForeignKeyOnUpdateAction(Table table, ForeignKey foreignKey) throws IOException {
-    CascadeActionEnum action = foreignKey.getOnUpdate();
+    CascadeAction action = foreignKey.getOnUpdate();
 
     if (!getPlatformInfo().isActionSupportedForOnUpdate(action)) {
       if (getPlatform().isDefaultOnUpdateActionUsedIfUnsupported()) {
@@ -1782,20 +1780,26 @@ public abstract class SqlBuilder {
     }
     if (action != getPlatformInfo().getDefaultOnUpdateAction()) {
       print(" ON UPDATE ");
-      switch (action.getValue()) {
-        case CascadeActionEnum.VALUE_CASCADE:
+
+      CascadeAction cascadeAction = CascadeAction.getEnum(action.getValue());
+      if (cascadeAction == null) {
+        throw new ModelException("Unsupported cascade value '" + action +
+                                 "' for onUpdate in foreign key in table " + table.getName());
+      }
+      switch (action) {
+        case CASCADE:
           print("CASCADE");
           break;
-        case CascadeActionEnum.VALUE_SET_NULL:
+        case SET_NULL:
           print("SET NULL");
           break;
-        case CascadeActionEnum.VALUE_SET_DEFAULT:
+        case SET_DEFAULT:
           print("SET DEFAULT");
           break;
-        case CascadeActionEnum.VALUE_RESTRICT:
+        case RESTRICT:
           print("RESTRICT");
           break;
-        case CascadeActionEnum.VALUE_NONE:
+        case NONE:
           print("NO ACTION");
           break;
         default:

@@ -21,10 +21,10 @@ package org.apache.ddlutils.io;
 
 import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 
@@ -444,7 +444,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a restrict onDelete action.
    */
   public void testForeignKeyWithOnDeleteRestrict() {
-    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.RESTRICT)) {
+    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeAction.RESTRICT)) {
       return;
     }
 
@@ -488,7 +488,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a cascade onDelete action.
    */
   public void testForeignKeyWithOnDeleteCascade() {
-    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.CASCADE)) {
+    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeAction.CASCADE)) {
       return;
     }
 
@@ -534,7 +534,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a set-null onDelete action.
    */
   public void testForeignKeyWithOnDeleteSetNull() {
-    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.SET_NULL)) {
+    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeAction.SET_NULL)) {
       return;
     }
 
@@ -582,7 +582,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a set-default onDelete action.
    */
   public void testForeignKeyWithOnDeleteSetDefault() {
-    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeActionEnum.SET_DEFAULT)) {
+    if (!getPlatformInfo().isActionSupportedForOnDelete(CascadeAction.SET_DEFAULT)) {
       return;
     }
 
@@ -633,7 +633,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a restrict onUpdate action.
    */
   public void testForeignKeyWithOnUpdateRestrict() {
-    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.RESTRICT)) {
+    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeAction.RESTRICT)) {
       return;
     }
 
@@ -677,7 +677,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a cascade onUpdate action.
    */
   public void testForeignKeyWithOnUpdateCascade() {
-    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.CASCADE)) {
+    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeAction.CASCADE)) {
       return;
     }
 
@@ -726,7 +726,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a set-null onUpdate action.
    */
   public void testForeignKeyWithOnUpdateSetNull() {
-    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.SET_NULL)) {
+    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeAction.SET_NULL)) {
       return;
     }
 
@@ -775,7 +775,7 @@ public class TestConstraints extends TestAgainstLiveDatabaseBase {
    * Tests two tables with a foreign key with a det-default onUpdate action.
    */
   public void testForeignKeyWithOnUpdateSetDefault() {
-    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeActionEnum.SET_DEFAULT)) {
+    if (!getPlatformInfo().isActionSupportedForOnUpdate(CascadeAction.SET_DEFAULT)) {
       return;
     }
 

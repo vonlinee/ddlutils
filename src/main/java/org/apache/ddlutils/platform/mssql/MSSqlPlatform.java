@@ -19,11 +19,11 @@ package org.apache.ddlutils.platform.mssql;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -78,10 +78,10 @@ public class MSSqlPlatform extends PlatformImplBase {
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     info.setIdentityColumnAutomaticallyRequired(true);
     info.setMultipleIdentityColumnsSupported(false);
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.NONE});
-    info.addEquivalentOnUpdateActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.NONE});
-    info.addEquivalentOnDeleteActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.NONE});
+    info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.NONE});
+    info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     info.addNativeTypeMapping(Types.ARRAY, "IMAGE", Types.LONGVARBINARY);
     // BIGINT will be mapped back to BIGINT by the model reader

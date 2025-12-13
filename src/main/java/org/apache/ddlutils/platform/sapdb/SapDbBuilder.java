@@ -79,7 +79,7 @@ public class SapDbBuilder extends SqlBuilder {
    * {@inheritDoc}
    */
   protected void writeForeignKeyOnDeleteAction(Table table, ForeignKey foreignKey) throws IOException {
-    if (foreignKey.getOnDelete() != CascadeActionEnum.NONE) {
+    if (foreignKey.getOnDelete() != CascadeAction.NONE) {
       super.writeForeignKeyOnDeleteAction(table, foreignKey);
     }
   }

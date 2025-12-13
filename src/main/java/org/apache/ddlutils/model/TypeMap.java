@@ -167,36 +167,36 @@ public abstract class TypeMap {
   private static HashMap _typesPerCategory = new HashMap();
 
   static {
-    registerJdbcType(Types.ARRAY, ARRAY, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.BIGINT, BIGINT, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.BINARY, BINARY, JdbcTypeCategoryEnum.BINARY);
-    registerJdbcType(Types.BIT, BIT, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.BLOB, BLOB, JdbcTypeCategoryEnum.BINARY);
-    registerJdbcType(Types.BOOLEAN, BOOLEAN, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.CHAR, CHAR, JdbcTypeCategoryEnum.TEXTUAL);
-    registerJdbcType(Types.CLOB, CLOB, JdbcTypeCategoryEnum.TEXTUAL);
-    registerJdbcType(Types.DATALINK, DATALINK, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.DATE, DATE, JdbcTypeCategoryEnum.DATETIME);
-    registerJdbcType(Types.DECIMAL, DECIMAL, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.DISTINCT, DISTINCT, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.DOUBLE, DOUBLE, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.FLOAT, FLOAT, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.INTEGER, INTEGER, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.JAVA_OBJECT, JAVA_OBJECT, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.LONGVARBINARY, LONGVARBINARY, JdbcTypeCategoryEnum.BINARY);
-    registerJdbcType(Types.LONGVARCHAR, LONGVARCHAR, JdbcTypeCategoryEnum.TEXTUAL);
-    registerJdbcType(Types.NULL, NULL, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.NUMERIC, NUMERIC, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.OTHER, OTHER, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.REAL, REAL, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.REF, REF, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.SMALLINT, SMALLINT, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.STRUCT, STRUCT, JdbcTypeCategoryEnum.SPECIAL);
-    registerJdbcType(Types.TIME, TIME, JdbcTypeCategoryEnum.DATETIME);
-    registerJdbcType(Types.TIMESTAMP, TIMESTAMP, JdbcTypeCategoryEnum.DATETIME);
-    registerJdbcType(Types.TINYINT, TINYINT, JdbcTypeCategoryEnum.NUMERIC);
-    registerJdbcType(Types.VARBINARY, VARBINARY, JdbcTypeCategoryEnum.BINARY);
-    registerJdbcType(Types.VARCHAR, VARCHAR, JdbcTypeCategoryEnum.TEXTUAL);
+    registerJdbcType(Types.ARRAY, ARRAY, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.BIGINT, BIGINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.BINARY, BINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(Types.BIT, BIT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.BLOB, BLOB, JdbcTypeCategory.BINARY);
+    registerJdbcType(Types.BOOLEAN, BOOLEAN, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.CHAR, CHAR, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(Types.CLOB, CLOB, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(Types.DATALINK, DATALINK, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.DATE, DATE, JdbcTypeCategory.DATETIME);
+    registerJdbcType(Types.DECIMAL, DECIMAL, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.DISTINCT, DISTINCT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.DOUBLE, DOUBLE, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.FLOAT, FLOAT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.INTEGER, INTEGER, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.JAVA_OBJECT, JAVA_OBJECT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.LONGVARBINARY, LONGVARBINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(Types.LONGVARCHAR, LONGVARCHAR, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(Types.NULL, NULL, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.NUMERIC, NUMERIC, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.OTHER, OTHER, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.REAL, REAL, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.REF, REF, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.SMALLINT, SMALLINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.STRUCT, STRUCT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(Types.TIME, TIME, JdbcTypeCategory.DATETIME);
+    registerJdbcType(Types.TIMESTAMP, TIMESTAMP, JdbcTypeCategory.DATETIME);
+    registerJdbcType(Types.TINYINT, TINYINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(Types.VARBINARY, VARBINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(Types.VARCHAR, VARCHAR, JdbcTypeCategory.TEXTUAL);
 
     // Torque/Turbine extensions which we only support when reading from an XML schema
     _typeNameToTypeCode.put("BOOLEANINT", new Integer(Types.TINYINT));
@@ -248,7 +248,7 @@ public abstract class TypeMap {
    * @param typeName The type name (case is ignored)
    * @param category The type category
    */
-  protected static void registerJdbcType(int typeCode, String typeName, JdbcTypeCategoryEnum category) {
+  protected static void registerJdbcType(int typeCode, String typeName, JdbcTypeCategory category) {
     Integer typeId = new Integer(typeCode);
 
     _typeNameToTypeCode.put(typeName.toUpperCase(), typeId);
@@ -271,7 +271,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a numeric one
    */
   public static boolean isNumericType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategoryEnum.NUMERIC);
+    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.NUMERIC);
 
     return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
   }
@@ -284,7 +284,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a numeric one
    */
   public static boolean isDateTimeType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategoryEnum.DATETIME);
+    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.DATETIME);
 
     return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
   }
@@ -297,7 +297,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a text one
    */
   public static boolean isTextType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategoryEnum.TEXTUAL);
+    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.TEXTUAL);
 
     return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
   }
@@ -310,7 +310,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a binary one
    */
   public static boolean isBinaryType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategoryEnum.BINARY);
+    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.BINARY);
 
     return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
   }
@@ -323,7 +323,7 @@ public abstract class TypeMap {
    * @return <code>true</code> if the type is a special one
    */
   public static boolean isSpecialType(int jdbcTypeCode) {
-    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategoryEnum.SPECIAL);
+    Set typesInCategory = (Set) _typesPerCategory.get(JdbcTypeCategory.SPECIAL);
 
     return typesInCategory == null ? false : typesInCategory.contains(new Integer(jdbcTypeCode));
   }

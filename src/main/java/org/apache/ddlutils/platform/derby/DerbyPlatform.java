@@ -24,7 +24,7 @@ import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.AddColumnChange;
 import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.alteration.TableDefinitionChangesPredicate;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
@@ -69,12 +69,12 @@ public class DerbyPlatform extends CloudscapePlatform {
 
     info.addNativeTypeMapping(Types.DOUBLE, "DOUBLE");
     info.addNativeTypeMapping(Types.FLOAT, "DOUBLE", Types.DOUBLE);
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT});
-    info.setDefaultOnUpdateAction(CascadeActionEnum.NONE);
-    info.addEquivalentOnUpdateActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT,
-      CascadeActionEnum.CASCADE, CascadeActionEnum.SET_NULL});
-    info.setDefaultOnDeleteAction(CascadeActionEnum.NONE);
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT});
+    info.setDefaultOnUpdateAction(CascadeAction.NONE);
+    info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
+      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setDefaultOnDeleteAction(CascadeAction.NONE);
 
     setSqlBuilder(new DerbyBuilder(this));
     setModelReader(new DerbyModelReader(this));

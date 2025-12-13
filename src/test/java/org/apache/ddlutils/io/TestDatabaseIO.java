@@ -20,13 +20,12 @@ package org.apache.ddlutils.io;
  */
 
 import junit.framework.TestCase;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.model.*;
 
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.sql.Types;
-import java.util.Iterator;
 
 /**
  * Tests the database XML reading/writing via the {@link org.apache.ddlutils.io.DatabaseIO} class.
@@ -148,8 +147,8 @@ public class TestDatabaseIO extends TestCase {
    * @param foreignKey      The foreign key
    */
   private void assertEquals(String name,
-                            CascadeActionEnum onUpdate,
-                            CascadeActionEnum onDelete,
+                            CascadeAction onUpdate,
+                            CascadeAction onDelete,
                             Table referencedTable,
                             int numReferences,
                             ForeignKey foreignKey) {
@@ -798,7 +797,7 @@ public class TestDatabaseIO extends TestCase {
 
     ForeignKey fk = anotherTable.getForeignKey(0);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, someTable, 1, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, someTable, 1, fk);
     assertEquals(fkColumn, pkColumn, fk.getFirstReference());
 
     assertEquals(
@@ -874,7 +873,7 @@ public class TestDatabaseIO extends TestCase {
 
     ForeignKey fk = anotherTable.getForeignKey(0);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, someTable, 2, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, someTable, 2, fk);
     assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
     assertEquals(anotherTable.getColumn(1), someTable.getColumn(2), fk.getReference(1));
 
@@ -976,7 +975,7 @@ public class TestDatabaseIO extends TestCase {
 
     ForeignKey fk = anotherTable.getForeignKey(0);
 
-    assertEquals("The foreignkey", CascadeActionEnum.NONE, CascadeActionEnum.NONE, someTable, 1, fk);
+    assertEquals("The foreignkey", CascadeAction.NONE, CascadeAction.NONE, someTable, 1, fk);
     assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
 
     assertEquals(
@@ -999,7 +998,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests a database model containing foreignkeys with onUpdate values.
    */
   public void testForeignkeysWithOnUpdate() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+    StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
     modelXml.append("  <table name='SomeTable'\n");
@@ -1017,9 +1016,8 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("            type='VARCHAR'\n");
     modelXml.append("            size='16'\n");
     modelXml.append("            description='The foreign key'/>\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); ) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
 
+    for (CascadeAction enumValue : CascadeAction.values()) {
       modelXml.append("    <foreign-key name='foreignkey ");
       modelXml.append(enumValue.getName());
       modelXml.append("' foreignTable='SomeTable' onUpdate='");
@@ -1028,6 +1026,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("       <reference local='Some_ID' foreign='ID'/>\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>");
 
@@ -1045,18 +1044,17 @@ public class TestDatabaseIO extends TestCase {
 
     Table anotherTable = model.getTable(1);
 
-    assertEquals("AnotherTable", "And another table", 1, 0, 0, CascadeActionEnum.getEnumList().size(), 0,
+    assertEquals("AnotherTable", "And another table", 1, 0, 0, CascadeAction.values().length, 0,
       anotherTable);
     assertEquals("Some_ID", Types.VARCHAR, 16, 0, null, "The foreign key", null, false, false, false,
       anotherTable.getColumn(0));
 
-    int idx = 0;
-
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+    CascadeAction[] actionEnums = CascadeAction.values();
+    for (int idx = 0; idx < actionEnums.length; idx++) {
+      CascadeAction enumValue = actionEnums[idx];
       ForeignKey fk = anotherTable.getForeignKey(idx);
 
-      assertEquals("foreignkey " + enumValue.getName(), enumValue, CascadeActionEnum.NONE, someTable, 1, fk);
+      assertEquals("foreignkey " + enumValue.getName(), enumValue, CascadeAction.NONE, someTable, 1, fk);
       assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
     }
 
@@ -1068,12 +1066,11 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("  </table>\n");
     modelXml.append("  <table name=\"AnotherTable\" description=\"And another table\">\n");
     modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
 
+    for (CascadeAction enumValue : CascadeAction.values()) {
       modelXml.append("    <foreign-key foreignTable=\"SomeTable\" name=\"foreignkey ");
       modelXml.append(enumValue.getName());
-      if (enumValue != CascadeActionEnum.NONE) {
+      if (enumValue != CascadeAction.NONE) {
         modelXml.append("\" onUpdate=\"");
         modelXml.append(enumValue.getName());
       }
@@ -1081,6 +1078,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\" />\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>\n");
 
@@ -1091,7 +1089,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests a database model containing foreignkeys with onDelete values.
    */
   public void testForeignkeysWithOnDelete() throws Exception {
-    StringBuffer modelXml = new StringBuffer();
+    StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
     modelXml.append("  <table name='SomeTable'\n");
@@ -1109,9 +1107,8 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("            type='VARCHAR'\n");
     modelXml.append("            size='16'\n");
     modelXml.append("            description='The foreign key'/>\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); ) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
 
+    for (CascadeAction enumValue : CascadeAction.values()) {
       modelXml.append("    <foreign-key name='foreignkey ");
       modelXml.append(enumValue.getName());
       modelXml.append("' foreignTable='SomeTable' onDelete='");
@@ -1120,6 +1117,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("       <reference local='Some_ID' foreign='ID'/>\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>");
 
@@ -1137,20 +1135,20 @@ public class TestDatabaseIO extends TestCase {
 
     Table anotherTable = model.getTable(1);
 
-    assertEquals("AnotherTable", "And another table", 1, 0, 0, CascadeActionEnum.getEnumList().size(), 0,
+    assertEquals("AnotherTable", "And another table", 1, 0, 0, CascadeAction.values().length, 0,
       anotherTable);
     assertEquals("Some_ID", Types.VARCHAR, 16, 0, null, "The foreign key", null, false, false, false,
       anotherTable.getColumn(0));
 
-    int idx = 0;
-
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
+    CascadeAction[] actionEnums = CascadeAction.values();
+    for (int idx = 0; idx < actionEnums.length; idx++) {
+      CascadeAction enumValue = actionEnums[idx];
       ForeignKey fk = anotherTable.getForeignKey(idx);
 
-      assertEquals("foreignkey " + enumValue.getName(), CascadeActionEnum.NONE, enumValue, someTable, 1, fk);
+      assertEquals("foreignkey " + enumValue.getName(), CascadeAction.NONE, enumValue, someTable, 1, fk);
       assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
     }
+
 
     modelXml.setLength(0);
     modelXml.append("<?xml version='1.0' encoding='UTF-8'?>\n");
@@ -1160,12 +1158,11 @@ public class TestDatabaseIO extends TestCase {
     modelXml.append("  </table>\n");
     modelXml.append("  <table name=\"AnotherTable\" description=\"And another table\">\n");
     modelXml.append("    <column name=\"Some_ID\" primaryKey=\"false\" required=\"false\" type=\"VARCHAR\" size=\"16\" autoIncrement=\"false\" description=\"The foreign key\" />\n");
-    for (Iterator it = CascadeActionEnum.iterator(); it.hasNext(); idx++) {
-      CascadeActionEnum enumValue = (CascadeActionEnum) it.next();
 
+    for (CascadeAction enumValue : CascadeAction.values()) {
       modelXml.append("    <foreign-key foreignTable=\"SomeTable\" name=\"foreignkey ");
       modelXml.append(enumValue.getName());
-      if (enumValue != CascadeActionEnum.NONE) {
+      if (enumValue != CascadeAction.NONE) {
         modelXml.append("\" onDelete=\"");
         modelXml.append(enumValue.getName());
       }
@@ -1173,6 +1170,7 @@ public class TestDatabaseIO extends TestCase {
       modelXml.append("      <reference local=\"Some_ID\" foreign=\"ID\" />\n");
       modelXml.append("    </foreign-key>\n");
     }
+
     modelXml.append("  </table>\n");
     modelXml.append("</database>\n");
 
@@ -1535,12 +1533,12 @@ public class TestDatabaseIO extends TestCase {
 
     ForeignKey fk = anotherTable.getForeignKey(0);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, someTable, 1, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, someTable, 1, fk);
     assertEquals(anotherTable.getColumn(0), someTable.getColumn(0), fk.getReference(0));
 
     fk = anotherTable.getForeignKey(1);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, someTable, 1, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, someTable, 1, fk);
     assertEquals(anotherTable.getColumn(1), someTable.getColumn(2), fk.getReference(0));
 
     assertEquals(
@@ -2247,7 +2245,7 @@ public class TestDatabaseIO extends TestCase {
 
     ForeignKey fk = table.getForeignKey(0);
 
-    assertEquals("parent", CascadeActionEnum.NONE, CascadeActionEnum.NONE, table, 1, fk);
+    assertEquals("parent", CascadeAction.NONE, CascadeAction.NONE, table, 1, fk);
     assertEquals(table.getColumn(1), table.getColumn(0), fk.getFirstReference());
 
     Index index = table.getIndex(0);
@@ -2270,12 +2268,12 @@ public class TestDatabaseIO extends TestCase {
 
     fk = table.getForeignKey(0);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, model.getTable(0), 1, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, model.getTable(0), 1, fk);
     assertEquals(table.getColumn(1), model.getTable(0).getColumn(0), fk.getFirstReference());
 
     fk = table.getForeignKey(1);
 
-    assertEquals(null, CascadeActionEnum.NONE, CascadeActionEnum.NONE, model.getTable(2), 1, fk);
+    assertEquals(null, CascadeAction.NONE, CascadeAction.NONE, model.getTable(2), 1, fk);
     assertEquals(table.getColumn(2), model.getTable(2).getColumn(0), fk.getFirstReference());
 
     index = table.getIndex(0);

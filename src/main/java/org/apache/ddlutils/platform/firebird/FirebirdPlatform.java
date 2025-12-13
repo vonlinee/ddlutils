@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform.firebird;
 
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -66,8 +66,8 @@ public class FirebirdPlatform extends PlatformImplBase {
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     info.setCommentPrefix("/*");
     info.setCommentSuffix("*/");
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.SET_DEFAULT, CascadeActionEnum.SET_NULL, CascadeActionEnum.NONE});
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.SET_DEFAULT, CascadeActionEnum.SET_NULL, CascadeActionEnum.NONE});
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
 
     info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.LONGVARBINARY);
     info.addNativeTypeMapping(Types.BINARY, "BLOB", Types.LONGVARBINARY);

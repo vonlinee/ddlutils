@@ -19,8 +19,8 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.collections4.map.ListOrderedMap;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
@@ -70,7 +70,7 @@ public class JdbcModelReader {
   /**
    * Contains default column sizes (minimum sizes that a JDBC-compliant db must support).
    */
-  private HashMap _defaultSizes = new HashMap();
+  private HashMap<Integer, String> _defaultSizes = new HashMap<>();
   /**
    * The default database catalog to read.
    */
@@ -104,19 +104,19 @@ public class JdbcModelReader {
   public JdbcModelReader(Platform platform) {
     _platform = platform;
 
-    _defaultSizes.put(new Integer(Types.CHAR), "254");
-    _defaultSizes.put(new Integer(Types.VARCHAR), "254");
-    _defaultSizes.put(new Integer(Types.LONGVARCHAR), "254");
-    _defaultSizes.put(new Integer(Types.BINARY), "254");
-    _defaultSizes.put(new Integer(Types.VARBINARY), "254");
-    _defaultSizes.put(new Integer(Types.LONGVARBINARY), "254");
-    _defaultSizes.put(new Integer(Types.INTEGER), "32");
-    _defaultSizes.put(new Integer(Types.BIGINT), "64");
-    _defaultSizes.put(new Integer(Types.REAL), "7,0");
-    _defaultSizes.put(new Integer(Types.FLOAT), "15,0");
-    _defaultSizes.put(new Integer(Types.DOUBLE), "15,0");
-    _defaultSizes.put(new Integer(Types.DECIMAL), "15,15");
-    _defaultSizes.put(new Integer(Types.NUMERIC), "15,15");
+    _defaultSizes.put(Types.CHAR, "254");
+    _defaultSizes.put(Types.VARCHAR, "254");
+    _defaultSizes.put(Types.LONGVARCHAR, "254");
+    _defaultSizes.put(Types.BINARY, "254");
+    _defaultSizes.put(Types.VARBINARY, "254");
+    _defaultSizes.put(Types.LONGVARBINARY, "254");
+    _defaultSizes.put(Types.INTEGER, "32");
+    _defaultSizes.put(Types.BIGINT, "64");
+    _defaultSizes.put(Types.REAL, "7,0");
+    _defaultSizes.put(Types.FLOAT, "15,0");
+    _defaultSizes.put(Types.DOUBLE, "15,0");
+    _defaultSizes.put(Types.DECIMAL, "15,15");
+    _defaultSizes.put(Types.NUMERIC, "15,15");
 
     _columnsForTable = initColumnsForTable();
     _columnsForColumn = initColumnsForColumn();
@@ -190,9 +190,9 @@ public class JdbcModelReader {
     // we're also reading the table name so that a model reader impl can filter manually
     result.add(new MetaDataColumnDescriptor("TABLE_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("COLUMN_NAME", Types.VARCHAR));
-    result.add(new MetaDataColumnDescriptor("DATA_TYPE", Types.INTEGER, new Integer(java.sql.Types.OTHER)));
-    result.add(new MetaDataColumnDescriptor("NUM_PREC_RADIX", Types.INTEGER, new Integer(10)));
-    result.add(new MetaDataColumnDescriptor("DECIMAL_DIGITS", Types.INTEGER, new Integer(0)));
+    result.add(new MetaDataColumnDescriptor("DATA_TYPE", Types.INTEGER, Types.OTHER));
+    result.add(new MetaDataColumnDescriptor("NUM_PREC_RADIX", Types.INTEGER, 10));
+    result.add(new MetaDataColumnDescriptor("DECIMAL_DIGITS", Types.INTEGER, 0));
     result.add(new MetaDataColumnDescriptor("COLUMN_SIZE", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("IS_NULLABLE", Types.VARCHAR, "YES"));
     result.add(new MetaDataColumnDescriptor("REMARKS", Types.VARCHAR));
@@ -234,7 +234,7 @@ public class JdbcModelReader {
     result.add(new MetaDataColumnDescriptor("PKTABLE_NAME", Types.VARCHAR));
     // we're also reading the table name so that a model reader impl can filter manually
     result.add(new MetaDataColumnDescriptor("FKTABLE_NAME", Types.VARCHAR));
-    result.add(new MetaDataColumnDescriptor("KEY_SEQ", Types.TINYINT, new Short((short) 0)));
+    result.add(new MetaDataColumnDescriptor("KEY_SEQ", Types.TINYINT, (short) 0));
     result.add(new MetaDataColumnDescriptor("FK_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("UPDATE_RULE", Types.TINYINT));
     result.add(new MetaDataColumnDescriptor("DELETE_RULE", Types.TINYINT));
@@ -259,7 +259,7 @@ public class JdbcModelReader {
     // we're also reading the table name so that a model reader impl can filter manually
     result.add(new MetaDataColumnDescriptor("TABLE_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("NON_UNIQUE", Types.BIT, Boolean.TRUE));
-    result.add(new MetaDataColumnDescriptor("ORDINAL_POSITION", Types.TINYINT, new Short((short) 0)));
+    result.add(new MetaDataColumnDescriptor("ORDINAL_POSITION", Types.TINYINT, (short) 0));
     result.add(new MetaDataColumnDescriptor("COLUMN_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("TYPE", Types.TINYINT));
 
@@ -738,7 +738,7 @@ public class JdbcModelReader {
     String size = (String) values.get("COLUMN_SIZE");
 
     if (size == null) {
-      size = (String) _defaultSizes.get(new Integer(column.getTypeCode()));
+      size = (String) _defaultSizes.get(column.getTypeCode());
     }
     // we're setting the size after the precision and radix in case
     // the database prefers to return them in the size value
@@ -836,8 +836,8 @@ public class JdbcModelReader {
       fk = new ForeignKey(fkName);
       fk.setForeignTableName((String) values.get("PKTABLE_NAME"));
 
-      CascadeActionEnum onUpdateAction = convertAction((Short) values.get("UPDATE_RULE"));
-      CascadeActionEnum onDeleteAction = convertAction((Short) values.get("DELETE_RULE"));
+      CascadeAction onUpdateAction = convertAction((Short) values.get("UPDATE_RULE"));
+      CascadeAction onDeleteAction = convertAction((Short) values.get("DELETE_RULE"));
 
       if (onUpdateAction == null) {
         onUpdateAction = getPlatformInfo().getDefaultOnUpdateAction();
@@ -863,27 +863,27 @@ public class JdbcModelReader {
 
   /**
    * Converts the JDBC action value (one of the <code>importKey</code> constants in the
-   * {@link DatabaseMetaData} class) to a {@link CascadeActionEnum}.
+   * {@link DatabaseMetaData} class) to a {@link CascadeAction}.
    *
    * @param jdbcActionValue The jdbc action value
    * @return The enum value
    */
-  protected CascadeActionEnum convertAction(Short jdbcActionValue) {
-    CascadeActionEnum action = null;
+  protected CascadeAction convertAction(Short jdbcActionValue) {
+    CascadeAction action = null;
 
     if (jdbcActionValue != null) {
       switch (jdbcActionValue.shortValue()) {
         case DatabaseMetaData.importedKeyCascade:
-          action = CascadeActionEnum.CASCADE;
+          action = CascadeAction.CASCADE;
           break;
         case DatabaseMetaData.importedKeySetNull:
-          action = CascadeActionEnum.SET_NULL;
+          action = CascadeAction.SET_NULL;
           break;
         case DatabaseMetaData.importedKeySetDefault:
-          action = CascadeActionEnum.SET_DEFAULT;
+          action = CascadeAction.SET_DEFAULT;
           break;
         case DatabaseMetaData.importedKeyRestrict:
-          action = CascadeActionEnum.RESTRICT;
+          action = CascadeAction.RESTRICT;
           break;
       }
     }

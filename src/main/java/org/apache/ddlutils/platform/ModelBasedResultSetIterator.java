@@ -20,7 +20,7 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.commons.beanutils.*;
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;

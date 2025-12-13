@@ -19,7 +19,7 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;

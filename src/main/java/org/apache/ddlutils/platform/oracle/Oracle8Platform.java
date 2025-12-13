@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform.oracle;
 
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -76,9 +76,9 @@ public class Oracle8Platform extends PlatformImplBase {
     info.setMaxIdentifierLength(30);
     info.setIdentityStatusReadingSupported(false);
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.NONE});
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.SET_NULL, CascadeActionEnum.NONE});
-    info.addEquivalentOnDeleteActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE});
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     // Note that the back-mappings are partially done by the model reader, not the driver
     info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.BLOB);

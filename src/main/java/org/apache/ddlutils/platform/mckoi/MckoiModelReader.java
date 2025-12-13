@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform.mckoi;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;

@@ -19,9 +19,9 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.collections.set.ListOrderedSet;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.collections4.set.ListOrderedSet;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.Serializable;
@@ -53,15 +53,15 @@ public class ForeignKey implements Serializable {
   /**
    * The action to perform when the value of the referenced column changes.
    */
-  private CascadeActionEnum _onUpdate = CascadeActionEnum.NONE;
+  private CascadeAction _onUpdate = CascadeAction.NONE;
   /**
    * The action to perform when the referenced row is deleted.
    */
-  private CascadeActionEnum _onDelete = CascadeActionEnum.NONE;
+  private CascadeAction _onDelete = CascadeAction.NONE;
   /**
    * The references between local and remote columns.
    */
-  private ListOrderedSet _references = new ListOrderedSet();
+  private final ListOrderedSet<Reference> _references = new ListOrderedSet<>();
   /**
    * Whether this foreign key has an associated auto-generated index.
    */
@@ -144,21 +144,21 @@ public class ForeignKey implements Serializable {
   }
 
   /**
-   * Returns the action for this foreignkey for when the referenced row is deleted.
+   * Returns the action for this foreign key for when the referenced row is deleted.
    *
    * @return The action
    */
-  public CascadeActionEnum getOnDelete() {
+  public CascadeAction getOnDelete() {
     return _onDelete;
   }
 
   /**
-   * Sets the action for this foreignkey for when the referenced row is deleted.
+   * Sets the action for this foreign key for when the referenced row is deleted.
    *
    * @param onDelete The action
    * @throws NullPointerException If <code>onDelete</code> is null
    */
-  public void setOnDelete(CascadeActionEnum onDelete) throws NullPointerException {
+  public void setOnDelete(CascadeAction onDelete) throws NullPointerException {
     if (onDelete == null) {
       throw new NullPointerException("The onDelete action cannot be null");
     }
@@ -166,11 +166,11 @@ public class ForeignKey implements Serializable {
   }
 
   /**
-   * Returns the action for this foreignkey for when the referenced row is changed.
+   * Returns the action for this foreign key for when the referenced row is changed.
    *
    * @return The action
    */
-  public CascadeActionEnum getOnUpdate() {
+  public CascadeAction getOnUpdate() {
     return _onUpdate;
   }
 
@@ -180,7 +180,7 @@ public class ForeignKey implements Serializable {
    * @param onUpdate The action
    * @throws NullPointerException If <code>onUdate</code> is null
    */
-  public void setOnUpdate(CascadeActionEnum onUpdate) throws NullPointerException {
+  public void setOnUpdate(CascadeAction onUpdate) throws NullPointerException {
     if (onUpdate == null) {
       throw new NullPointerException("The onUpdate action cannot be null");
     }
@@ -212,7 +212,7 @@ public class ForeignKey implements Serializable {
    * @return The references
    */
   public Reference[] getReferences() {
-    return (Reference[]) _references.toArray(new Reference[_references.size()]);
+    return _references.toArray(new Reference[0]);
   }
 
   /**
@@ -221,7 +221,7 @@ public class ForeignKey implements Serializable {
    * @return The first reference
    */
   public Reference getFirstReference() {
-    return (Reference) (_references.isEmpty() ? null : _references.get(0));
+    return _references.isEmpty() ? null : _references.get(0);
   }
 
   /**
@@ -359,16 +359,17 @@ public class ForeignKey implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean equals(Object obj) {
     if (obj instanceof ForeignKey) {
       ForeignKey otherFk = (ForeignKey) obj;
 
-      // Note that this compares case sensitive
+      // Note that this compares case-sensitive
       // Note also that we can simply compare the references regardless of their order
       // (which is irrelevant for fks) because they are contained in a set
       EqualsBuilder builder = new EqualsBuilder();
 
-      if ((_name != null) && (_name.length() > 0) && (otherFk._name != null) && (otherFk._name.length() > 0)) {
+      if ((_name != null) && (!_name.isEmpty()) && (otherFk._name != null) && (!otherFk._name.isEmpty())) {
         builder.append(_name, otherFk._name);
       }
       return builder.append(_foreignTableName, otherFk._foreignTableName)
@@ -386,21 +387,17 @@ public class ForeignKey implements Serializable {
    * @return <code>true</code> if this foreign key is equal (ignoring case) to the given one
    */
   public boolean equalsIgnoreCase(ForeignKey otherFk) {
-    boolean checkName = (_name != null) && (_name.length() > 0) &&
-                        (otherFk._name != null) && (otherFk._name.length() > 0);
+    boolean checkName = (_name != null) && (!_name.isEmpty()) &&
+                        (otherFk._name != null) && (!otherFk._name.isEmpty());
 
     if ((!checkName || _name.equalsIgnoreCase(otherFk._name)) &&
         _foreignTableName.equalsIgnoreCase(otherFk._foreignTableName)) {
-      HashSet otherRefs = new HashSet();
 
-      otherRefs.addAll(otherFk._references);
-      for (Iterator it = _references.iterator(); it.hasNext(); ) {
-        Reference curLocalRef = (Reference) it.next();
+      HashSet<Reference> otherRefs = new HashSet<>(otherFk._references);
+      for (Reference curLocalRef : _references) {
         boolean found = false;
-
-        for (Iterator otherIt = otherRefs.iterator(); otherIt.hasNext(); ) {
-          Reference curOtherRef = (Reference) otherIt.next();
-
+        for (Iterator<Reference> otherIt = otherRefs.iterator(); otherIt.hasNext(); ) {
+          Reference curOtherRef = otherIt.next();
           if (curLocalRef.equalsIgnoreCase(curOtherRef)) {
             otherIt.remove();
             found = true;
@@ -420,6 +417,7 @@ public class ForeignKey implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public int hashCode() {
     return new HashCodeBuilder(17, 37).append(_name)
       .append(_foreignTableName)
@@ -430,11 +428,12 @@ public class ForeignKey implements Serializable {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String toString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("Foreign key [");
-    if ((getName() != null) && (getName().length() > 0)) {
+    if ((getName() != null) && (!getName().isEmpty())) {
       result.append("name=");
       result.append(getName());
       result.append("; ");
@@ -454,10 +453,10 @@ public class ForeignKey implements Serializable {
    * @return The string representation
    */
   public String toVerboseString() {
-    StringBuffer result = new StringBuffer();
+    StringBuilder result = new StringBuilder();
 
     result.append("ForeignK ky [");
-    if ((getName() != null) && (getName().length() > 0)) {
+    if ((getName() != null) && (!getName().isEmpty())) {
       result.append("name=");
       result.append(getName());
       result.append("; ");

@@ -38,18 +38,18 @@ public class TimeConverter implements SqlTypeConverter {
   /**
    * The regular expression pattern for the parsing of ISO times.
    */
-  private Pattern _timePattern;
+  private final Pattern _timePattern;
   /**
    * The calendar object to convert to/from times.
    */
-  private Calendar _calendar;
+  private final Calendar _calendar;
 
   /**
    * Creates a new time converter object.
    */
   public TimeConverter() {
     try {
-      _timePattern = Pattern.compile("(?:\\d{4}\\-\\d{2}\\-\\d{2}\\s)?(\\d{2})(?::(\\d{2}))?(?::(\\d{2}))?(?:\\..*)?");
+      _timePattern = Pattern.compile("(?:\\d{4}-\\d{2}-\\d{2}\\s)?(\\d{2})(?::(\\d{2}))?(?::(\\d{2}))?(?:\\..*)?");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }

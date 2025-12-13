@@ -39,7 +39,6 @@ import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -195,11 +194,11 @@ public class PlatformUtils {
   /**
    * Maps the sub-protocl part of a jdbc connection url to a OJB platform name.
    */
-  private HashMap jdbcSubProtocolToPlatform = new HashMap();
+  private final HashMap<String, String> jdbcSubProtocolToPlatform = new HashMap<>();
   /**
    * Maps the jdbc driver name to a OJB platform name.
    */
-  private HashMap jdbcDriverToPlatform = new HashMap();
+  private final HashMap<String, String> jdbcDriverToPlatform = new HashMap<>();
 
   /**
    * Creates a new instance.
@@ -341,17 +340,16 @@ public class PlatformUtils {
    */
   public String determineDatabaseType(String driverName, String jdbcConnectionUrl) {
     if (jdbcDriverToPlatform.containsKey(driverName)) {
-      return (String) jdbcDriverToPlatform.get(driverName);
+      return jdbcDriverToPlatform.get(driverName);
     }
     if (jdbcConnectionUrl == null) {
       return null;
     }
-    for (Iterator it = jdbcSubProtocolToPlatform.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
-      String curSubProtocol = "jdbc:" + (String) entry.getKey() + ":";
+    for (Map.Entry<String, String> entry : jdbcSubProtocolToPlatform.entrySet()) {
+      String curSubProtocol = "jdbc:" + entry.getKey() + ":";
 
       if (jdbcConnectionUrl.startsWith(curSubProtocol)) {
-        return (String) entry.getValue();
+        return entry.getValue();
       }
     }
     return null;

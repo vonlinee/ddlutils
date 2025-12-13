@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;

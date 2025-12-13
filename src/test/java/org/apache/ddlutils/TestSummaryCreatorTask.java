@@ -20,7 +20,7 @@ package org.apache.ddlutils;
  */
 
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Project;

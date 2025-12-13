@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform.sapdb;
 
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -63,10 +63,10 @@ public class SapDbPlatform extends PlatformImplBase {
     info.setMultipleIdentityColumnsSupported(false);
     info.setCommentPrefix("/*");
     info.setCommentSuffix("*/");
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.CASCADE, CascadeActionEnum.RESTRICT, CascadeActionEnum.SET_DEFAULT, CascadeActionEnum.SET_NULL, CascadeActionEnum.NONE});
-    info.addEquivalentOnDeleteActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.NONE});
-    info.addEquivalentOnUpdateActions(CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT);
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.RESTRICT, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE});
+    info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     // BIGINT is also handled by the model reader
     // Unfortunately there is no way to distinguish between REAL, and FLOAT/DOUBLE when

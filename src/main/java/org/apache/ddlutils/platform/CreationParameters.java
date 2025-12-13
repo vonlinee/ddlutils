@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.commons.collections.map.ListOrderedMap;
+import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.model.Table;
 
 import java.util.HashMap;

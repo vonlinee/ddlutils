@@ -19,7 +19,7 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
-import org.apache.commons.collections.Closure;
+import org.apache.commons.collections4.Closure;
 import org.apache.ddlutils.DdlUtilsException;
 
 import java.lang.reflect.InvocationTargetException;

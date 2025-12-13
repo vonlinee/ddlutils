@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform.mysql;
 
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.alteration.*;
-import org.apache.ddlutils.model.CascadeActionEnum;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
@@ -74,12 +74,12 @@ public class MySqlPlatform extends PlatformImplBase {
     info.setCommentPrefix("#");
     // Double quotes are only allowed for delimiting identifiers if the server SQL mode includes ANSI_QUOTES
     info.setDelimiterToken("`");
-    info.setSupportedOnUpdateActions(new CascadeActionEnum[]{CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT,
-      CascadeActionEnum.CASCADE, CascadeActionEnum.SET_NULL});
-    info.setDefaultOnUpdateAction(CascadeActionEnum.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeActionEnum[]{CascadeActionEnum.NONE, CascadeActionEnum.RESTRICT,
-      CascadeActionEnum.CASCADE, CascadeActionEnum.SET_NULL});
-    info.setDefaultOnDeleteAction(CascadeActionEnum.RESTRICT);
+    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
+      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setDefaultOnUpdateAction(CascadeAction.RESTRICT);
+    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
+      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setDefaultOnDeleteAction(CascadeAction.RESTRICT);
 
     info.addNativeTypeMapping(Types.ARRAY, "LONGBLOB", Types.LONGVARBINARY);
     info.addNativeTypeMapping(Types.BIT, "TINYINT(1)");

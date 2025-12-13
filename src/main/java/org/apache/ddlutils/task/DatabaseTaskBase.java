@@ -19,7 +19,7 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import org.apache.commons.dbcp.BasicDataSource;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
@@ -109,7 +109,7 @@ public abstract class DatabaseTaskBase extends Task {
    * @ant.not-required Per default, DdlUtils tries to determine the database type via JDBC.
    */
   public void setDatabaseType(String type) {
-    if ((type != null) && (type.length() > 0)) {
+    if ((type != null) && (!type.isEmpty())) {
       _platformConf.setDatabaseType(type);
     }
   }

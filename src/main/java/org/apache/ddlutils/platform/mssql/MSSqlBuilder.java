@@ -19,7 +19,7 @@ package org.apache.ddlutils.platform.mssql;
  * under the License.
  */
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.alteration.ColumnDefinitionChange;
 import org.apache.ddlutils.model.*;
