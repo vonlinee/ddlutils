@@ -1,10 +1,23 @@
 package org.apache.ddlutils.util;
 
+import org.apache.ddlutils.platform.MetaDataColumnDescriptor;
+
 import java.sql.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public final class JdbcUtils {
 
   private JdbcUtils() {
+  }
+
+  public static Map<String, Object> readColumnValues(ResultSet resultSet, List<MetaDataColumnDescriptor> columnDescriptors) throws SQLException {
+    HashMap<String, Object> values = new HashMap<>();
+    for (MetaDataColumnDescriptor descriptor : columnDescriptors) {
+      values.put(descriptor.getName(), descriptor.readColumn(resultSet));
+    }
+    return values;
   }
 
   /**

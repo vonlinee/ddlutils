@@ -26,6 +26,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.CollectionUtils;
+import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.ObjectUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
 
@@ -796,10 +797,8 @@ public class JdbcModelReader {
 
     try {
       fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
-
       while (fkData.next()) {
         Map<String, Object> values = readColumns(fkData, getColumnsForFK());
-
         readForeignKey(metaData, values, fks);
       }
     } finally {
@@ -947,16 +946,11 @@ public class JdbcModelReader {
    * Reads the indicated columns from the result set.
    *
    * @param resultSet         The result set
-   * @param columnDescriptors The dscriptors of the columns to read
+   * @param columnDescriptors The descriptors of the columns to read
    * @return The read values keyed by the column name
    */
   protected Map<String, Object> readColumns(ResultSet resultSet, List<MetaDataColumnDescriptor> columnDescriptors) throws SQLException {
-    HashMap<String, Object> values = new HashMap<>();
-
-    for (MetaDataColumnDescriptor descriptor : columnDescriptors) {
-      values.put(descriptor.getName(), descriptor.readColumn(resultSet));
-    }
-    return values;
+    return JdbcUtils.readColumnValues(resultSet, columnDescriptors);
   }
 
   /**
@@ -970,45 +964,37 @@ public class JdbcModelReader {
     if ((columnsToCheck == null) || (columnsToCheck.length == 0)) {
       return;
     }
-
+    final Platform platform = getPlatform();
+    final PlatformInfo platformInfo = getPlatformInfo();
     StringBuilder query = new StringBuilder();
-
     query.append("SELECT ");
     for (int idx = 0; idx < columnsToCheck.length; idx++) {
       if (idx > 0) {
         query.append(",");
       }
       if (getPlatform().isDelimitedIdentifierModeOn()) {
-        query.append(getPlatformInfo().getDelimiterToken());
+        query.append(platformInfo.getDelimiterToken());
       }
       query.append(columnsToCheck[idx].getName());
-      if (getPlatform().isDelimitedIdentifierModeOn()) {
-        query.append(getPlatformInfo().getDelimiterToken());
+      if (platform.isDelimitedIdentifierModeOn()) {
+        query.append(platformInfo.getDelimiterToken());
       }
     }
     query.append(" FROM ");
-    if (getPlatform().isDelimitedIdentifierModeOn()) {
-      query.append(getPlatformInfo().getDelimiterToken());
+    if (platform.isDelimitedIdentifierModeOn()) {
+      query.append(platformInfo.getDelimiterToken());
     }
     query.append(table.getName());
-    if (getPlatform().isDelimitedIdentifierModeOn()) {
-      query.append(getPlatformInfo().getDelimiterToken());
+    if (platform.isDelimitedIdentifierModeOn()) {
+      query.append(platformInfo.getDelimiterToken());
     }
     query.append(" WHERE 1 = 0");
 
     Statement stmt = null;
-
     try {
       stmt = getConnection().createStatement();
-
       ResultSet rs = stmt.executeQuery(query.toString());
-      ResultSetMetaData rsMetaData = rs.getMetaData();
-
-      for (int idx = 0; idx < columnsToCheck.length; idx++) {
-        if (rsMetaData.isAutoIncrement(idx + 1)) {
-          columnsToCheck[idx].setAutoIncrement(true);
-        }
-      }
+      ModelUtils.setAutoIncrement(rs, columnsToCheck);
     } finally {
       closeStatement(stmt);
     }
@@ -1020,9 +1006,7 @@ public class JdbcModelReader {
    * @param model The model
    */
   protected void sortForeignKeys(Database model) {
-    for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
-      model.getTable(tableIdx).sortForeignKeys(getPlatform().isDelimitedIdentifierModeOn());
-    }
+    ModelUtils.sortForeignKeys(model, _platform);
   }
 
   /**

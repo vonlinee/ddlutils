@@ -4,7 +4,11 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.platform.DefaultValueHelper;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.sql.Types;
+import java.util.List;
 
 public final class ModelUtils {
 
@@ -91,6 +95,30 @@ public final class ModelUtils {
         default:
           column.setDefaultValue("");
           break;
+      }
+    }
+  }
+
+  public static void sortForeignKeys(Database model, Platform platform) {
+    for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
+      model.getTable(tableIdx).sortForeignKeys(platform.isDelimitedIdentifierModeOn());
+    }
+  }
+
+  public static void setAutoIncrement(ResultSet rs, List<Column> columns) throws SQLException {
+    ResultSetMetaData rsMetaData = rs.getMetaData();
+    for (int idx = 0; idx < columns.size(); idx++) {
+      if (rsMetaData.isAutoIncrement(idx + 1)) {
+        columns.get(idx).setAutoIncrement(true);
+      }
+    }
+  }
+
+  public static void setAutoIncrement(ResultSet rs, Column... columns) throws SQLException {
+    ResultSetMetaData rsMetaData = rs.getMetaData();
+    for (int idx = 0; idx < columns.length; idx++) {
+      if (rsMetaData.isAutoIncrement(idx + 1)) {
+        columns[idx].setAutoIncrement(true);
       }
     }
   }

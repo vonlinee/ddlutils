@@ -22,6 +22,7 @@ package org.apache.ddlutils.platform;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.regex.Pattern;
 
 /**
@@ -139,21 +140,18 @@ public class DatabaseMetaDataWrapper {
    *
    * @param literalString The string to escape.
    * @return A string that can be properly used as a search string.
-   * @throws SQLException If an error occurred retrieving the meta data
+   * @throws SQLException If an error occurred retrieving the metadata
    */
   public String escapeForSearch(String literalString) throws SQLException {
     String escape = getMetaData().getSearchStringEscape();
-
-    if (escape == "") {
+    if (Objects.equals(escape, "")) {
       // No escape string, so nothing to do...
       return literalString;
     } else {
       // with Java 5, we would just use Matcher.quoteReplacement
-      StringBuffer quotedEscape = new StringBuffer();
-
+      StringBuilder quotedEscape = new StringBuilder();
       for (int idx = 0; idx < escape.length(); idx++) {
         char c = escape.charAt(idx);
-
         switch (c) {
           case '\\':
             quotedEscape.append("\\\\");
@@ -166,7 +164,6 @@ public class DatabaseMetaDataWrapper {
         }
       }
       quotedEscape.append("$0");
-
       return searchStringPattern.matcher(literalString).replaceAll(quotedEscape.toString());
     }
   }
