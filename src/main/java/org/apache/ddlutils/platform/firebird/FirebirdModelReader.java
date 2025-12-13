@@ -49,6 +49,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Table table = super.readTable(metaData, values);
 
@@ -62,11 +63,12 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Collection<Column> readColumns(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     ResultSet columnData = null;
 
     try {
-      List columns = new ArrayList<>();
+      List<Column> columns = new ArrayList<>();
 
       if (getPlatform().isDelimitedIdentifierModeOn()) {
         // Jaybird has a problem when delimited identifiers are used as
@@ -100,6 +102,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     Column column = super.readColumn(metaData, values);
 
@@ -123,7 +126,7 @@ public class FirebirdModelReader extends JdbcModelReader {
 
     FirebirdBuilder builder = (FirebirdBuilder) getPlatform().getSqlBuilder();
     Column[] columns = table.getColumns();
-    HashMap names = new HashMap();
+    HashMap<String, Column> names = new HashMap<>();
     String name;
 
     for (Column value : columns) {
@@ -143,7 +146,7 @@ public class FirebirdModelReader extends JdbcModelReader {
 
       while (rs.next()) {
         String generatorName = rs.getString(1).trim();
-        Column column = (Column) names.get(generatorName);
+        Column column = names.get(generatorName);
 
         if (column != null) {
           column.setAutoIncrement(true);
@@ -157,8 +160,9 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
-    List pks = new ArrayList<>();
+  @Override
+  protected Collection<String> readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+    List<String> pks = new ArrayList<>();
     ResultSet pkData = null;
 
     try {
@@ -191,6 +195,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     Map<String, ForeignKey> fks = new ListOrderedMap<>();
     ResultSet fkData = null;
@@ -225,7 +230,8 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
-  protected Collection readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
+  @Override
+  protected Collection<Index> readIndices(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     // Jaybird is not able to read indices when delimited identifiers are turned on,
     // so we gather the data manually using Firebird's system tables
     final String query =
@@ -233,7 +239,7 @@ public class FirebirdModelReader extends JdbcModelReader {
       "a.RDB$FIELD_POSITION ORDINAL_POSITION, a.RDB$FIELD_NAME COLUMN_NAME, 3 INDEX_TYPE " +
       "FROM RDB$INDEX_SEGMENTS a, RDB$INDICES b WHERE a.RDB$INDEX_NAME=b.RDB$INDEX_NAME AND b.RDB$RELATION_NAME = ?";
 
-    Map indices = new ListOrderedMap();
+    Map<String, Index> indices = new ListOrderedMap<>();
     PreparedStatement stmt = null;
 
     try {
@@ -263,6 +269,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) throws SQLException {
     final String query =
       "SELECT RDB$CONSTRAINT_NAME FROM RDB$RELATION_CONSTRAINTS " +
@@ -289,6 +296,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) throws SQLException {
     final String query =
       "SELECT RDB$CONSTRAINT_NAME FROM RDB$RELATION_CONSTRAINTS " +
@@ -317,6 +325,7 @@ public class FirebirdModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String determineSchemaOf(Connection connection, String schemaPattern, Table table) throws SQLException {
     ResultSet tableData = null;
     ResultSet columnData = null;

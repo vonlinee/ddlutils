@@ -25,7 +25,7 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 /**
- * Wrapper class for database meta data that stores additional info.
+ * Wrapper class for database metadata that stores additional info.
  */
 public class DatabaseMetaDataWrapper {
   /**
@@ -172,7 +172,7 @@ public class DatabaseMetaDataWrapper {
   }
 
   /**
-   * Convenience method to return the table meta data using the configured catalog,
+   * Convenience method to return the table metadata using the configured catalog,
    * schema pattern and table types.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
@@ -185,7 +185,7 @@ public class DatabaseMetaDataWrapper {
   }
 
   /**
-   * Convenience method to return the column meta data using the configured catalog and
+   * Convenience method to return the column metadata using the configured catalog and
    * schema pattern.
    *
    * @param tableNamePattern  The pattern identifying for which tables to return info
@@ -199,7 +199,7 @@ public class DatabaseMetaDataWrapper {
   }
 
   /**
-   * Convenience method to return the primary key meta data using the configured catalog and
+   * Convenience method to return the primary key metadata using the configured catalog and
    * schema pattern.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
@@ -212,7 +212,7 @@ public class DatabaseMetaDataWrapper {
   }
 
   /**
-   * Convenience method to return the foreign key meta data using the configured catalog and
+   * Convenience method to return the foreign key metadata using the configured catalog and
    * schema pattern.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info
@@ -225,7 +225,7 @@ public class DatabaseMetaDataWrapper {
   }
 
   /**
-   * Convenience method to return the index meta data using the configured catalog and
+   * Convenience method to return the index metadata using the configured catalog and
    * schema pattern.
    *
    * @param tableNamePattern The pattern identifying for which tables to return info

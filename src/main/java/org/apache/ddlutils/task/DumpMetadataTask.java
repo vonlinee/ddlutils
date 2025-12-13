@@ -264,10 +264,10 @@ public class DumpMetadataTask extends Task {
   }
 
   /**
-   * Dumps the database meta data into XML elements under the current element in the given writer.
+   * Dumps the database metadata into XML elements under the current element in the given writer.
    *
    * @param xmlWriter The XML writer to write to
-   * @param metaData  The meta data to write
+   * @param metaData  The metadata to write
    */
   private void dumpMetaData(PrettyPrintingXmlWriter xmlWriter, DatabaseMetaData metaData) throws NoSuchMethodException,
     IllegalAccessException,

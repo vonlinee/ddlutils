@@ -32,7 +32,7 @@ import java.text.Collator;
 import java.util.*;
 
 /**
- * An utility class to create a Database model from a live database.
+ * A utility class to create a Database model from a live database.
  *
  * @version $Revision$
  */
@@ -43,23 +43,23 @@ public class JdbcModelReader {
   private final Log _log = LogFactory.getLog(getClass());
 
   /**
-   * The descriptors for the relevant columns in the table meta data.
+   * The descriptors for the relevant columns in the table metadata.
    */
   private final List<MetaDataColumnDescriptor> _columnsForTable;
   /**
-   * The descriptors for the relevant columns in the table column meta data.
+   * The descriptors for the relevant columns in the table column metadata.
    */
   private final List<MetaDataColumnDescriptor> _columnsForColumn;
   /**
-   * The descriptors for the relevant columns in the primary key meta data.
+   * The descriptors for the relevant columns in the primary key metadata.
    */
   private final List<MetaDataColumnDescriptor> _columnsForPK;
   /**
-   * The descriptors for the relevant columns in the foreign key meta data.
+   * The descriptors for the relevant columns in the foreign key metadata.
    */
   private final List<MetaDataColumnDescriptor> _columnsForFK;
   /**
-   * The descriptors for the relevant columns in the index meta data.
+   * The descriptors for the relevant columns in the index metadata.
    */
   private final List<MetaDataColumnDescriptor> _columnsForIndex;
 
@@ -99,7 +99,7 @@ public class JdbcModelReader {
   /**
    * Creates a new model reader instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public JdbcModelReader(Platform platform) {
     _platform = platform;
@@ -154,7 +154,7 @@ public class JdbcModelReader {
 
   /**
    * Returns descriptors for the columns that shall be read from the result set when
-   * reading the meta data for a table. Note that the columns are read in the order
+   * reading the metadata for a table. Note that the columns are read in the order
    * defined by this list.<br/>
    * Redefine this method if you want more columns or a different order.
    *
@@ -174,7 +174,7 @@ public class JdbcModelReader {
 
   /**
    * Returns descriptors for the columns that shall be read from the result set when
-   * reading the meta data for table columns. Note that the columns are read in the order
+   * reading the metadata for table columns. Note that the columns are read in the order
    * defined by this list.<br/>
    * Redefine this method if you want more columns or a different order.
    *
@@ -202,7 +202,7 @@ public class JdbcModelReader {
 
   /**
    * Returns descriptors for the columns that shall be read from the result set when
-   * reading the meta data for primary keys. Note that the columns are read in the order
+   * reading the metadata for primary keys. Note that the columns are read in the order
    * defined by this list.<br/>
    * Redefine this method if you want more columns or a different order.
    *
@@ -222,7 +222,7 @@ public class JdbcModelReader {
 
   /**
    * Returns descriptors for the columns that shall be read from the result set when
-   * reading the meta data for foreign keys originating from a table. Note that the
+   * reading the metadata for foreign keys originating from a table. Note that the
    * columns are read in the order defined by this list.<br/>
    * Redefine this method if you want more columns or a different order.
    *
@@ -246,7 +246,7 @@ public class JdbcModelReader {
 
   /**
    * Returns descriptors for the columns that shall be read from the result set when
-   * reading the meta data for indices. Note that the columns are read in the order
+   * reading the metadata for indices. Note that the columns are read in the order
    * defined by this list.<br/>
    * Redefine this method if you want more columns or a different order.
    *
@@ -371,7 +371,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Returns the descriptors for the columns to be read from the table meta data result set.
+   * Returns the descriptors for the columns to be read from the table metadata result set.
    *
    * @return The column descriptors
    */
@@ -380,7 +380,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Returns the descriptors for the columns to be read from the column meta data result set.
+   * Returns the descriptors for the columns to be read from the column metadata result set.
    *
    * @return The column descriptors
    */
@@ -389,7 +389,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Returns the descriptors for the columns to be read from the primary key meta data result set.
+   * Returns the descriptors for the columns to be read from the primary key metadata result set.
    *
    * @return The column descriptors
    */
@@ -398,7 +398,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Returns the descriptors for the columns to be read from the foreign key meta data result set.
+   * Returns the descriptors for the columns to be read from the foreign key metadata result set.
    *
    * @return The column descriptors
    */
@@ -407,7 +407,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Returns the descriptors for the columns to be read from the index meta data result set.
+   * Returns the descriptors for the columns to be read from the index metadata result set.
    *
    * @return The column descriptors
    */
@@ -443,8 +443,8 @@ public class JdbcModelReader {
    * @param connection The connection
    * @param name       The name of the resulting database; <code>null</code> when the default name (the catalog)
    *                   is desired which might be <code>null</code> itself though
-   * @param catalog    The catalog to acess in the database; use <code>null</code> for the default value
-   * @param schema     The schema to acess in the database; use <code>null</code> for the default value
+   * @param catalog    The catalog to access in the database; use <code>null</code> for the default value
+   * @param schema     The schema to access in the database; use <code>null</code> for the default value
    * @param tableTypes The table types to process; use <code>null</code> or an empty list for the default ones
    * @return The database model
    */
@@ -481,8 +481,8 @@ public class JdbcModelReader {
   /**
    * Reads the tables from the database metadata.
    *
-   * @param catalog       The catalog to acess in the database; use <code>null</code> for the default value
-   * @param schemaPattern The schema(s) to acess in the database; use <code>null</code> for the default value
+   * @param catalog       The catalog to access in the database; use <code>null</code> for the default value
+   * @param schemaPattern The schema(s) to access in the database; use <code>null</code> for the default value
    * @param tableTypes    The table types to process; use <code>null</code> or an empty list for the default ones
    * @return The tables
    */
@@ -519,7 +519,7 @@ public class JdbcModelReader {
   }
 
   /**
-   * Reads the next table from the meta data.
+   * Reads the next table from the metadata.
    *
    * @param metaData The database meta data
    * @param values   The table metadata values as defined by {@link #getColumnsForTable()}
@@ -542,10 +542,10 @@ public class JdbcModelReader {
       table.addForeignKeys(readForeignKeys(metaData, tableName));
       table.addIndices(readIndices(metaData, tableName));
 
-      Collection primaryKeys = readPrimaryKeyNames(metaData, tableName);
+      Collection<String> primaryKeys = readPrimaryKeyNames(metaData, tableName);
 
-      for (Iterator it = primaryKeys.iterator(); it.hasNext(); ) {
-        table.findColumn((String) it.next(), true).setPrimaryKey(true);
+      for (String primaryKey : primaryKeys) {
+        table.findColumn(primaryKey, true).setPrimaryKey(true);
       }
 
       if (getPlatformInfo().isSystemIndicesReturned()) {
@@ -714,7 +714,7 @@ public class JdbcModelReader {
    * Extracts a column definition from the result set.
    *
    * @param metaData The database meta data
-   * @param values   The column meta data values as defined by {@link #getColumnsForColumn()}
+   * @param values   The column metadata values as defined by {@link #getColumnsForColumn()}
    * @return The column
    */
   protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
@@ -784,7 +784,7 @@ public class JdbcModelReader {
    * Extracts a primary key name from the result set.
    *
    * @param metaData The database meta data
-   * @param values   The primary key meta data values as defined by {@link #getColumnsForPK()}
+   * @param values   The primary key metadata values as defined by {@link #getColumnsForPK()}
    * @return The primary key name
    */
   protected String readPrimaryKeyName(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
@@ -820,7 +820,7 @@ public class JdbcModelReader {
    * Reads the next foreign key spec from the result set.
    *
    * @param metaData The database meta data
-   * @param values   The foreign key meta data as defined by {@link #getColumnsForFK()}
+   * @param values   The foreign key metadata as defined by {@link #getColumnsForFK()}
    * @param knownFks The already read foreign keys for the current table
    */
   protected void readForeignKey(DatabaseMetaDataWrapper metaData, Map<String, Object> values, Map<String, ForeignKey> knownFks) throws SQLException {
@@ -914,7 +914,7 @@ public class JdbcModelReader {
    * Reads the next index spec from the result set.
    *
    * @param metaData     The database meta data
-   * @param values       The index meta data as defined by {@link #getColumnsForIndex()}
+   * @param values       The index metadata as defined by {@link #getColumnsForIndex()}
    * @param knownIndices The already read indices for the current table
    */
   protected void readIndex(DatabaseMetaDataWrapper metaData, Map<String, Object> values, Map<String, Index> knownIndices) throws SQLException {
