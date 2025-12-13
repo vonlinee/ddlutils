@@ -34,7 +34,7 @@ public class DataConverterRegistration {
    */
   private SqlTypeConverter _converter;
   /**
-   * The sql type for which the converter shall be registered.
+   * The SQL type for which the converter shall be registered.
    */
   private int _typeCode = Integer.MIN_VALUE;
   /**

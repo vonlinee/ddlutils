@@ -303,7 +303,7 @@ public abstract class TypeMap {
   }
 
   /**
-   * Determines whether the given sql type (one of the {@link java.sql.Types} constants)
+   * Determines whether the given SQL type (one of the {@link java.sql.Types} constants)
    * is a special type.
    *
    * @param jdbcTypeCode The type code

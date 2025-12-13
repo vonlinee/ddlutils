@@ -22,7 +22,7 @@ package org.apache.ddlutils.dynabean;
 import org.apache.ddlutils.DdlUtilsException;
 
 /**
- * This exception is thrown when something dealing with sql dyna beans or classes failed.
+ * This exception is thrown when something dealing with SQL dyna beans or classes failed.
  *
  * @version $Revision: 289996 $
  */

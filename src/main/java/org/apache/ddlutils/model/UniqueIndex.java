@@ -24,7 +24,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import java.util.ArrayList;
 
 /**
- * Provides compatibility with Torque-style xml with separate &lt;index&gt; and
+ * Provides compatibility with Torque-style XML with separate &lt;index&gt; and
  * &lt;unique&gt; tags, but adds no functionality.  All indexes are treated the
  * same by the Table.
  *

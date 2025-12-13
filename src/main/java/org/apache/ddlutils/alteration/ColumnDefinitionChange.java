@@ -68,7 +68,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * Determines whether the jdbc type of the given target column is different from the one of the given source column.
    * This method uses the platform info object to determine the actual jdbc type that the target column would have
-   * in the database, and compares that to the type of he source column.
+   * in the database, and compares that to the type of the source column.
    *
    * @param platformInfo The info object for the current platform
    * @param sourceColumn The source column

@@ -109,7 +109,7 @@ public abstract class SqlBuilder {
   /**
    * Creates a new sql builder.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public SqlBuilder(Platform platform) {
     _platform = platform;

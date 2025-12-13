@@ -56,7 +56,7 @@ public class ModelComparator {
    */
   private final CloneHelper _cloneHelper = new CloneHelper();
   /**
-   * Whether comparison is case sensitive.
+   * Whether comparison is case-sensitive.
    */
   private final boolean _caseSensitive;
   /**
@@ -75,7 +75,7 @@ public class ModelComparator {
    * @param platformInfo            The platform info
    * @param tableDefChangePredicate The predicate that defines whether tables changes are supported
    *                                by the platform or not; all changes are supported if this is null
-   * @param caseSensitive           Whether comparison is case sensitive
+   * @param caseSensitive           Whether comparison is case-sensitive
    */
   public ModelComparator(PlatformInfo platformInfo,
                          TableDefinitionChangesPredicate tableDefChangePredicate,
@@ -119,7 +119,7 @@ public class ModelComparator {
   }
 
   /**
-   * Determines whether comparison should be case sensitive.
+   * Determines whether comparison should be case-sensitive.
    *
    * @return <code>true</code> if case matters
    */

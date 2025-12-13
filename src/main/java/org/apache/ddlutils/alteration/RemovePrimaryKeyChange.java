@@ -32,7 +32,7 @@ public class RemovePrimaryKeyChange extends TableChangeImplBase {
   /**
    * Creates a new change object.
    *
-   * @param tableName The name of he table to remove the primary key from
+   * @param tableName The name of the table to remove the primary key from
    */
   public RemovePrimaryKeyChange(String tableName) {
     super(tableName);

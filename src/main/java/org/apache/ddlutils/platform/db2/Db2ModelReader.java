@@ -69,7 +69,7 @@ public class Db2ModelReader extends JdbcModelReader {
 
     try {
       _db2TimePattern = Pattern.compile("'(\\d{2}).(\\d{2}).(\\d{2})'");
-      _db2TimestampPattern = Pattern.compile("'(\\d{4}\\-\\d{2}\\-\\d{2})\\-(\\d{2}).(\\d{2}).(\\d{2})(\\.\\d{1,8})?'");
+      _db2TimestampPattern = Pattern.compile("'(\\d{4}-\\d{2}-\\d{2})-(\\d{2}).(\\d{2}).(\\d{2})(\\.\\d{1,8})?'");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
@@ -78,11 +78,12 @@ public class Db2ModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
 
-    for (int idx = 0; idx < KNOWN_SYSTEM_TABLES.length; idx++) {
-      if (KNOWN_SYSTEM_TABLES[idx].equals(tableName)) {
+    for (String knownSystemTable : KNOWN_SYSTEM_TABLES) {
+      if (knownSystemTable.equals(tableName)) {
         return null;
       }
     }

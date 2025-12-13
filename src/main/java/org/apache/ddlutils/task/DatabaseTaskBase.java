@@ -200,7 +200,7 @@ public abstract class DatabaseTaskBase extends Task {
   /**
    * Specifies whether DdlUtils shall sort the foreign keys of a table read from a live database or
    * leave them in the order in which they are returned by the database/JDBC driver. Note that
-   * the sort is case sensitive only if delimited identifier mode is on
+   * the sort is case-sensitive only if delimited identifier mode is on
    * (<code>useDelimitedSqlIdentifiers</code> is set to <code>true</code>).
    *
    * @param sortForeignKeys <code>true</code> if the foreign keys shall be sorted

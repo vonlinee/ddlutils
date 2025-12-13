@@ -217,7 +217,7 @@ public class Table implements Serializable {
    * Adds the column after the given previous column.
    *
    * @param previousColumn The column to add the new column after; use
-   *                       <code>null</code> for adding at the begin
+   *                       <code>null</code> for adding at the beginning
    * @param column         The column
    */
   public void addColumn(Column previousColumn, Column column) {
@@ -477,7 +477,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the column with the specified name, using case insensitive matching.
+   * Finds the column with the specified name, using case-insensitive matching.
    * Note that this method is not called getColumn(String) to avoid introspection
    * problems.
    *
@@ -489,7 +489,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the column with the specified name, using case insensitive matching.
+   * Finds the column with the specified name, using case-insensitive matching.
    * Note that this method is not called getColumn(String) to avoid introspection
    * problems.
    *
@@ -530,7 +530,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the index with the specified name, using case insensitive matching.
+   * Finds the index with the specified name, using case-insensitive matching.
    * Note that this method is not called getIndex to avoid introspection
    * problems.
    *
@@ -542,7 +542,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the index with the specified name, using case sensitive or insensitive
+   * Finds the index with the specified name, using case-sensitive or insensitive
    * matching depending on the <code>caseSensitive</code> parameter.
    * Note that this method is not called getIndex to avoid introspection
    * problems.
@@ -567,7 +567,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the foreign key with the specified name, using case insensitive matching.
+   * Finds the foreign key with the specified name, using case-insensitive matching.
    * Note that this method is not called getForeignKey to avoid introspection
    * problems.
    *
@@ -579,7 +579,7 @@ public class Table implements Serializable {
   }
 
   /**
-   * Finds the foreign key with the specified name, using case sensitive or insensitive
+   * Finds the foreign key with the specified name, using case-sensitive or insensitive
    * matching depending on the <code>caseSensitive</code> parameter.
    * Note that this method is not called getForeignKey to avoid introspection
    * problems.
@@ -728,7 +728,7 @@ public class Table implements Serializable {
     if (obj instanceof Table) {
       Table other = (Table) obj;
 
-      // Note that this compares case sensitive
+      // Note that this compares case-sensitive
       // TODO: For now we ignore catalog and schema (type should be irrelevant anyways)
       return new EqualsBuilder().append(_name, other._name)
         .append(_columns, other._columns)

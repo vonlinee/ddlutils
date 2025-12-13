@@ -34,7 +34,7 @@ import java.util.List;
  */
 public class SqlDynaClass extends BasicDynaClass {
   /**
-   * Unique ID for serializaion purposes.
+   * Unique ID for serialization purposes.
    */
   private static final long serialVersionUID = -5768155698352911245L;
 

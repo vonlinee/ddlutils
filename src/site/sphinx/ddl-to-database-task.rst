@@ -54,7 +54,7 @@ Attributes
     :Allowed: ``true``, ``false``
     :Default: ``false``
     :Meaning: Whether DdlUtils shall sort (alphabetically) the foreign keys of a table read from a live database or
-              leave them in the order that they are returned by the database. Note that the sort is case sensitive
+              leave them in the order that they are returned by the database. Note that the sort is case-sensitive
               only if delimited identifier mode is on (``useDelimitedSqlIdentifiers`` is set to ``true``).
 
 ``useDelimitedSqlIdentifiers``

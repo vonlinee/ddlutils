@@ -31,14 +31,14 @@ import org.apache.commons.beanutils.DynaProperty;
  */
 public class SqlDynaBean extends BasicDynaBean {
   /**
-   * Unique ID for serializaion purposes.
+   * Unique ID for serialization purposes.
    */
   private static final long serialVersionUID = -6946514447446174227L;
 
   /**
    * Creates a new dyna bean of the given class.
    *
-   * @param dynaClass The dyna class
+   * @param dynaClass The Dyna class
    */
   public SqlDynaBean(DynaClass dynaClass) {
     super(dynaClass);

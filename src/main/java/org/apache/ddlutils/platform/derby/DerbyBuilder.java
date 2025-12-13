@@ -39,7 +39,7 @@ public class DerbyBuilder extends CloudscapeBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public DerbyBuilder(Platform platform) {
     super(platform);

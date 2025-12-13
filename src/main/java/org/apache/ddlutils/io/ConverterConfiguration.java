@@ -70,7 +70,7 @@ public class ConverterConfiguration {
   }
 
   /**
-   * Registers the given type converter for an sql type.
+   * Registers the given type converter for a SQL type.
    *
    * @param sqlTypeCode The type code, one of the {@link java.sql.Types} constants
    * @param converter   The converter

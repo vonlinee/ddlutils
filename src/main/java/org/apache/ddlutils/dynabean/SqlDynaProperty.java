@@ -32,7 +32,7 @@ import org.apache.ddlutils.model.Column;
  */
 public class SqlDynaProperty extends DynaProperty {
   /**
-   * Unique ID for serializaion purposes.
+   * Unique ID for serialization purposes.
    */
   private static final long serialVersionUID = -4491018827449106588L;
 

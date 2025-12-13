@@ -56,7 +56,7 @@ public class TableXmlWriter extends ModelXmlWriter {
   /**
    * Write the table data to XML to the given writer.
    *
-   * @param columnXmlWriters A list of column xml writers for writing out the bean's values to XML
+   * @param columnXmlWriters A list of column XML writers for writing out the bean's values to XML
    * @param writer           The writer to write to
    */
   public void write(List<ColumnXmlWriter> columnXmlWriters, DataWriter writer) {

@@ -36,7 +36,7 @@ public class AxionBuilder extends SqlBuilder {
   /**
    * Creates a new axion sql builder.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public AxionBuilder(Platform platform) {
     super(platform);

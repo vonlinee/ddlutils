@@ -32,9 +32,9 @@ import javax.xml.validation.Validator;
  */
 public class ModelValidator {
   /**
-   * Validates the given xml document using the Java XML validation framework.
+   * Validates the given XML document using the Java XML validation framework.
    *
-   * @param source The source object for the xml document
+   * @param source The source object for the XML document
    * @throws DdlUtilsXMLException If the document could not be validated
    */
   public void validate(Source source) throws DdlUtilsXMLException {

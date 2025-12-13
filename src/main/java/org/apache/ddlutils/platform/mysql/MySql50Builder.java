@@ -33,7 +33,7 @@ public class MySql50Builder extends MySqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public MySql50Builder(Platform platform) {
     super(platform);

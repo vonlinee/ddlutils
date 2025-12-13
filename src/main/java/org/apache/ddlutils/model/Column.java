@@ -58,7 +58,7 @@ public class Column implements Serializable {
    */
   private boolean _primaryKey;
   /**
-   * Whether the column is required, ie. it must not contain <code>NULL</code>.
+   * Whether the column is required, i.e. it must not contain <code>NULL</code>.
    */
   private boolean _required;
   /**
@@ -165,7 +165,7 @@ public class Column implements Serializable {
   }
 
   /**
-   * Determines whether this column is a required column, ie. that it is not allowed
+   * Determines whether this column is a required column, i.e. that it is not allowed
    * to contain <code>NULL</code> values.
    *
    * @return <code>true</code> if this column is a required column
@@ -175,7 +175,7 @@ public class Column implements Serializable {
   }
 
   /**
-   * Specifies whether this column is a required column, ie. that it is not allowed
+   * Specifies whether this column is a required column, i.e. that it is not allowed
    * to contain <code>NULL</code> values.
    *
    * @param required <code>true</code> if this column is a required column
@@ -457,7 +457,7 @@ public class Column implements Serializable {
       Column other = (Column) obj;
       EqualsBuilder comparator = new EqualsBuilder();
 
-      // Note that this compares case sensitive
+      // Note that this compares case-sensitive
       comparator.append(_name, other._name);
       comparator.append(_primaryKey, other._primaryKey);
       comparator.append(_required, other._required);

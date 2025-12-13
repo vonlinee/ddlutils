@@ -28,7 +28,7 @@ import java.io.PrintWriter;
 import java.io.Writer;
 
 /**
- * Generates the DTD for data xml files usable with a specified database model.
+ * Generates the DTD for data XML files usable with a specified database model.
  * <p>
  * TODO: Make names (tables, columns) XML-compliant
  *
@@ -36,7 +36,7 @@ import java.io.Writer;
  */
 public class DataDtdWriter {
   /**
-   * Writes the DTD for data xml files for the given database model, to the specified writer.
+   * Writes the DTD for data XML files for the given database model, to the specified writer.
    *
    * @param model  The database model
    * @param output The writer to write the DTD to

@@ -34,7 +34,7 @@ public class Db2v8Builder extends Db2Builder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public Db2v8Builder(Platform platform) {
     super(platform);

@@ -66,7 +66,7 @@ public class CloneHelper {
    *                         will not have any foreign keys
    * @param targetModel      The target model, can be <code>null</code> if
    *                         <code>cloneForeignKeys=false</code>
-   * @param caseSensitive    Whether comparison is case sensitive (for cloning foreign keys)
+   * @param caseSensitive    Whether comparison is case-sensitive (for cloning foreign keys)
    * @return The clone
    */
   public Table clone(Table source, boolean cloneIndexes, boolean cloneForeignKeys, Database targetModel, boolean caseSensitive) {
@@ -122,7 +122,7 @@ public class CloneHelper {
    *
    * @param source        The source index
    * @param targetTable   The table whose columns shall be used by the clone
-   * @param caseSensitive Whether comparison is case sensitive (for finding the columns
+   * @param caseSensitive Whether comparison is case-sensitive (for finding the columns
    *                      in the target table)
    * @return The clone
    */
@@ -143,7 +143,7 @@ public class CloneHelper {
    *
    * @param source        The source index column
    * @param targetTable   The table containing the column to be used by the clone
-   * @param caseSensitive Whether comparison is case sensitive (for finding the columns
+   * @param caseSensitive Whether comparison is case-sensitive (for finding the columns
    *                      in the target table)
    * @return The clone
    */
@@ -162,7 +162,7 @@ public class CloneHelper {
    * @param source        The source foreign key
    * @param owningTable   The table owning the source foreign key
    * @param targetModel   The target model containing the tables that the clone shall link
-   * @param caseSensitive Whether comparison is case sensitive (for finding the columns
+   * @param caseSensitive Whether comparison is case-sensitive (for finding the columns
    *                      in the target model)
    * @return The clone
    */
@@ -191,7 +191,7 @@ public class CloneHelper {
    * @param source        The source reference
    * @param localTable    The table containing the local column to be used by the reference
    * @param foreignTable  The table containing the foreign column to be used by the reference
-   * @param caseSensitive Whether comparison is case sensitive (for finding the columns
+   * @param caseSensitive Whether comparison is case-sensitive (for finding the columns
    *                      in the tables)
    * @return The clone
    */

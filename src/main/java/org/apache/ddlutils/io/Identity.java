@@ -26,7 +26,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * Stores the identity of an database object as defined by its primary keys. Is used
+ * Stores the identity of a database object as defined by its primary keys. Is used
  * by {@link org.apache.ddlutils.io.DataToDatabaseSink} class for inserting objects
  * in the correct order.
  *

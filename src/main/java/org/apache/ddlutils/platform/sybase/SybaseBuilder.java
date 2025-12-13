@@ -37,7 +37,7 @@ public class SybaseBuilder extends SqlBuilder {
   /**
    * Creates a new builder instance.
    *
-   * @param platform The plaftform this builder belongs to
+   * @param platform The platform this builder belongs to
    */
   public SybaseBuilder(Platform platform) {
     super(platform);

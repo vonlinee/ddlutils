@@ -385,7 +385,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @param model     The database model to add the table objects to
    */
-  private void readTableElements(XMLStreamReader xmlReader, Database model) throws XMLStreamException, IOException {
+  private void readTableElements(XMLStreamReader xmlReader, Database model) throws XMLStreamException {
     int eventType = XMLStreamReader.START_ELEMENT;
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
@@ -406,7 +406,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The table object
    */
-  private Table readTableElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private Table readTableElement(XMLStreamReader xmlReader) throws XMLStreamException {
     Table table = new Table();
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -430,7 +430,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @param table     The table
    */
-  private void readTableSubElements(XMLStreamReader xmlReader, Table table) throws XMLStreamException, IOException {
+  private void readTableSubElements(XMLStreamReader xmlReader, Table table) throws XMLStreamException {
     int eventType = XMLStreamReader.START_ELEMENT;
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
@@ -495,7 +495,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The foreign key object
    */
-  private ForeignKey readForeignKeyElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private ForeignKey readForeignKeyElement(XMLStreamReader xmlReader) throws XMLStreamException {
     ForeignKey foreignKey = new ForeignKey();
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -523,7 +523,7 @@ public class DatabaseIO {
    * @param xmlReader  The reader
    * @param foreignKey The foreign key
    */
-  private void readReferenceElements(XMLStreamReader xmlReader, ForeignKey foreignKey) throws XMLStreamException, IOException {
+  private void readReferenceElements(XMLStreamReader xmlReader, ForeignKey foreignKey) throws XMLStreamException {
     int eventType = XMLStreamReader.START_ELEMENT;
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
@@ -546,7 +546,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The reference object
    */
-  private Reference readReferenceElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private Reference readReferenceElement(XMLStreamReader xmlReader) throws XMLStreamException {
     Reference reference = new Reference();
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
@@ -567,7 +567,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The index object
    */
-  private Index readIndexElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private Index readIndexElement(XMLStreamReader xmlReader) throws XMLStreamException {
     Index index = new NonUniqueIndex();
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
@@ -581,12 +581,12 @@ public class DatabaseIO {
   }
 
   /**
-   * Reads an unique index element from the XML stream reader.
+   * Reads a unique index element from the XML stream reader.
    *
    * @param xmlReader The reader
    * @return The unique index object
    */
-  private Index readUniqueElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private Index readUniqueElement(XMLStreamReader xmlReader) throws XMLStreamException {
     Index index = new UniqueIndex();
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -608,7 +608,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @param index     The index object
    */
-  private void readIndexColumnElements(XMLStreamReader xmlReader, Index index) throws XMLStreamException, IOException {
+  private void readIndexColumnElements(XMLStreamReader xmlReader, Index index) throws XMLStreamException {
     int eventType = XMLStreamReader.START_ELEMENT;
     while (eventType != XMLStreamReader.END_ELEMENT) {
       eventType = xmlReader.next();
@@ -631,7 +631,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @param index     The index object
    */
-  private void readUniqueColumnElements(XMLStreamReader xmlReader, Index index) throws XMLStreamException, IOException {
+  private void readUniqueColumnElements(XMLStreamReader xmlReader, Index index) throws XMLStreamException {
     int eventType = XMLStreamReader.START_ELEMENT;
 
     while (eventType != XMLStreamReader.END_ELEMENT) {
@@ -654,7 +654,7 @@ public class DatabaseIO {
    * @param xmlReader The reader
    * @return The index column object
    */
-  private IndexColumn readIndexColumnElement(XMLStreamReader xmlReader) throws XMLStreamException, IOException {
+  private IndexColumn readIndexColumnElement(XMLStreamReader xmlReader) throws XMLStreamException {
     IndexColumn indexColumn = new IndexColumn();
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
@@ -671,7 +671,7 @@ public class DatabaseIO {
   }
 
   /**
-   * Compares the given qnames. This specifically ignores the namespace
+   * Compares the given qNames. This specifically ignores the namespace
    * uri of the other qname if the namespace of the current element is
    * empty.
    *
@@ -691,7 +691,7 @@ public class DatabaseIO {
    * Returns the value of the indicated attribute of the current element as a string.
    * This method can handle "null" in which case it returns a null object.
    *
-   * @param xmlReader    The xml reader
+   * @param xmlReader    The XML reader
    * @param attributeIdx The index of the attribute
    * @return The attribute's value
    */
@@ -705,7 +705,7 @@ public class DatabaseIO {
    * Returns the value of the indicated attribute of the current element as a boolean.
    * If the value is not a valid boolean, then an exception is thrown.
    *
-   * @param xmlReader    The xml reader
+   * @param xmlReader    The XML reader
    * @param attributeIdx The index of the attribute
    * @return The attribute's value as a boolean
    */
@@ -725,7 +725,7 @@ public class DatabaseIO {
    * Returns the value of the indicated attribute of the current element as a boolean.
    * If the value is not a valid boolean, then an exception is thrown.
    *
-   * @param xmlReader    The xml reader
+   * @param xmlReader    The XML reader
    * @param attributeIdx The index of the attribute
    * @return The attribute's value as a boolean
    */
@@ -744,7 +744,7 @@ public class DatabaseIO {
    * Consumes the rest of the current element. This assumes that the current XML stream
    * event type is not START_ELEMENT.
    *
-   * @param reader The xml reader
+   * @param reader The XML reader
    */
   private void consumeRestOfElement(XMLStreamReader reader) throws XMLStreamException {
     int eventType = reader.getEventType();
@@ -758,7 +758,7 @@ public class DatabaseIO {
    * Reads over the current element. This assumes that the current XML stream event type is
    * START_ELEMENT.
    *
-   * @param reader The xml reader
+   * @param reader The XML reader
    */
   private void readOverElement(XMLStreamReader reader) throws XMLStreamException {
     int depth = 1;
@@ -971,7 +971,7 @@ public class DatabaseIO {
   /**
    * Writes the start of the specified XML element to the given XML writer.
    *
-   * @param xmlWriter The xml writer
+   * @param xmlWriter The XML writer
    * @param qName     The qname of the XML element
    */
   private void writeElementStart(PrettyPrintingXmlWriter xmlWriter, QName qName) throws DdlUtilsXMLException {
@@ -981,7 +981,7 @@ public class DatabaseIO {
   /**
    * Writes an attribute to the given XML writer.
    *
-   * @param xmlWriter The xml writer
+   * @param xmlWriter The XML writer
    * @param qName     The qname of the attribute
    * @param value     The value; if empty, then nothing is written
    */
@@ -994,7 +994,7 @@ public class DatabaseIO {
   /**
    * Writes the end of the current XML element to the given XML writer.
    *
-   * @param xmlWriter The xml writer
+   * @param xmlWriter The XML writer
    */
   private void writeElementEnd(PrettyPrintingXmlWriter xmlWriter) throws DdlUtilsXMLException {
     xmlWriter.writeElementEnd();
