@@ -45,7 +45,6 @@ public class DefaultValueHelper {
    */
   public String convert(String defaultValue, int originalTypeCode, int targetTypeCode) {
     String result = defaultValue;
-
     if (defaultValue != null) {
       switch (originalTypeCode) {
         case Types.BIT:
@@ -56,7 +55,6 @@ public class DefaultValueHelper {
           if (targetTypeCode == Types.TIMESTAMP) {
             try {
               Date date = Date.valueOf(result);
-
               return new Timestamp(date.getTime()).toString();
             } catch (IllegalArgumentException ex) {
             }
@@ -66,7 +64,6 @@ public class DefaultValueHelper {
           if (targetTypeCode == Types.TIMESTAMP) {
             try {
               Time time = Time.valueOf(result);
-
               return new Timestamp(time.getTime()).toString();
             } catch (IllegalArgumentException ex) {
             }
@@ -85,9 +82,8 @@ public class DefaultValueHelper {
    * @return The converted value
    */
   private Object convertBoolean(String defaultValue, int targetTypeCode) {
-    Boolean value = null;
-    Object result = null;
-
+    Boolean value;
+    Object result;
     try {
       value = (Boolean) ConvertUtils.convert(defaultValue, Boolean.class);
     } catch (ConversionException ex) {
@@ -97,7 +93,7 @@ public class DefaultValueHelper {
     if ((targetTypeCode == Types.BIT) || (targetTypeCode == Types.BOOLEAN)) {
       result = value;
     } else if (TypeMap.isNumericType(targetTypeCode)) {
-      result = (value.booleanValue() ? new Integer(1) : new Integer(0));
+      result = (value ? 1 : 0);
     } else {
       result = value.toString();
     }

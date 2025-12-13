@@ -19,8 +19,9 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
+import org.apache.ddlutils.util.JdbcUtils;
+
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 
@@ -103,7 +104,6 @@ public class MetaDataColumnDescriptor {
    */
   public Object readColumn(ResultSet resultSet) throws SQLException {
     Object result;
-
     try {
       switch (_jdbcType) {
         case Types.BIT:
@@ -123,29 +123,12 @@ public class MetaDataColumnDescriptor {
         result = null;
       }
     } catch (SQLException ex) {
-      if (isColumnInResultSet(resultSet)) {
+      if (JdbcUtils.isColumnInResultSet(resultSet, _columnName)) {
         throw ex;
       } else {
         result = _defaultValue;
       }
     }
     return result;
-  }
-
-  /**
-   * Determines whether a value for the specified column is present in the given result set.
-   *
-   * @param resultSet The result set
-   * @return <code>true</code> if the column is present in the result set
-   */
-  private boolean isColumnInResultSet(ResultSet resultSet) throws SQLException {
-    ResultSetMetaData metaData = resultSet.getMetaData();
-
-    for (int idx = 1; idx <= metaData.getColumnCount(); idx++) {
-      if (_columnName.equals(metaData.getColumnName(idx).toUpperCase())) {
-        return true;
-      }
-    }
-    return false;
   }
 }

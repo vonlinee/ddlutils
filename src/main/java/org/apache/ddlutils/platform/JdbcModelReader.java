@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.util.ObjectUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.*;
@@ -344,14 +345,7 @@ public class JdbcModelReader {
    * @return The default table types
    */
   public String[] getDefaultTableTypes() {
-    if (_defaultTableTypes == null) {
-      return null;
-    } else {
-      String[] result = new String[_defaultTableTypes.length];
-
-      System.arraycopy(_defaultTableTypes, 0, result, 0, _defaultTableTypes.length);
-      return result;
-    }
+    return ObjectUtils.cloneStringArray(_defaultTableTypes);
   }
 
   /**

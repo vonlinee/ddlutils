@@ -1,12 +1,26 @@
 package org.apache.ddlutils.util;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public final class JdbcUtils {
 
   private JdbcUtils() {
+  }
+
+  /**
+   * Determines whether a value for the specified column is present in the given result set.
+   *
+   * @param resultSet The result set
+   * @return <code>true</code> if the column is present in the result set
+   */
+  public static boolean isColumnInResultSet(ResultSet resultSet, String columnName) throws SQLException {
+    ResultSetMetaData metaData = resultSet.getMetaData();
+    for (int idx = 1; idx <= metaData.getColumnCount(); idx++) {
+      if (columnName.equals(metaData.getColumnName(idx).toUpperCase())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   public static void closeSilently(Connection conn) {
