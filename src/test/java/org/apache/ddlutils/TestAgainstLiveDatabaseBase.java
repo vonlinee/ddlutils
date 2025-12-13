@@ -36,7 +36,6 @@ import org.apache.ddlutils.io.DataToDatabaseSink;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.platform.CreationParameters;
-import org.apache.ddlutils.platform.DefaultValueHelper;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
@@ -707,15 +706,19 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     } catch (Exception ex) {
       getLog().error("Error while dropping the remaining triggers", ex);
     } finally {
-      if (stmt != null) {
-        try {
-          stmt.close();
-        } catch (Exception ex) {
-          getLog().error("Error while clearing the database", ex);
-        }
-      }
+      closeStatement(stmt);
     }
     return hasTriggers;
+  }
+
+  protected void closeStatement(Statement stmt) {
+    if (stmt != null) {
+      try {
+        stmt.close();
+      } catch (Exception ex) {
+        getLog().error("Error while clearing the database", ex);
+      }
+    }
   }
 
   /**
@@ -740,74 +743,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @return The adjusted model
    */
   protected Database adjustModel(Database sourceModel) {
-    Database model = new CloneHelper().clone(sourceModel);
-
-    for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
-      Table table = model.getTable(tableIdx);
-      for (int columnIdx = 0; columnIdx < table.getColumnCount(); columnIdx++) {
-        Column column = table.getColumn(columnIdx);
-        int origType = column.getTypeCode();
-        int targetType = getPlatformInfo().getTargetJdbcType(origType);
-
-        // we adjust the column types if the native type would back-map to a
-        // different jdbc type
-        if (targetType != origType) {
-          column.setTypeCode(targetType);
-          // we should also adapt the default value
-          if (column.getDefaultValue() != null) {
-            DefaultValueHelper helper = getPlatform().getSqlBuilder().getDefaultValueHelper();
-
-            column.setDefaultValue(helper.convert(column.getDefaultValue(), origType, targetType));
-          }
-        }
-        // we also promote the default size if the column has no size
-        // spec of its own
-        if ((column.getSize() == null) && getPlatformInfo().hasSize(targetType)) {
-          Integer defaultSize = getPlatformInfo().getDefaultSize(targetType);
-
-          if (defaultSize != null) {
-            column.setSize(defaultSize.toString());
-          }
-        }
-        // finally the platform might return a synthetic default value if the column
-        // is a primary key column
-        if (getPlatformInfo().isSyntheticDefaultValueForRequiredReturned() &&
-            (column.getDefaultValue() == null) && column.isRequired() && !column.isAutoIncrement()) {
-          switch (column.getTypeCode()) {
-            case Types.TINYINT:
-            case Types.SMALLINT:
-            case Types.INTEGER:
-            case Types.BIGINT:
-              column.setDefaultValue("0");
-              break;
-            case Types.REAL:
-            case Types.FLOAT:
-            case Types.DOUBLE:
-              column.setDefaultValue("0.0");
-              break;
-            case Types.BIT:
-              column.setDefaultValue("false");
-              break;
-            default:
-              column.setDefaultValue("");
-              break;
-          }
-        }
-        if (column.isPrimaryKey() && getPlatformInfo().isPrimaryKeyColumnAutomaticallyRequired()) {
-          column.setRequired(true);
-        }
-        if (column.isAutoIncrement() && getPlatformInfo().isIdentityColumnAutomaticallyRequired()) {
-          column.setRequired(true);
-        }
-      }
-      // we also add the default names to foreign keys that are initially unnamed
-      for (ForeignKey foreignKey : table.getForeignKeys()) {
-        if (foreignKey.getName() == null) {
-          foreignKey.setName(getPlatform().getSqlBuilder().getForeignKeyName(table, foreignKey));
-        }
-      }
-    }
-    return model;
+    return ModelUtils.adjustModel(getPlatform(), sourceModel);
   }
 
   /**

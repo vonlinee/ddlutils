@@ -162,7 +162,7 @@ public abstract class TypeMap {
    */
   private static final HashMap<Integer, String> _typeCodeToTypeName = new HashMap<>();
   /**
-   * Conatins the types per category.
+   * Contains the types per category.
    */
   private static final HashMap<JdbcTypeCategory, Set<Integer>> _typesPerCategory = new HashMap<>();
 
