@@ -977,6 +977,9 @@ public class JdbcModelReader {
       query.append(getPlatform().asIdentifier(columnsToCheck[idx].getName()));
     }
     query.append(" FROM ");
+    if (StringUtilsExt.isNotBlank(table.getSchema())) {
+      query.append(getPlatform().asIdentifier(table.getSchema())).append(".");
+    }
     query.append(getPlatform().asIdentifier(table.getName()));
     query.append(" WHERE 1 = 0");
     return query.toString();
