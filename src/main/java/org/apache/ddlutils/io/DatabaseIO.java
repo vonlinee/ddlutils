@@ -52,104 +52,104 @@ public class DatabaseIO {
   /**
    * Qualified name of the column element.
    */
-  public static final QName QNAME_ELEMENT_COLUMN = new QName(DDLUTILS_NAMESPACE, "column");
+  private static final QName QNAME_ELEMENT_COLUMN = new QName(DDLUTILS_NAMESPACE, "column");
   /**
    * Qualified name of the database element.
    */
-  public static final QName QNAME_ELEMENT_DATABASE = new QName(DDLUTILS_NAMESPACE, "database");
+  private static final QName QNAME_ELEMENT_DATABASE = new QName(DDLUTILS_NAMESPACE, "database");
   /**
    * Qualified name of the foreign-key element.
    */
-  public static final QName QNAME_ELEMENT_FOREIGN_KEY = new QName(DDLUTILS_NAMESPACE, "foreign-key");
+  private static final QName QNAME_ELEMENT_FOREIGN_KEY = new QName(DDLUTILS_NAMESPACE, "foreign-key");
   /**
    * Qualified name of the index element.
    */
-  public static final QName QNAME_ELEMENT_INDEX = new QName(DDLUTILS_NAMESPACE, "index");
+  private static final QName QNAME_ELEMENT_INDEX = new QName(DDLUTILS_NAMESPACE, "index");
   /**
    * Qualified name of the index-column element.
    */
-  public static final QName QNAME_ELEMENT_INDEX_COLUMN = new QName(DDLUTILS_NAMESPACE, "index-column");
+  private static final QName QNAME_ELEMENT_INDEX_COLUMN = new QName(DDLUTILS_NAMESPACE, "index-column");
   /**
    * Qualified name of the reference element.
    */
-  public static final QName QNAME_ELEMENT_REFERENCE = new QName(DDLUTILS_NAMESPACE, "reference");
+  private static final QName QNAME_ELEMENT_REFERENCE = new QName(DDLUTILS_NAMESPACE, "reference");
   /**
    * Qualified name of the table element.
    */
-  public static final QName QNAME_ELEMENT_TABLE = new QName(DDLUTILS_NAMESPACE, "table");
+  private static final QName QNAME_ELEMENT_TABLE = new QName(DDLUTILS_NAMESPACE, "table");
   /**
    * Qualified name of the unique element.
    */
-  public static final QName QNAME_ELEMENT_UNIQUE = new QName(DDLUTILS_NAMESPACE, "unique");
+  private static final QName QNAME_ELEMENT_UNIQUE = new QName(DDLUTILS_NAMESPACE, "unique");
   /**
    * Qualified name of the unique-column element.
    */
-  public static final QName QNAME_ELEMENT_UNIQUE_COLUMN = new QName(DDLUTILS_NAMESPACE, "unique-column");
+  private static final QName QNAME_ELEMENT_UNIQUE_COLUMN = new QName(DDLUTILS_NAMESPACE, "unique-column");
 
   /**
    * Qualified name of the autoIncrement attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_AUTO_INCREMENT = new QName(DDLUTILS_NAMESPACE, "autoIncrement");
+  private static final QName QNAME_ATTRIBUTE_AUTO_INCREMENT = new QName(DDLUTILS_NAMESPACE, "autoIncrement");
   /**
    * Qualified name of the default attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_DEFAULT = new QName(DDLUTILS_NAMESPACE, "default");
+  private static final QName QNAME_ATTRIBUTE_DEFAULT = new QName(DDLUTILS_NAMESPACE, "default");
   /**
    * Qualified name of the defaultIdMethod attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_DEFAULT_ID_METHOD = new QName(DDLUTILS_NAMESPACE, "defaultIdMethod");
+  private static final QName QNAME_ATTRIBUTE_DEFAULT_ID_METHOD = new QName(DDLUTILS_NAMESPACE, "defaultIdMethod");
   /**
    * Qualified name of the description attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_DESCRIPTION = new QName(DDLUTILS_NAMESPACE, "description");
+  private static final QName QNAME_ATTRIBUTE_DESCRIPTION = new QName(DDLUTILS_NAMESPACE, "description");
   /**
    * Qualified name of the foreign attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_FOREIGN = new QName(DDLUTILS_NAMESPACE, "foreign");
+  private static final QName QNAME_ATTRIBUTE_FOREIGN = new QName(DDLUTILS_NAMESPACE, "foreign");
   /**
    * Qualified name of the foreignTable attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_FOREIGN_TABLE = new QName(DDLUTILS_NAMESPACE, "foreignTable");
+  private static final QName QNAME_ATTRIBUTE_FOREIGN_TABLE = new QName(DDLUTILS_NAMESPACE, "foreignTable");
   /**
    * Qualified name of the javaName attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_JAVA_NAME = new QName(DDLUTILS_NAMESPACE, "javaName");
+  private static final QName QNAME_ATTRIBUTE_JAVA_NAME = new QName(DDLUTILS_NAMESPACE, "javaName");
   /**
    * Qualified name of the local attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_LOCAL = new QName(DDLUTILS_NAMESPACE, "local");
+  private static final QName QNAME_ATTRIBUTE_LOCAL = new QName(DDLUTILS_NAMESPACE, "local");
   /**
    * Qualified name of the name attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_NAME = new QName(DDLUTILS_NAMESPACE, "name");
+  private static final QName QNAME_ATTRIBUTE_NAME = new QName(DDLUTILS_NAMESPACE, "name");
   /**
    * Qualified name of the onDelete attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_ON_DELETE = new QName(DDLUTILS_NAMESPACE, "onDelete");
+  private static final QName QNAME_ATTRIBUTE_ON_DELETE = new QName(DDLUTILS_NAMESPACE, "onDelete");
   /**
    * Qualified name of the onUpdate attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_ON_UPDATE = new QName(DDLUTILS_NAMESPACE, "onUpdate");
+  private static final QName QNAME_ATTRIBUTE_ON_UPDATE = new QName(DDLUTILS_NAMESPACE, "onUpdate");
   /**
    * Qualified name of the primaryKey attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_PRIMARY_KEY = new QName(DDLUTILS_NAMESPACE, "primaryKey");
+  private static final QName QNAME_ATTRIBUTE_PRIMARY_KEY = new QName(DDLUTILS_NAMESPACE, "primaryKey");
   /**
    * Qualified name of the required attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_REQUIRED = new QName(DDLUTILS_NAMESPACE, "required");
+  private static final QName QNAME_ATTRIBUTE_REQUIRED = new QName(DDLUTILS_NAMESPACE, "required");
   /**
    * Qualified name of the size attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_SIZE = new QName(DDLUTILS_NAMESPACE, "size");
+  private static final QName QNAME_ATTRIBUTE_SIZE = new QName(DDLUTILS_NAMESPACE, "size");
   /**
    * Qualified name of the type attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_TYPE = new QName(DDLUTILS_NAMESPACE, "type");
+  private static final QName QNAME_ATTRIBUTE_TYPE = new QName(DDLUTILS_NAMESPACE, "type");
   /**
    * Qualified name of the version attribute.
    */
-  public static final QName QNAME_ATTRIBUTE_VERSION = new QName(DDLUTILS_NAMESPACE, "version");
+  private static final QName QNAME_ATTRIBUTE_VERSION = new QName(DDLUTILS_NAMESPACE, "version");
 
   /**
    * The log.
