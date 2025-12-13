@@ -340,4 +340,24 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.sql</include>
+          <include>**/*.xml</include>
+        </includes>
+      </testResource>
+      <testResource>
+        <directory>src/test/java</directory>
+        <includes>
+          <include>**/*.properties</include>
+          <include>**/*.sql</include>
+        </includes>
+      </testResource>
+    </testResources>
+  </build>
 </project>
