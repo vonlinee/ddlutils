@@ -485,7 +485,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    *
    * @param tableName    The name of the table (case-insensitive)
    * @param columnValues The values for the columns in order of definition
-   * @return The dyna bean for the row
+   * @return The Dyna bean for the row
    */
   protected DynaBean insertRow(String tableName, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
@@ -506,7 +506,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @param tableName    The name of the table (case-insensitive)
    * @param oldBean      The bean representing the current row
    * @param columnValues The values for the columns in order of definition
-   * @return The dyna bean for the new row
+   * @return The Dyna bean for the new row
    */
   protected DynaBean updateRow(String tableName, DynaBean oldBean, Object[] columnValues) {
     Table table = getModel().findTable(tableName);
@@ -1023,7 +1023,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     assertEquals("Not the same number of foreign keys in table " + actual.getName() + ".",
       expected.getForeignKeyCount(),
       actual.getForeignKeyCount());
-    // order is not assumed with the way foreignkeys are returned.
+    // order is not assumed with the way foreign keys are returned.
     for (int expectedFkIdx = 0; expectedFkIdx < expected.getForeignKeyCount(); expectedFkIdx++) {
       ForeignKey expectedFk = expected.getForeignKey(expectedFkIdx);
       String expectedName = getPlatform().getSqlBuilder().shortenName(expectedFk.getName(), getSqlBuilder().getMaxForeignKeyNameLength());
