@@ -51,7 +51,7 @@ import java.util.Map;
  *
  * @version $Revision$
  */
-public abstract class SqlBuilder {
+public class SqlBuilder {
   /**
    * The placeholder for the size value in the native type spec.
    */
