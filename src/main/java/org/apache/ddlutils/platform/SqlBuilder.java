@@ -676,7 +676,7 @@ public abstract class SqlBuilder {
       Table table = database.getTable(idx);
 
       if ((table.getName() != null) &&
-          (table.getName().length() > 0)) {
+          (!table.getName().isEmpty())) {
         dropForeignKeys(table);
       }
     }
@@ -687,9 +687,7 @@ public abstract class SqlBuilder {
     //       * alter the tables first to drop the internal foreignkeys
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
-
-      if ((table.getName() != null) &&
-          (table.getName().length() > 0)) {
+      if (StringUtilsExt.isNotEmpty(table.getName())) {
         writeTableComment(table);
         dropTable(table);
       }
@@ -1090,7 +1088,7 @@ public abstract class SqlBuilder {
     if (((startCut == 0) || (name.charAt(startCut - 1) != '_')) &&
         ((startCut + delta + 1 == originalLength) || (name.charAt(startCut + delta + 1) != '_'))) {
       // just to make sure that there isn't already a '_' right before or right
-      // after the cutting place (which would look odd with an aditional one)
+      // after the cutting place (which would look odd with an additional one)
       result.append("_");
     }
     result.append(name, startCut + delta + 1, originalLength);
@@ -1350,9 +1348,8 @@ public abstract class SqlBuilder {
    * @return <code>true</code> if the default value spec is valid
    */
   protected boolean isValidDefaultValue(String defaultSpec, int typeCode) {
-    return (defaultSpec != null) &&
-           ((defaultSpec.length() > 0) ||
-            (!TypeMap.isNumericType(typeCode) && !TypeMap.isDateTimeType(typeCode)));
+    return StringUtilsExt.isNotEmpty(defaultSpec) ||
+            (!TypeMap.isNumericType(typeCode) && !TypeMap.isDateTimeType(typeCode));
   }
 
   /**
@@ -1604,7 +1601,7 @@ public abstract class SqlBuilder {
    * @param index The index
    */
   protected void writeEmbeddedIndexCreateStmt(Table table, Index index) throws IOException {
-    if ((index.getName() != null) && (index.getName().length() > 0)) {
+    if (StringUtilsExt.isNotEmpty(index.getName())) {
       print(" CONSTRAINT ");
       printIdentifier(getIndexName(index));
     }

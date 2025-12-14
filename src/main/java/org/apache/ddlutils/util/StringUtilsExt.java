@@ -19,12 +19,28 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+
 /**
  * Helper class containing string utility functions.
  *
  * @version $Revision: $
  */
-public class StringUtilsExt extends org.apache.commons.lang3.StringUtils {
+public class StringUtilsExt {
+
+  public static boolean isEmpty(String str) {
+    return StringUtils.isEmpty(str);
+  }
+
+  public static boolean equals(String str1, String str2) {
+    return Strings.CS.equals(str1, str2);
+  }
+
+  public static boolean equalsIgnoreCase(String str1, String str2) {
+    return Strings.CI.equals(str1, str2);
+  }
+
   /**
    * Compares the two given strings in a case-sensitive or insensitive manner
    * depending on the <code>caseSensitive</code> parameter.
@@ -77,5 +93,21 @@ public class StringUtilsExt extends org.apache.commons.lang3.StringUtils {
       }
     }
     return result.toString();
+  }
+
+  public static String replace(final String text, final String searchString, final String replacement) {
+    return Strings.CS.replace(text, searchString, replacement);
+  }
+
+  public static boolean isNotBlank(String str) {
+    return StringUtils.isNotBlank(str);
+  }
+
+  public static boolean isNotEmpty(String str) {
+    return StringUtils.isNotEmpty(str);
+  }
+
+  public static String repeat(final String repeat, final int count) {
+    return StringUtils.repeat(repeat, count);
   }
 }
