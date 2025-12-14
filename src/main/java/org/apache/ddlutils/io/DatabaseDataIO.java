@@ -25,6 +25,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -435,13 +436,7 @@ public class DatabaseDataIO {
       } catch (SQLException ex) {
         // ignored
       } finally {
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException ex) {
-            // ignored
-          }
-        }
+        JdbcUtils.closeSilently(connection);
       }
     }
 
