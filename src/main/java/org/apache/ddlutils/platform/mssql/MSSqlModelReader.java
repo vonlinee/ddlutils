@@ -41,7 +41,7 @@ import java.util.regex.PatternSyntaxException;
  */
 public class MSSqlModelReader extends JdbcModelReader {
   /**
-   * Known system tables that Sql Server creates (e.g. automatic maintenance).
+   * Known system tables that SQL Server creates (e.g. automatic maintenance).
    */
   private static final String[] KNOWN_SYSTEM_TABLES = {"dtproperties"};
   /**
@@ -54,7 +54,7 @@ public class MSSqlModelReader extends JdbcModelReader {
   private final Pattern _isoTimePattern;
 
   /**
-   * Creates a new model reader for Microsoft Sql Server databases.
+   * Creates a new model reader for Microsoft SQL Server databases.
    *
    * @param platform The platform that this model reader belongs to
    */
@@ -112,12 +112,8 @@ public class MSSqlModelReader extends JdbcModelReader {
    */
   @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
-    // Sql Server generates an index "PK__[table name]__[hex number]"
-
-    String pkIndexName = "PK__" +
-                         table.getName() +
-                         "__";
-
+    // SQL Server generates an index "PK__[table name]__[hex number]"
+    String pkIndexName = "PK__" + table.getName() + "__";
     return index.getName().toUpperCase().startsWith(pkIndexName.toUpperCase());
   }
 
@@ -131,10 +127,8 @@ public class MSSqlModelReader extends JdbcModelReader {
    */
   private boolean existsPKWithName(DatabaseMetaDataWrapper metaData, Table table, String name) throws SQLException {
     ResultSet pks = null;
-
     try {
       pks = metaData.getPrimaryKeys(metaData.escapeForSearch(table.getName()));
-
       while (pks.next()) {
         if (name.equals(pks.getString("PK_NAME"))) {
           return true;
@@ -154,14 +148,14 @@ public class MSSqlModelReader extends JdbcModelReader {
     Column column = super.readColumn(metaData, values);
     String defaultValue = column.getDefaultValue();
 
-    // Sql Server tends to surround the returned default value with one or two sets of parentheses
+    // SQL Server tends to surround the returned default value with one or two sets of parentheses
     if (defaultValue != null) {
       while (defaultValue.startsWith("(") && defaultValue.endsWith(")")) {
         defaultValue = defaultValue.substring(1, defaultValue.length() - 1);
       }
 
       if (column.getTypeCode() == Types.TIMESTAMP) {
-        // Sql Server maintains the default values for DATE/TIME jdbc types, so we have to
+        // SQL Server maintains the default values for DATE/TIME jdbc types, so we have to
         // migrate the default value to TIMESTAMP
         Matcher matcher = _isoDatePattern.matcher(defaultValue);
         Timestamp timestamp = null;
@@ -179,7 +173,7 @@ public class MSSqlModelReader extends JdbcModelReader {
           defaultValue = timestamp.toString();
         }
       } else if (column.getTypeCode() == Types.DECIMAL) {
-        // For some reason, Sql Server 2005 always returns DECIMAL default values with a dot
+        // For some reason, SQL Server 2005 always returns DECIMAL default values with a dot
         // even if the scale is 0, so we remove the dot
         if ((column.getScale() == 0) && defaultValue.endsWith(".")) {
           defaultValue = defaultValue.substring(0, defaultValue.length() - 1);

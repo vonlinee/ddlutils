@@ -29,6 +29,9 @@ import org.apache.ddlutils.platform.SqlBuilder;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -1220,4 +1223,8 @@ public interface Platform {
       return name;
     }
   }
+
+  Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException;
+
+  void closeStatement(Statement stmt);
 }

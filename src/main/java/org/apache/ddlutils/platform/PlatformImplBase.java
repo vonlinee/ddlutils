@@ -2529,7 +2529,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param table      The table
    * @return The value
    */
-  protected Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
+  @Override
+  public Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
     Column column = (table == null ? null : table.findColumn(columnName, isDelimitedIdentifierModeOn()));
     Object value;
 

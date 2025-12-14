@@ -808,7 +808,6 @@ public class JdbcModelReader {
   protected Collection<ForeignKey> readForeignKeys(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     Map<String, ForeignKey> fks = new ListOrderedMap<>();
     ResultSet fkData = null;
-
     try {
       fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
       while (fkData.next()) {

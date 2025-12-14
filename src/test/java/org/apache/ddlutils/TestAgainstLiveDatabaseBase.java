@@ -207,7 +207,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   public static DataSource getLiveDataSource(String propFile) {
     Properties props = readTestProperties(propFile);
     if (props == null) {
-      throw new RuntimeException("failed to load properties file");
+      throw new RuntimeException("failed to load properties file: " + propFile);
     }
     return initDataSourceFromProperties(props);
   }

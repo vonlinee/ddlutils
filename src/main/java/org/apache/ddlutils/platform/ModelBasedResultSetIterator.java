@@ -22,6 +22,7 @@ package org.apache.ddlutils.platform;
 import org.apache.commons.beanutils.*;
 import org.apache.commons.collections4.map.ListOrderedMap;
 import org.apache.ddlutils.DatabaseOperationException;
+import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
@@ -50,7 +51,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   /**
    * The platform.
    */
-  private PlatformImplBase _platform;
+  private Platform _platform;
   /**
    * The base result set.
    */
@@ -176,13 +177,12 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * @param queryHints The query hints
    * @return The column name -> table map
    */
-  private Map<String, Table> prepareQueryHints(Table[] queryHints) {
+  protected Map<String, Table> prepareQueryHints(Table[] queryHints) {
     Map<String, Table> result = new HashMap<>();
 
     for (int tableIdx = 0; (queryHints != null) && (tableIdx < queryHints.length); tableIdx++) {
       for (int columnIdx = 0; columnIdx < queryHints[tableIdx].getColumnCount(); columnIdx++) {
         String columnName = queryHints[tableIdx].getColumn(columnIdx).getName();
-
         if (!_caseSensitive) {
           columnName = columnName.toLowerCase();
         }
@@ -218,7 +218,6 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
 
         if (bean instanceof SqlDynaBean) {
           SqlDynaClass dynaClass = (SqlDynaClass) bean.getDynaClass();
-
           table = dynaClass.getTable();
         }
 
@@ -232,7 +231,6 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
           }
 
           Object value = _platform.getObjectFromResultSet(_resultSet, columnName, curTable);
-
           bean.set(propName, value);
         }
         _needsAdvancing = true;
@@ -296,9 +294,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
       Connection conn = null;
       try {
         Statement stmt = _resultSet.getStatement();
-
         conn = stmt.getConnection();
-
         // also closes the resultset
         _platform.closeStatement(stmt);
       } catch (SQLException ex) {
