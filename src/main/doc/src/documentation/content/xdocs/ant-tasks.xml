@@ -813,7 +813,7 @@
             Specifies the table types to processed.
             For details and typical table types see
             <a href="ext:java/api/databaseMetaData-getTables">java.sql.DatabaseMetaData#getTables</a>.
-            Per default, only tables of type <code>TABLE</code>, eg. user tables, are processed.
+            Per default, only tables of type <code>TABLE</code>, e.g. user tables, are processed.
           </td>
         </tr>
         <tr>

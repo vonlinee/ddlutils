@@ -70,7 +70,7 @@ public class CreationParameters {
     Map<String, Object> params = _parametersPerTable.get(key);
 
     if (params == null) {
-      // we're using a list orderered map to retain the order
+      // we're using a list ordered map to retain the order
       params = new ListOrderedMap<>();
       _parametersPerTable.put(key, params);
     }

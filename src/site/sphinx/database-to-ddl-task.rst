@@ -82,7 +82,7 @@ Attributes
     :Default: ``TABLE``
     :Meaning: Specifies the table types to processed. For details and typical table types see
               the ``getTables`` method in the `DatabaseMetaData Javadoc`_. By default, only tables of type
-              ``TABLE``, eg. user tables, are processed.
+              ``TABLE``, e.g. user tables, are processed.
 
 ``useDelimitedSqlIdentifiers``
     :Required: no
