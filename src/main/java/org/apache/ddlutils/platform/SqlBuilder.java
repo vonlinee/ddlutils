@@ -1942,4 +1942,8 @@ public class SqlBuilder {
   public void flush() throws IOException {
     _writer.flush();
   }
+
+  public void nextLine() throws IOException {
+    println();
+  }
 }

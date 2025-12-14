@@ -1233,4 +1233,11 @@ public interface Platform {
    * @return current schema name
    */
   String currentSchemaName();
+
+  /**
+   * This function returns the qualified name of the given table
+   *
+   * @return qualified name
+   */
+  String getQualifiedName(Table table);
 }

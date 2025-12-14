@@ -34,6 +34,7 @@ import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.JdbcSupport;
 import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.SqlTokenizer;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -2724,6 +2725,14 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     } finally {
       returnConnection(connection);
     }
+  }
+
+  @Override
+  public String getQualifiedName(Table table) {
+    if (StringUtilsExt.isEmpty(table.getSchema())) {
+      return asIdentifier(table.getName());
+    }
+    return asIdentifier(table.getSchema()) + "." + asIdentifier(table.getName());
   }
 
   protected String getCurrentSchemaName(Connection connection) throws SQLException {

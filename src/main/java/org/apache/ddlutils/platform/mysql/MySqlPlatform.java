@@ -28,6 +28,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.sql.Types;
@@ -242,5 +243,14 @@ public class MySqlPlatform extends PlatformImplBase {
   @Override
   protected String getCurrentSchemaQuerySql() {
     return "SELECT DATABASE()";
+  }
+
+  @Override
+  public String getQualifiedName(Table table) {
+    String schema = table.getSchema();
+    if (StringUtilsExt.isEmpty(schema)) {
+      schema = table.getCatalog();
+    }
+    return asIdentifier(schema) + "." + asIdentifier(table.getName());
   }
 }
