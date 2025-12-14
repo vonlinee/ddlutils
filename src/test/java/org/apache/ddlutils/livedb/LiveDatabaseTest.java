@@ -30,7 +30,7 @@ public class LiveDatabaseTest {
     Assert.assertEquals("ddlutils", currentSchema);
   }
 
-  // @Test
+  @Test
   public void exportDatabaseAsSql() throws Exception {
     DataSource dataSource = TestAgainstLiveDatabaseBase.getLiveDataSource("/jdbc.mysql8.properties");
     Platform platform = PlatformFactory.createNewPlatformInstance(MySql8Platform.DATABASENAME);
@@ -52,15 +52,15 @@ public class LiveDatabaseTest {
         boolean first = true;
         while (iterator.hasNext()) {
           if (first) {
-            sqlBuilder.appendCommentLine("=================================================");
-            sqlBuilder.appendCommentLine("Data of table: " + platform.getQualifiedName(table));
-            sqlBuilder.appendCommentLine("==================================================");
-            sqlBuilder.nextLine();
+//            sqlBuilder.appendCommentLine("=================================================");
+//            sqlBuilder.appendCommentLine("Data of table: " + platform.getQualifiedName(table));
+//            sqlBuilder.appendCommentLine("==================================================");
+            // sqlBuilder.nextLine();
             first = false;
           }
           DynaBean bean = iterator.next();
           String insertSql = platform.getInsertSql(db, bean) + ";";
-          sqlBuilder.appendLine(insertSql);
+          // sqlBuilder.appendLine(insertSql);
         }
         sqlBuilder.flush();
       }
