@@ -47,7 +47,7 @@ import java.util.Map;
  * <p>
  * An implementation of this class can always delegate down to some templating technology such as Velocity if
  * it requires. Though often that can be quite complex when attempting to reuse code across many databases.
- * Hopefully only a small amount code needs to be changed on a per database basis.
+ * Hopefully only a small amount code needs to be changed on a per-database basis.
  *
  * @version $Revision$
  */
@@ -57,7 +57,7 @@ public abstract class SqlBuilder {
    */
   protected static final String SIZE_PLACEHOLDER = "{0}";
   /**
-   * The line separator for in between sql commands.
+   * The line separator for in between SQL commands.
    */
   private static final String LINE_SEPARATOR = System.getProperty("line.separator", "\n");
   /**
@@ -107,7 +107,7 @@ public abstract class SqlBuilder {
   //
 
   /**
-   * Creates a new sql builder.
+   * Creates a new SQL builder.
    *
    * @param platform The platform this builder belongs to
    */
@@ -390,7 +390,7 @@ public abstract class SqlBuilder {
         params == null ? null : params.getParametersFor(table));
     }
 
-    // we're writing the external foreignkeys last to ensure that all referenced tables are already defined
+    // we're writing the external foreign keys last to ensure that all referenced tables are already defined
     createForeignKeys(database);
   }
 
@@ -597,7 +597,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates the external foreignkey creation statements for all tables in the database.
+   * Creates the external foreign key creation statements for all tables in the database.
    *
    * @param database The database
    */
@@ -608,7 +608,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates external foreignkey creation statements if necessary.
+   * Creates external foreign key creation statements if necessary.
    *
    * @param database The database model
    * @param table    The table
@@ -620,7 +620,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Writes a single foreign key constraint using a alter table statement.
+   * Writes a single foreign key constraint using an alter table statement.
    *
    * @param database   The database model
    * @param table      The table
@@ -671,7 +671,7 @@ public abstract class SqlBuilder {
    * @param database The database
    */
   public void dropTables(Database database) throws IOException {
-    // we're dropping the external foreignkeys first
+    // we're dropping the external foreign keys first
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
 
@@ -681,10 +681,10 @@ public abstract class SqlBuilder {
       }
     }
 
-    // Next we drop the tables in reverse order to avoid referencial problems
+    // Next we drop the tables in reverse order to avoid reference problems
     // TODO: It might be more useful to either (or both)
-    //       * determine an order in which the tables can be dropped safely (via the foreignkeys)
-    //       * alter the tables first to drop the internal foreignkeys
+    //       * determine an order in which the tables can be dropped safely (via the foreign keys)
+    //       * alter the tables first to drop the internal foreign keys
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
       if (StringUtilsExt.isNotEmpty(table.getName())) {
@@ -702,7 +702,7 @@ public abstract class SqlBuilder {
    * @param table    The table
    */
   public void dropTable(Database database, Table table) throws IOException {
-    // we're dropping the foreignkeys to the table first
+    // we're dropping the foreign keys to the table first
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table otherTable = database.getTable(idx);
       ForeignKey[] fks = otherTable.getForeignKeys();
@@ -734,7 +734,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Creates external foreignkey drop statements.
+   * Creates external foreign key drop statements.
    *
    * @param table The table
    */
@@ -745,7 +745,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Generates the statement to drop a foreignkey constraint from the database using an
+   * Generates the statement to drop a foreign key constraint from the database using an
    * alter table statement.
    *
    * @param table      The table
@@ -767,7 +767,7 @@ public abstract class SqlBuilder {
    * @param columnValues    The columns values indexed by the column names
    * @param genPlaceholders Whether to generate value placeholders for a
    *                        prepared statement
-   * @return The insertion sql
+   * @return The insertion SQL
    */
   public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("INSERT INTO ");
@@ -826,7 +826,7 @@ public abstract class SqlBuilder {
    *                        in case <code>genPlaceholders</code> is <code>false</code>
    * @param genPlaceholders Whether to generate value placeholders for a
    *                        prepared statement (both for the pk values and the object values)
-   * @return The update sql
+   * @return The update SQL
    */
   public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("UPDATE ");
@@ -884,9 +884,9 @@ public abstract class SqlBuilder {
    * @param newColumnValues Contains the values for the columns to update
    * @param genPlaceholders Whether to generate value placeholders for a
    *                        prepared statement (both for the pk values and the object values)
-   * @return The update sql
+   * @return The update SQL
    */
-  public String getUpdateSql(Table table, Map oldColumnValues, Map newColumnValues, boolean genPlaceholders) {
+  public String getUpdateSql(Table table, Map<String, Object> oldColumnValues, Map<String, Object> newColumnValues, boolean genPlaceholders) {
     StringBuilder buffer = new StringBuilder("UPDATE ");
     boolean addSep = false;
 
@@ -935,7 +935,7 @@ public abstract class SqlBuilder {
   /**
    * Creates the SQL for deleting an object from the specified table. Depending on
    * the value of <code>genPlaceholders</code>, the generated SQL will contain
-   * prepared statement place holders or concrete values. Only those primary key
+   * prepared statement placeholders or concrete values. Only those primary key
    * columns wil be used that are present in the given map. If the map is null or
    * completely empty, then the SQL will not have a WHERE clause. The SQL will contain
    * the columns in the order defined in the table.
@@ -956,9 +956,7 @@ public abstract class SqlBuilder {
 
       Column[] pkCols = table.getPrimaryKeyColumns();
 
-      for (int pkColIdx = 0; pkColIdx < pkCols.length; pkColIdx++) {
-        Column column = pkCols[pkColIdx];
-
+      for (Column column : pkCols) {
         if (pkValues.containsKey(column.getName())) {
           if (addSep) {
             buffer.append(" AND ");
@@ -1048,7 +1046,7 @@ public abstract class SqlBuilder {
    * A database that does not support this, will return <code>null</code>.
    *
    * @param table The table
-   * @return The sql, or <code>null</code> if the database does not support this
+   * @return The SQL, or <code>null</code> if the database does not support this
    */
   public String getSelectLastIdentityValues(Table table) {
     // No default possible as the databases are quite different in this respect
@@ -1329,11 +1327,8 @@ public abstract class SqlBuilder {
    */
   protected String escapeStringValue(String value) {
     String result = value;
-
-    for (Iterator it = _charSequencesToEscape.entrySet().iterator(); it.hasNext(); ) {
-      Map.Entry entry = (Map.Entry) it.next();
-
-      result = StringUtilsExt.replace(result, (String) entry.getKey(), (String) entry.getValue());
+    for (Map.Entry<String, String> entry : _charSequencesToEscape.entrySet()) {
+      result = StringUtilsExt.replace(result, entry.getKey(), entry.getValue());
     }
     return result;
   }
@@ -1435,7 +1430,7 @@ public abstract class SqlBuilder {
   /**
    * Compares the current column in the database with the desired one.
    * Type, nullability, size, scale, default value, and precision radix are
-   * the attributes checked.  Currently default values are compared, and
+   * the attributes checked.  Currently, default values are compared, and
    * null and empty string are considered equal.
    *
    * @param currentColumn The current column as it is in the database
@@ -1449,11 +1444,11 @@ public abstract class SqlBuilder {
     //an alter statement for the column, but it will be the exact same definition
     //as before.  In order to avoid this situation I am ignoring the comparison
     //if the desired default is null.  In order to "un-default" a column you'll
-    //have to have a default="" or default="0" in the schema xml.
+    //have to have a default="" or default="0" in the schema XML.
     //If this is bad for other databases, it is recommended that the createColumn
     //method use a "DEFAULT NULL" statement if that is what is needed.
     //A good way to get this would be to require a defaultValue="<NULL>" in the
-    //schema xml if you really want null and not just unspecified.
+    //schema XML if you really want null and not just unspecified.
 
     String desiredDefault = desiredColumn.getDefaultValue();
     String currentDefault = currentColumn.getDefaultValue();
@@ -1474,7 +1469,7 @@ public abstract class SqlBuilder {
    * specified name, this method determines a unique name for it. The name will also
    * be shortened to honor the maximum identifier length imposed by the platform.
    *
-   * @param table The table for whith the foreign key is defined
+   * @param table The table for with the foreign key is defined
    * @param fk    The foreign key
    * @return The name
    */
@@ -1581,7 +1576,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Writes the indexes embedded within the create table statement.
+   * Writes the indexes embedded within the creation table statement.
    *
    * @param table The table
    */
@@ -1650,7 +1645,7 @@ public abstract class SqlBuilder {
 
 
   /**
-   * Writes the foreign key constraints inside a create table () clause.
+   * Writes the foreign key constraints inside a creation table () clause.
    *
    * @param database The database model
    * @param table    The table
@@ -1713,7 +1708,7 @@ public abstract class SqlBuilder {
    * Writes the onDelete action for the given foreign key.
    *
    * @param table      The table
-   * @param foreignKey The foreignkey
+   * @param foreignKey The foreign key
    */
   protected void writeForeignKeyOnDeleteAction(Table table, ForeignKey foreignKey) throws IOException {
     CascadeAction action = foreignKey.getOnDelete();
@@ -1761,7 +1756,7 @@ public abstract class SqlBuilder {
    * Writes the onDelete action for the given foreign key.
    *
    * @param table      The table
-   * @param foreignKey The foreignkey
+   * @param foreignKey The foreign key
    */
   protected void writeForeignKeyOnUpdateAction(Table table, ForeignKey foreignKey) throws IOException {
     CascadeAction action = foreignKey.getOnUpdate();
@@ -1836,7 +1831,7 @@ public abstract class SqlBuilder {
   }
 
   /**
-   * Prints the end of statement text, which is typically a semi colon followed by
+   * Prints the end of statement text, which is typically a semicolon followed by
    * a carriage return.
    */
   protected void printEndOfStatement() throws IOException {
