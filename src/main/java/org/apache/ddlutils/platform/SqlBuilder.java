@@ -1344,7 +1344,7 @@ public class SqlBuilder {
    */
   protected boolean isValidDefaultValue(String defaultSpec, int typeCode) {
     return StringUtilsExt.isNotEmpty(defaultSpec) ||
-            (!TypeMap.isNumericType(typeCode) && !TypeMap.isDateTimeType(typeCode));
+           (!TypeMap.isNumericType(typeCode) && !TypeMap.isDateTimeType(typeCode));
   }
 
   /**
@@ -1905,7 +1905,7 @@ public class SqlBuilder {
   /**
    * Prints the characters used to indent SQL.
    */
-  protected void printIndent() throws IOException {
+  public void printIndent() throws IOException {
     print(getIndent());
   }
 
@@ -1915,7 +1915,31 @@ public class SqlBuilder {
    *
    * @return The identifier
    */
-  protected String createUniqueIdentifier() {
+  public String createUniqueIdentifier() {
     return new UID().toString().replace(':', '_').replace('-', '_');
+  }
+
+  public SqlBuilder append(String text) throws IOException {
+    _writer.append(text);
+    return this;
+  }
+
+  public SqlBuilder appendLine(String text) throws IOException {
+    println(text);
+    return this;
+  }
+
+  public SqlBuilder appendCommentLine(String text) throws IOException {
+    printComment(text);
+    return this;
+  }
+
+  public SqlBuilder appendIndent() throws IOException {
+    printIndent();
+    return this;
+  }
+
+  public void flush() throws IOException {
+    _writer.flush();
   }
 }
