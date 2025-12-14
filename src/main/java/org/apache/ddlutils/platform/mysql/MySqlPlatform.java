@@ -238,4 +238,9 @@ public class MySqlPlatform extends PlatformImplBase {
     getSqlBuilder().createPrimaryKey(changedTable, newPKColumns);
     change.apply(currentModel, isDelimitedIdentifierModeOn());
   }
+
+  @Override
+  protected String getCurrentSchemaQuerySql() {
+    return "SELECT DATABASE()";
+  }
 }

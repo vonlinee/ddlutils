@@ -104,4 +104,44 @@ public final class JdbcUtils {
       }
     }
   }
+
+  public static ResultSet executeQuery(Connection connection, String sql) throws SQLException {
+    Statement statement = connection.createStatement();
+    return statement.executeQuery(sql);
+  }
+
+  public static ResultSet executeQuery(Connection connection, String sql, Object... parameters) throws SQLException {
+    PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    for (int i = 0; i < parameters.length; ++i) {
+      preparedStatement.setObject(i + 1, parameters[i]);
+    }
+    return preparedStatement.executeQuery();
+  }
+
+  public static String queryForSingleStringValue(Connection connection, String sql) throws SQLException {
+    try (Statement statement = connection.createStatement()) {
+      try (ResultSet rs = statement.executeQuery(sql)) {
+        rs.next();
+        return rs.getString(1);
+      }
+    }
+  }
+
+  public static int queryForSingleIntValue(Connection connection, String sql) throws SQLException {
+    try (Statement statement = connection.createStatement()) {
+      try (ResultSet rs = statement.executeQuery(sql)) {
+        rs.next();
+        return rs.getInt(1);
+      }
+    }
+  }
+
+  public static long queryForSingleLongValue(Connection connection, String sql) throws SQLException {
+    try (Statement statement = connection.createStatement()) {
+      try (ResultSet rs = statement.executeQuery(sql)) {
+        rs.next();
+        return rs.getLong(1);
+      }
+    }
+  }
 }

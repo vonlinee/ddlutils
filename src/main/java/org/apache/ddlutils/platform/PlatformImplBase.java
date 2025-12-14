@@ -32,6 +32,7 @@ import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.dynabean.SqlDynaProperty;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.JdbcSupport;
+import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.SqlTokenizer;
 
 import java.io.IOException;
@@ -2711,5 +2712,26 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   protected ModelBasedResultSetIterator createResultSetIterator(Database model, ResultSet resultSet, Table[] queryHints) {
     return new ModelBasedResultSetIterator(this, model, resultSet, queryHints, true);
+  }
+
+  @Override
+  public String currentSchemaName() {
+    Connection connection = borrowConnection();
+    try {
+      return getCurrentSchemaName(connection);
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    } finally {
+      returnConnection(connection);
+    }
+  }
+
+  protected String getCurrentSchemaName(Connection connection) throws SQLException {
+    String currentSchemaQuerySql = getCurrentSchemaQuerySql();
+    return JdbcUtils.queryForSingleStringValue(connection, currentSchemaQuerySql);
+  }
+
+  protected String getCurrentSchemaQuerySql() {
+    throw new UnsupportedOperationException("not implemented");
   }
 }

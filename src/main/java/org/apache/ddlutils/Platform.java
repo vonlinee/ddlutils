@@ -1227,4 +1227,10 @@ public interface Platform {
   Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException;
 
   void closeStatement(Statement stmt);
+
+  /**
+   * This function returns the name of the default schema for the current connection
+   * @return current schema name
+   */
+  String currentSchemaName();
 }
