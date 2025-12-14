@@ -200,7 +200,7 @@ public abstract class SqlBuilder {
   public void setValueLocale(String localeStr) {
     if (localeStr != null) {
       int sepPos = localeStr.indexOf('_');
-      String language = null;
+      String language;
       String country = null;
       String variant = null;
 
@@ -215,7 +215,7 @@ public abstract class SqlBuilder {
       } else {
         language = localeStr;
       }
-      Locale locale = null;
+      Locale locale;
 
       if (variant != null) {
         locale = new Locale(language, country, variant);
