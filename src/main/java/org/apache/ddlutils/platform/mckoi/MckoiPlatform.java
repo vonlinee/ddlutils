@@ -28,11 +28,11 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
@@ -132,12 +132,7 @@ public class MckoiPlatform extends PlatformImplBase {
       } catch (Exception ex) {
         throw new DatabaseOperationException("Error while trying to create a database", ex);
       } finally {
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException ex) {
-          }
-        }
+        JdbcUtils.closeSilently(connection);
       }
     } else {
       throw new UnsupportedOperationException("Unable to create a McKoi database via the driver " + jdbcDriverClassName);
