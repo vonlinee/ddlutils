@@ -25,9 +25,9 @@ import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Sub task for dropping the target database. Note that this is only supported on some database
+ * Sub-task for dropping the target database. Note that this is only supported on some database
  * platforms. See the database support documentation for details on which platforms support this.<br/>
- * This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
+ * This sub-task does not require schema files. Therefore, the <code>fileset</code> subelement and
  * the <code>schemaFile</code> attribute of the enclosing task can be omitted.
  *
  * @version $Revision: 289996 $

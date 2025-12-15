@@ -42,7 +42,7 @@ public class PrettyPrintingXmlWriter {
    */
   private final String _encoding;
   /**
-   * The xml writer.
+   * The XML writer.
    */
   private XMLStreamWriter _writer;
   /**
@@ -51,7 +51,7 @@ public class PrettyPrintingXmlWriter {
   private boolean _prettyPrinting = true;
 
   /**
-   * Creates a xml writer instance using UTF-8 encoding.
+   * Creates a XML writer instance using UTF-8 encoding.
    *
    * @param output The target to write the data XML to
    */
@@ -60,7 +60,7 @@ public class PrettyPrintingXmlWriter {
   }
 
   /**
-   * Creates a xml writer instance.
+   * Creates a XML writer instance.
    *
    * @param output   The target to write the data XML to
    * @param encoding The encoding of the XML file

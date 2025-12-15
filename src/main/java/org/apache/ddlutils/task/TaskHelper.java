@@ -59,6 +59,6 @@ public class TaskHelper {
     if (last != null) {
       values.add(last + ",");
     }
-    return values.toArray(new String[values.size()]);
+    return values.toArray(new String[0]);
   }
 }

@@ -102,7 +102,6 @@ public class MckoiPlatform extends PlatformImplBase {
     // For McKoi, you create databases by simply appending "?create=true" to the connection url
     if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
       StringBuilder creationUrl = new StringBuilder();
-      Connection connection = null;
 
       creationUrl.append(connectionUrl);
       // TODO: It might be safer to parse the URN and check whethere there is already a parameter there
@@ -124,9 +123,9 @@ public class MckoiPlatform extends PlatformImplBase {
       if (getLog().isDebugEnabled()) {
         getLog().debug("About to create database using this URL: " + creationUrl);
       }
+      Connection connection = null;
       try {
         Class.forName(jdbcDriverClassName);
-
         connection = DriverManager.getConnection(creationUrl.toString(), username, password);
         logWarnings(connection);
       } catch (Exception ex) {

@@ -49,7 +49,7 @@ public class PlatformConfiguration {
    */
   private boolean _sortForeignKeys;
   /**
-   * Whether to shutdown the database after the task has finished.
+   * Whether to shut down the database after the task has finished.
    */
   private boolean _shutdownDatabase;
   /**
@@ -204,10 +204,8 @@ public class PlatformConfiguration {
         if (_dataSource == null) {
           throw new BuildException("No database specified.");
         }
-        if (_databaseType == null) {
-          _databaseType = new PlatformUtils().determineDatabaseType(_dataSource.getDriverClassName(),
-            _dataSource.getUrl());
-        }
+        _databaseType = new PlatformUtils().determineDatabaseType(_dataSource.getDriverClassName(),
+          _dataSource.getUrl());
         if (_databaseType == null) {
           _databaseType = new PlatformUtils().determineDatabaseType(_dataSource);
         }

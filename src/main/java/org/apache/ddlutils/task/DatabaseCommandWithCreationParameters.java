@@ -24,7 +24,6 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Base type for database commands that use creation parameters.

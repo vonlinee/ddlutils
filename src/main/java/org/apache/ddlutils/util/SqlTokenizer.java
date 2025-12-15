@@ -50,7 +50,7 @@ public class SqlTokenizer {
   private boolean _finished;
 
   /**
-   * Creates a new sql tokenizer.
+   * Creates a new SQL tokenizer.
    *
    * @param sql The sql text
    */

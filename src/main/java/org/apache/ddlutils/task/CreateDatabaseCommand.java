@@ -25,14 +25,13 @@ import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * The sub task for creating the target database. Note that this is only supported on some database
+ * The sub-task for creating the target database. Note that this is only supported on some database
  * platforms. See the database support documentation for details on which platforms support this.<br/>
- * This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
+ * This sub-task does not require schema files. Therefore, the <code>fileset</code> subelement and
  * the <code>schemaFile</code> attribute of the enclosing task can be omitted.
  *
  * @version $Revision: 231306 $

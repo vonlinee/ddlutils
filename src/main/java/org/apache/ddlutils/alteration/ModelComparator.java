@@ -50,7 +50,7 @@ public class ModelComparator {
   /**
    * The predicate that defines which changes are supported by the platform.
    */
-  private final TableDefinitionChangesPredicate _tableDefCangePredicate;
+  private final TableDefinitionChangesPredicate _tableDefChangePredicate;
   /**
    * The object clone helper.
    */
@@ -82,7 +82,7 @@ public class ModelComparator {
                          boolean caseSensitive) {
     _platformInfo = platformInfo;
     _caseSensitive = caseSensitive;
-    _tableDefCangePredicate = tableDefChangePredicate;
+    _tableDefChangePredicate = tableDefChangePredicate;
   }
 
   /**
@@ -102,7 +102,7 @@ public class ModelComparator {
    * comparator will create additional primary key changes.
    * The default value is <code>true</code>.
    *
-   * @param canDropPrimaryKeyColumns Whether {@link RemoveColumnChange} objecs for primary
+   * @param canDropPrimaryKeyColumns Whether {@link RemoveColumnChange} objects for primary
    *                                 key columns are ok
    */
   public void setCanDropPrimaryKeyColumns(boolean canDropPrimaryKeyColumns) {
@@ -353,12 +353,12 @@ public class ModelComparator {
 
     // TOOD: check for foreign key changes (on delete/on update)
     if (!tableDefinitionChanges.isEmpty()) {
-      if ((_tableDefCangePredicate == null) || _tableDefCangePredicate.areSupported(tmpTable, tableDefinitionChanges)) {
+      if ((_tableDefChangePredicate == null) || _tableDefChangePredicate.areSupported(tmpTable, tableDefinitionChanges)) {
         changes.addAll(tableDefinitionChanges);
       } else {
         // we need to recreate the table; for this to work we need to remove foreign keys to and from the table
         // however, we don't have to add them back here as there is a check for added foreign keys/indexes
-        // later on anyways
+        // later on anyway
         // we also don't have to drop indexes on the original table
 
         ForeignKey[] fks = intermediateTable.getForeignKeys();
@@ -729,7 +729,7 @@ public class ModelComparator {
             getIntermediateColumnNamesFor(targetPK, intermediateTable));
 
           changes.add(change);
-          change.apply(intermediateModel, changePK);
+          change.apply(intermediateModel, true);
         } else {
           RemovePrimaryKeyChange removePKChange = new RemovePrimaryKeyChange(intermediateTable.getName());
           AddPrimaryKeyChange addPKChange = new AddPrimaryKeyChange(intermediateTable.getName(),
@@ -747,7 +747,7 @@ public class ModelComparator {
 
   /**
    * Compares the two columns and returns the change necessary to create the second
-   * column from the first one if they differe.
+   * column from the first one if they differ.
    *
    * @param sourceTable  The source table which contains the source column
    * @param sourceColumn The source column
@@ -802,8 +802,8 @@ public class ModelComparator {
 
   /**
    * Searches in the given table for a corresponding index. If the given index
-   * has no name, then a index to the same table with the same columns in the
-   * same order is searched. If the given index has a name, then the a corresponding
+   * has no name, then an index to the same table with the same columns in the
+   * same order is searched. If the given index has a name, then the corresponding
    * index also needs to have the same name, or no name at all, but not a different one.
    *
    * @param table The table to search in

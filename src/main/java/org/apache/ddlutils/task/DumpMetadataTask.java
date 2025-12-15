@@ -22,6 +22,7 @@ package org.apache.ddlutils.task;
 import org.apache.commons.collections4.set.ListOrderedSet;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ddlutils.io.PrettyPrintingXmlWriter;
+import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -80,7 +81,7 @@ public class DumpMetadataTask extends Task {
    */
   private String _columnPattern = "%";
   /**
-   * The tables types to read; <code>null</code> or an empty list means that we shall read every type.
+   * The tables type to read; <code>null</code> or an empty list means that we shall read every type.
    */
   private String[] _tableTypes = null;
   /**
@@ -248,16 +249,11 @@ public class DumpMetadataTask extends Task {
     } catch (Exception ex) {
       throw new BuildException(ex);
     } finally {
-      if (connection != null) {
-        try {
-          connection.close();
-        } catch (SQLException ex) {
-        }
-      }
+      JdbcUtils.closeSilently(connection);
       if ((_outputFile != null) && (output != null)) {
         try {
           output.close();
-        } catch (IOException ex) {
+        } catch (IOException ignored) {
         }
       }
     }
@@ -455,7 +451,7 @@ public class DumpMetadataTask extends Task {
   /**
    * Dumps the catalogs and schemas of the database.
    *
-   * @param xmlWriter The xml writer to write to
+   * @param xmlWriter The XML writer to write to
    * @param metaData  The database meta data
    */
   private void dumpCatalogsAndSchemas(PrettyPrintingXmlWriter xmlWriter, final DatabaseMetaData metaData) {
@@ -1120,7 +1116,7 @@ public class DumpMetadataTask extends Task {
    * @param columns    The columns in the result set
    * @param columnName The name of the column in the result set
    */
-  private void addStringAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set columns, String columnName) throws SQLException {
+  private void addStringAttribute(PrettyPrintingXmlWriter xmlWriter, String attrName, ResultSet result, Set<String> columns, String columnName) throws SQLException {
     if (columns.contains(columnName)) {
       try {
         xmlWriter.writeAttribute(null, attrName, result.getString(columnName));

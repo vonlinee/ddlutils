@@ -29,12 +29,11 @@ import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Inserts the data defined by the data XML file(s) into the database. This requires the schema
  * in the database to match the schema defined by the XML files specified at the enclosing task.<br/>
- * DdlUtils will honor the order imposed by the foreign keys. Ie. first all required entries are
+ * DdlUtils will honor the order imposed by the foreign keys. I.e. first all required entries are
  * inserted, then the dependent ones. Obviously this requires that no circular references exist
  * in the schema (DdlUtils currently does not check this). Also, the referenced entries must be
  * present in the data, otherwise the task will fail. This behavior can be turned off via the
@@ -113,7 +112,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * for the same table are bundled together and executed as one statement. This can be a lot faster
    * than single insert statements but is not supported by all JDBC drivers/databases. To achieve the
    * highest performance, you should group the data in the XML file according to the tables. This is
-   * because a batch insert only works for one table at a time. Thus when the table changes in an
+   * because a batch insert only works for one table at a time. Thus, when the table changes in an
    * entry in the XML file, the batch is committed and then a new one is started.
    *
    * @param useBatchMode <code>true</code> if batch mode shall be used
@@ -127,7 +126,7 @@ public class WriteDataToDatabaseCommand extends ConvertingDatabaseCommand {
    * Specifies whether the foreign key order shall be honored when inserting data into the database.
    * If not, DdlUtils will simply assume that the entry order is correct, i.e. that referenced rows
    * come before referencing rows in the data XML. Note that execution will be slower when DdlUtils
-   * has to ensure the foreign-key order of the data. Thus if you know that the data is specified in
+   * has to ensure the foreign-key order of the data. Thus, if you know that the data is specified in
    * foreign key order turn this off.
    *
    * @param ensureFKOrder <code>true</code> if the foreign key order shall be followed

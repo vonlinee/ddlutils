@@ -69,8 +69,7 @@ public class MckoiModelReader extends JdbcModelReader {
       "SELECT uniqueColumns.column, uniqueColumns.seq_no, uniqueInfo.name" +
       " FROM SYS_INFO.sUSRUniqueColumns uniqueColumns, SYS_INFO.sUSRUniqueInfo uniqueInfo" +
       " WHERE uniqueColumns.un_id = uniqueInfo.id AND uniqueInfo.table = ?";
-    final String queryWithSchema =
-      query + " AND uniqueInfo.schema = ?";
+    final String queryWithSchema = query + " AND uniqueInfo.schema = ?";
 
     Table table = super.readTable(metaData, values);
 

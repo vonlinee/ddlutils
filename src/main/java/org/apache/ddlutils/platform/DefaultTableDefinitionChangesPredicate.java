@@ -22,7 +22,6 @@ package org.apache.ddlutils.platform;
 import org.apache.ddlutils.alteration.*;
 import org.apache.ddlutils.model.Table;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,10 +35,9 @@ public class DefaultTableDefinitionChangesPredicate implements TableDefinitionCh
   /**
    * {@inheritDoc}
    */
+  @Override
   public boolean areSupported(Table intermediateTable, List<TableChange> changes) {
-    for (Iterator<TableChange> changeIt = changes.iterator(); changeIt.hasNext(); ) {
-      TableChange change = changeIt.next();
-
+    for (TableChange change : changes) {
       if (!isSupported(intermediateTable, change)) {
         return false;
       }
@@ -48,7 +46,7 @@ public class DefaultTableDefinitionChangesPredicate implements TableDefinitionCh
   }
 
   /**
-   * Checks whether the given change is suppored.
+   * Checks whether the given change is supported.
    *
    * @param intermediateTable The current table to which this change would be applied
    * @param change            The table change

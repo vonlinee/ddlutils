@@ -23,7 +23,6 @@ import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
 
 /**

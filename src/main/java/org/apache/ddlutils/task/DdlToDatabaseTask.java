@@ -27,10 +27,9 @@ import org.apache.tools.ant.types.FileSet;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
- * Task for performing operations on a live database. Sub tasks e.g. create the
+ * Task for performing operations on a live database. Sub-tasks e.g. create the
  * schema in the database, drop database schemas, insert data into the database,
  * create DTDs for data files, or write the SQL for creating a schema to a file.
  * <br/>
@@ -160,7 +159,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
   }
 
   /**
-   * Adds the "write schema sql to file"-command.
+   * Adds the "write schema SQL to file"-command.
    *
    * @param command The command
    */
@@ -197,7 +196,7 @@ public class DdlToDatabaseTask extends DatabaseTaskBase {
     reader.setValidateXml(_validateXml);
     reader.setUseInternalDtd(_useInternalDtd);
     if ((_singleSchemaFile != null) && !_fileSets.isEmpty()) {
-      throw new BuildException("Please use either the schemafile attribute or the sub fileset element, but not both");
+      throw new BuildException("Please use either the schema file attribute or the sub fileset element, but not both");
     }
     if (_singleSchemaFile != null) {
       model = readSingleSchemaFile(reader, _singleSchemaFile);

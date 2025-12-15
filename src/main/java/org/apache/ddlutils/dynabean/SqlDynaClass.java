@@ -111,7 +111,6 @@ public class SqlDynaClass extends BasicDynaClass {
   public SqlDynaProperty[] getSqlDynaProperties() {
     DynaProperty[] props = getDynaProperties();
     SqlDynaProperty[] result = new SqlDynaProperty[props.length];
-
     System.arraycopy(props, 0, result, 0, props.length);
     return result;
   }
@@ -127,7 +126,6 @@ public class SqlDynaClass extends BasicDynaClass {
     }
 
     SqlDynaProperty[] result = new SqlDynaProperty[_primaryKeyProperties.length];
-
     System.arraycopy(_primaryKeyProperties, 0, result, 0, _primaryKeyProperties.length);
     return result;
   }
@@ -143,7 +141,6 @@ public class SqlDynaClass extends BasicDynaClass {
     }
 
     SqlDynaProperty[] result = new SqlDynaProperty[_nonPrimaryKeyProperties.length];
-
     System.arraycopy(_nonPrimaryKeyProperties, 0, result, 0, _nonPrimaryKeyProperties.length);
     return result;
   }

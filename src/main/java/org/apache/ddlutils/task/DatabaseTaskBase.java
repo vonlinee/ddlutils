@@ -54,7 +54,7 @@ public abstract class DatabaseTaskBase extends Task {
    */
   private final PlatformConfiguration _platformConf = new PlatformConfiguration();
   /**
-   * The sub tasks to execute.
+   * The sub-tasks to execute.
    */
   private final ArrayList<Command> _commands = new ArrayList<>();
   /**
@@ -175,7 +175,7 @@ public abstract class DatabaseTaskBase extends Task {
    * identifiers when performing any SQL command. Undelimited identifiers also cannot be reserved
    * words and can only contain alphanumerical characters and the underscore.<br/>
    * These limitations do not exist for delimited identifiers where identifiers have to be enclosed
-   * in double quotes. Delimited identifiers can contain unicode characters, and even reserved
+   * in double quotes. Delimited identifiers can contain Unicode characters, and even reserved
    * words can be used as identifiers. Please be aware though, that they always have to enclosed
    * in double quotes, and that the case of the identifier will be important in every SQL command
    * executed against the database.

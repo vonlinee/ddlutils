@@ -249,7 +249,7 @@ public class DataReader {
   // TODO: add debug level logging (or trace ?)
 
   /**
-   * Reads the xml document from the given xml stream reader.
+   * Reads the XML document from the given XML stream reader.
    *
    * @param xmlReader The reader
    */
@@ -266,7 +266,7 @@ public class DataReader {
   }
 
   /**
-   * Reads a bean from the given xml stream reader.
+   * Reads a bean from the given XML stream reader.
    *
    * @param xmlReader The reader
    */
@@ -274,7 +274,7 @@ public class DataReader {
     QName elemQName = xmlReader.getName();
     Location location = xmlReader.getLocation();
     Map<String, String> attributes = new HashMap<>();
-    String tableName = null;
+    String tableName;
 
     for (int idx = 0; idx < xmlReader.getAttributeCount(); idx++) {
       QName attrQName = xmlReader.getAttributeName(idx);
@@ -312,7 +312,7 @@ public class DataReader {
   }
 
   /**
-   * Reads all relevant sub elements that match the columns specified by the given table object from the xml reader into the given bean.
+   * Reads all relevant sub elements that match the columns specified by the given table object from the XML reader into the given bean.
    *
    * @param xmlReader The reader
    * @param data      Where to store the values
@@ -329,7 +329,7 @@ public class DataReader {
   }
 
   /**
-   * Reads the next column sub element that matches a column specified by the given table object from the xml reader into the given bean.
+   * Reads the next column sub element that matches a column specified by the given table object from the XML reader into the given bean.
    *
    * @param xmlReader The reader
    * @param data      Where to store the values
@@ -457,7 +457,7 @@ public class DataReader {
    * Consumes the rest of the current element. This assumes that the current XML stream
    * event type is not START_ELEMENT.
    *
-   * @param reader The xml reader
+   * @param reader The XML reader
    */
   private void consumeRestOfElement(XMLStreamReader reader) throws XMLStreamException {
     int eventType = reader.getEventType();

@@ -55,7 +55,7 @@ public abstract class Command {
    * Specifies whether the execution shall stop if an error has occurred during the task runs.
    *
    * @param failOnError <code>true</code> if the execution shall stop in case of an error
-   * @ant.not-required By default execution will be stopped when an error is encountered.
+   * @ant.not-required By default, execution will be stopped when an error is encountered.
    */
   public void setFailOnError(boolean failOnError) {
     _failOnError = failOnError;
@@ -66,7 +66,7 @@ public abstract class Command {
    * re-throwing it (wrapped in a build exception) or only logging it.
    *
    * @param ex  The exception
-   * @param msg The message to use unless this the exception is rethrown and it is
+   * @param msg The message to use unless this the exception is rethrown, and it is
    *            already a build exception
    */
   protected void handleException(Exception ex, String msg) throws BuildException {

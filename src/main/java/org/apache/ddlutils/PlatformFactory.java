@@ -126,7 +126,7 @@ public class PlatformFactory {
    * at the returned platform instance (method {@link Platform#setDataSource(DataSource)}).
    *
    * @param dataSource The data source for the database
-   * @param username   The user name to use for connecting to the database
+   * @param username   The username to use for connecting to the database
    * @param password   The password to use for connecting to the database
    * @return The platform or <code>null</code> if the database is not supported
    */

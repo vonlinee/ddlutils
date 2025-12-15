@@ -56,7 +56,7 @@ public class DefaultValueHelper {
             try {
               Date date = Date.valueOf(result);
               return new Timestamp(date.getTime()).toString();
-            } catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ignored) {
             }
           }
           break;
@@ -65,7 +65,7 @@ public class DefaultValueHelper {
             try {
               Time time = Time.valueOf(result);
               return new Timestamp(time.getTime()).toString();
-            } catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ignored) {
             }
           }
           break;

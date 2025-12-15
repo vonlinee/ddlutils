@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 /**
- * Task for getting structural info and data from a live database. e.g. it has sub tasks for
+ * Task for getting structural info and data from a live database. e.g. it has sub-tasks for
  * writing the schema of the live database or the data currently in it to an XML file, for
  * creating the DTDs for these data files, and for generating SQL to creating a schema in the
  * database to a file.
@@ -84,7 +84,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Specifies the name of the model that is read from the database. This is mostly useful
-   * for the the <code>writeSchemaToFile</code> sub-task as it ensures that the generated
+   * for the <code>writeSchemaToFile</code> sub-task as it ensures that the generated
    * XML defines a valid model.
    *
    * @param modelName The model name. Use <code>null</code> or an empty string for the default name
@@ -113,7 +113,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Sets the regular expression matching the names of the tables that shall be read.
-   * For case insensitive matching, an uppercase name can be assumed.
+   * For case-insensitive matching, an uppercase name can be assumed.
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
    *                        for details
@@ -143,13 +143,13 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Sets the regular expression matching the names of the tables that shall be ignored.
-   * For case insensitive matching, an uppercase name can be assumed.
+   * For case-insensitive matching, an uppercase name can be assumed.
    *
    * @param tableNameRegExp The regular expression; see {@link java.util.regex.Pattern}
    *                        for details
    * @ant.not-required If no table filter is specified, then all tables will be read unless
    * <code>includeTables</code> or <code>includeTableFilter</code> is
-   * specifed
+   * specified
    */
   public void setExcludeTableFilter(String tableNameRegExp) {
     _excludeTableNameRegExp = tableNameRegExp;
@@ -174,7 +174,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
   }
 
   /**
-   * Adds the "write schema sql to file"-command.
+   * Adds the "write schema SQL to file"-command.
    *
    * @param command The command
    */
@@ -234,7 +234,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
 
   /**
    * Specifies the table types to be processed. More precisely, all tables that are of a
-   * type not in this list, will be ignored by the task and its sub tasks. For details and
+   * type not in this list, will be ignored by the task and its sub-tasks. For details and
    * typical table types see
    * <a href="http://java.sun.com/j2se/1.4.2/docs/api/java/sql/DatabaseMetaData.html#getTables(java.lang.String,%20java.lang.String,%20java.lang.String,%20java.lang.String[])">java.sql.DatabaseMetaData#getTables</a>.
    *
