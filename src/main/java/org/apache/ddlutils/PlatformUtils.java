@@ -33,6 +33,7 @@ import org.apache.ddlutils.platform.oracle.Oracle8Platform;
 import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -306,28 +307,11 @@ public class PlatformUtils {
    * @return The database type or <code>null</code> if the database type couldn't be determined
    */
   public String determineDatabaseType(DataSource dataSource, String username, String password) throws DatabaseOperationException {
-    Connection connection = null;
-
-    try {
-      if (username != null) {
-        connection = dataSource.getConnection(username, password);
-      } else {
-        connection = dataSource.getConnection();
-      }
-
+    try (Connection connection = JdbcUtils.getConnection(dataSource, username, password)){
       DatabaseMetaData metaData = connection.getMetaData();
-
       return determineDatabaseType(metaData.getDriverName(), metaData.getURL());
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while reading the database metadata: " + ex.getMessage(), ex);
-    } finally {
-      if (connection != null) {
-        try {
-          connection.close();
-        } catch (SQLException ex) {
-          // we ignore this one
-        }
-      }
     }
   }
 

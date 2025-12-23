@@ -126,12 +126,7 @@ public abstract class JdbcSupport {
    */
   public Connection borrowConnection() throws DatabaseOperationException {
     try {
-      Connection connection;
-      if (_username == null) {
-        connection = getDataSource().getConnection();
-      } else {
-        connection = getDataSource().getConnection(_username, _password);
-      }
+      Connection connection = JdbcUtils.getConnection(getDataSource(), _username, _password);
       if (_log.isDebugEnabled()) {
         String connName = connection.toString();
         _log.debug("Borrowed connection " + connName + " from data source");

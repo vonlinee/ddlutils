@@ -3,6 +3,7 @@ package org.apache.ddlutils.util;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.ddlutils.platform.MetaDataColumnDescriptor;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +13,16 @@ import java.util.Map;
 public final class JdbcUtils {
 
   private JdbcUtils() {
+  }
+
+  public static Connection getConnection(DataSource dataSource, String username, String password) throws SQLException {
+    Connection connection;
+    if (username != null) {
+      connection = dataSource.getConnection(username, password);
+    } else {
+      connection = dataSource.getConnection();
+    }
+    return connection;
   }
 
   public static List<Map<String, Object>> toMapList(ResultSet rs) throws SQLException {
