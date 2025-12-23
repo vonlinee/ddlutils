@@ -294,6 +294,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getInsertSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getInsertSql(table, columnValues, genPlaceholders);
   }
@@ -301,6 +302,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getUpdateSql(Table table, Map<String, Object> columnValues, boolean genPlaceholders) {
     return getQuotationOnStatement() + super.getUpdateSql(table, columnValues, genPlaceholders);
   }
@@ -320,6 +322,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void copyData(Table sourceTable, Table targetTable) throws IOException {
     // Sql Server per default does not allow us to insert values explicitly into
     // identity columns. However, we can change this behavior
@@ -351,6 +354,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   public void addColumn(Database model, Table table, Column newColumn) throws IOException {
     print("ALTER TABLE ");
     printlnIdentifier(getTableName(table));
@@ -482,6 +486,7 @@ public class MSSqlBuilder extends SqlBuilder {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     boolean sizeChanged = ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn);
     boolean typeChanged = ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, targetColumn);

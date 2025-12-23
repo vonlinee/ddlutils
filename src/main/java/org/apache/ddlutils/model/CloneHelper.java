@@ -62,7 +62,7 @@ public class CloneHelper {
    * @param source           The source table
    * @param cloneIndexes     Whether to clone indexes; if <code>false</code> then the clone will
    *                         not have any indexes
-   * @param cloneForeignKeys Whether to clone foreign kets; if <code>false</code> then the clone
+   * @param cloneForeignKeys Whether to clone foreign keys; if <code>false</code> then the clone
    *                         will not have any foreign keys
    * @param targetModel      The target model, can be <code>null</code> if
    *                         <code>cloneForeignKeys=false</code>

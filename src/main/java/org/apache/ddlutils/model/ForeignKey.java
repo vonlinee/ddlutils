@@ -175,7 +175,7 @@ public class ForeignKey implements Serializable {
   }
 
   /**
-   * Sets the action for this foreignkey for when the referenced row is changed.
+   * Sets the action for this foreign key for when the referenced row is changed.
    *
    * @param onUpdate The action
    * @throws NullPointerException If <code>onUdate</code> is null
@@ -225,7 +225,7 @@ public class ForeignKey implements Serializable {
   }
 
   /**
-   * Adds a reference, ie. a mapping between a local column (in the table that owns this foreign key)
+   * Adds a reference, i.e. a mapping between a local column (in the table that owns this foreign key)
    * and a remote column.
    *
    * @param reference The reference to add

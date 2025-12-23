@@ -87,7 +87,7 @@ public class IndexColumn implements Serializable {
 
   /**
    * Sets the position within the owning index. Please note that you should not
-   * change the value once the column has been added to a index.
+   * change the value once the column has been added to an index.
    *
    * @param position The position
    */

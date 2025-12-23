@@ -34,7 +34,7 @@ import java.io.IOException;
  */
 public class AxionBuilder extends SqlBuilder {
   /**
-   * Creates a new axion sql builder.
+   * Creates a new axion SQL builder.
    *
    * @param platform The platform this builder belongs to
    */

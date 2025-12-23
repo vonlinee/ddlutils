@@ -55,8 +55,8 @@ public class ModelHelper {
   }
 
   /**
-   * Removes all foreign keys from the tables in the list to tables outside of the list,
-   * or from tables outside of the list to tables in the list.
+   * Removes all foreign keys from the tables in the list to tables outside the list,
+   * or from tables outside the list to tables in the list.
    *
    * @param model  The database model
    * @param tables The tables

@@ -62,7 +62,7 @@ public class Oracle10ModelReader extends Oracle8ModelReader {
       ResultSet rs = stmt.executeQuery();
 
       if (rs.next()) {
-        // we found the table in the recycle bin, so its a deleted one which we ignore
+        // we found the table in the recycle bin, so it's a deleted one which we ignore
         deletedObj = true;
       }
     } finally {

@@ -341,7 +341,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           }
         } catch (SQLException ex) {
           if (continueOnError) {
-            // Since the user deciced to ignore this error, we log the error
+            // Since the user decided to ignore this error, we log the error
             // on level warn, and the exception itself on level debug
             _log.warn("SQL Command " + command + " failed with: " + ex.getMessage());
             if (_log.isDebugEnabled()) {
@@ -545,7 +545,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   }
 
   /**
-   * Returns the model comparator to be used for this platform. This method is intendeded
+   * Returns the model comparator to be used for this platform. This method is intended
    * to be redefined by platforms that need to customize the model reader.
    *
    * @return The model comparator
@@ -1623,7 +1623,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * either has a value or the column hasn't got a default value, for the given dyna class.
    *
    * @param model     The database model
-   * @param dynaClass The dyna class
+   * @param dynaClass The Dyna class
    * @param bean      The bean
    * @return The properties
    */
@@ -1652,7 +1652,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * now need to be read back from the DB.
    *
    * @param model     The database model
-   * @param dynaClass The dyna class
+   * @param dynaClass The Dyna class
    * @param bean      The bean
    * @return The columns
    */
@@ -2163,7 +2163,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * the specified table.
    *
    * @param connection The connection used for the update
-   * @param table      The table that the rows are updateed into
+   * @param table      The table that the rows are updated into
    */
   protected void beforeUpdate(Connection connection, Table table) throws SQLException {
   }
@@ -2173,7 +2173,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * the specified table.
    *
    * @param connection The connection used for the update
-   * @param table      The table that the rows have been updateed into
+   * @param table      The table that the rows have been updated into
    */
   protected void afterUpdate(Connection connection, Table table) throws SQLException {
   }

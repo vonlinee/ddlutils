@@ -36,7 +36,7 @@ import java.util.List;
 
 /**
  * The platform implementation for the Firebird database.
- * It is assumed that the database is configured with sql dialect 3!
+ * It is assumed that the database is configured with SQL dialect 3!
  *
  * @version $Revision: 231306 $
  */

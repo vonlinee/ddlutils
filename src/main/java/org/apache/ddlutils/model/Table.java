@@ -572,7 +572,7 @@ public class Table implements Serializable {
    * problems.
    *
    * @param name The name of the foreign key
-   * @return The foreign key or <code>null</code> if there is no such foreigb key
+   * @return The foreign key or <code>null</code> if there is no such foreign key
    */
   public ForeignKey findForeignKey(String name) {
     return findForeignKey(name, false);

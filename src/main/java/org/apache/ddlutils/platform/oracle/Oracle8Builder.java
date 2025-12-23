@@ -74,7 +74,7 @@ public class Oracle8Builder extends SqlBuilder {
    */
   @Override
   public void createTable(Database database, Table table, Map<String, Object> parameters) throws IOException {
-    // lets create any sequences
+    // let's create any sequences
     Column[] columns = table.getAutoIncrementColumns();
 
     for (Column column : columns) {

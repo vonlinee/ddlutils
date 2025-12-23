@@ -242,15 +242,15 @@ public class XMLUtils {
   }
 
   /**
-   * <p>Determines whether the given string is a well formed xml name.
-   * Only certain characters are allowed in well formed element and attribute
-   * names in xml. For example, white space is not allowed in a name.</p>
+   * <p>Determines whether the given string is a well-formed XML name.
+   * Only certain characters are allowed in well-formed element and attribute
+   * names in XML. For example, white space is not allowed in a name.</p>
    *
    * <p>The code for this method is based on code in <code>org.apache.xerces.util.XMLChar</code>
    * in <a href='http://xerces.apache.org/xerces2-j/index.html'>Apache Xerces</a>.
    * The authors of this class are credited at the top of this class.</p>
    *
-   * @param name The string to be checked for use as an xml attribute or element name.
+   * @param name The string to be checked for use as an XML attribute or element name.
    *             Returns <code>false</code> if <code>name</code> is null
    * @return Whether this string would be a well-formed name
    */

@@ -150,7 +150,7 @@ public class SapDbPlatform extends PlatformImplBase {
         } else if (change instanceof ColumnDefinitionChange) {
           ColumnDefinitionChange colChange = (ColumnDefinitionChange) change;
 
-          // SapDB has a ALTER TABLE MODIFY COLUMN but it is limited regarding the type conversions
+          // SapDB has a ALTER TABLE MODIFY COLUMN, but it is limited regarding the type conversions
           // it can perform, so we don't use it here but rather rebuild the table
           Column curColumn = intermediateTable.findColumn(colChange.getChangedColumn(), isDelimitedIdentifierModeOn());
           Column newColumn = colChange.getNewColumn();

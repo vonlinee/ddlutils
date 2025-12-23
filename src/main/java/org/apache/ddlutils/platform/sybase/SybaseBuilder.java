@@ -434,7 +434,7 @@ public class SybaseBuilder extends SqlBuilder {
                              ((oldParsedDefault != null) && !oldParsedDefault.equals(newParsedDefault));
 
     // Sybase does not like it if there is a default spec in the ALTER TABLE ALTER
-    // statement; thus we have to change the default afterwards
+    // statement; thus we have to change the default afterward
     if (defaultChanges) {
       // we're first removing the default as it might make problems when the
       // datatype changes
