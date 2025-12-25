@@ -21,6 +21,8 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.sql.Types;
 import java.util.List;
@@ -31,9 +33,11 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestPrimaryKeyComparison extends TestComparisonBase {
+
   /**
    * Tests the addition of a column that is the primary key.
    */
+  @Test
   public void testAddPrimaryKeyColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -55,31 +59,26 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     AddColumnChange colChange = (AddColumnChange) changes.get(0);
     AddPrimaryKeyChange pkChange = (AddPrimaryKeyChange) changes.get(1);
 
-    assertEquals("TableA",
-      colChange.getChangedTable());
+    Assert.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("ColPK1", Types.INTEGER, null, null, false, true, false,
       colChange.getNewColumn());
-    assertNull(colChange.getPreviousColumn());
-    assertEquals("ColPK2",
-      colChange.getNextColumn());
+    Assert.assertNull(colChange.getPreviousColumn());
+    Assert.assertEquals("ColPK2", colChange.getNextColumn());
 
-    assertEquals("TableA",
-      pkChange.getChangedTable());
-    assertEquals(1,
-      pkChange.getPrimaryKeyColumns().length);
-    assertEquals("ColPK1",
-      pkChange.getPrimaryKeyColumns()[0]);
+    Assert.assertEquals("TableA", pkChange.getChangedTable());
+    Assert.assertEquals(1, pkChange.getPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK1", pkChange.getPrimaryKeyColumns()[0]);
   }
 
   /**
    * Tests the addition of a single-column primary key.
    */
+  @Test
   public void testMakeColumnPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -100,22 +99,19 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddPrimaryKeyChange change = (AddPrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals(1,
-      change.getPrimaryKeyColumns().length);
-    assertEquals("ColPK",
-      change.getPrimaryKeyColumns()[0]);
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals(1, change.getPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK", change.getPrimaryKeyColumns()[0]);
   }
 
   /**
    * Tests the addition of a column to the primary key.
    */
+  @Test
   public void testAddColumnToPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -138,24 +134,20 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     PrimaryKeyChange change = (PrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals(2,
-      change.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK1",
-      change.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK2",
-      change.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals(2, change.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK1", change.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK2", change.getNewPrimaryKeyColumns()[1]);
   }
 
   /**
    * Tests changing the order of columns in the primary key.
    */
+  @Test
   public void testChangeColumnOrderInPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -180,36 +172,27 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(0);
     ColumnOrderChange colChange = (ColumnOrderChange) changes.get(1);
 
-    assertEquals("TableA",
-      pkChange.getChangedTable());
-    assertEquals(3,
-      pkChange.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK2",
-      pkChange.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK3",
-      pkChange.getNewPrimaryKeyColumns()[1]);
-    assertEquals("ColPK1",
-      pkChange.getNewPrimaryKeyColumns()[2]);
+    Assert.assertEquals("TableA", pkChange.getChangedTable());
+    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    assertEquals("TableA",
-      colChange.getChangedTable());
-    assertEquals(2,
-      colChange.getNewPosition("ColPK1", true));
-    assertEquals(0,
-      colChange.getNewPosition("ColPK2", true));
-    assertEquals(1,
-      colChange.getNewPosition("ColPK3", true));
+    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assert.assertEquals(2, colChange.getNewPosition("ColPK1", true));
+    Assert.assertEquals(0, colChange.getNewPosition("ColPK2", true));
+    Assert.assertEquals(1, colChange.getNewPosition("ColPK3", true));
   }
 
   /**
    * Tests adding a column to and changing the order of columns in the primary key.
    */
+  @Test
   public void testAddColumnAndChangeColumnOrderInPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -233,55 +216,40 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(4,
-      changes.size());
+    Assert.assertEquals(4, changes.size());
 
     PrimaryKeyChange pkChange1 = (PrimaryKeyChange) changes.get(0);
     ColumnOrderChange colChange1 = (ColumnOrderChange) changes.get(1);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(2);
     PrimaryKeyChange pkChange2 = (PrimaryKeyChange) changes.get(3);
 
-    assertEquals("TableA",
-      pkChange1.getChangedTable());
-    assertEquals(2,
-      pkChange1.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK3",
-      pkChange1.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK1",
-      pkChange1.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("TableA", pkChange1.getChangedTable());
+    Assert.assertEquals(2, pkChange1.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK3", pkChange1.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK1", pkChange1.getNewPrimaryKeyColumns()[1]);
 
-    assertEquals("TableA",
-      colChange1.getChangedTable());
-    assertEquals(1,
-      colChange1.getNewPosition("ColPK1", true));
-    assertEquals(-1,
-      colChange1.getNewPosition("ColPK2", true));
-    assertEquals(0,
-      colChange1.getNewPosition("ColPK3", true));
+    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assert.assertEquals(1, colChange1.getNewPosition("ColPK1", true));
+    Assert.assertEquals(-1, colChange1.getNewPosition("ColPK2", true));
+    Assert.assertEquals(0, colChange1.getNewPosition("ColPK3", true));
 
-    assertEquals("TableA",
-      colChange2.getChangedTable());
+    Assert.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("ColPK2", Types.INTEGER, null, null, false, true, false,
       colChange2.getNewColumn());
-    assertNull(colChange2.getPreviousColumn());
-    assertEquals("ColPK3",
-      colChange2.getNextColumn());
+    Assert.assertNull(colChange2.getPreviousColumn());
+    Assert.assertEquals("ColPK3", colChange2.getNextColumn());
 
-    assertEquals("TableA",
-      pkChange2.getChangedTable());
-    assertEquals(3,
-      pkChange2.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK2",
-      pkChange2.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK3",
-      pkChange2.getNewPrimaryKeyColumns()[1]);
-    assertEquals("ColPK1",
-      pkChange2.getNewPrimaryKeyColumns()[2]);
+    Assert.assertEquals("TableA", pkChange2.getChangedTable());
+    Assert.assertEquals(3, pkChange2.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK2", pkChange2.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK3", pkChange2.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("ColPK1", pkChange2.getNewPrimaryKeyColumns()[2]);
   }
 
   /**
    * Tests removing a column from and changing the order of columns in the primary key.
    */
+  @Test
   public void testRemoveColumnAndChangeColumnOrderInPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -305,35 +273,24 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(3,
-      changes.size());
+    Assert.assertEquals(3, changes.size());
 
     RemoveColumnChange colChange1 = (RemoveColumnChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     ColumnOrderChange colChange2 = (ColumnOrderChange) changes.get(2);
 
-    assertEquals("TableA",
-      colChange1.getChangedTable());
-    assertEquals("ColPK2",
-      colChange1.getChangedColumn());
+    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assert.assertEquals("ColPK2", colChange1.getChangedColumn());
 
-    assertEquals("TableA",
-      pkChange.getChangedTable());
-    assertEquals(2,
-      pkChange.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK3",
-      pkChange.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK1",
-      pkChange.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("TableA", pkChange.getChangedTable());
+    Assert.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[1]);
 
-    assertEquals("TableA",
-      colChange2.getChangedTable());
-    assertEquals(1,
-      colChange2.getNewPosition("ColPK1", true));
-    assertEquals(-1,
-      colChange2.getNewPosition("ColPK2", true));
-    assertEquals(0,
-      colChange2.getNewPosition("ColPK3", true));
+    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assert.assertEquals(1, colChange2.getNewPosition("ColPK1", true));
+    Assert.assertEquals(-1, colChange2.getNewPosition("ColPK2", true));
+    Assert.assertEquals(0, colChange2.getNewPosition("ColPK3", true));
   }
 
   // TODO: remove, add & reorder PK columns
@@ -341,6 +298,7 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
   /**
    * Tests the removal of a column from the primary key.
    */
+  @Test
   public void testMakeColumnNotPrimaryKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -363,23 +321,20 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     PrimaryKeyChange change = (PrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals(1,
-      change.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK2",
-      change.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals(1, change.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK2", change.getNewPrimaryKeyColumns()[0]);
   }
 
 
   /**
    * Tests removing the column that is the primary key.
    */
+  @Test
   public void testDropPrimaryKeyColumn1() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -401,20 +356,18 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveColumnChange colChange = (RemoveColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      colChange.getChangedTable());
-    assertEquals("ColPK",
-      colChange.getChangedColumn());
+    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assert.assertEquals("ColPK", colChange.getChangedColumn());
   }
 
   /**
    * Tests dropping a column that is part of the primary key.
    */
+  @Test
   public void testDropPrimaryKeyColumn2() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -438,20 +391,18 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveColumnChange colChange = (RemoveColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      colChange.getChangedTable());
-    assertEquals("ColPK2",
-      colChange.getChangedColumn());
+    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assert.assertEquals("ColPK2", colChange.getChangedColumn());
   }
 
   /**
    * Tests the removal of a primary key.
    */
+  @Test
   public void testRemovePrimaryKey1() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -472,18 +423,17 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemovePrimaryKeyChange change = (RemovePrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
   }
 
   /**
    * Tests removing a multi-column primary key.
    */
+  @Test
   public void testRemovePrimaryKey2() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -508,18 +458,17 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemovePrimaryKeyChange pkChange = (RemovePrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      pkChange.getChangedTable());
+    Assert.assertEquals("TableA", pkChange.getChangedTable());
   }
 
   /**
    * Tests changing the columns of a primary key.
    */
+  @Test
   public void testChangePrimaryKeyColumns() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -548,18 +497,13 @@ public class TestPrimaryKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(0);
 
-    assertEquals("TableA",
-      pkChange.getChangedTable());
-    assertEquals(2,
-      pkChange.getNewPrimaryKeyColumns().length);
-    assertEquals("ColPK2",
-      pkChange.getNewPrimaryKeyColumns()[0]);
-    assertEquals("ColPK4",
-      pkChange.getNewPrimaryKeyColumns()[1]);
+    Assert.assertEquals("TableA", pkChange.getChangedTable());
+    Assert.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
+    Assert.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assert.assertEquals("ColPK4", pkChange.getNewPrimaryKeyColumns()[1]);
   }
 }

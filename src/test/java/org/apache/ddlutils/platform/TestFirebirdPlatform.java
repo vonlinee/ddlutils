@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
+import org.junit.Test;
 
 /**
  * Tests the Firebird platform.
@@ -39,6 +40,7 @@ public class TestFirebirdPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"coltype\";\n" +
@@ -82,6 +84,7 @@ public class TestFirebirdPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TRIGGER \"trg_constraints_OL_PK_AUTO_INCR\";\n" +
@@ -113,6 +116,7 @@ public class TestFirebirdPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE \"table3\" DROP CONSTRAINT \"testfk\";\n" +
@@ -152,6 +156,7 @@ public class TestFirebirdPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Firebird requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"escapedcharacters\";\n" +

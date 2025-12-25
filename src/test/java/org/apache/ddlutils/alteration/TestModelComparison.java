@@ -21,6 +21,8 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.sql.Types;
 import java.util.List;
@@ -31,9 +33,11 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestModelComparison extends TestComparisonBase {
+
   /**
    * Tests the addition of a table.
    */
+  @Test
   public void testAddTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -57,8 +61,7 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddTableChange change = (AddTableChange) changes.get(0);
 
@@ -71,6 +74,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of a table with an index.
    */
+  @Test
   public void testAddTableWithIndex() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -98,8 +102,7 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddTableChange change = (AddTableChange) changes.get(0);
 
@@ -116,6 +119,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of a table and a foreign key to it.
    */
+  @Test
   public void testAddTableAndForeignKeyToIt() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -144,8 +148,7 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     AddTableChange tableChange = (AddTableChange) changes.get(0);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(1);
@@ -155,8 +158,7 @@ public class TestModelComparison extends TestComparisonBase {
     assertColumn("COLPK", Types.INTEGER, null, null, true, true, false,
       tableChange.getNewTable().getColumn(0));
 
-    assertEquals("TABLEA",
-      fkChange.getChangedTable());
+    Assert.assertEquals("TABLEA", fkChange.getChangedTable());
     assertForeignKey("TESTFKB", "TABLEB", new String[]{"COLFK"}, new String[]{"COLPK"},
       fkChange.getNewForeignKey());
   }
@@ -164,6 +166,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the addition of two tables with foreign keys to each other .
    */
+  @Test
   public void testAddTablesWithForeignKeys() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -192,8 +195,7 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(4,
-      changes.size());
+    Assert.assertEquals(4, changes.size());
 
     AddTableChange tableChange1 = (AddTableChange) changes.get(0);
     AddTableChange tableChange2 = (AddTableChange) changes.get(1);
@@ -214,13 +216,11 @@ public class TestModelComparison extends TestComparisonBase {
     assertColumn("COLFK", Types.INTEGER, null, null, false, false, false,
       tableChange2.getNewTable().getColumn(1));
 
-    assertEquals("TABLEA",
-      fkChange1.getChangedTable());
+    Assert.assertEquals("TABLEA", fkChange1.getChangedTable());
     assertForeignKey("TESTFKB", "TABLEB", new String[]{"COLFK"}, new String[]{"COLPK"},
       fkChange1.getNewForeignKey());
 
-    assertEquals("TABLEB",
-      fkChange2.getChangedTable());
+    Assert.assertEquals("TABLEB", fkChange2.getChangedTable());
     assertForeignKey("TESTFKA", "TABLEA", new String[]{"COLFK"}, new String[]{"COLPK"},
       fkChange2.getNewForeignKey());
   }
@@ -228,6 +228,7 @@ public class TestModelComparison extends TestComparisonBase {
   /**
    * Tests the removal of a table.
    */
+  @Test
   public void testDropTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -251,18 +252,17 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveTableChange change = (RemoveTableChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
   }
 
   /**
    * Tests the removal of a table with an index.
    */
+  @Test
   public void testDropTableWithIndex() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -290,18 +290,17 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveTableChange change = (RemoveTableChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
   }
 
   /**
    * Tests the removal of a table with a foreign key.
    */
+  @Test
   public void testDropTableWithForeignKey() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -329,24 +328,21 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     RemoveForeignKeyChange fkChange = (RemoveForeignKeyChange) changes.get(0);
     RemoveTableChange tableChange = (RemoveTableChange) changes.get(1);
 
-    assertEquals("TableA",
-      fkChange.getChangedTable());
-    assertEquals(model1.findTable("TableA").getForeignKey(0),
-      fkChange.findChangedForeignKey(model1, false));
+    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange.findChangedForeignKey(model1, false));
 
-    assertEquals("TableA",
-      tableChange.getChangedTable());
+    Assert.assertEquals("TableA", tableChange.getChangedTable());
   }
 
   /**
    * Tests the removal of a table and a foreign key to it.
    */
+  @Test
   public void testDropTableAndForeignKeyToIt() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -375,24 +371,21 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     RemoveForeignKeyChange fkChange = (RemoveForeignKeyChange) changes.get(0);
     RemoveTableChange tableChange = (RemoveTableChange) changes.get(1);
 
-    assertEquals("TableB",
-      fkChange.getChangedTable());
-    assertEquals(model1.findTable("TableB").getForeignKey(0),
-      fkChange.findChangedForeignKey(model1, false));
+    Assert.assertEquals("TableB", fkChange.getChangedTable());
+    Assert.assertEquals(model1.findTable("TableB").getForeignKey(0), fkChange.findChangedForeignKey(model1, false));
 
-    assertEquals("TableA",
-      tableChange.getChangedTable());
+    Assert.assertEquals("TableA", tableChange.getChangedTable());
   }
 
   /**
    * Tests the addition and removal of a table.
    */
+  @Test
   public void testAddAndDropTable() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -413,14 +406,12 @@ public class TestModelComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     RemoveTableChange change1 = (RemoveTableChange) changes.get(0);
     AddTableChange change2 = (AddTableChange) changes.get(1);
 
-    assertEquals("TableA",
-      change1.getChangedTable());
+    Assert.assertEquals("TableA", change1.getChangedTable());
 
     assertTable("TABLEA", null, 1, 0, 0,
       change2.getNewTable());

@@ -19,7 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.TestCase;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
@@ -27,6 +26,8 @@ import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.util.StringUtilsExt;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -39,7 +40,8 @@ import java.util.List;
  *
  * @version $Revision: 289996 $
  */
-public class TestDataReaderAndWriter extends TestCase {
+public class TestDataReaderAndWriter {
+
   /**
    * Reads the given schema xml into a {@link Database} object.
    *
@@ -118,17 +120,18 @@ public class TestDataReaderAndWriter extends TestCase {
   private void roundtripTest(Database model, SqlDynaBean bean, String encoding, String expectedDataXml) throws UnsupportedEncodingException {
     byte[] xmlData = writeBean(model, bean, encoding);
 
-    assertEquals(expectedDataXml, new String(xmlData, encoding));
+    Assert.assertEquals(expectedDataXml, new String(xmlData, encoding));
 
     List<DynaBean> beans = readBeans(model, xmlData);
 
-    assertEquals(1, beans.size());
-    assertEquals(bean, beans.get(0));
+    Assert.assertEquals(1, beans.size());
+    Assert.assertEquals(bean, beans.get(0));
   }
 
   /**
    * Tests reading the data from XML.
    */
+  @Test
   public void testRead() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -174,7 +177,7 @@ public class TestDataReaderAndWriter extends TestCase {
       "  </book>\n" +
       "</data>");
 
-    assertEquals(5, beans.size());
+    Assert.assertEquals(5, beans.size());
 
     DynaBean obj1 = beans.get(0);
     DynaBean obj2 = beans.get(1);
@@ -182,59 +185,36 @@ public class TestDataReaderAndWriter extends TestCase {
     DynaBean obj4 = beans.get(3);
     DynaBean obj5 = beans.get(4);
 
-    assertEquals("author",
-      obj1.getDynaClass().getName());
-    assertEquals("1",
-      obj1.get("author_id").toString());
-    assertEquals("Ernest Hemingway",
-      obj1.get("name").toString());
-    assertEquals("author",
-      obj2.getDynaClass().getName());
-    assertEquals("2",
-      obj2.get("author_id").toString());
-    assertEquals("William Shakespeare",
-      obj2.get("name").toString());
-    assertEquals("book",
-      obj3.getDynaClass().getName());
-    assertEquals("1",
-      obj3.get("book_id").toString());
-    assertEquals("1",
-      obj3.get("author_id").toString());
-    assertEquals("0684830493",
-      obj3.get("isbn").toString());
-    assertEquals("Old Man And The Sea",
-      obj3.get("title").toString());
-    assertEquals("1952-01-01",
-      obj3.get("issue_date").toString());    // parsed as a java.sql.Date
-    assertEquals("book",
-      obj4.getDynaClass().getName());
-    assertEquals("2",
-      obj4.get("book_id").toString());
-    assertEquals("2",
-      obj4.get("author_id").toString());
-    assertEquals("0198321465",
-      obj4.get("isbn").toString());
-    assertEquals("Macbeth",
-      obj4.get("title").toString());
-    assertEquals("1606-01-01",
-      obj4.get("issue_date").toString());    // parsed as a java.sql.Date
-    assertEquals("book",
-      obj5.getDynaClass().getName());
-    assertEquals("3",
-      obj5.get("book_id").toString());
-    assertEquals("2",
-      obj5.get("author_id").toString());
-    assertEquals("0140707026",
-      obj5.get("isbn").toString());
-    assertEquals("A Midsummer Night's Dream",
-      obj5.get("title").toString());
-    assertEquals("1595-01-01",
-      obj5.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assert.assertEquals("author", obj1.getDynaClass().getName());
+    Assert.assertEquals("1", obj1.get("author_id").toString());
+    Assert.assertEquals("Ernest Hemingway", obj1.get("name").toString());
+    Assert.assertEquals("author", obj2.getDynaClass().getName());
+    Assert.assertEquals("2", obj2.get("author_id").toString());
+    Assert.assertEquals("William Shakespeare", obj2.get("name").toString());
+    Assert.assertEquals("book", obj3.getDynaClass().getName());
+    Assert.assertEquals("1", obj3.get("book_id").toString());
+    Assert.assertEquals("1", obj3.get("author_id").toString());
+    Assert.assertEquals("0684830493", obj3.get("isbn").toString());
+    Assert.assertEquals("Old Man And The Sea", obj3.get("title").toString());
+    Assert.assertEquals("1952-01-01", obj3.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assert.assertEquals("book", obj4.getDynaClass().getName());
+    Assert.assertEquals("2", obj4.get("book_id").toString());
+    Assert.assertEquals("2", obj4.get("author_id").toString());
+    Assert.assertEquals("0198321465", obj4.get("isbn").toString());
+    Assert.assertEquals("Macbeth", obj4.get("title").toString());
+    Assert.assertEquals("1606-01-01", obj4.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assert.assertEquals("book", obj5.getDynaClass().getName());
+    Assert.assertEquals("3", obj5.get("book_id").toString());
+    Assert.assertEquals("2", obj5.get("author_id").toString());
+    Assert.assertEquals("0140707026", obj5.get("isbn").toString());
+    Assert.assertEquals("A Midsummer Night's Dream", obj5.get("title").toString());
+    Assert.assertEquals("1595-01-01", obj5.get("issue_date").toString());    // parsed as a java.sql.Date
   }
 
   /**
    * Tests reading the data from a file via the {#link {@link DataReader#read(String)} method.
    */
+  @Test
   public void testReadFromFile1() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -264,16 +244,13 @@ public class TestDataReaderAndWriter extends TestCase {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(tmpFile.getAbsolutePath());
 
-      assertEquals(1, beans.size());
+      Assert.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      assertEquals("test",
-        obj.getDynaClass().getName());
-      assertEquals("1",
-        obj.get("id").toString());
-      assertEquals("foo",
-        obj.get("value").toString());
+      Assert.assertEquals("test", obj.getDynaClass().getName());
+      Assert.assertEquals("1", obj.get("id").toString());
+      Assert.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }
@@ -282,6 +259,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests reading the data from a file via the {#link {@link DataReader#read(File)} method.
    */
+  @Test
   public void testReadFromFile2() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -311,16 +289,13 @@ public class TestDataReaderAndWriter extends TestCase {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(tmpFile);
 
-      assertEquals(1, beans.size());
+      Assert.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      assertEquals("test",
-        obj.getDynaClass().getName());
-      assertEquals("1",
-        obj.get("id").toString());
-      assertEquals("foo",
-        obj.get("value").toString());
+      Assert.assertEquals("test", obj.getDynaClass().getName());
+      Assert.assertEquals("1", obj.get("id").toString());
+      Assert.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }
@@ -329,6 +304,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests reading the data from a file via the {#link {@link DataReader#read(java.io.InputStream)} method.
    */
+  @Test
   public void testReadFromFile3() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -358,16 +334,13 @@ public class TestDataReaderAndWriter extends TestCase {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(Files.newInputStream(tmpFile.toPath()));
 
-      assertEquals(1, beans.size());
+      Assert.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      assertEquals("test",
-        obj.getDynaClass().getName());
-      assertEquals("1",
-        obj.get("id").toString());
-      assertEquals("foo",
-        obj.get("value").toString());
+      Assert.assertEquals("test", obj.getDynaClass().getName());
+      Assert.assertEquals("1", obj.get("id").toString());
+      Assert.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }
@@ -376,6 +349,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests sub elements for columns.
    */
+  @Test
   public void testSubElements() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -398,39 +372,31 @@ public class TestDataReaderAndWriter extends TestCase {
       "  </test>\n" +
       "</data>");
 
-    assertEquals(3, beans.size());
+    Assert.assertEquals(3, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("id").toString());
-    assertEquals("foo",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("id").toString());
+    Assert.assertEquals("foo", obj.get("value").toString());
 
     obj = beans.get(1);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("2",
-      obj.get("id").toString());
-    assertEquals("bar",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("2", obj.get("id").toString());
+    Assert.assertEquals("bar", obj.get("value").toString());
 
     obj = beans.get(2);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("3",
-      obj.get("id").toString());
-    assertEquals("baz",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("3", obj.get("id").toString());
+    Assert.assertEquals("baz", obj.get("value").toString());
   }
 
   /**
    * Tests that the name of the root element does not matter.
    */
+  @Test
   public void testRootElementNameDoesntMatter() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -446,21 +412,19 @@ public class TestDataReaderAndWriter extends TestCase {
       "  <test id='1' value='foo'/>\n" +
       "</someRandomName>");
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("id").toString());
-    assertEquals("foo",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("id").toString());
+    Assert.assertEquals("foo", obj.get("value").toString());
   }
 
   /**
    * Tests that elements for undefined tables are ignored.
    */
+  @Test
   public void testElementForUndefinedTable() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -478,30 +442,25 @@ public class TestDataReaderAndWriter extends TestCase {
       "  <test id='3' value='baz'/>\n" +
       "</data>");
 
-    assertEquals(2, beans.size());
+    Assert.assertEquals(2, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("id").toString());
-    assertEquals("foo",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("id").toString());
+    Assert.assertEquals("foo", obj.get("value").toString());
 
     obj = beans.get(1);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("3",
-      obj.get("id").toString());
-    assertEquals("baz",
-      obj.get("value").toString());
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("3", obj.get("id").toString());
+    Assert.assertEquals("baz", obj.get("value").toString());
   }
 
   /**
    * Tests that attributes for which no column is defined, are ignored.
    */
+  @Test
   public void testAttributeForUndefinedColumn() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -517,20 +476,19 @@ public class TestDataReaderAndWriter extends TestCase {
       "  <test id='1' value1='foo'/>\n" +
       "</data>");
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("id").toString());
-    assertNull(obj.get("value"));
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("id").toString());
+    Assert.assertNull(obj.get("value"));
   }
 
   /**
    * Tests that sub elements for which no column is defined, are ignored.
    */
+  @Test
   public void testSubElementForUndefinedColumn() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -548,20 +506,19 @@ public class TestDataReaderAndWriter extends TestCase {
       "  </test>\n" +
       "</data>");
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("id").toString());
-    assertNull(obj.get("value"));
+    Assert.assertEquals("test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("id").toString());
+    Assert.assertNull(obj.get("value"));
   }
 
   /**
    * Tests parsing when case sensitivity is turned on.
    */
+  @Test
   public void testCaseSensitivityTurnedOn() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -585,20 +542,19 @@ public class TestDataReaderAndWriter extends TestCase {
     dataReader.setSink(new TestDataSink(beans));
     dataReader.read(new StringReader(testDataXml));
 
-    assertEquals(1, beans.size());
+    Assert.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("Test",
-      obj.getDynaClass().getName());
-    assertEquals("2",
-      obj.get("Id").toString());
-    assertNull(obj.get("Value"));
+    Assert.assertEquals("Test", obj.getDynaClass().getName());
+    Assert.assertEquals("2", obj.get("Id").toString());
+    Assert.assertNull(obj.get("Value"));
   }
 
   /**
    * Tests parsing when case sensitivity is turned off.
    */
+  @Test
   public void testCaseSensitivityTurnedOff() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -623,39 +579,31 @@ public class TestDataReaderAndWriter extends TestCase {
     dataReader.setSink(new TestDataSink(beans));
     dataReader.read(new StringReader(testDataXml));
 
-    assertEquals(3, beans.size());
+    Assert.assertEquals(3, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    assertEquals("Test",
-      obj.getDynaClass().getName());
-    assertEquals("1",
-      obj.get("Id").toString());
-    assertEquals("foo",
-      obj.get("Value").toString());
+    Assert.assertEquals("Test", obj.getDynaClass().getName());
+    Assert.assertEquals("1", obj.get("Id").toString());
+    Assert.assertEquals("foo", obj.get("Value").toString());
 
     obj = beans.get(1);
 
-    assertEquals("Test",
-      obj.getDynaClass().getName());
-    assertEquals("2",
-      obj.get("Id").toString());
-    assertEquals("bar",
-      obj.get("Value").toString());
+    Assert.assertEquals("Test", obj.getDynaClass().getName());
+    Assert.assertEquals("2", obj.get("Id").toString());
+    Assert.assertEquals("bar", obj.get("Value").toString());
 
     obj = beans.get(2);
 
-    assertEquals("Test",
-      obj.getDynaClass().getName());
-    assertEquals("3",
-      obj.get("Id").toString());
-    assertEquals("baz",
-      obj.get("Value").toString());
+    Assert.assertEquals("Test", obj.getDynaClass().getName());
+    Assert.assertEquals("3", obj.get("Id").toString());
+    Assert.assertEquals("baz", obj.get("Value").toString());
   }
 
   /**
    * Tests special characters in the data XML (for DDLUTILS-63).
    */
+  @Test
   public void testSpecialCharacters() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -684,6 +632,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests special characters in the data XML (for DDLUTILS-233).
    */
+  @Test
   public void testSpecialCharactersUTF8() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -712,6 +661,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests a cdata section (see DDLUTILS-174).
    */
+  @Test
   public void testCData() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -743,13 +693,14 @@ public class TestDataReaderAndWriter extends TestCase {
     byte[] xmlData = writeBean(model, bean, "UTF-8");
     List<DynaBean> beans = readBeans(model, xmlData);
 
-    assertEquals(1, beans.size());
-    assertEquals(bean, beans.get(0));
+    Assert.assertEquals(1, beans.size());
+    Assert.assertEquals(bean, beans.get(0));
   }
 
   /**
    * Tests the reader & writer behavior when the table name is not a valid XML identifier.
    */
+  @Test
   public void testTableNameLong() throws Exception {
     String tableName = StringUtilsExt.repeat("test", 100);
     Database model = readModel(
@@ -779,6 +730,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name is not a valid XML identifier.
    */
+  @Test
   public void testTableNameNotAValidXmlIdentifier() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -805,6 +757,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name is not a valid XML identifier and too long.
    */
+  @Test
   public void testTableNameInvalidAndLong() throws Exception {
     String tableName = StringUtilsExt.repeat("table name", 50);
     Database model = readModel(
@@ -834,6 +787,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name contains a '&' character.
    */
+  @Test
   public void testTableNameContainsAmpersand() throws Exception {
     String tableName = "test&table";
     Database model = new Database("test");
@@ -870,6 +824,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name contains a '<' character.
    */
+  @Test
   public void testTableNameContainsLessCharacter() throws Exception {
     String tableName = "test<table";
     Database model = new Database("test");
@@ -906,6 +861,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name contains a '>' character.
    */
+  @Test
   public void testTableNameContainsMoreCharacter() throws Exception {
     String tableName = "test>table";
     Database model = new Database("test");
@@ -942,6 +898,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name contains characters not allowed in XML.
    */
+  @Test
   public void testTableNameContainsInvalidCharacters() throws Exception {
     String tableName = "test\u0000table";
     Database model = new Database("test");
@@ -980,6 +937,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when the table name is 'table'.
    */
+  @Test
   public void testTableNameIsTable() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1011,6 +969,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a normal valid tag,
    * and both column name and value are shorter than 255 characters.
    */
+  @Test
   public void testColumnNameAndValueShort() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1038,6 +997,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a normal valid tag,
    * and the column name is shorter than 255 characters but the value is longer.
    */
+  @Test
   public void testColumnNameShortAndValueLong() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1066,6 +1026,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name is not a valid XML identifier.
    */
+  @Test
   public void testColumnNameShortAndInvalidAndValueShort() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1095,6 +1056,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is not a valid tag,
    * and the column name is shorter than 255 characters and the value is longer.
    */
+  @Test
   public void testColumnNameShortAndInvalidAndValueLong() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1124,6 +1086,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a valid tag,
    * and the column name is longer than 255 characters and the value is shorter.
    */
+  @Test
   public void testColumnNameLongAndValueShort() throws Exception {
     String columnName = StringUtilsExt.repeat("value", 100);
     Database model = readModel(
@@ -1157,6 +1120,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a valid tag,
    * and both the column name and value are longer than 255 characters.
    */
+  @Test
   public void testColumnNameLongAndValueLong() throws Exception {
     String columnName = StringUtilsExt.repeat("value", 100);
     Database model = readModel(
@@ -1190,6 +1154,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a valid tag,
    * and the column name is longer than 255 characters and the value is shorter.
    */
+  @Test
   public void testColumnNameAndValueLong() throws Exception {
     String columnName = StringUtilsExt.repeat("value", 100);
     Database model = readModel(
@@ -1223,6 +1188,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is not a valid tag,
    * and the value is invalid, and both are short.
    */
+  @Test
   public void testColumnNameAndValueShortAndInvalid() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1252,6 +1218,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is a valid tag and longer,
    * than 255 characters, and the value is invalid and shorter than 255 characters.
    */
+  @Test
   public void testColumnNameLongAndValueInvalidAndShort() throws Exception {
     String columnName = StringUtilsExt.repeat("value", 100);
     Database model = readModel(
@@ -1285,6 +1252,7 @@ public class TestDataReaderAndWriter extends TestCase {
    * Tests the reader & writer behavior when a column name is not a valid tag,
    * and the value is invalid, and both are short.
    */
+  @Test
   public void testColumnNameAndValueLongAndInvalid() throws Exception {
     Database model = new Database("test");
     Table table = new Table();
@@ -1326,6 +1294,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name contains an invalid character.
    */
+  @Test
   public void testColumnNameContainsInvalidCharacters() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1354,6 +1323,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column value contains an invalid character.
    */
+  @Test
   public void testColumnValueContainsInvalidCharacters() throws Exception {
     Database model = new Database("test");
     Table table = new Table();
@@ -1395,6 +1365,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column value contains the '&' character.
    */
+  @Test
   public void testColumnValueContainsAmpersand() throws Exception {
     Database model = new Database("test");
     Table table = new Table();
@@ -1433,6 +1404,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column value contains the '<' character.
    */
+  @Test
   public void testColumnValueContainsLessCharacter() throws Exception {
     Database model = new Database("test");
     Table table = new Table();
@@ -1471,6 +1443,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column value contains the '>' character.
    */
+  @Test
   public void testColumnValueContainsMoreCharacter() throws Exception {
     Database model = new Database("test");
     Table table = new Table();
@@ -1509,6 +1482,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name is 'column'.
    */
+  @Test
   public void testColumnNameIsColumn() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1535,6 +1509,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name is 'column-name'.
    */
+  @Test
   public void testColumnNameIsColumnName() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1561,6 +1536,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name is 'table-name'.
    */
+  @Test
   public void testColumnNameIsTableName() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -1589,6 +1565,7 @@ public class TestDataReaderAndWriter extends TestCase {
   /**
    * Tests the reader & writer behavior when a column name is 'base64'.
    */
+  @Test
   public void testColumnNameIsBase64() throws Exception {
     Database model = readModel(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +

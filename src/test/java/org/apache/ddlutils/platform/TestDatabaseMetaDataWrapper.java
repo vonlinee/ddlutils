@@ -19,17 +19,20 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
-import org.apache.ddlutils.TestBase;
+import org.apache.ddlutils.DdlUtilsTest;
+import org.junit.Test;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.DatabaseMetaData;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Tests for the utility methods in the {@link DatabaseMetaDataWrapper} class.
  */
-public class TestDatabaseMetaDataWrapper extends TestBase {
+public class TestDatabaseMetaDataWrapper extends DdlUtilsTest {
   /**
    * Helper method to create a proxied DatabaseMetaData instance using the given invocation handler.
    *
@@ -45,11 +48,13 @@ public class TestDatabaseMetaDataWrapper extends TestBase {
   /**
    * Tests the {@link DatabaseMetaDataWrapper#escapeForSearch(String)} method (see DDLUTILS-246).
    */
+  @Test
   public void testEscapeSearchString() throws Exception {
     DatabaseMetaData metaData = createMockDatabaseMetaData(new InvocationHandler() {
       /**
        * {@inheritDoc}
        */
+      @Override
       public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         if ("getSearchStringEscape".equals(method.getName())) {
           return "\\";

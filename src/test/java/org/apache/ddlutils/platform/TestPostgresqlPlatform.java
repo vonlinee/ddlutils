@@ -22,6 +22,7 @@ package org.apache.ddlutils.platform;
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
+import org.junit.Test;
 
 /**
  * Tests the PostgreSQL platform.
@@ -40,6 +41,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"coltype\" CASCADE;\n" +
@@ -83,6 +85,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"constraints\" CASCADE;\n" +
@@ -106,6 +109,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE \"table3\" DROP CONSTRAINT \"testfk\";\n" +
@@ -145,6 +149,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where PostgreSQL requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     // PostgreSql specific database schema for testing escaping of character sequences
     final String schema =

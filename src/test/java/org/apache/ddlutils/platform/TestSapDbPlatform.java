@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
+import org.junit.Test;
 
 /**
  * Tests the SapDB platform.
@@ -39,6 +40,7 @@ public class TestSapDbPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"coltype\" CASCADE;\n" +
@@ -82,6 +84,7 @@ public class TestSapDbPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"constraints\" CASCADE;\n" +
@@ -101,6 +104,7 @@ public class TestSapDbPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE \"table3\" DROP FOREIGN KEY \"testfk\";\n" +
@@ -140,6 +144,7 @@ public class TestSapDbPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Cloudscape requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE \"escapedcharacters\" CASCADE;\n" +

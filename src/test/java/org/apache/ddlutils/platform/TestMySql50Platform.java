@@ -23,6 +23,7 @@ import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
+import org.junit.Test;
 
 /**
  * Tests the MySQL platform.
@@ -41,6 +42,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE IF EXISTS `coltype`;\n" +
@@ -84,6 +86,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     // MySql-specfic schema
     final String schema =
@@ -117,6 +120,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "ALTER TABLE `table3` DROP FOREIGN KEY `testfk`;\n" +
@@ -156,6 +160,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the usage of creation parameters.
    */
+  @Test
   public void testCreationParameters1() throws Exception {
     // MySql-specfic schema
     final String schema =
@@ -202,6 +207,7 @@ public class TestMySql50Platform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where MySQL requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     // MySql-specific schema
     final String schema =

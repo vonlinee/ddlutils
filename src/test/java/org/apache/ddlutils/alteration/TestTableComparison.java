@@ -21,6 +21,8 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.sql.Types;
 import java.util.List;
@@ -31,9 +33,11 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestTableComparison extends TestComparisonBase {
+
   /**
    * Tests the addition a column.
    */
+  @Test
   public void testAddColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -55,23 +59,21 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddColumnChange change = (AddColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col1", Types.DOUBLE, null, null, false, false, false,
       change.getNewColumn());
-    assertEquals("ColPK",
-      change.getPreviousColumn());
-    assertNull(change.getNextColumn());
+    Assert.assertEquals("ColPK", change.getPreviousColumn());
+    Assert.assertNull(change.getNextColumn());
   }
 
   /**
    * Tests the addition of an auto-increment column.
    */
+  @Test
   public void testAddAutoIncrementColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -93,23 +95,21 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddColumnChange change = (AddColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("ColA", Types.INTEGER, null, null, false, false, true,
       change.getNewColumn());
-    assertEquals("ColPK",
-      change.getPreviousColumn());
-    assertNull(change.getNextColumn());
+    Assert.assertEquals("ColPK", change.getPreviousColumn());
+    Assert.assertNull(change.getNextColumn());
   }
 
   /**
    * Tests the addition of a required column.
    */
+  @Test
   public void testAddRequiredColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -131,23 +131,21 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddColumnChange change = (AddColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("ColA", Types.INTEGER, null, null, false, true, false,
       change.getNewColumn());
-    assertEquals("ColPK",
-      change.getPreviousColumn());
-    assertNull(change.getNextColumn());
+    Assert.assertEquals("ColPK", change.getPreviousColumn());
+    Assert.assertNull(change.getNextColumn());
   }
 
   /**
    * Tests the addition of a column that has a size spec and a default value.
    */
+  @Test
   public void testAddColumnWithSizeAndDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -169,23 +167,21 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     AddColumnChange change = (AddColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("COLA", Types.VARCHAR, "32", "text", false, false, false,
       change.getNewColumn());
-    assertEquals("ColPK",
-      change.getPreviousColumn());
-    assertNull(change.getNextColumn());
+    Assert.assertEquals("ColPK", change.getPreviousColumn());
+    Assert.assertNull(change.getNextColumn());
   }
 
   /**
    * Tests making a column required.
    */
+  @Test
   public void testMakeColumnRequired() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -208,13 +204,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, null, false, true, false,
       change.getNewColumn());
   }
@@ -222,6 +216,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests making a column not required.
    */
+  @Test
   public void testMakeColumnNotRequired() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -244,13 +239,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, null, false, false, false,
       change.getNewColumn());
   }
@@ -258,6 +251,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests making a column auto-increment.
    */
+  @Test
   public void testMakeColumnAutoIncrement() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -280,13 +274,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, null, false, false, true,
       change.getNewColumn());
   }
@@ -294,6 +286,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests making a column not auto-increment.
    */
+  @Test
   public void testMakeColumnNotAutoIncrement() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -316,13 +309,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, null, false, false, false,
       change.getNewColumn());
   }
@@ -330,6 +321,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType1() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -352,13 +344,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, null, false, false, false,
       change.getNewColumn());
   }
@@ -366,6 +356,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType2() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -388,13 +379,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.VARCHAR, "32", null, false, false, false,
       change.getNewColumn());
   }
@@ -402,6 +391,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType3() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -424,13 +414,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.NUMERIC, "10,5", null, false, false, false,
       change.getNewColumn());
   }
@@ -438,6 +426,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType4() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -460,13 +449,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.CHAR, "32", null, false, false, false,
       change.getNewColumn());
   }
@@ -474,6 +461,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType5() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -496,13 +484,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.NUMERIC, "32,5", null, false, false, false,
       change.getNewColumn());
   }
@@ -510,6 +496,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType6() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -532,13 +519,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.VARCHAR, "32", null, false, false, false,
       change.getNewColumn());
   }
@@ -546,6 +531,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType7() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -568,13 +554,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.FLOAT, null, null, false, false, false,
       change.getNewColumn());
   }
@@ -582,6 +566,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the data type of a column.
    */
+  @Test
   public void testChangeColumnDataType8() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -604,13 +589,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.TIMESTAMP, null, null, false, false, false,
       change.getNewColumn());
   }
@@ -618,6 +601,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the size of a column.
    */
+  @Test
   public void testChangeColumnSize() {
     // note that we also have a size for the INTEGER column, but we don't
     // expect a change for it because the size is not relevant for this type
@@ -642,13 +626,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.VARCHAR, "32", null, false, false, false,
       change.getNewColumn());
   }
@@ -656,6 +638,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the precision & scale of a column.
    */
+  @Test
   public void testChangeColumnPrecisionAndScale() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -678,13 +661,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.DECIMAL, "32,7", null, false, false, false,
       change.getNewColumn());
   }
@@ -692,6 +673,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the scale of a column.
    */
+  @Test
   public void testChangeColumnScale() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -714,13 +696,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.NUMERIC, "32,5", null, false, false, false,
       change.getNewColumn());
   }
@@ -732,6 +712,7 @@ public class TestTableComparison extends TestComparisonBase {
    * The model comparator will filter out these changes depending on the
    * platform info with which the comparator was created.
    */
+  @Test
   public void testRemoveUnnecessaryColumnSize() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -754,12 +735,13 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertTrue(changes.isEmpty());
+    Assert.assertTrue(changes.isEmpty());
   }
 
   /**
    * Tests adding a default value to a column.
    */
+  @Test
   public void testAddDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -782,13 +764,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, "0", false, false, false,
       change.getNewColumn());
   }
@@ -796,6 +776,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the default value of a column.
    */
+  @Test
   public void testChangeDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -818,13 +799,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, "2", false, false, false,
       change.getNewColumn());
   }
@@ -833,6 +812,7 @@ public class TestTableComparison extends TestComparisonBase {
    * Tests that shows that the same default value expressed differently does not
    * result in a change.
    */
+  @Test
   public void testSameDefaultValueExpressedDifferently() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -855,12 +835,13 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertTrue(changes.isEmpty());
+    Assert.assertTrue(changes.isEmpty());
   }
 
   /**
    * Tests removing the default value of a column.
    */
+  @Test
   public void testRemoveDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -883,13 +864,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.VARCHAR, "16", null, false, false, false,
       change.getNewColumn());
   }
@@ -897,6 +876,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests making a columnb required with a new default value.
    */
+  @Test
   public void testMakeColumnRequiredWithDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -919,13 +899,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.INTEGER, null, "0", false, true, false,
       change.getNewColumn());
   }
@@ -933,6 +911,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests making a column not required and removing the default value.
    */
+  @Test
   public void testMakeColumnNotRequiredWithoutDefaultValue() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -955,13 +934,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnDefinitionChange change = (ColumnDefinitionChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
+    Assert.assertEquals("TableA", change.getChangedTable());
     assertColumn("Col", Types.VARCHAR, "16", null, false, false, false,
       change.getNewColumn());
   }
@@ -969,6 +946,7 @@ public class TestTableComparison extends TestComparisonBase {
   /**
    * Tests changing the order of the columns in a table.
    */
+  @Test
   public void testChangeColumnOrder() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -995,24 +973,20 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     ColumnOrderChange change = (ColumnOrderChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals(3,
-      change.getNewPosition("Col1", true));
-    assertEquals(-1,
-      change.getNewPosition("Col2", true));
-    assertEquals(1,
-      change.getNewPosition("Col3", true));
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals(3, change.getNewPosition("Col1", true));
+    Assert.assertEquals(-1, change.getNewPosition("Col2", true));
+    Assert.assertEquals(1, change.getNewPosition("Col3", true));
   }
 
   /**
    * Tests adding a column and changing the order of the existing columns in a table.
    */
+  @Test
   public void testAddColumnAndChangeColumnOrder() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1038,32 +1012,26 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     ColumnOrderChange change1 = (ColumnOrderChange) changes.get(0);
     AddColumnChange change2 = (AddColumnChange) changes.get(1);
 
-    assertEquals("TableA",
-      change1.getChangedTable());
-    assertEquals(2,
-      change1.getNewPosition("Col1", false));
-    assertEquals(1,
-      change1.getNewPosition("Col2", false));
+    Assert.assertEquals("TableA", change1.getChangedTable());
+    Assert.assertEquals(2, change1.getNewPosition("Col1", false));
+    Assert.assertEquals(1, change1.getNewPosition("Col2", false));
 
-    assertEquals("TableA",
-      change2.getChangedTable());
+    Assert.assertEquals("TableA", change2.getChangedTable());
     assertColumn("Col3", Types.VARCHAR, "32", null, false, false, false,
       change2.getNewColumn());
-    assertEquals("ColPK",
-      change2.getPreviousColumn());
-    assertEquals("Col2",
-      change2.getNextColumn());
+    Assert.assertEquals("ColPK", change2.getPreviousColumn());
+    Assert.assertEquals("Col2", change2.getNextColumn());
   }
 
   /**
    * Tests removing a column and changing the order of the existing columns in a table.
    */
+  @Test
   public void testRemoveColumnAndChangeColumnOrder() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1089,30 +1057,24 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    assertEquals(2,
-      changes.size());
+    Assert.assertEquals(2, changes.size());
 
     RemoveColumnChange change1 = (RemoveColumnChange) changes.get(0);
     ColumnOrderChange change2 = (ColumnOrderChange) changes.get(1);
 
-    assertEquals("TableA",
-      change1.getChangedTable());
-    assertEquals("Col3",
-      change1.getChangedColumn());
+    Assert.assertEquals("TableA", change1.getChangedTable());
+    Assert.assertEquals("Col3", change1.getChangedColumn());
 
-    assertEquals("TableA",
-      change2.getChangedTable());
-    assertEquals(-1,
-      change2.getNewPosition("ColPK", true));
-    assertEquals(2,
-      change2.getNewPosition("Col1", true));
-    assertEquals(1,
-      change2.getNewPosition("Col2", true));
+    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assert.assertEquals(-1, change2.getNewPosition("ColPK", true));
+    Assert.assertEquals(2, change2.getNewPosition("Col1", true));
+    Assert.assertEquals(1, change2.getNewPosition("Col2", true));
   }
 
   /**
    * Tests the removal of a column.
    */
+  @Test
   public void testDropColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1134,20 +1096,18 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveColumnChange change = (RemoveColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals("Col1",
-      change.getChangedColumn());
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals("Col1", change.getChangedColumn());
   }
 
   /**
    * Tests the removal of an auto-increment column.
    */
+  @Test
   public void testDropAutoIncrementColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1169,20 +1129,18 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveColumnChange change = (RemoveColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals("Col1",
-      change.getChangedColumn());
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals("Col1", change.getChangedColumn());
   }
 
   /**
    * Tests the removal of a required column.
    */
+  @Test
   public void testDropRequiredColumn() {
     final String MODEL1 =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1204,14 +1162,11 @@ public class TestTableComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    assertEquals(1,
-      changes.size());
+    Assert.assertEquals(1, changes.size());
 
     RemoveColumnChange change = (RemoveColumnChange) changes.get(0);
 
-    assertEquals("TableA",
-      change.getChangedTable());
-    assertEquals("Col1",
-      change.getChangedColumn());
+    Assert.assertEquals("TableA", change.getChangedTable());
+    Assert.assertEquals("Col1", change.getChangedColumn());
   }
 }

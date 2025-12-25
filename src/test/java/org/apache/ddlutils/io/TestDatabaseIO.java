@@ -19,9 +19,10 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.TestCase;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.StringUtilsExt;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -32,7 +33,8 @@ import java.sql.Types;
  *
  * @version $Revision: 289996 $
  */
-public class TestDatabaseIO extends TestCase {
+public class TestDatabaseIO {
+
   /**
    * Reads the database model from the given string.
    *
@@ -80,13 +82,13 @@ public class TestDatabaseIO extends TestCase {
                             int numForeignKeys,
                             int numIndexes,
                             Table table) {
-    assertEquals(name, table.getName());
-    assertEquals(description, table.getDescription());
-    assertEquals(numColumns, table.getColumnCount());
-    assertEquals(numPrimaryKeyColumns, table.getPrimaryKeyColumns().length);
-    assertEquals(numAutoIncrementColumns, table.getAutoIncrementColumns().length);
-    assertEquals(numForeignKeys, table.getForeignKeyCount());
-    assertEquals(numIndexes, table.getIndexCount());
+    Assert.assertEquals(name, table.getName());
+    Assert.assertEquals(description, table.getDescription());
+    Assert.assertEquals(numColumns, table.getColumnCount());
+    Assert.assertEquals(numPrimaryKeyColumns, table.getPrimaryKeyColumns().length);
+    Assert.assertEquals(numAutoIncrementColumns, table.getAutoIncrementColumns().length);
+    Assert.assertEquals(numForeignKeys, table.getForeignKeyCount());
+    Assert.assertEquals(numIndexes, table.getIndexCount());
   }
 
   /**
@@ -115,25 +117,25 @@ public class TestDatabaseIO extends TestCase {
                             boolean isRequired,
                             boolean isAutoIncrement,
                             Column column) {
-    assertEquals(name, column.getName());
-    assertEquals(TypeMap.getJdbcTypeName(typeCode), column.getType());
-    assertEquals(typeCode, column.getTypeCode());
-    assertEquals(size, column.getSizeAsInt());
-    assertEquals(size, column.getPrecisionRadix());
-    assertEquals(scale, column.getScale());
+    Assert.assertEquals(name, column.getName());
+    Assert.assertEquals(TypeMap.getJdbcTypeName(typeCode), column.getType());
+    Assert.assertEquals(typeCode, column.getTypeCode());
+    Assert.assertEquals(size, column.getSizeAsInt());
+    Assert.assertEquals(size, column.getPrecisionRadix());
+    Assert.assertEquals(scale, column.getScale());
     if ((size <= 0) && (scale <= 0)) {
-      assertNull(column.getSize());
+      Assert.assertNull(column.getSize());
     } else if (scale == 0) {
-      assertEquals("" + size, column.getSize());
+      Assert.assertEquals("" + size, column.getSize());
     } else {
-      assertEquals(size + "," + scale, column.getSize());
+      Assert.assertEquals(size + "," + scale, column.getSize());
     }
-    assertEquals(defaultValue, column.getDefaultValue());
-    assertEquals(description, column.getDescription());
-    assertEquals(javaName, column.getJavaName());
-    assertEquals(isPrimaryKey, column.isPrimaryKey());
-    assertEquals(isRequired, column.isRequired());
-    assertEquals(isAutoIncrement, column.isAutoIncrement());
+    Assert.assertEquals(defaultValue, column.getDefaultValue());
+    Assert.assertEquals(description, column.getDescription());
+    Assert.assertEquals(javaName, column.getJavaName());
+    Assert.assertEquals(isPrimaryKey, column.isPrimaryKey());
+    Assert.assertEquals(isRequired, column.isRequired());
+    Assert.assertEquals(isAutoIncrement, column.isAutoIncrement());
   }
 
   /**
@@ -152,12 +154,12 @@ public class TestDatabaseIO extends TestCase {
                             Table referencedTable,
                             int numReferences,
                             ForeignKey foreignKey) {
-    assertEquals(name, foreignKey.getName());
-    assertEquals(onUpdate, foreignKey.getOnUpdate());
-    assertEquals(onDelete, foreignKey.getOnDelete());
-    assertEquals(referencedTable, foreignKey.getForeignTable());
-    assertEquals(referencedTable.getName(), foreignKey.getForeignTableName());
-    assertEquals(numReferences, foreignKey.getReferenceCount());
+    Assert.assertEquals(name, foreignKey.getName());
+    Assert.assertEquals(onUpdate, foreignKey.getOnUpdate());
+    Assert.assertEquals(onDelete, foreignKey.getOnDelete());
+    Assert.assertEquals(referencedTable, foreignKey.getForeignTable());
+    Assert.assertEquals(referencedTable.getName(), foreignKey.getForeignTableName());
+    Assert.assertEquals(numReferences, foreignKey.getReferenceCount());
   }
 
   /**
@@ -168,10 +170,10 @@ public class TestDatabaseIO extends TestCase {
    * @param ref           The reference
    */
   private void assertEquals(Column localColumn, Column foreignColumn, Reference ref) {
-    assertEquals(localColumn, ref.getLocalColumn());
-    assertEquals(localColumn.getName(), ref.getLocalColumnName());
-    assertEquals(foreignColumn, ref.getForeignColumn());
-    assertEquals(foreignColumn.getName(), ref.getForeignColumnName());
+    Assert.assertEquals(localColumn, ref.getLocalColumn());
+    Assert.assertEquals(localColumn.getName(), ref.getLocalColumnName());
+    Assert.assertEquals(foreignColumn, ref.getForeignColumn());
+    Assert.assertEquals(foreignColumn.getName(), ref.getForeignColumnName());
   }
 
   /**
@@ -183,9 +185,9 @@ public class TestDatabaseIO extends TestCase {
    * @param index      The index
    */
   private void assertEquals(String name, boolean isUnique, int numColumns, Index index) {
-    assertEquals(name, index.getName());
-    assertEquals(isUnique, index.isUnique());
-    assertEquals(numColumns, index.getColumnCount());
+    Assert.assertEquals(name, index.getName());
+    Assert.assertEquals(isUnique, index.isUnique());
+    Assert.assertEquals(numColumns, index.getColumnCount());
   }
 
   /**
@@ -196,9 +198,9 @@ public class TestDatabaseIO extends TestCase {
    * @param indexColumn The index column
    */
   private void assertEquals(Column column, String size, IndexColumn indexColumn) {
-    assertEquals(column, indexColumn.getColumn());
-    assertEquals(column.getName(), indexColumn.getName());
-    assertEquals(size, indexColumn.getSize());
+    Assert.assertEquals(column, indexColumn.getColumn());
+    Assert.assertEquals(column.getName(), indexColumn.getName());
+    Assert.assertEquals(size, indexColumn.getSize());
   }
 
   /**
@@ -209,17 +211,18 @@ public class TestDatabaseIO extends TestCase {
    * @param model       The database model
    */
   private void assertEquals(String expectedXml, Database model) {
-    assertEquals(expectedXml, writeModel(model));
+    Assert.assertEquals(expectedXml, writeModel(model));
   }
 
   /**
    * Tests an XML document without a database element.
    */
+  @Test
   public void testNoDatabaseElement() {
     try {
       readModel("<data-base xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "'></data-base>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -227,11 +230,12 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated by the validation when the database element has no namespace attribute.
    */
+  @Test
   public void testDatabaseWithoutNamespace() {
     try {
       readModel("<database></database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -239,6 +243,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the database element has no name attribute.
    */
+  @Test
   public void testDatabaseWithoutName() {
     try {
       readModel(
@@ -251,7 +256,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -259,15 +264,14 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model without tables.
    */
+  @Test
   public void testNoTables() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "</database>");
 
-    assertEquals("test",
-      model.getName());
-    assertEquals(0,
-      model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(0, model.getTableCount());
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -278,6 +282,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table without columns.
    */
+  @Test
   public void testTableWithoutColumns() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -286,8 +291,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
     assertEquals("SomeTable", "Some table", 0, 0, 0, 0, 0,
       model.getTable(0));
 
@@ -302,6 +307,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the table element has no name attribute.
    */
+  @Test
   public void testTableWithoutName() {
     try {
       readModel(
@@ -314,7 +320,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -322,6 +328,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a single column.
    */
+  @Test
   public void testSingleColumn() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -332,8 +339,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -355,6 +362,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the column element has no name attribute.
    */
+  @Test
   public void testColumnWithoutName() {
     try {
       readModel(
@@ -366,7 +374,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -374,6 +382,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the column element has no type attribute.
    */
+  @Test
   public void testColumnWithoutType() {
     try {
       readModel(
@@ -385,7 +394,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ignored) {
     }
   }
@@ -393,6 +402,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model columns of all possible datatypes.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     StringBuilder modelXml = new StringBuilder();
     int[] types = TypeMap.getSupportedJdbcTypes();
@@ -412,8 +422,8 @@ public class TestDatabaseIO extends TestCase {
 
     Database model = readModel(modelXml.toString());
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -445,6 +455,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests an illegal column type.
    */
+  @Test
   public void testColumnWithIllegalType() {
     try {
       readModel(
@@ -457,7 +468,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -465,6 +476,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a primary key column.
    */
+  @Test
   public void testPrimaryKeyColumn() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -476,8 +488,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -489,7 +501,7 @@ public class TestDatabaseIO extends TestCase {
     assertEquals("ID", Types.INTEGER, 0, 0, null, null, null, true, false, false,
       column);
 
-    assertEquals(column, table.getPrimaryKeyColumns()[0]);
+    Assert.assertEquals(column, table.getPrimaryKeyColumns()[0]);
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -504,6 +516,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a required column.
    */
+  @Test
   public void testRequiredColumn() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -515,8 +528,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -538,6 +551,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with an autoincrement column.
    */
+  @Test
   public void testAutoIncrementColumn() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -549,8 +563,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -562,7 +576,7 @@ public class TestDatabaseIO extends TestCase {
     assertEquals("ID", Types.INTEGER, 0, 0, null, null, null, false, false, true,
       column);
 
-    assertEquals(column, table.getAutoIncrementColumns()[0]);
+    Assert.assertEquals(column, table.getAutoIncrementColumns()[0]);
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -577,6 +591,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a column with a size spec.
    */
+  @Test
   public void testColumnWithSize1() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -588,8 +603,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -611,6 +626,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a column with a size spec.
    */
+  @Test
   public void testColumnWithSize2() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -622,8 +638,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -645,6 +661,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a column with a description.
    */
+  @Test
   public void testColumnWithDescription() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -656,8 +673,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -679,6 +696,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a column with a default.
    */
+  @Test
   public void testColumnWithDefault() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -691,8 +709,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -714,6 +732,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with a table with a column with a java name.
    */
+  @Test
   public void testColumnWithJavaName() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -725,8 +744,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -748,6 +767,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing a single foreignkey.
    */
+  @Test
   public void testSingleForeignkey() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -772,8 +792,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -819,6 +839,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing a foreignkey with two references.
    */
+  @Test
   public void testForeignkeyWithTwoReferences() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -854,8 +875,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -900,6 +921,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key without references.
    */
+  @Test
   public void testForeignKeyWithoutReferences() {
     try {
       readModel(
@@ -924,7 +946,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -932,6 +954,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing a named foreignkey.
    */
+  @Test
   public void testNamedForeignkey() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -956,8 +979,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -997,6 +1020,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing foreignkeys with onUpdate values.
    */
+  @Test
   public void testForeignkeysWithOnUpdate() throws Exception {
     StringBuilder modelXml = new StringBuilder();
 
@@ -1032,8 +1056,8 @@ public class TestDatabaseIO extends TestCase {
 
     Database model = readModel(modelXml.toString());
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1088,6 +1112,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing foreignkeys with onDelete values.
    */
+  @Test
   public void testForeignkeysWithOnDelete() throws Exception {
     StringBuilder modelXml = new StringBuilder();
 
@@ -1123,8 +1148,8 @@ public class TestDatabaseIO extends TestCase {
 
     Database model = readModel(modelXml.toString());
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1180,6 +1205,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key with an illegal onUpdate value.
    */
+  @Test
   public void testForeignKeyWithIllegalOnUpdateValue() {
     try {
       readModel(
@@ -1205,7 +1231,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1213,6 +1239,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key with an empty onUpdate value.
    */
+  @Test
   public void testForeignKeyWithEmptyOnUpdateValue() {
     try {
       readModel(
@@ -1238,7 +1265,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1246,6 +1273,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key with an illegal onDelete value.
    */
+  @Test
   public void testForeignKeyWithIllegalOnDeleteValue() {
     try {
       readModel(
@@ -1271,7 +1299,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1279,6 +1307,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key with an empty onDelete value.
    */
+  @Test
   public void testForeignKeyWithEmptyOnDeleteValue() {
     try {
       readModel(
@@ -1304,7 +1333,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1312,6 +1341,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key referencing a non-existing table.
    */
+  @Test
   public void testForeignKeyReferencingUndefinedTable() {
     try {
       readModel(
@@ -1337,7 +1367,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1345,6 +1375,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key using a non-existing column in the local table.
    */
+  @Test
   public void testForeignKeyUsingUndefinedColumn() {
     try {
       readModel(
@@ -1370,7 +1401,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1378,6 +1409,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key referencing a non-existing column in the foreign table.
    */
+  @Test
   public void testForeignKeyReferencingUndefinedColumn() {
     try {
       readModel(
@@ -1403,7 +1435,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1411,6 +1443,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key without a local column.
    */
+  @Test
   public void testForeignKeyWithoutLocalColumn() {
     try {
       readModel(
@@ -1436,7 +1469,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1444,6 +1477,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a foreign key without a remote column.
    */
+  @Test
   public void testForeignKeyWithoutRemoteColumn() {
     try {
       readModel(
@@ -1469,7 +1503,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1477,6 +1511,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing two foreignkeys.
    */
+  @Test
   public void testTwoForeignkeys() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1514,8 +1549,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(2, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1566,6 +1601,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model containing two foreignkeys with the same name.
    */
+  @Test
   public void testTwoForeignkeysWithSameName() throws Exception {
     try {
       readModel(
@@ -1604,7 +1640,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1612,6 +1648,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index.
    */
+  @Test
   public void testSingleIndex() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1629,8 +1666,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1663,6 +1700,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index with two columns.
    */
+  @Test
   public void testIndexWithTwoColumns() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1684,8 +1722,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1723,6 +1761,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index with a name.
    */
+  @Test
   public void testIndexWithName() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1740,8 +1779,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1774,6 +1813,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index without index columns.
    */
+  @Test
   public void testIndexWithoutColumns() throws Exception {
     try {
       readModel(
@@ -1791,7 +1831,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1799,6 +1839,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index with an index column that references an undefined column.
    */
+  @Test
   public void testIndexWithUndefinedColumns() throws Exception {
     try {
       readModel(
@@ -1817,7 +1858,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1825,6 +1866,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an index with an index column that has no name.
    */
+  @Test
   public void testIndexWithNoNameColumn() throws Exception {
     try {
       readModel(
@@ -1843,7 +1885,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1852,6 +1894,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index.
    */
+  @Test
   public void testSingleUniqueIndex() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1869,8 +1912,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1903,6 +1946,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index with two columns.
    */
+  @Test
   public void testUniqueIndexWithTwoColumns() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1924,8 +1968,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1963,6 +2007,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index with a name.
    */
+  @Test
   public void testUniqueIndexWithName() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1980,8 +2025,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -2014,6 +2059,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index without index columns.
    */
+  @Test
   public void testUniqueIndexWithoutColumns() throws Exception {
     try {
       readModel(
@@ -2031,7 +2077,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2039,6 +2085,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index with an index column that references an undefined column.
    */
+  @Test
   public void testUniqueIndexWithUndefinedColumns() throws Exception {
     try {
       readModel(
@@ -2057,7 +2104,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2065,6 +2112,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with an unique index with an index column that has no name.
    */
+  @Test
   public void testUniqueIndexWithNoNameColumn() throws Exception {
     try {
       readModel(
@@ -2083,7 +2131,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2091,6 +2139,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a database model with indices, both uniques and non-uniques.
    */
+  @Test
   public void testMixedIndexes() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -2111,8 +2160,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -2122,7 +2171,7 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(0));
     assertEquals("when", Types.DATE, 0, 0, null, null, null, false, false, false,
       table.getColumn(1));
-    assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
+    Assert.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
 
     Index index = table.getIndex(0);
 
@@ -2154,6 +2203,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests a complex database model with multiple tables, foreign keys, indices and uniques.
    */
+  @Test
   public void testComplex() throws Exception {
     // A = id:INTEGER, parentId:INTEGER, name:VARCHAR(32); fk 'parent' -> A (parentId -> id), unique(name)
     // B = id:TIMESTAMP, aid:INTEGER, cid:CHAR(32) fk -> A (aid -> id), fk -> C (cid -> id), index(aid,cid)
@@ -2226,8 +2276,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(3, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(3, model.getTableCount());
 
     // table A
 
@@ -2241,7 +2291,7 @@ public class TestDatabaseIO extends TestCase {
       table.getColumn(1));
     assertEquals("name", Types.VARCHAR, 32, 0, null, "The name", null, false, true, false,
       table.getColumn(2));
-    assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
+    Assert.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
 
     ForeignKey fk = table.getForeignKey(0);
 
@@ -2341,6 +2391,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when an index references an undefined column.
    */
+  @Test
   public void testUndefinedIndexColumn() {
     try {
       readModel(
@@ -2357,7 +2408,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2365,6 +2416,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when two table elements have the same value in their name attributes.
    */
+  @Test
   public void testTwoTablesWithTheSameName() {
     try {
       readModel(
@@ -2383,7 +2435,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2392,6 +2444,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests that an exception is generated when two column elements within the same table
    * element have the same value in their name attributes.
    */
+  @Test
   public void testTwoColumnsWithTheSameName() {
     try {
       readModel(
@@ -2406,7 +2459,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2414,6 +2467,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when the a unique index references an undefined column.
    */
+  @Test
   public void testUndefinedUniqueColumn() {
     try {
       readModel(
@@ -2429,7 +2483,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2437,6 +2491,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests that an exception is generated when two indices have the same value in their name attributes.
    */
+  @Test
   public void testTwoIndicesWithTheSameName() {
     try {
       readModel(
@@ -2461,7 +2516,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2470,6 +2525,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests that an exception is generated when two unique indices have the
    * same value in their name attributes.
    */
+  @Test
   public void testTwoUniqueIndicesWithTheSameName() {
     try {
       readModel(
@@ -2494,7 +2550,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2503,6 +2559,7 @@ public class TestDatabaseIO extends TestCase {
    * Tests that an exception is generated when a unique and a normal index
    * have the same value in their name attributes.
    */
+  @Test
   public void testUniqueAndNormalIndexWithTheSameName() {
     try {
       readModel(
@@ -2527,7 +2584,7 @@ public class TestDatabaseIO extends TestCase {
         "  </table>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2535,6 +2592,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Regression test ensuring that wrong XML is not read (regarding betwixt issue #37369).
    */
+  @Test
   public void testFaultReadOfTable() {
     try {
       readModel(
@@ -2542,7 +2600,7 @@ public class TestDatabaseIO extends TestCase {
         "  <index name='NotATable'/>\n" +
         "</database>");
 
-      fail();
+      Assert.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2550,6 +2608,7 @@ public class TestDatabaseIO extends TestCase {
   /**
    * Tests the Torque/Turbine extensions BOOLEANINT & BOOLEANCHAR.
    */
+  @Test
   public void testTurbineExtension() throws Exception {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -2561,8 +2620,8 @@ public class TestDatabaseIO extends TestCase {
       "  </table>\n" +
       "</database>");
 
-    assertEquals("test", model.getName());
-    assertEquals(1, model.getTableCount());
+    Assert.assertEquals("test", model.getName());
+    Assert.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 

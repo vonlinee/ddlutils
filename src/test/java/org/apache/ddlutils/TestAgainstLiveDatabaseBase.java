@@ -41,7 +41,10 @@ import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import javax.sql.DataSource;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.file.Files;
@@ -60,9 +63,7 @@ import java.util.Properties;
  *
  * @version $Revision: 289996 $
  */
-public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
-
-  protected static final Log log = LogFactory.getLog(TestAgainstLiveDatabaseBase.class);
+public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
 
   /**
    * The name of the property that specifies properties file with the settings for the connection to test against.
@@ -92,6 +93,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * The prefix for table creation properties.
    */
   public static final String DDLUTILS_TABLE_CREATION_PREFIX = DDLUTILS_PROPERTY_PREFIX + "tableCreation.";
+  protected static final Log log = LogFactory.getLog(TestAgainstLiveDatabaseBase.class);
   /**
    * The test properties as defined by an external properties file.
    */
@@ -868,7 +870,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * Compares the specified attribute value of the given bean with the expected object.
    *
    * @param expected The expected object
-   * @param dynaBean     The bean
+   * @param dynaBean The bean
    * @param attrName The attribute name
    */
   protected void assertEquals(Object expected, DynaBean dynaBean, String attrName) {

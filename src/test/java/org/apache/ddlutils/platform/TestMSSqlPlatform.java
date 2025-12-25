@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
+import org.junit.Test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,6 +43,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     String sql = getColumnTestDatabaseCreationSql();
 
@@ -118,6 +120,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     String sql = getConstraintTestDatabaseCreationSql();
 
@@ -170,6 +173,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     String sql = getTableConstraintTestDatabaseCreationSql();
 
@@ -283,6 +287,7 @@ public class TestMSSqlPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where Sql Server requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     String sql = getCharEscapingTestDatabaseCreationSql();
 

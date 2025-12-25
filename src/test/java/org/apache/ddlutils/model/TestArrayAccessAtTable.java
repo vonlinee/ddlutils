@@ -19,14 +19,16 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test case for DDLUTILS-6.
  *
  * @version $Revision: 289996 $
  */
-public class TestArrayAccessAtTable extends TestCase {
+public class TestArrayAccessAtTable {
   /**
    * The tested table.
    */
@@ -51,6 +53,7 @@ public class TestArrayAccessAtTable extends TestCase {
   /**
    * {@inheritDoc}
    */
+  @Before
   public void setUp() {
     _testedTable = new Table();
 
@@ -74,50 +77,45 @@ public class TestArrayAccessAtTable extends TestCase {
   /**
    * Tests that the primary key columns are correctly extracted.
    */
+  @Test
   public void testGetPrimaryKeyColumns() {
     Column[] primaryKeyColumns = _testedTable.getPrimaryKeyColumns();
 
-    assertEquals(1,
-      primaryKeyColumns.length);
-    assertSame(_column1,
-      primaryKeyColumns[0]);
+    Assert.assertEquals(1, primaryKeyColumns.length);
+    Assert.assertSame(_column1, primaryKeyColumns[0]);
   }
 
   /**
    * Tests that the columns are correctly extracted.
    */
+  @Test
   public void testGetColumns() {
     Column[] columns = _testedTable.getColumns();
 
-    assertEquals(2,
-      columns.length);
-    assertSame(_column1,
-      columns[0]);
-    assertSame(_column2,
-      columns[1]);
+    Assert.assertEquals(2, columns.length);
+    Assert.assertSame(_column1, columns[0]);
+    Assert.assertSame(_column2, columns[1]);
   }
 
   /**
    * Tests that the non-unique indices are correctly extracted.
    */
+  @Test
   public void testGetNonUniqueIndices() {
     Index[] nonUniqueIndices = _testedTable.getNonUniqueIndices();
 
-    assertEquals(1,
-      nonUniqueIndices.length);
-    assertSame(_nonUniqueIndex,
-      nonUniqueIndices[0]);
+    Assert.assertEquals(1, nonUniqueIndices.length);
+    Assert.assertSame(_nonUniqueIndex, nonUniqueIndices[0]);
   }
 
   /**
    * Tests that the unique indices are correctly extracted.
    */
+  @Test
   public void testGetUniqueIndices() {
     Index[] uniqueIndices = _testedTable.getUniqueIndices();
 
-    assertEquals(1,
-      uniqueIndices.length);
-    assertSame(_uniqueIndex,
-      uniqueIndices[0]);
+    Assert.assertEquals(1, uniqueIndices.length);
+    Assert.assertSame(_uniqueIndex, uniqueIndices[0]);
   }
 }

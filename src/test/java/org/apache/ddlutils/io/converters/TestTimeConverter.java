@@ -19,7 +19,10 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.Time;
 import java.sql.Types;
@@ -30,7 +33,7 @@ import java.util.Calendar;
  *
  * @version $Revision: 1.0 $
  */
-public class TestTimeConverter extends TestCase {
+public class TestTimeConverter {
   /**
    * The tested time converter.
    */
@@ -39,24 +42,23 @@ public class TestTimeConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  @Before
+  public void setUp() throws Exception {
     _timeConverter = new TimeConverter();
   }
 
   /**
    * {@inheritDoc}
    */
-  @Override
-  protected void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     _timeConverter = null;
-    super.tearDown();
   }
 
   /**
    * Tests a normal time string.
    */
+  @Test
   public void testNormalConvertFromHoursMinutesSecondsTimeString() {
     String textRep = "02:15:59";
     Calendar cal = Calendar.getInstance();
@@ -69,13 +71,14 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
-    assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assert.assertTrue(result instanceof Time);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
    * Tests a time string without seconds.
    */
+  @Test
   public void testNormalConvertFromHoursMinutesTimeString() {
     String textRep = "02:15";
     Calendar cal = Calendar.getInstance();
@@ -87,13 +90,14 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
-    assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assert.assertTrue(result instanceof Time);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
    * Tests a time string with only an hour value.
    */
+  @Test
   public void testNormalConvertFromHoursTimeString() {
     String textRep = "02";
     Calendar cal = Calendar.getInstance();
@@ -104,13 +108,14 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
-    assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assert.assertTrue(result instanceof Time);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
    * Tests a full ISO datetime string.
    */
+  @Test
   public void testNormalConvertFromIsoDateTimeString() {
     String textRep = "2004-01-13 04:45:09.245";
     Calendar cal = Calendar.getInstance();
@@ -123,37 +128,40 @@ public class TestTimeConverter extends TestCase {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    assertTrue(result instanceof Time);
-    assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assert.assertTrue(result instanceof Time);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
    * Tests converting with an invalid SQL type.
    */
+  @Test
   public void testConvertFromStringWithInvalidSqlType() {
     String textRep = "02:15:59";
     Object result = _timeConverter.convertFromString(textRep, Types.INTEGER);
 
-    assertNotNull(result);
-    assertEquals(textRep, result);
+    Assert.assertNotNull(result);
+    Assert.assertEquals(textRep, result);
   }
 
   /**
    * Tests converting a null.
    */
+  @Test
   public void testConvertFromStringWithNullTextRep() {
     Object result = _timeConverter.convertFromString(null, Types.TIME);
-    assertNull(result);
+    Assert.assertNull(result);
   }
 
   /**
    * Tests converting an invalid time string.
    */
+  @Test
   public void testConvertFromStringWithInvalidTextRep() {
     String textRep = "99:99:99";
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // We expect the exception
     }
@@ -162,11 +170,12 @@ public class TestTimeConverter extends TestCase {
   /**
    * Tests converting an invalid time string containing not only numbers.
    */
+  @Test
   public void testConvertFromStringWithAlphaTextRep() {
     String textRep = "aa:bb:cc";
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // We expect the exception
     }
@@ -175,6 +184,7 @@ public class TestTimeConverter extends TestCase {
   /**
    * Tests converting a normal time to a string.
    */
+  @Test
   public void testNormalConvertToString() {
     Calendar cal = Calendar.getInstance();
 
@@ -187,27 +197,29 @@ public class TestTimeConverter extends TestCase {
     Time time = new Time(cal.getTimeInMillis());
     String result = _timeConverter.convertToString(time, Types.TIME);
 
-    assertNotNull(result);
-    assertEquals("02:15:59", result);
+    Assert.assertNotNull(result);
+    Assert.assertEquals("02:15:59", result);
   }
 
   /**
    * Tests converting a null time.
    */
+  @Test
   public void testConvertToStringWithNullTime() {
     String result = _timeConverter.convertToString(null, Types.TIME);
-    assertNull(result);
+    Assert.assertNull(result);
   }
 
   /**
    * Tests converting a {@link java.util.Date}.
    */
+  @Test
   public void testConvertToStringWithWrongType() {
     java.util.Date date = new java.util.Date();
 
     try {
       _timeConverter.convertToString(date, Types.TIME);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // We expect the exception
     }

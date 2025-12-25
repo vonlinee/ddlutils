@@ -19,7 +19,10 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import junit.framework.TestCase;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.sql.Date;
 import java.sql.Types;
@@ -30,7 +33,7 @@ import java.util.Calendar;
  *
  * @version $Revision: 1.0 $
  */
-public class TestDateConverter extends TestCase {
+public class TestDateConverter {
   /**
    * The tested date converter.
    */
@@ -39,24 +42,23 @@ public class TestDateConverter extends TestCase {
   /**
    * {@inheritDoc}
    */
-  @Override
-  protected void setUp() throws Exception {
-    super.setUp();
+  @Before
+  public void setUp() throws Exception {
     _dateConverter = new DateConverter();
   }
 
   /**
    * {@inheritDoc}
    */
-  @Override
-  protected void tearDown() throws Exception {
+  @After
+  public void tearDown() throws Exception {
     _dateConverter = null;
-    super.tearDown();
   }
 
   /**
    * Tests a normal date string.
    */
+  @Test
   public void testNormalConvertFromYearMonthDateString() {
     String textRep = "2005-12-19";
     Calendar cal = Calendar.getInstance();
@@ -67,13 +69,14 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
-    assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assert.assertTrue(result instanceof Date);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
    * Tests a date string that has no day.
    */
+  @Test
   public void testNormalConvertFromYearMonthString() {
     String textRep = "2005-12";
     Calendar cal = Calendar.getInstance();
@@ -84,13 +87,14 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
-    assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assert.assertTrue(result instanceof Date);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
    * Tests a date string that has only a year.
    */
+  @Test
   public void testNormalConvertFromYearString() {
     String textRep = "2005";
     Calendar cal = Calendar.getInstance();
@@ -100,13 +104,14 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
-    assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assert.assertTrue(result instanceof Date);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
    * Tests a full datetime string.
    */
+  @Test
   public void testNormalConvertFromFullDateTimeString() {
     String textRep = "2005-06-07 10:11:12";
     Calendar cal = Calendar.getInstance();
@@ -116,39 +121,42 @@ public class TestDateConverter extends TestCase {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    assertTrue(result instanceof Date);
-    assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assert.assertTrue(result instanceof Date);
+    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
    * Tests converting with an invalid SQL type.
    */
+  @Test
   public void testConvertFromStringWithInvalidSqlType() {
     String textRep = "2005-12-19";
     Object result = _dateConverter.convertFromString(textRep, Types.INTEGER);
 
     // Make sure that the text representation is returned since SQL type was not a DATE
-    assertNotNull(result);
-    assertEquals(textRep, result);
+    Assert.assertNotNull(result);
+    Assert.assertEquals(textRep, result);
   }
 
   /**
    * Tests handling of null.
    */
+  @Test
   public void testConvertFromStringWithNullTextRep() {
     Object result = _dateConverter.convertFromString(null, Types.DATE);
-    assertNull(result);
+    Assert.assertNull(result);
   }
 
   /**
    * Tests an invalid date.
    */
+  @Test
   public void testConvertFromStringWithInvalidTextRep() {
     String textRep = "9999-99-99";
 
     try {
       _dateConverter.convertFromString(textRep, Types.DATE);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // we expect the exception
     }
@@ -157,12 +165,13 @@ public class TestDateConverter extends TestCase {
   /**
    * Tests an invalid date that contains non-numbers.
    */
+  @Test
   public void testConvertFromStringWithAlphaTextRep() {
     String textRep = "aaaa-bb-cc";
 
     try {
       _dateConverter.convertFromString(textRep, Types.DATE);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // we expect the exception
     }
@@ -171,6 +180,7 @@ public class TestDateConverter extends TestCase {
   /**
    * Tests converting a normal date to a string.
    */
+  @Test
   public void testNormalConvertToString() {
     Calendar cal = Calendar.getInstance();
 
@@ -181,28 +191,30 @@ public class TestDateConverter extends TestCase {
     Date date = new Date(cal.getTimeInMillis());
     String result = _dateConverter.convertToString(date, Types.DATE);
 
-    assertNotNull(result);
-    assertEquals("2005-12-19", result);
+    Assert.assertNotNull(result);
+    Assert.assertEquals("2005-12-19", result);
   }
 
   /**
    * Tests converting a null.
    */
+  @Test
   public void testConvertToStringWithNullDate() {
     String result = _dateConverter.convertToString(null, Types.DATE);
 
-    assertNull(result);
+    Assert.assertNull(result);
   }
 
   /**
    * Tests converting a {@link java.util.Date}.
    */
+  @Test
   public void testConvertToStringWithWrongType() {
     java.util.Date date = new java.util.Date();
 
     try {
       _dateConverter.convertToString(date, Types.DATE);
-      fail("ConversionException expected");
+      Assert.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // we expect the exception
     }

@@ -19,9 +19,9 @@ package org.apache.ddlutils.alteration;
  * under the License.
  */
 
+import org.apache.ddlutils.DdlUtilsTest;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
-import org.apache.ddlutils.TestBase;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.ForeignKey;
 import org.apache.ddlutils.model.Index;
@@ -30,12 +30,14 @@ import org.apache.ddlutils.platform.TestPlatform;
 
 import java.sql.Types;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Base class for model comparison tests.
  *
  * @version $Revision: $
  */
-public abstract class TestComparisonBase extends TestBase {
+public abstract class TestComparisonBase extends DdlUtilsTest {
   /**
    * Creates a new platform object.
    *

@@ -20,24 +20,29 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestBase;
+import org.apache.ddlutils.DdlUtilsTest;
 import org.apache.ddlutils.dynabean.SqlDynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.junit.Test;
 
 import java.util.Map;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Tests the {@link org.apache.ddlutils.PlatformImplBase} (abstract) class.
  *
  * @version $Revision: 279421 $
  */
-public class TestPlatformImplBase extends TestBase {
+public class TestPlatformImplBase extends DdlUtilsTest {
   /**
    * Test the toColumnValues method.
    */
+  @Test
   public void testToColumnValues() {
     final String schema =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

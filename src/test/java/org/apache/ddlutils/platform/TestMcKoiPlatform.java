@@ -22,6 +22,7 @@ package org.apache.ddlutils.platform;
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
+import org.junit.Test;
 
 /**
  * Tests the McKoi platform.
@@ -40,6 +41,7 @@ public class TestMcKoiPlatform extends TestPlatformBase {
   /**
    * Tests the column types.
    */
+  @Test
   public void testColumnTypes() throws Exception {
     assertEqualsIgnoringWhitespaces(
       "DROP TABLE IF EXISTS \"coltype\";\n" +
@@ -83,6 +85,7 @@ public class TestMcKoiPlatform extends TestPlatformBase {
   /**
    * Tests the column constraints.
    */
+  @Test
   public void testColumnConstraints() throws Exception {
     // note that this is not valid SQL as obviously only one auto increment field
     // can be defined for each table
@@ -108,6 +111,7 @@ public class TestMcKoiPlatform extends TestPlatformBase {
   /**
    * Tests the table constraints.
    */
+  @Test
   public void testTableConstraints() throws Exception {
     // The database schema for testing table constraints, ie. foreign keys and indices.
     // This schema is adapted for McKoi which does not support non-unique indices
@@ -182,6 +186,7 @@ public class TestMcKoiPlatform extends TestPlatformBase {
   /**
    * Tests the proper escaping of character sequences where McKoi requires it.
    */
+  @Test
   public void testCharacterEscaping() throws Exception {
     // McKoi-specific schema
     final String schema =
