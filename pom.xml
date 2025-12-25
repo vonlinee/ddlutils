@@ -190,6 +190,12 @@
       <artifactId>dom4j</artifactId>
       <version>2.1.4</version>
     </dependency>
+    <!-- Jaxen is XPath engine used optionally by dom4j. See: https://github.com/dom4j/dom4j/issues/60-->
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <version>1.1.6</version>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
