@@ -19,14 +19,14 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
 import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,19 +36,12 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestInsertColumn.class);
-  }
+public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
 
   /**
    * Tests the insertion of a column.
    */
+  @Test
   public void testInsertColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -83,6 +76,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an auto-increment column.
    */
+  @Test
   public void testInsertAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -140,6 +134,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column that is set to NOT NULL.
    */
+  @Test
   public void testInsertRequiredColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -177,6 +172,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
    * For instance, Sql Server has a statement for this which means that the
    * existing value in column avalue won't be changed and thus the test fails.
    */
+  @Test
   public void testInsertColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -216,6 +212,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required auto-increment column.
    */
+  @Test
   public void testInsertRequiredAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -276,6 +273,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
    * For instance, Sql Server has a statement for this which means that the
    * existing value in column avalue won't be changed and thus the test fails.
    */
+  @Test
   public void testAddRequiredColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -325,6 +323,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the addition and insertion of several columns.
    */
+  @Test
   public void testAddAndInsertMultipleColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -366,6 +365,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a primary key and a column.
    */
+  @Test
   public void testInsertPKAndColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -400,6 +400,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a primary key and an autoincrement column.
    */
+  @Test
   public void testInsertPKAndAutoIncrementColumn() {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
@@ -451,6 +452,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a primary key and multiple columns.
    */
+  @Test
   public void testAddAndInsertPKAndMultipleColumns() {
     if (!getPlatformInfo().isMixingIdentityAndNormalPrimaryKeyColumnsSupported()) {
       return;
@@ -490,6 +492,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column to a primary key.
    */
+  @Test
   public void testInsertColumnIntoPK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -524,6 +527,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an autoincrement column into the primary key.
    */
+  @Test
   public void testInsertAutoIncrementColumnIntoPK() {
     if (!getPlatformInfo().isMixingIdentityAndNormalPrimaryKeyColumnsSupported()) {
       return;
@@ -583,6 +587,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of multiple columns into the primary key.
    */
+  @Test
   public void testInsertMultipleColumnsIntoPK() {
     if (!getPlatformInfo().isMixingIdentityAndNormalPrimaryKeyColumnsSupported()) {
       return;
@@ -622,6 +627,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and a column.
    */
+  @Test
   public void testInsertNonUniqueIndexAndColumn() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -663,6 +669,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and an auto increment column.
    */
+  @Test
   public void testInsertNonUniqueIndexAndAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -705,6 +712,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and a required column.
    */
+  @Test
   public void testInsertNonUniqueIndexAndRequiredColumn() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -744,6 +752,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and a column with a default value.
    */
+  @Test
   public void testInsertNonUniqueIndexAndColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -785,6 +794,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and a required auto increment column.
    */
+  @Test
   public void testInsertNonUniqueIndexAndrequiredAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -827,6 +837,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and a required column with a default value.
    */
+  @Test
   public void testInsertNonUniqueIndexAndRequiredColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -877,6 +888,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a non-unique index and several columns.
    */
+  @Test
   public void testAddAndInsertNonUniqueIndexAndMultipleColumns() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -918,6 +930,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and a column.
    */
+  @Test
   public void testInsertUniqueIndexAndColumn() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -959,6 +972,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and an auto increment column.
    */
+  @Test
   public void testInsertUniqueIndexAndAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1001,6 +1015,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and a required column.
    */
+  @Test
   public void testInsertUniqueIndexAndRequiredColumn() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1040,6 +1055,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and a column with a default value.
    */
+  @Test
   public void testInsertUniqueIndexAndColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1081,6 +1097,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and a required auto increment column.
    */
+  @Test
   public void testInsertUniqueIndexAndRequiredAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1123,6 +1140,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and a required column with a default value.
    */
+  @Test
   public void testInsertUniqueIndexAndRequiredColumnWithDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1173,6 +1191,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an unique index and several columns.
    */
+  @Test
   public void testAddAndInsertUniqueIndexAndMultipleColumns() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1214,6 +1233,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column into a non-unique index.
    */
+  @Test
   public void testInsertColumnIntoNonUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1262,6 +1282,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insert of an auto increment column into a non-unique index.
    */
+  @Test
   public void testInsertAutoIncrementColumnIntoNonUniqueIndex() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1311,6 +1332,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required column into a non-unique index.
    */
+  @Test
   public void testInsertRequiredColumnIntoNonUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1356,6 +1378,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column with a default value into a non-unique index.
    */
+  @Test
   public void testInsertColumnWithDefaultIntoNonUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1404,6 +1427,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required auto increment column into a non-unique index.
    */
+  @Test
   public void testInsertRequiredAutoIncrementColumnIntoNonUniqueIndex() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1453,6 +1477,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required column with a default value into a non-unique index.
    */
+  @Test
   public void testInsertRequiredColumnWithDefaultIntoNonUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1510,6 +1535,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of multiple columns into a non-unique index.
    */
+  @Test
   public void testAddAndInsertMultipleColumnsIntoNonUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1557,6 +1583,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column into an unique index.
    */
+  @Test
   public void testInsertColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1605,6 +1632,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of an auto increment column into an unique index.
    */
+  @Test
   public void testInsertAutoIncrementColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1654,6 +1682,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required column into an unique index.
    */
+  @Test
   public void testInsertRequiredColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1699,6 +1728,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a column with a default value into an unique index.
    */
+  @Test
   public void testInsertColumnWithDefaultIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1747,6 +1777,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required auto increment column into an unique index.
    */
+  @Test
   public void testInsertRequiredAutoIncrementColumnIntoUniqueIndex() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported() ||
         !getPlatformInfo().isIndicesSupported()) {
@@ -1796,6 +1827,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a required column with a default value into an unique index.
    */
+  @Test
   public void testInsertRequiredColumnWithDefaultIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1853,6 +1885,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of multiple columns into an unique index.
    */
+  @Test
   public void testAddAndInsertMultipleColumnsIntoUniqueIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1900,6 +1933,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local column.
    */
+  @Test
   public void testInsertFKAndLocalColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1947,6 +1981,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local auto increment column.
    */
+  @Test
   public void testInsertFKAndLocalAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -1998,6 +2033,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local required column.
    */
+  @Test
   public void testInsertFKAndLocalRequiredColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2044,6 +2080,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local column with a default value.
    */
+  @Test
   public void testInsertFKAndLocalColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2091,6 +2128,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local required auto increment column.
    */
+  @Test
   public void testInsertFKAndLocalRequiredAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2142,6 +2180,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local required column with a default value.
    */
+  @Test
   public void testInsertFKAndLocalRequiredColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2202,6 +2241,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its local columns.
    */
+  @Test
   public void testAddAndInsertFKAndMultipleLocalColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2253,6 +2293,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its foreign column.
    */
+  @Test
   public void testInsertFKAndForeignColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2292,6 +2333,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its foreign auto increment column.
    */
+  @Test
   public void testInsertFKAndForeignAutoIncrementColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2342,6 +2384,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its foreign auto increment column.
    */
+  @Test
   public void testInsertFKAndForeignColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2392,6 +2435,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of a foreign key and its multiple foreign columns.
    */
+  @Test
   public void testAddAndInsertFKAndMultipleForeignColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2435,6 +2479,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign column into a foreign key.
    */
+  @Test
   public void testInsertColumnsIntoFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2479,6 +2524,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign auto increment columns into a foreign key.
    */
+  @Test
   public void testInsertAutoIncrementColumnIntoFK() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2539,6 +2585,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign required columns into a foreign key.
    */
+  @Test
   public void testInsertRequiredColumnsIntoFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2583,6 +2630,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign columns with default values into a foreign key.
    */
+  @Test
   public void testInsertColumnsWithDefaultsIntoFK() {
     if (getPlatformInfo().isPrimaryKeyColumnsHaveToBeRequired()) {
       return;
@@ -2640,6 +2688,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign required auto increment columns into a foreign key.
    */
+  @Test
   public void testInsertRequiredAutoIncrementColumnIntoFK() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2700,6 +2749,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of local and foreign required columns with default values into a foreign key.
    */
+  @Test
   public void testInsertRequiredColumnsWithDefaultsIntoFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2764,6 +2814,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insertion of multiple local and foreign columns into a foreign key.
    */
+  @Test
   public void testAddAndInsertMultipleColumnsIntoFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

@@ -19,9 +19,9 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.io.DatabaseIO;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -34,14 +34,6 @@ import java.util.List;
  * @version $Revision: $
  */
 public class TestWriteDataToDatabaseCommand extends TestTaskBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestWriteDataToDatabaseCommand.class);
-  }
 
   /**
    * Adds the writeDataToDatabase sub task to the given task, executes it, and checks its output.
@@ -87,6 +79,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
   /**
    * Basic test that creates a schema and puts some data into it.
    */
+  @Test
   public void testSimple() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -122,6 +115,7 @@ public class TestWriteDataToDatabaseCommand extends TestTaskBase {
   /**
    * Tests data insertion in batch mode.
    */
+  @Test
   public void testBatchMode() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

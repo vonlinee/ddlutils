@@ -19,13 +19,13 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataSink;
 import org.apache.ddlutils.io.DataSinkException;
 import org.apache.ddlutils.io.DatabaseIO;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,14 +40,6 @@ import java.util.Map;
  * @version $Revision: $
  */
 public class TestWriteDataToFileCommand extends TestTaskBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestWriteDataToFileCommand.class);
-  }
 
   /**
    * Adds the writeDataToFile sub task to the given task, executes it, and checks its output.
@@ -97,6 +89,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests the task against an empty database.
    */
+  @Test
   public void testEmptyDatabase() throws IOException {
     runTask(getDatabaseToDdlTaskInstance(), new HashMap<>());
   }
@@ -104,6 +97,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests against a simple model.
    */
+  @Test
   public void testSimpleModel() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -130,6 +124,7 @@ public class TestWriteDataToFileCommand extends TestTaskBase {
   /**
    * Tests against a model with multiple tables and foreign keys.
    */
+  @Test
   public void testComplexModel() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

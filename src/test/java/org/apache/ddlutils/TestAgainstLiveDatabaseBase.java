@@ -20,7 +20,6 @@ package org.apache.ddlutils;
  */
 
 import junit.framework.AssertionFailedError;
-import junit.framework.TestSuite;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
@@ -45,8 +44,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -63,7 +60,7 @@ import java.util.Properties;
  *
  * @version $Revision: 289996 $
  */
-public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
+public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
 
   /**
    * The name of the property that specifies properties file with the settings for the connection to test against.
@@ -114,66 +111,6 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
    * Whether to use delimited identifiers for the test.
    */
   private boolean _useDelimitedIdentifiers;
-
-  /**
-   * Creates the test suite for the given test class which must be a subclass of
-   * {@link RoundtripTestBase}. If the platform supports it, it will be tested
-   * with both delimited and undelimited identifiers.
-   *
-   * @param testedClass The tested class
-   * @return The tests
-   */
-  protected static TestSuite getTests(Class<?> testedClass) {
-    if (!TestAgainstLiveDatabaseBase.class.isAssignableFrom(testedClass) ||
-        Modifier.isAbstract(testedClass.getModifiers())) {
-      throw new DdlUtilsException("Cannot create parameterized tests for class " + testedClass.getName());
-    }
-
-    TestSuite suite = new TestSuite();
-    String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
-    Properties props = readTestProperties(propFile);
-    if (props == null) {
-      return suite;
-    }
-    DataSource dataSource = initDataSourceFromProperties(props);
-    String databaseName = determineDatabaseName(props, dataSource);
-    try {
-      Method[] methods = testedClass.getMethods();
-      PlatformInfo info = null;
-      TestAgainstLiveDatabaseBase newTest;
-      for (Method method : methods) {
-        if (method.getName().startsWith("test") && method.getParameterTypes().length == 0) {
-          newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-          newTest.setName(method.getName());
-          newTest.setTestProperties(props);
-          newTest.setDataSource(dataSource);
-          newTest.setDatabaseName(databaseName);
-          newTest.setUseDelimitedIdentifiers(false);
-          suite.addTest(newTest);
-
-          if (info == null) {
-            Platform platform = PlatformFactory.createNewPlatformInstance(databaseName);
-            if (platform == null) {
-              throw new DdlUtilsException("platform is null");
-            }
-            info = platform.getPlatformInfo();
-          }
-          if (info.isDelimitedIdentifiersSupported()) {
-            newTest = (TestAgainstLiveDatabaseBase) testedClass.newInstance();
-            newTest.setName(method.getName());
-            newTest.setTestProperties(props);
-            newTest.setDataSource(dataSource);
-            newTest.setDatabaseName(databaseName);
-            newTest.setUseDelimitedIdentifiers(true);
-            suite.addTest(newTest);
-          }
-        }
-      }
-    } catch (Exception ex) {
-      throw new DdlUtilsException(ex);
-    }
-    return suite;
-  }
 
   /**
    * Reads the test properties as specified by the property.

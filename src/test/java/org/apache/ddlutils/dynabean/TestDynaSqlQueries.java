@@ -19,14 +19,13 @@ package org.apache.ddlutils.dynabean;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.io.DatabaseIO;
-import org.apache.ddlutils.io.TestAlteration;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.ModelBasedResultSetIterator;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,15 +35,7 @@ import java.util.List;
  *
  * @version $Revision: 289996 $
  */
-public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestAlteration.class);
-  }
+public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
 
   /**
    * Helper method to wrap the given identifier in delimiters if delimited identifier mode is turned on for the test.
@@ -59,6 +50,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple SELECT query.
    */
+  @Test
   public void testSimpleQuery() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -117,6 +109,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple SELECT fetch.
    */
+  @Test
   public void testSimpleFetch() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -167,6 +160,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests insertion & reading of auto-increment columns.
    */
+  @Test
   public void testAutoIncrement() throws Exception {
     // we need special catering for Sybase which does not support identity for INTEGER columns
     final String modelXml;
@@ -265,6 +259,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a more complicated SELECT query that leads to a JOIN in the database.
    */
+  @Test
   public void testJoinQuery() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -322,6 +317,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insert method.
    */
+  @Test
   public void testInsertSingle() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -358,6 +354,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the insert method.
    */
+  @Test
   public void testInsertMultiple() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -420,6 +417,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the update method.
    */
+  @Test
   public void testUpdate() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -462,6 +460,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the exists method.
    */
+  @Test
   public void testExists() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -500,6 +499,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the store method.
    */
+  @Test
   public void testStoreNew() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -536,6 +536,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the store method.
    */
+  @Test
   public void testStoreExisting() throws Exception {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

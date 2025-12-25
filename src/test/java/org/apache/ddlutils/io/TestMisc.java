@@ -19,9 +19,8 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
@@ -35,6 +34,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
 import org.dom4j.io.SAXReader;
+import org.junit.Test;
 import org.xml.sax.InputSource;
 
 import java.io.*;
@@ -48,20 +48,13 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestMisc extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestMisc.class);
-  }
+public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
 
   /**
    * Tests the backup and restore of a table with an identity column and a foreign key to
    * it when identity override is turned on.
    */
+  @Test
   public void testIdentityOverrideOn() throws Exception {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
@@ -199,6 +192,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    * Tests the backup and restore of a table with an identity column and a foreign key to
    * it when identity override is turned off.
    */
+  @Test
   public void testIdentityOverrideOff() throws Exception {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
@@ -338,6 +332,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    * Tests the backup and restore of a table with an identity column and a foreign key to
    * itself while identity override is off.
    */
+  @Test
   public void testSelfReferenceIdentityOverrideOff() throws Exception {
     // Hsqldb does not allow rows to reference themselves
     if (HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
@@ -453,6 +448,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    * Tests the backup and restore of a table with an identity column and a foreign key to
    * itself while identity override is off.
    */
+  @Test
   public void testSelfReferenceIdentityOverrideOn() throws Exception {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
@@ -567,6 +563,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the backup and restore of a self-referencing data set.
    */
+  @Test
   public void testSelfReferences() throws Exception {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
@@ -690,6 +687,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    * Tests the backup and restore of a self-referencing data set (with multiple self references
    * in the same table).
    */
+  @Test
   public void testMultiSelfReferences() throws Exception {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
@@ -802,6 +800,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
    * Tests the backup and restore of several tables with complex relationships with an identity column and a foreign key to
    * itself while identity override is off.
    */
+  @Test
   public void testComplexTableModel() throws Exception {
     // A: self-reference (A1->A2)
     // B: self- and foreign-reference (B1->B2|G1, B2->G2)
@@ -973,6 +972,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   /**
    * Test for DDLUTILS-178.
    */
+  @Test
   public void testDdlUtils178() throws Exception {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1001,6 +1001,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   /**
    * Test for DDLUTILS-179.
    */
+  @Test
   public void testDdlUtils179() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1081,6 +1082,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   /**
    * Test for DDLUTILS-214.
    */
+  @Test
   public void testDdlUtils214() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1138,6 +1140,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   /**
    * Test for DDLUTILS-227.
    */
+  @Test
   public void testDdlUtils227() throws Exception {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

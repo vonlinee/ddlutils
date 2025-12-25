@@ -19,10 +19,10 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -39,15 +39,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestChangeColumn.class);
-  }
+public class TestChangeColumn extends TestAgainstLiveDatabaseBaseJunit4 {
 
 //  - change default value (add default, remove default, change default)
 //  - combined changes, e.g
@@ -61,6 +53,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a column datatype change from integer to double.
    */
+  @Test
   public void testColumnTypeIntegerToDouble() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -97,6 +90,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a column datatype change from smallint to varchar.
    */
+  @Test
   public void testColumnTypeSmallintToVarchar() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -138,6 +132,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a pk column datatype change from integer to double.
    */
+  @Test
   public void testPKColumnTypeIntegerToDouble() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -171,6 +166,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a pk column datatype change from integer to varchar.
    */
+  @Test
   public void testPKColumnTypeIntegerToVarchar() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -209,6 +205,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the change of the datatypes of PK and FK columns from integer to varchar.
    */
+  @Test
   public void testPKAndFKColumnTypesIntegerToVarchar() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -270,6 +267,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * Tests the alteration of the datatypes of columns of a PK and FK that
    * will be dropped.
    */
+  @Test
   public void testPKAndFKColumnTypesAndDropFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -327,6 +325,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of an indexed column datatype change from integer to double.
    */
+  @Test
   public void testIndexColumnTypeIntegerToDouble() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -378,6 +377,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of an indexed column datatype change from smallint to varchar.
    */
+  @Test
   public void testIndexColumnTypeSmallintToVarchar() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -435,6 +435,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * Tests the alteration of the datatype of an indexed column where
    * the index will be dropped.
    */
+  @Test
   public void testIndexColumnTypeAndDropIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -481,6 +482,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of an indexed column datatype change from integer to double.
    */
+  @Test
   public void testUniqueIndexColumnTypeIntegerToDouble() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -532,6 +534,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of an indexed column datatype change from smallint to varchar.
    */
+  @Test
   public void testUniqueIndexColumnTypeSmallintToVarchar() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -588,6 +591,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasng the size of a column.
    */
+  @Test
   public void testColumnIncreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -624,6 +628,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the size of a column.
    */
+  @Test
   public void testColumnDecreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -661,6 +666,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the size of a primary key column.
    */
+  @Test
   public void testPKColumnIncreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -695,6 +701,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the size of a column.
    */
+  @Test
   public void testPKColumnDecreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -729,6 +736,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the sizes of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnIncreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -780,6 +788,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the sizes of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnDecreaseSize() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -833,6 +842,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the size of an indexed column.
    */
+  @Test
   public void testIndexColumnIncreaseSize() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -884,6 +894,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the size of an indexed column.
    */
+  @Test
   public void testIndexColumnDecreaseSize() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -936,6 +947,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the size of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnIncreaseSize() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -988,6 +1000,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the size of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnDecreaseSize() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1039,6 +1052,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the precision of a column.
    */
+  @Test
   public void testColumnIncreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1075,6 +1089,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasng the precision of a column.
    */
+  @Test
   public void testColumnDecreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1111,6 +1126,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the precision of a primary key column.
    */
+  @Test
   public void testPKColumnIncreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1144,6 +1160,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the precision of a primary key column.
    */
+  @Test
   public void testPKColumnDecreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1177,6 +1194,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the precision of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnIncreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1228,6 +1246,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the precision of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnDecreasePrecision() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1279,6 +1298,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the precision of an indexed column.
    */
+  @Test
   public void testIndexColumnIncreasePrecision() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1330,6 +1350,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the precision of an indexed column.
    */
+  @Test
   public void testIndexColumnDecreasePrecision() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1381,6 +1402,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the precision of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnIncreasePrecision() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1432,6 +1454,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the precision of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnDecreasePrecision() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1483,6 +1506,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the scale of a column.
    */
+  @Test
   public void testColumnIncreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1522,6 +1546,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the scale of a column.
    */
+  @Test
   public void testColumnDecreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1558,6 +1583,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the scale of a primary key column.
    */
+  @Test
   public void testPKColumnIncreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1594,6 +1620,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the scale of a primary key column.
    */
+  @Test
   public void testPKColumnDecreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1627,6 +1654,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the scale of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnIncreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1683,6 +1711,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the scale of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnDecreaseScale() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1734,6 +1763,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the scale of an indexed column.
    */
+  @Test
   public void testIndexColumnIncreaseScale() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1786,6 +1816,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the scale of an indexed column.
    */
+  @Test
   public void testIndexColumnDecreaseScale() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1837,6 +1868,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests increasing the scale of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnIncreaseScale() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1889,6 +1921,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests decreasing the scale of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnDecreaseScale() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -1940,6 +1973,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a column required.
    */
+  @Test
   public void testColumnMakeRequired() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -1976,6 +2010,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a column no longer required.
    */
+  @Test
   public void testColumnUnmakeRequired() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2012,6 +2047,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a primary key column required.
    */
+  @Test
   public void testPKColumnMakeRequired() {
     if (getPlatformInfo().isPrimaryKeyColumnAutomaticallyRequired() ||
         getPlatformInfo().isPrimaryKeyColumnsHaveToBeRequired()) {
@@ -2050,6 +2086,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a primary key column no longer required.
    */
+  @Test
   public void testPKColumnUnmakeRequired() {
     if (getPlatformInfo().isPrimaryKeyColumnAutomaticallyRequired() ||
         getPlatformInfo().isPrimaryKeyColumnsHaveToBeRequired()) {
@@ -2088,6 +2125,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a FK column required.
    */
+  @Test
   public void testFKColumnMakeRequired() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2139,6 +2177,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a FK column no longer required.
    */
+  @Test
   public void testFKColumnUnmakeRequired() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -2190,6 +2229,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making PK and FK columns required.
    */
+  @Test
   public void testPKAndFKColumnMakeRequired() {
     if (getPlatformInfo().isPrimaryKeyColumnAutomaticallyRequired() ||
         getPlatformInfo().isPrimaryKeyColumnsHaveToBeRequired()) {
@@ -2246,6 +2286,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making PK and FK columns no longer required.
    */
+  @Test
   public void testPKAndFKColumnUnmakeRequired() {
     if (getPlatformInfo().isPrimaryKeyColumnAutomaticallyRequired() ||
         getPlatformInfo().isPrimaryKeyColumnsHaveToBeRequired()) {
@@ -2302,6 +2343,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column required.
    */
+  @Test
   public void testIndexColumnMakeRequired() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -2358,6 +2400,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column no longer required.
    */
+  @Test
   public void testIndexColumnUnmakeRequired() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -2414,6 +2457,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column required.
    */
+  @Test
   public void testUniqueIndexColumnMakeRequired() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -2466,6 +2510,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column no longer required.
    */
+  @Test
   public void testUniqueIndexColumnUnmakeRequired() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -2518,6 +2563,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a column auto increment.
    */
+  @Test
   public void testColumnMakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2565,6 +2611,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a column no longer auto increment.
    */
+  @Test
   public void testColumnUnmakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2611,6 +2658,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a primary column auto increment.
    */
+  @Test
   public void testPKColumnMakeAutoIncrement() {
     boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
     final String model1Xml =
@@ -2651,6 +2699,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a primary column no longer auto increment.
    */
+  @Test
   public void testPKColumnUnmakeAutoIncrement() {
     boolean isSybase = SybasePlatform.DATABASENAME.equals(getPlatform().getName());
     final String model1Xml =
@@ -2693,6 +2742,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a FK column auto increment.
    */
+  @Test
   public void testFKColumnMakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2759,6 +2809,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making a FK column no longer auto increment.
    */
+  @Test
   public void testFKColumnnUnmakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2825,6 +2876,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making PK and FK columns auto increment.
    */
+  @Test
   public void testPKAndFKColumnMakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2891,6 +2943,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making PK and FK columns no longer auto increment.
    */
+  @Test
   public void testPKAndFKColumnUnmakeAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -2959,6 +3012,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column auto increment.
    */
+  @Test
   public void testIndexColumnMakeAutoIncrement() {
     if (!getPlatformInfo().isIndicesSupported() ||
         !getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
@@ -3022,6 +3076,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column no longer auto increment.
    */
+  @Test
   public void testIndexColumnUnmakeAutoIncrement() {
     if (!getPlatformInfo().isIndicesSupported() ||
         !getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
@@ -3080,6 +3135,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column auto increment.
    */
+  @Test
   public void testUniqueIndexColumnMakeAutoIncrement() {
     if (!getPlatformInfo().isIndicesSupported() ||
         !getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
@@ -3139,6 +3195,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests making an indexed column no longer auto increment.
    */
+  @Test
   public void testUniqeIndexColumnUnmakeAutoIncrement() {
     if (!getPlatformInfo().isIndicesSupported() ||
         !getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
@@ -3202,6 +3259,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding a default value to a column.
    */
+  @Test
   public void testColumnAddDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3238,6 +3296,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default value of a column.
    */
+  @Test
   public void testColumnChangeDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3274,6 +3333,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default value of a column.
    */
+  @Test
   public void testColumnRemoveDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3310,6 +3370,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding a default value to a primary key column.
    */
+  @Test
   public void testPKColumnAddDefault() throws ParseException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3356,6 +3417,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default value of a primary key column.
    */
+  @Test
   public void testPKColumnChangeDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3396,6 +3458,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default value of a primary key column.
    */
+  @Test
   public void testPKColumnRemoveDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3434,6 +3497,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding a default value to a FK column.
    */
+  @Test
   public void testFKColumnAddDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3491,6 +3555,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default value of a FK column.
    */
+  @Test
   public void testFKColumnChangeDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3548,6 +3613,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default value of a FK column.
    */
+  @Test
   public void testFKColumnRemoveDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3599,6 +3665,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding default values to PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnAddDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3660,6 +3727,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default values of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnChangeDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3721,6 +3789,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default values of PK and FK columns.
    */
+  @Test
   public void testPKAndFKColumnRemoveDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -3775,6 +3844,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding a default value to an indexed column.
    */
+  @Test
   public void testIndexColumnAddDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -3836,6 +3906,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default value of an indexed column.
    */
+  @Test
   public void testIndexColumnChangeDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -3892,6 +3963,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default value of an indexed column.
    */
+  @Test
   public void testIndexColumnRemoveDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -3948,6 +4020,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests adding a default value to an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnAddDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -4010,6 +4083,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests changing the default value of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnChangeDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -4066,6 +4140,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests removing the default value of an indexed column.
    */
+  @Test
   public void testUniqueIndexColumnRemoveDefault() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -4122,6 +4197,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a column's datatype and size.
    */
+  @Test
   public void testChangeDatatypeAndSize1() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -4157,6 +4233,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the alteration of a column's datatype and size.
    */
+  @Test
   public void testChangeDatatypeAndSize2() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

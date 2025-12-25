@@ -38,6 +38,7 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
+import org.junit.Before;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -308,8 +309,13 @@ public abstract class TestAgainstLiveDatabaseBaseJunit4 extends TestPlatformBase
    * {@inheritDoc}
    */
   @Override
+  @Before
   public void setUp() throws Exception {
     String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
+    if (propFile == null) {
+      // with default value
+      propFile = "/jdbc.hsqldb-memory-embedded.properties";
+    }
     Properties props = readTestProperties(propFile);
     if (props == null) {
       return;

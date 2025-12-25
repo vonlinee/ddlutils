@@ -19,11 +19,11 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
+import org.junit.Test;
 
 import java.io.Reader;
 import java.io.StringReader;
@@ -42,17 +42,8 @@ import java.util.TreeSet;
  *
  * @version $Revision: $
  */
-public class TestDatatypes extends TestAgainstLiveDatabaseBase {
+public class TestDatatypes extends TestAgainstLiveDatabaseBaseJunit4 {
   // TODO: special columns (java_object, array, distinct, ...)
-
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestDatatypes.class);
-  }
 
   /**
    * Performs a data type test.
@@ -139,6 +130,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple BIT column.
    */
+  @Test
   public void testBit() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -155,6 +147,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a BIT column with a default value.
    */
+  @Test
   public void testBitWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -171,6 +164,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple BOOLEAN column.
    */
+  @Test
   public void testBoolean() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -187,6 +181,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a BOOLEAN column with a default value.
    */
+  @Test
   public void testBooleanWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -203,6 +198,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple TINYINT column.
    */
+  @Test
   public void testTinyInt() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -219,6 +215,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a TINYINT column with a default value.
    */
+  @Test
   public void testTinyIntWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -235,6 +232,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple SMALLINT column.
    */
+  @Test
   public void testSmallInt() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -251,6 +249,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a SMALLINT column with a default value.
    */
+  @Test
   public void testSmallIntWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -267,6 +266,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple INTEGER column.
    */
+  @Test
   public void testInteger() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -283,6 +283,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a INTEGER column with a default value.
    */
+  @Test
   public void testIntegerWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -299,6 +300,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple BIGINT column.
    */
+  @Test
   public void testBigInt() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -315,6 +317,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a BIGINT column with a default value.
    */
+  @Test
   public void testBigIntWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -331,6 +334,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple REAL column.
    */
+  @Test
   public void testReal() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -347,6 +351,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a REAL column with a default value.
    */
+  @Test
   public void testRealWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -363,6 +368,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple FLOAT column.
    */
+  @Test
   public void testFloat() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -379,6 +385,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a FLOAT column with a default value.
    */
+  @Test
   public void testFloatWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -395,6 +402,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple DOUBLE column.
    */
+  @Test
   public void testDouble() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -411,6 +419,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a DOUBLE column with a default value.
    */
+  @Test
   public void testDoubleWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -427,6 +436,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple DECIMAL column.
    */
+  @Test
   public void testDecimal() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -443,6 +453,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a DECIMAL column with a default value.
    */
+  @Test
   public void testDecimalWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -459,6 +470,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple DECIMAL column with a scale.
    */
+  @Test
   public void testDecimalWithScale() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -475,6 +487,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a DECIMAL column with a scale and default value.
    */
+  @Test
   public void testDecimalWithScaleAndDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -491,6 +504,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple NUMERIC column.
    */
+  @Test
   public void testNumeric() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -507,6 +521,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a NUMERIC column with a default value.
    */
+  @Test
   public void testNumericWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -523,6 +538,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple NUMERIC column with a scale.
    */
+  @Test
   public void testNumericWithScale() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -539,6 +555,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a NUMERIC column with a scale and default value.
    */
+  @Test
   public void testNumericWithScaleAndDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -555,6 +572,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple CHAR column.
    */
+  @Test
   public void testChar() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -571,6 +589,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a CHAR column with a default value.
    */
+  @Test
   public void testCharWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -587,6 +606,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple VARCHAR column.
    */
+  @Test
   public void testVarChar() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -603,6 +623,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a VARCHAR column with a default value.
    */
+  @Test
   public void testVarCharWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -624,6 +645,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a VARCHAR column with a default value that contains a single quote.
    */
+  @Test
   public void testVarCharWithDefaultValueWithQuote() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -640,6 +662,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a VARCHAR column with a single quote as the default value.
    */
+  @Test
   public void testVarCharWithSingleQuoteAsDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -656,6 +679,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple LONGVARCHAR column.
    */
+  @Test
   public void testLongVarChar() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -672,6 +696,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a LONGVARCHAR column with a default value.
    */
+  @Test
   public void testLongVarCharWithDefault() {
     if (!getPlatformInfo().isDefaultValuesForLongTypesSupported() ||
         InterbasePlatform.DATABASENAME.equals(getPlatform().getName())) {
@@ -699,6 +724,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple DATE column.
    */
+  @Test
   public void testDate() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -716,6 +742,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a DATE column with a default value.
    */
+  @Test
   public void testDateWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -733,6 +760,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple TIME column.
    */
+  @Test
   public void testTime() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -750,6 +778,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a TIME column with a default value.
    */
+  @Test
   public void testTimeWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -767,6 +796,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple TIMESTAMP column.
    */
+  @Test
   public void testTimestamp() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -786,6 +816,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a TIMESTAMP column with a default value.
    */
+  @Test
   public void testTimestampWithDefault() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -805,6 +836,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple BINARY column.
    */
+  @Test
   public void testBinary() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -831,6 +863,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple VARBINARY column.
    */
+  @Test
   public void testVarBinary() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -856,6 +889,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple LONGVARBINARY column.
    */
+  @Test
   public void testLongVarBinary() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -881,6 +915,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple BLOB column.
    */
+  @Test
   public void testBlob() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -906,6 +941,7 @@ public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   /**
    * Tests a simple CLOB column.
    */
+  @Test
   public void testClob() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

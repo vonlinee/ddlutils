@@ -19,9 +19,9 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -32,19 +32,12 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestDropColumn extends TestAgainstLiveDatabaseBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestDropColumn.class);
-  }
+public class TestDropColumn extends TestAgainstLiveDatabaseBaseJunit4 {
 
   /**
    * Tests the removal of a column.
    */
+  @Test
   public void testDropColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -79,6 +72,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of an auto increment column.
    */
+  @Test
   public void testDropAutoIncrementColumn() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -117,6 +111,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a required column.
    */
+  @Test
   public void testDropRequiredColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -151,6 +146,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a column that has a default value.
    */
+  @Test
   public void testDropColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -185,6 +181,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a required column that has a default value.
    */
+  @Test
   public void testDropRequiredColumnWithDefault() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -219,6 +216,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of multiple columns.
    */
+  @Test
   public void testDropMultipleColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -257,6 +255,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of multiple columns, including one with auto incremen.
    */
+  @Test
   public void testDropMultipleColumnsInclAutoIncrement() {
     if (!getPlatformInfo().isNonPrimaryKeyIdentityColumnsSupported()) {
       return;
@@ -299,6 +298,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a primary key column.
    */
+  @Test
   public void testDropPKColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -336,6 +336,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of the single primary key column.
    */
+  @Test
   public void testDropSinglePKColumn() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -370,6 +371,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of multiple primary key columns.
    */
+  @Test
   public void testDropMultiplePKColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -408,6 +410,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of all primary key columns.
    */
+  @Test
   public void testDropAllPKColumns() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -444,6 +447,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a column from a non-unique index.
    */
+  @Test
   public void testDropColumnFromIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -492,6 +496,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of the single column from a unique index.
    */
+  @Test
   public void testDropSingleColumnFromIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -533,6 +538,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a column from a non-unique index.
    */
+  @Test
   public void testDropMultipleColumnsFromIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -583,6 +589,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of all column from a unique index.
    */
+  @Test
   public void testDropAllColumnsFromIndex() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
@@ -628,6 +635,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of the single local column from a foreign key.
    */
+  @Test
   public void testDropSingleLocalColumnFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -674,6 +682,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of the single foreign column from a foreign key.
    */
+  @Test
   public void testDropSingleForeignColumnFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -723,6 +732,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of all local columns from a foreign key.
    */
+  @Test
   public void testDropAllLocalColumnsFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -774,6 +784,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of all foreign columns from a foreign key.
    */
+  @Test
   public void testDropAllForeignColumnsFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -828,6 +839,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of a local and foreign column from a foreign key.
    */
+  @Test
   public void testDropLocalAndForeignColumnFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -885,6 +897,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of multiple local and foreign columns from a foreign key.
    */
+  @Test
   public void testDropMultipleLocalAndForeignColumnsFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -945,6 +958,7 @@ public class TestDropColumn extends TestAgainstLiveDatabaseBase {
   /**
    * Tests the removal of all local and foreign columns from a foreign key.
    */
+  @Test
   public void testDropAllLocalAndForeignColumnsFromFK() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +

@@ -19,10 +19,10 @@ package org.apache.ddlutils.task;
  * under the License.
  */
 
-import junit.framework.Test;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.tools.ant.BuildException;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,14 +33,6 @@ import java.io.IOException;
  * @version $Revision: $
  */
 public class TestWriteSchemaToFileCommand extends TestTaskBase {
-  /**
-   * Parameterized test case pattern.
-   *
-   * @return The tests
-   */
-  public static Test suite() throws Exception {
-    return getTests(TestWriteSchemaToFileCommand.class);
-  }
 
   /**
    * Adds the writeSchemaToFile sub task to the given task, executes it, and checks its output.
@@ -71,6 +63,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests the task against an empty database.
    */
+  @Test
   public void testEmptyDatabase() throws IOException {
     runTask(getDatabaseToDdlTaskInstance(), new Database("roundtriptest"));
   }
@@ -78,6 +71,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests against a model with two tables and a FK.
    */
+  @Test
   public void testSimpleModel() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -105,6 +99,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests against a model with two tables and a FK.
    */
+  @Test
   public void testSimpleModelWithDelimitedIdentifiers() throws IOException {
     if (!isUseDelimitedIdentifiers()) {
       return;
@@ -136,6 +131,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables filter.
    */
+  @Test
   public void testIncludeSingleTable() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -176,6 +172,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables filter in the presence of a foreign key to the indicated table.
    */
+  @Test
   public void testIncludeSingleTableWithFk() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -216,6 +213,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTableFilter filter.
    */
+  @Test
   public void testIncludeSingleTableViaRegExp() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -256,6 +254,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTableFilter filter in the presence of a foreign key to the indicated table.
    */
+  @Test
   public void testIncludeSingleTableWithFkViaRegExp() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -296,6 +295,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables filter for multiple tables.
    */
+  @Test
   public void testIncludeMultipleTables() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -353,6 +353,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables filter for multiple tables.
    */
+  @Test
   public void testIncludeMultipleTablesWithFKPointingToThem() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -400,6 +401,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTableFilter filter for multiple tables.
    */
+  @Test
   public void testIncludeMultipleTablesViaRegExp() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -460,6 +462,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables filter for multiple tables via reg exp.
    */
+  @Test
   public void testIncludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -507,6 +510,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTables filter.
    */
+  @Test
   public void testExcludeSingleTable() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -547,6 +551,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTables filter in the presence of a foreign key to the indicated table.
    */
+  @Test
   public void testExcludeSingleTableWithFk() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -587,6 +592,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTableFilter filter.
    */
+  @Test
   public void testExcludeSingleTableViaRegExp() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -627,6 +633,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTableFilter filter in the presence of a foreign key to the indicated table.
    */
+  @Test
   public void testExcludeSingleTableWithFkViaRegExp() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -667,6 +674,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTables filter for multiple tables.
    */
+  @Test
   public void testExcludeMultipleTables() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -714,6 +722,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTables filter for multiple tables.
    */
+  @Test
   public void testExcludeMultipleTablesWithFKPointingToThem() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -761,6 +770,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTableFilter filter for multiple tables.
    */
+  @Test
   public void testExcludeMultipleTablesViaRegExp() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -814,6 +824,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the excludeTables filter for multiple tables via reg exp.
    */
+  @Test
   public void testExcludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -861,6 +872,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTables and excludeTables filters for multiple tables.
    */
+  @Test
   public void testIncludeAndExcludeMultipleTables() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
@@ -917,6 +929,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   /**
    * Tests of the includeTableFilter and excludeTableFilter filters for multiple tables.
    */
+  @Test
   public void testIncludeAndExcludeMultipleTablesViaRegExp() throws IOException {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
