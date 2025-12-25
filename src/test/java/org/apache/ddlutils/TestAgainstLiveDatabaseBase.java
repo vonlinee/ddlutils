@@ -152,7 +152,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
           suite.addTest(newTest);
 
           if (info == null) {
-            Platform platform = PlatformFactory.createNewPlatformInstance(newTest.getDatabaseName());
+            Platform platform = PlatformFactory.createNewPlatformInstance(databaseName);
             if (platform == null) {
               throw new DdlUtilsException("platform is null");
             }
@@ -370,7 +370,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
    * {@inheritDoc}
    */
   @Override
-  protected void setUp() throws Exception {
+  public void setUp() throws Exception {
     super.setUp();
     getPlatform().setDataSource(getDataSource());
     getPlatform().setDelimitedIdentifierModeOn(_useDelimitedIdentifiers);
@@ -380,7 +380,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBaseTemp {
    * {@inheritDoc}
    */
   @Override
-  protected void tearDown() throws Exception {
+  public void tearDown() throws Exception {
     try {
       if (_model != null) {
         dropDatabase();

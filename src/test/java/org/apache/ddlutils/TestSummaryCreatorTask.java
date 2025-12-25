@@ -96,7 +96,7 @@ public class TestSummaryCreatorTask extends Task {
    * @return The input files
    */
   private List<File> getInputFiles() {
-    ArrayList<File> result = new ArrayList<File>();
+    ArrayList<File> result = new ArrayList<>();
 
     for (FileSet fileSet : _fileSets) {
       File fileSetDir = fileSet.getDir(getProject());

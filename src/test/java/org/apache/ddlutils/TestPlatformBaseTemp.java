@@ -22,6 +22,8 @@ package org.apache.ddlutils;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.SqlBuilder;
+import org.junit.After;
+import org.junit.Before;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -44,8 +46,9 @@ public abstract class TestPlatformBaseTemp extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @Before
   @Override
-  protected void setUp() throws Exception {
+  public void setUp() throws Exception {
     _writer = new StringWriter();
     _platform = PlatformFactory.createNewPlatformInstance(getDatabaseName());
     _platform.getSqlBuilder().setWriter(_writer);
@@ -57,8 +60,9 @@ public abstract class TestPlatformBaseTemp extends TestBase {
   /**
    * {@inheritDoc}
    */
+  @After
   @Override
-  protected void tearDown() throws Exception {
+  public void tearDown() throws Exception {
     _platform = null;
     _writer = null;
   }
