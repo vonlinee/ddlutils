@@ -188,7 +188,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
 
   /**
    * {@inheritDoc}
-   */
+   */  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) {
     // PostgreSQL does not return an index for a foreign key
     return false;
@@ -196,7 +196,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
 
   /**
    * {@inheritDoc}
-   */
+   */  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     // PostgreSql uses the form "[tablename]_pkey"
     return (table.getName() + "_pkey").equals(index.getName());

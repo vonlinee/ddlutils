@@ -227,6 +227,7 @@ public class InterbaseModelReader extends JdbcModelReader {
   /**
    * {@inheritDoc}
    */
+  @Override
   protected Collection<String> readPrimaryKeyNames(DatabaseMetaDataWrapper metaData, String tableName) throws SQLException {
     List<String> pks = new ArrayList<>();
     ResultSet pkData = null;

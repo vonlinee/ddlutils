@@ -225,6 +225,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public List<DynaBean> fetch(Database model, String sql, Table[] queryHints, int start, int end) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.fetch(model, sql, queryHints, start, end);
@@ -233,6 +234,7 @@ public class SybasePlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public Iterator<DynaBean> query(Database model, String sql, Collection<Object> parameters, Table[] queryHints) throws DatabaseOperationException {
     setTextSize(MAX_TEXT_SIZE);
     return super.query(model, sql, parameters, queryHints);

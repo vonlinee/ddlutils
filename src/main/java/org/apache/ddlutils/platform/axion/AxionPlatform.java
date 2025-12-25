@@ -22,6 +22,7 @@ package org.apache.ddlutils.platform.axion;
 import org.apache.ddlutils.DatabaseOperationException;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.sql.*;
 import java.util.Map;
@@ -72,6 +73,7 @@ public class AxionPlatform extends PlatformImplBase {
   /**
    * {@inheritDoc}
    */
+  @Override
   public String getName() {
     return DATABASENAME;
   }
@@ -93,12 +95,7 @@ public class AxionPlatform extends PlatformImplBase {
       } catch (Exception ex) {
         throw new DatabaseOperationException("Error while trying to create a database", ex);
       } finally {
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException ex) {
-          }
-        }
+        JdbcUtils.closeSilently(connection);
       }
     } else {
       throw new UnsupportedOperationException("Unable to create a Axion database via the driver " + jdbcDriverClassName);
