@@ -150,11 +150,7 @@ public class HsqlDbBuilder extends SqlBuilder {
       print("CAST(");
       printIdentifier(getColumnName(sourceColumn));
       print(" AS ");
-      if (needSubstr) {
-        print(getNativeType(targetColumn));
-      } else {
-        print(getSqlType(targetColumn));
-      }
+      print(getSqlType(targetColumn));
       print(")");
       if (needSubstr) {
         print(",1,");
