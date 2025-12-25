@@ -366,7 +366,7 @@
   <!-- ================================================================== -->
   <target name="junit-hsqldb"
           description="Runs the test cases against Hsqldb">
-    <property name="jdbc.properties.file" value="/jdbc.properties.hsqldb"/>
+    <property name="jdbc.properties.file" value="/jdbc.hsqldb-memory-embedded.properties"/>
     <antcall target="-junit-internal"/>
   </target>
 

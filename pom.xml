@@ -110,6 +110,8 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <hsqldb.version>2.4.1</hsqldb.version>
   </properties>
 
   <dependencies>
@@ -234,10 +236,11 @@
       <scope>test</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.hsqldb/hsqldb -->
+    <!-- since year 2009 -->
     <dependency>
       <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
-      <version>2.7.4</version>
+      <version>${hsqldb.version}</version>
       <scope>test</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.mckoi/mckoisqldb -->
@@ -295,9 +298,9 @@
       </activation>
       <dependencies>
         <dependency>
-          <groupId>hsqldb</groupId>
+          <groupId>org.hsqldb</groupId>
           <artifactId>hsqldb</artifactId>
-          <version>1.8.0.4</version>
+          <version>${hsqldb.version}</version>
           <scope>test</scope>
         </dependency>
       </dependencies>
@@ -310,7 +313,7 @@
               <systemProperties>
                 <property>
                   <name>jdbc.properties.file</name>
-                  <value>/jdbc.properties.hsqldb</value>
+                  <value>/jdbc.hsqldb-memory-embedded.properties</value>
                 </property>
               </systemProperties>
             </configuration>
