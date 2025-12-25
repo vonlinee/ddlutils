@@ -21,10 +21,7 @@ package org.apache.ddlutils.platform.hsqldb;
 
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.alteration.ColumnDefinitionChange;
-import org.apache.ddlutils.model.Column;
-import org.apache.ddlutils.model.ModelException;
-import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.model.TypeMap;
+import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.platform.SqlBuilder;
 
 import java.io.IOException;
@@ -167,5 +164,22 @@ public class HsqlDbBuilder extends SqlBuilder {
     } else {
       super.writeCastExpression(sourceColumn, targetColumn);
     }
+  }
+
+  /**
+   * TODO: verify this
+   * sql: {@code DROP INDEX index_name ON table_name;} seems not supported in hsqldb 2.4.1
+   *
+   * @param table The table the index is on
+   * @param index The index to drop
+   */
+  @Override
+  public void dropIndex(Table table, Index index) throws IOException {
+    if (getPlatformInfo().isAlterTableForDropUsed()) {
+      writeTableAlterStmt(table);
+    }
+    print("DROP INDEX ");
+    printIdentifier(getIndexName(index));
+    printEndOfStatement();
   }
 }
