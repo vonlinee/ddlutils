@@ -928,7 +928,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and a column.
+   * Tests the insertion of a unique index and a column.
    */
   @Test
   public void testInsertUniqueIndexAndColumn() {
@@ -970,7 +970,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and an auto increment column.
+   * Tests the insertion of a unique index and an auto increment column.
    */
   @Test
   public void testInsertUniqueIndexAndAutoIncrementColumn() {
@@ -1013,7 +1013,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and a required column.
+   * Tests the insertion of a unique index and a required column.
    */
   @Test
   public void testInsertUniqueIndexAndRequiredColumn() {
@@ -1053,7 +1053,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and a column with a default value.
+   * Tests the insertion of a unique index and a column with a default value.
    */
   @Test
   public void testInsertUniqueIndexAndColumnWithDefault() {
@@ -1095,7 +1095,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and a required auto increment column.
+   * Tests the insertion of a unique index and a required auto increment column.
    */
   @Test
   public void testInsertUniqueIndexAndRequiredAutoIncrementColumn() {
@@ -1138,7 +1138,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and a required column with a default value.
+   * Tests the insertion of a unique index and a required column with a default value.
    */
   @Test
   public void testInsertUniqueIndexAndRequiredColumnWithDefault() {
@@ -1189,7 +1189,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an unique index and several columns.
+   * Tests the insertion of a unique index and several columns.
    */
   @Test
   public void testAddAndInsertUniqueIndexAndMultipleColumns() {
@@ -1581,7 +1581,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of a column into an unique index.
+   * Tests the insertion of a column into a unique index.
    */
   @Test
   public void testInsertColumnIntoUniqueIndex() {
@@ -1630,7 +1630,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of an auto increment column into an unique index.
+   * Tests the insertion of an auto increment column into a unique index.
    */
   @Test
   public void testInsertAutoIncrementColumnIntoUniqueIndex() {
@@ -1680,7 +1680,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of a required column into an unique index.
+   * Tests the insertion of a required column into a unique index.
    */
   @Test
   public void testInsertRequiredColumnIntoUniqueIndex() {
@@ -1726,7 +1726,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of a column with a default value into an unique index.
+   * Tests the insertion of a column with a default value into a unique index.
    */
   @Test
   public void testInsertColumnWithDefaultIntoUniqueIndex() {
@@ -1775,7 +1775,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of a required auto increment column into an unique index.
+   * Tests the insertion of a required auto increment column into a unique index.
    */
   @Test
   public void testInsertRequiredAutoIncrementColumnIntoUniqueIndex() {
@@ -1825,7 +1825,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of a required column with a default value into an unique index.
+   * Tests the insertion of a required column with a default value into a unique index.
    */
   @Test
   public void testInsertRequiredColumnWithDefaultIntoUniqueIndex() {
@@ -1883,7 +1883,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
   }
 
   /**
-   * Tests the insertion of multiple columns into an unique index.
+   * Tests the insertion of multiple columns into a unique index.
    */
   @Test
   public void testAddAndInsertMultipleColumnsIntoUniqueIndex() {

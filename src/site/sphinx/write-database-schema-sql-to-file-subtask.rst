@@ -19,7 +19,7 @@ writeSchemaSqlToFile
 ====================
 
 Creates the SQL commands necessary to re-create the schema in the database. In contrast to the
-sub task of the same name in the :doc:`DdlToDatabaseTask <ddl-to-database-task>`, this sub task
+sub task of the same name in the :doc:`DdlToDatabaseTask <ddl-to-database-task>`, this sub-task
 operates on the schema in the database.
 
 Attributes

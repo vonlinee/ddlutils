@@ -72,7 +72,7 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertInstanceOf(Time.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -91,7 +91,7 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertInstanceOf(Time.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -109,7 +109,7 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertInstanceOf(Time.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
@@ -129,7 +129,7 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertInstanceOf(Time.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 

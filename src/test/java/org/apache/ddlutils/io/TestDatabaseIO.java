@@ -266,7 +266,7 @@ public class TestDatabaseIO {
    * Tests a database model without tables.
    */
   @Test
-  public void testNoTables() throws Exception {
+  public void testNoTables() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "</database>");
@@ -284,7 +284,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table without columns.
    */
   @Test
-  public void testTableWithoutColumns() throws Exception {
+  public void testTableWithoutColumns() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -330,7 +330,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a single column.
    */
   @Test
-  public void testSingleColumn() throws Exception {
+  public void testSingleColumn() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -478,7 +478,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a primary key column.
    */
   @Test
-  public void testPrimaryKeyColumn() throws Exception {
+  public void testPrimaryKeyColumn() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -518,7 +518,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a required column.
    */
   @Test
-  public void testRequiredColumn() throws Exception {
+  public void testRequiredColumn() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -553,7 +553,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with an autoincrement column.
    */
   @Test
-  public void testAutoIncrementColumn() throws Exception {
+  public void testAutoIncrementColumn() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -593,7 +593,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a column with a size spec.
    */
   @Test
-  public void testColumnWithSize1() throws Exception {
+  public void testColumnWithSize1() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -628,7 +628,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a column with a size spec.
    */
   @Test
-  public void testColumnWithSize2() throws Exception {
+  public void testColumnWithSize2() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -663,7 +663,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a column with a description.
    */
   @Test
-  public void testColumnWithDescription() throws Exception {
+  public void testColumnWithDescription() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -698,7 +698,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a column with a default.
    */
   @Test
-  public void testColumnWithDefault() throws Exception {
+  public void testColumnWithDefault() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -734,7 +734,7 @@ public class TestDatabaseIO {
    * Tests a database model with a table with a column with a java name.
    */
   @Test
-  public void testColumnWithJavaName() throws Exception {
+  public void testColumnWithJavaName() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -769,7 +769,7 @@ public class TestDatabaseIO {
    * Tests a database model containing a single foreignkey.
    */
   @Test
-  public void testSingleForeignkey() throws Exception {
+  public void testSingleForeignkey() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -841,7 +841,7 @@ public class TestDatabaseIO {
    * Tests a database model containing a foreignkey with two references.
    */
   @Test
-  public void testForeignkeyWithTwoReferences() throws Exception {
+  public void testForeignkeyWithTwoReferences() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -956,7 +956,7 @@ public class TestDatabaseIO {
    * Tests a database model containing a named foreignkey.
    */
   @Test
-  public void testNamedForeignkey() throws Exception {
+  public void testNamedForeignkey() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -1022,7 +1022,7 @@ public class TestDatabaseIO {
    * Tests a database model containing foreignkeys with onUpdate values.
    */
   @Test
-  public void testForeignkeysWithOnUpdate() throws Exception {
+  public void testForeignkeysWithOnUpdate() {
     StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
@@ -1114,7 +1114,7 @@ public class TestDatabaseIO {
    * Tests a database model containing foreignkeys with onDelete values.
    */
   @Test
-  public void testForeignkeysWithOnDelete() throws Exception {
+  public void testForeignkeysWithOnDelete() {
     StringBuilder modelXml = new StringBuilder();
 
     modelXml.append("<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n");
@@ -1513,7 +1513,7 @@ public class TestDatabaseIO {
    * Tests a database model containing two foreignkeys.
    */
   @Test
-  public void testTwoForeignkeys() throws Exception {
+  public void testTwoForeignkeys() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'\n" +
@@ -1603,7 +1603,7 @@ public class TestDatabaseIO {
    * Tests a database model containing two foreignkeys with the same name.
    */
   @Test
-  public void testTwoForeignkeysWithSameName() throws Exception {
+  public void testTwoForeignkeysWithSameName() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1650,7 +1650,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index.
    */
   @Test
-  public void testSingleIndex() throws Exception {
+  public void testSingleIndex() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -1702,7 +1702,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index with two columns.
    */
   @Test
-  public void testIndexWithTwoColumns() throws Exception {
+  public void testIndexWithTwoColumns() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -1763,7 +1763,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index with a name.
    */
   @Test
-  public void testIndexWithName() throws Exception {
+  public void testIndexWithName() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -1815,7 +1815,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index without index columns.
    */
   @Test
-  public void testIndexWithoutColumns() throws Exception {
+  public void testIndexWithoutColumns() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1841,7 +1841,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index with an index column that references an undefined column.
    */
   @Test
-  public void testIndexWithUndefinedColumns() throws Exception {
+  public void testIndexWithUndefinedColumns() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1868,7 +1868,7 @@ public class TestDatabaseIO {
    * Tests a database model with an index with an index column that has no name.
    */
   @Test
-  public void testIndexWithNoNameColumn() throws Exception {
+  public void testIndexWithNoNameColumn() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1896,7 +1896,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index.
    */
   @Test
-  public void testSingleUniqueIndex() throws Exception {
+  public void testSingleUniqueIndex() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -1948,7 +1948,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index with two columns.
    */
   @Test
-  public void testUniqueIndexWithTwoColumns() throws Exception {
+  public void testUniqueIndexWithTwoColumns() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -2009,7 +2009,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index with a name.
    */
   @Test
-  public void testUniqueIndexWithName() throws Exception {
+  public void testUniqueIndexWithName() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndex'>\n" +
@@ -2061,7 +2061,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index without index columns.
    */
   @Test
-  public void testUniqueIndexWithoutColumns() throws Exception {
+  public void testUniqueIndexWithoutColumns() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -2087,7 +2087,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index with an index column that references an undefined column.
    */
   @Test
-  public void testUniqueIndexWithUndefinedColumns() throws Exception {
+  public void testUniqueIndexWithUndefinedColumns() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -2114,7 +2114,7 @@ public class TestDatabaseIO {
    * Tests a database model with an unique index with an index column that has no name.
    */
   @Test
-  public void testUniqueIndexWithNoNameColumn() throws Exception {
+  public void testUniqueIndexWithNoNameColumn() {
     try {
       readModel(
         "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -2141,7 +2141,7 @@ public class TestDatabaseIO {
    * Tests a database model with indices, both uniques and non-uniques.
    */
   @Test
-  public void testMixedIndexes() throws Exception {
+  public void testMixedIndexes() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='TableWithIndexes'>\n" +
@@ -2205,7 +2205,7 @@ public class TestDatabaseIO {
    * Tests a complex database model with multiple tables, foreign keys, indices and uniques.
    */
   @Test
-  public void testComplex() throws Exception {
+  public void testComplex() {
     // A = id:INTEGER, parentId:INTEGER, name:VARCHAR(32); fk 'parent' -> A (parentId -> id), unique(name)
     // B = id:TIMESTAMP, aid:INTEGER, cid:CHAR(32) fk -> A (aid -> id), fk -> C (cid -> id), index(aid,cid)
     // C = id:CHAR(32), text:LONGVARCHAR; index 'byText' (text)
@@ -2610,7 +2610,7 @@ public class TestDatabaseIO {
    * Tests the Torque/Turbine extensions BOOLEANINT & BOOLEANCHAR.
    */
   @Test
-  public void testTurbineExtension() throws Exception {
+  public void testTurbineExtension() {
     Database model = readModel(
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "  <table name='SomeTable'>\n" +

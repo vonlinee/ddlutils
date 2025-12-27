@@ -29,17 +29,17 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Tests the writeDataToDatabase sub task.
+ * Tests the writeDataToDatabase sub-task.
  *
  * @version $Revision: $
  */
 public class TestWriteDataToDatabaseCommand extends TestTaskBase {
 
   /**
-   * Adds the writeDataToDatabase sub task to the given task, executes it, and checks its output.
+   * Adds the writeDataToDatabase sub-task to the given task, executes it, and checks its output.
    *
    * @param task          The task
-   * @param dataXml       The data xml to write
+   * @param dataXml       The data XML to write
    * @param useBatchMode  Whether to use batch mode for inserting the data
    * @param ensureFkOrder Whether to ensure foreign key order
    */

@@ -28,14 +28,14 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Tests the writeSchemaToFile sub task.
+ * Tests the writeSchemaToFile sub-task.
  *
  * @version $Revision: $
  */
 public class TestWriteSchemaToFileCommand extends TestTaskBase {
 
   /**
-   * Adds the writeSchemaToFile sub task to the given task, executes it, and checks its output.
+   * Adds the writeSchemaToFile sub-task to the given task, executes it, and checks its output.
    *
    * @param task          The task
    * @param expectedModel The expected model
@@ -460,7 +460,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   }
 
   /**
-   * Tests of the includeTables filter for multiple tables via reg exp.
+   * Tests of the includeTables filter for multiple tables via regexp.
    */
   @Test
   public void testIncludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {
@@ -822,7 +822,7 @@ public class TestWriteSchemaToFileCommand extends TestTaskBase {
   }
 
   /**
-   * Tests of the excludeTables filter for multiple tables via reg exp.
+   * Tests of the excludeTables filter for multiple tables via regexp.
    */
   @Test
   public void testExcludeMultipleTablesWithFKPointingToThemViaRegExp() throws IOException {

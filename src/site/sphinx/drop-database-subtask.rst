@@ -18,10 +18,10 @@
 dropDatabase
 ============
 
-The sub task for dropping the target database. Note that this is only supported on some database
+The sub-task for dropping the target database. Note that this is only supported on some database
 platforms. See :doc:`here <database-support>` for details on which platforms support this.
 
-This sub task does not require schema files. Therefore the ``fileset`` subelement and
+This sub-task does not require schema files. Therefore the ``fileset`` subelement and
 the ``schemaFile`` attributes can be omitted.
 
 Attributes

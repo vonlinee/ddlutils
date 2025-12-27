@@ -24,7 +24,7 @@ import org.apache.ddlutils.model.Database;
 import org.junit.Test;
 
 /**
- * Tests the dropTables sub task.
+ * Tests the dropTables sub-task.
  *
  * @version $Revision: $
  */

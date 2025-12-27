@@ -40,7 +40,7 @@ public abstract class DdlUtilsTest {
    * an AssertionFailedError with the given message.
    */
   public static void assertTrue(String message, boolean condition) {
-    Assertions.assertTrue( condition, message);
+    Assertions.assertTrue(condition, message);
   }
 
   /**

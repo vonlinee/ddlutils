@@ -1674,7 +1674,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBaseJunit4 {
    * Test for DDLUTILS-54.
    */
   @Test
-  public void testIssue54() throws Exception {
+  public void testIssue54() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -1702,7 +1702,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBaseJunit4 {
    * Test for DDLUTILS-159.
    */
   @Test
-  public void testRenamePK() throws Exception {
+  public void testRenamePK() {
     final String model1Xml =
       "<?xml version='1.0'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +

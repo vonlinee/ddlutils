@@ -264,13 +264,13 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
     SAXReader reader = new SAXReader();
     Document testDoc = reader.read(new InputSource(new StringReader(dataAsXml)));
 
-    List misc1Rows = testDoc.selectNodes("//misc1");
-    List misc2Rows = testDoc.selectNodes("//misc2");
+    List<Node> misc1Rows = testDoc.selectNodes("//misc1");
+    List<Node> misc2Rows = testDoc.selectNodes("//misc2");
     String pkColumnName = "pk";
     String fkColumnName = "fk";
     String valueColumnName = "avalue";
 
-    if (misc1Rows.size() == 0) {
+    if (misc1Rows.isEmpty()) {
       misc1Rows = testDoc.selectNodes("//MISC1");
       misc2Rows = testDoc.selectNodes("//MISC2");
       pkColumnName = pkColumnName.toUpperCase();
@@ -564,7 +564,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the backup and restore of a self-referencing data set.
    */
   @Test
-  public void testSelfReferences() throws Exception {
+  public void testSelfReferences() {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
       return;
@@ -688,7 +688,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
    * in the same table).
    */
   @Test
-  public void testMultiSelfReferences() throws Exception {
+  public void testMultiSelfReferences() {
     if (!getPlatformInfo().isIdentityOverrideAllowed()) {
       // TODO: for testing these platforms, we need deleteRows
       return;
@@ -891,12 +891,12 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
     SAXReader reader = new SAXReader();
     Document testDoc = reader.read(new InputSource(new StringReader(dataAsXml)));
     boolean uppercase = false;
-    List rows = testDoc.selectNodes("/*/*");
+    List<Node> rows = testDoc.selectNodes("/*/*");
     String pkColumnName = "pk";
 
     assertEquals(12, rows.size());
-    if (!"e".equals(((Element) rows.get(0)).getName())) {
-      assertEquals("E", ((Element) rows.get(0)).getName());
+    if (!"e".equals(rows.get(0).getName())) {
+      assertEquals("E", rows.get(0).getName());
       uppercase = true;
     }
     if (!"pk".equals(((Element) rows.get(0)).attribute(0).getName())) {
@@ -910,47 +910,47 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
     HashSet<String> pkValues = new HashSet<>();
     HashSet<String> expectedValues = new HashSet<>(Arrays.asList("1", "2"));
 
-    assertEquals(uppercase ? "G" : "g", ((Element) rows.get(1)).getName());
-    assertEquals(uppercase ? "G" : "g", ((Element) rows.get(2)).getName());
+    assertEquals(uppercase ? "G" : "g", rows.get(1).getName());
+    assertEquals(uppercase ? "G" : "g", rows.get(2).getName());
     pkValues.add(((Element) rows.get(1)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(2)).attributeValue(pkColumnName));
     assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "A" : "a", ((Element) rows.get(3)).getName());
-    assertEquals(uppercase ? "A" : "a", ((Element) rows.get(4)).getName());
+    assertEquals(uppercase ? "A" : "a", rows.get(3).getName());
+    assertEquals(uppercase ? "A" : "a", rows.get(4).getName());
     pkValues.add(((Element) rows.get(3)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(4)).attributeValue(pkColumnName));
     assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "B" : "b", ((Element) rows.get(5)).getName());
-    assertEquals(uppercase ? "B" : "b", ((Element) rows.get(6)).getName());
+    assertEquals(uppercase ? "B" : "b", rows.get(5).getName());
+    assertEquals(uppercase ? "B" : "b", rows.get(6).getName());
     pkValues.add(((Element) rows.get(5)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(6)).attributeValue(pkColumnName));
     assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "C" : "c", ((Element) rows.get(7)).getName());
-    assertEquals(uppercase ? "C" : "c", ((Element) rows.get(8)).getName());
+    assertEquals(uppercase ? "C" : "c", rows.get(7).getName());
+    assertEquals(uppercase ? "C" : "c", rows.get(8).getName());
     pkValues.add(((Element) rows.get(7)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(8)).attributeValue(pkColumnName));
     assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "D" : "d", ((Element) rows.get(9)).getName());
-    assertEquals(uppercase ? "D" : "d", ((Element) rows.get(10)).getName());
+    assertEquals(uppercase ? "D" : "d", rows.get(9).getName());
+    assertEquals(uppercase ? "D" : "d", rows.get(10).getName());
     pkValues.add(((Element) rows.get(9)).attributeValue(pkColumnName));
     pkValues.add(((Element) rows.get(10)).attributeValue(pkColumnName));
     assertEquals(pkValues, expectedValues);
 
     pkValues.clear();
 
-    assertEquals(uppercase ? "F" : "f", ((Element) rows.get(11)).getName());
+    assertEquals(uppercase ? "F" : "f", rows.get(11).getName());
     assertEquals("1", ((Element) rows.get(11)).attributeValue(pkColumnName));
 
     dropDatabase();
@@ -973,7 +973,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
    * Test for DDLUTILS-178.
    */
   @Test
-  public void testDdlUtils178() throws Exception {
+  public void testDdlUtils178() {
     if (!getPlatformInfo().isIndicesSupported()) {
       return;
     }
@@ -1083,7 +1083,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
    * Test for DDLUTILS-214.
    */
   @Test
-  public void testDdlUtils214() throws Exception {
+  public void testDdlUtils214() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -1141,7 +1141,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
    * Test for DDLUTILS-227.
    */
   @Test
-  public void testDdlUtils227() throws Exception {
+  public void testDdlUtils227() {
     final String modelXml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='roundtriptest'>\n" +
@@ -1167,7 +1167,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
     assertEquals((Object) "foo", beans.get(0), "Avalue");
 
     Table table = getModel().findTable("Roundtrip", getPlatform().isDelimitedIdentifierModeOn());
-    StringBuffer query = new StringBuffer();
+    StringBuilder query = new StringBuilder();
 
     query.append("SELECT * FROM (SELECT * FROM ");
     if (getPlatform().isDelimitedIdentifierModeOn()) {

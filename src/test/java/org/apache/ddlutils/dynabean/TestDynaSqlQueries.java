@@ -51,7 +51,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests a simple SELECT query.
    */
   @Test
-  public void testSimpleQuery() throws Exception {
+  public void testSimpleQuery() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -110,7 +110,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests a simple SELECT fetch.
    */
   @Test
-  public void testSimpleFetch() throws Exception {
+  public void testSimpleFetch() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -260,7 +260,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests a more complicated SELECT query that leads to a JOIN in the database.
    */
   @Test
-  public void testJoinQuery() throws Exception {
+  public void testJoinQuery() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -318,7 +318,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the insert method.
    */
   @Test
-  public void testInsertSingle() throws Exception {
+  public void testInsertSingle() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -355,7 +355,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the insert method.
    */
   @Test
-  public void testInsertMultiple() throws Exception {
+  public void testInsertMultiple() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -418,7 +418,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the update method.
    */
   @Test
-  public void testUpdate() throws Exception {
+  public void testUpdate() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -461,7 +461,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the exists method.
    */
   @Test
-  public void testExists() throws Exception {
+  public void testExists() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -500,7 +500,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the store method.
    */
   @Test
-  public void testStoreNew() throws Exception {
+  public void testStoreNew() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +
@@ -537,7 +537,7 @@ public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
    * Tests the store method.
    */
   @Test
-  public void testStoreExisting() throws Exception {
+  public void testStoreExisting() {
     createDatabase(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='ddlutils'>\n" +

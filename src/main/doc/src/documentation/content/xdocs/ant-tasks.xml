@@ -242,11 +242,11 @@
       <section>
         <title>Subtask: createDatabase</title>
         <p>
-          The sub task for creating the target database. Note that this is only supported on some database
+          The sub-task for creating the target database. Note that this is only supported on some database
           platforms. See <a href="site:documentation/database-support">here</a> for details on which
           platforms support this.
           <br/>
-          This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
+          This sub-task does not require schema files. Therefore the <code>fileset</code> subelement and
           the <code>schemaFile</code> attribute can be omitted.
         </p>
         <table>
@@ -315,11 +315,11 @@
       <section>
         <title>Subtask: dropDatabase</title>
         <p>
-          The sub task for dropping the target database. Note that this is only supported on some database
+          The sub-task for dropping the target database. Note that this is only supported on some database
           platforms. See <a href="site:documentation/database-support">here</a> for details on which
           platforms support this.
           <br/>
-          This sub task does not require schema files. Therefore the <code>fileset</code> subelement and
+          This sub-task does not require schema files. Therefore the <code>fileset</code> subelement and
           the <code>schemaFile</code> attribute can be omitted.
         </p>
         <table>
@@ -344,7 +344,7 @@
         <p>
           Creates a DTD that specifies the layout for data XML files.
           <br/>
-          This sub task does not require a database connection, so the <code>dataSource</code> subelement
+          This sub-task does not require a database connection, so the <code>dataSource</code> subelement
           can be omitted.
         </p>
         <table>
@@ -893,7 +893,7 @@
         <title>Subtask: writeSchemaSqlToFile</title>
         <p>
           Creates the SQL commands necessary to re-create the schema in the database. In contrast to the
-          sub task of the same name in the <code>DdlToDatabaseTask</code>, this sub task operates on the
+          sub task of the same name in the <code>DdlToDatabaseTask</code>, this sub-task operates on the
           schema in the database.
         </p>
         <table>

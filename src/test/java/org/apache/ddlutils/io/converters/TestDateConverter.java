@@ -70,7 +70,7 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertInstanceOf(Date.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -88,7 +88,7 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertInstanceOf(Date.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -105,7 +105,7 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertInstanceOf(Date.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
@@ -122,7 +122,7 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertInstanceOf(Date.class, result);
     Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 

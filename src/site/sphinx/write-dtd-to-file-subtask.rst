@@ -20,7 +20,7 @@ writeDtdToFile
 
 Creates a DTD that specifies the layout for data XML files.
           
-This sub task does not require a database connection, so the ``dataSource`` subelement can be omitted.
+This sub-task does not require a database connection, so the ``dataSource`` subelement can be omitted.
 
 Attributes
 ----------

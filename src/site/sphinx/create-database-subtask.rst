@@ -18,10 +18,10 @@
 createDatabase
 ==============
 
-This is the sub task for creating the target database. Note that this is only supported on some database
+This is the sub-task for creating the target database. Note that this is only supported on some database
 platforms. See :doc:`here <database-support>` for details on which platforms support this.
 
-This sub task does not require schema files. Therefore the ``fileset`` subelement and the
+This sub-task does not require schema files. Therefore the ``fileset`` subelement and the
 ``schemaFile`` attributes can be omitted.
 
 Attributes

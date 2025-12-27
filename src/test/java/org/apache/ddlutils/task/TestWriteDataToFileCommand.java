@@ -35,17 +35,17 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Tests the writeDataToFile sub task.
+ * Tests the writeDataToFile sub-task.
  *
  * @version $Revision: $
  */
 public class TestWriteDataToFileCommand extends TestTaskBase {
 
   /**
-   * Adds the writeDataToFile sub task to the given task, executes it, and checks its output.
+   * Adds the writeDataToFile sub-task to the given task, executes it, and checks its output.
    *
    * @param task         The task
-   * @param expectedData A map table name -> list of dyna beans sorted by the pk value that is expected
+   * @param expectedData A map table name -> list of Dyna beans sorted by the pk value that is expected
    */
   private void runTask(DatabaseToDdlTask task, Map<String, Object> expectedData) throws IOException {
     WriteDataToFileCommand subTask = new WriteDataToFileCommand();

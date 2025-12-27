@@ -133,7 +133,7 @@ public class TestDataReaderAndWriter {
    * Tests reading the data from XML.
    */
   @Test
-  public void testRead() throws Exception {
+  public void testRead() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='bookstore'>\n" +
@@ -351,7 +351,7 @@ public class TestDataReaderAndWriter {
    * Tests sub elements for columns.
    */
   @Test
-  public void testSubElements() throws Exception {
+  public void testSubElements() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -398,7 +398,7 @@ public class TestDataReaderAndWriter {
    * Tests that the name of the root element does not matter.
    */
   @Test
-  public void testRootElementNameDoesntMatter() throws Exception {
+  public void testRootElementNameDoesntMatter() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -426,7 +426,7 @@ public class TestDataReaderAndWriter {
    * Tests that elements for undefined tables are ignored.
    */
   @Test
-  public void testElementForUndefinedTable() throws Exception {
+  public void testElementForUndefinedTable() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -462,7 +462,7 @@ public class TestDataReaderAndWriter {
    * Tests that attributes for which no column is defined, are ignored.
    */
   @Test
-  public void testAttributeForUndefinedColumn() throws Exception {
+  public void testAttributeForUndefinedColumn() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -490,7 +490,7 @@ public class TestDataReaderAndWriter {
    * Tests that sub elements for which no column is defined, are ignored.
    */
   @Test
-  public void testSubElementForUndefinedColumn() throws Exception {
+  public void testSubElementForUndefinedColumn() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -520,7 +520,7 @@ public class TestDataReaderAndWriter {
    * Tests parsing when case sensitivity is turned on.
    */
   @Test
-  public void testCaseSensitivityTurnedOn() throws Exception {
+  public void testCaseSensitivityTurnedOn() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -556,7 +556,7 @@ public class TestDataReaderAndWriter {
    * Tests parsing when case sensitivity is turned off.
    */
   @Test
-  public void testCaseSensitivityTurnedOff() throws Exception {
+  public void testCaseSensitivityTurnedOff() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
@@ -663,7 +663,7 @@ public class TestDataReaderAndWriter {
    * Tests a cdata section (see DDLUTILS-174).
    */
   @Test
-  public void testCData() throws Exception {
+  public void testCData() {
     Database model = readModel(
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
