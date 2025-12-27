@@ -28,6 +28,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.util.StringUtilsExt;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -120,12 +121,12 @@ public class TestDataReaderAndWriter {
   private void roundtripTest(Database model, SqlDynaBean bean, String encoding, String expectedDataXml) throws UnsupportedEncodingException {
     byte[] xmlData = writeBean(model, bean, encoding);
 
-    Assert.assertEquals(expectedDataXml, new String(xmlData, encoding));
+    Assertions.assertEquals(expectedDataXml, new String(xmlData, encoding));
 
     List<DynaBean> beans = readBeans(model, xmlData);
 
-    Assert.assertEquals(1, beans.size());
-    Assert.assertEquals(bean, beans.get(0));
+    Assertions.assertEquals(1, beans.size());
+    Assertions.assertEquals(bean, beans.get(0));
   }
 
   /**
@@ -177,7 +178,7 @@ public class TestDataReaderAndWriter {
       "  </book>\n" +
       "</data>");
 
-    Assert.assertEquals(5, beans.size());
+    Assertions.assertEquals(5, beans.size());
 
     DynaBean obj1 = beans.get(0);
     DynaBean obj2 = beans.get(1);
@@ -185,30 +186,30 @@ public class TestDataReaderAndWriter {
     DynaBean obj4 = beans.get(3);
     DynaBean obj5 = beans.get(4);
 
-    Assert.assertEquals("author", obj1.getDynaClass().getName());
-    Assert.assertEquals("1", obj1.get("author_id").toString());
-    Assert.assertEquals("Ernest Hemingway", obj1.get("name").toString());
-    Assert.assertEquals("author", obj2.getDynaClass().getName());
-    Assert.assertEquals("2", obj2.get("author_id").toString());
-    Assert.assertEquals("William Shakespeare", obj2.get("name").toString());
-    Assert.assertEquals("book", obj3.getDynaClass().getName());
-    Assert.assertEquals("1", obj3.get("book_id").toString());
-    Assert.assertEquals("1", obj3.get("author_id").toString());
-    Assert.assertEquals("0684830493", obj3.get("isbn").toString());
-    Assert.assertEquals("Old Man And The Sea", obj3.get("title").toString());
-    Assert.assertEquals("1952-01-01", obj3.get("issue_date").toString());    // parsed as a java.sql.Date
-    Assert.assertEquals("book", obj4.getDynaClass().getName());
-    Assert.assertEquals("2", obj4.get("book_id").toString());
-    Assert.assertEquals("2", obj4.get("author_id").toString());
-    Assert.assertEquals("0198321465", obj4.get("isbn").toString());
-    Assert.assertEquals("Macbeth", obj4.get("title").toString());
-    Assert.assertEquals("1606-01-01", obj4.get("issue_date").toString());    // parsed as a java.sql.Date
-    Assert.assertEquals("book", obj5.getDynaClass().getName());
-    Assert.assertEquals("3", obj5.get("book_id").toString());
-    Assert.assertEquals("2", obj5.get("author_id").toString());
-    Assert.assertEquals("0140707026", obj5.get("isbn").toString());
-    Assert.assertEquals("A Midsummer Night's Dream", obj5.get("title").toString());
-    Assert.assertEquals("1595-01-01", obj5.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assertions.assertEquals("author", obj1.getDynaClass().getName());
+    Assertions.assertEquals("1", obj1.get("author_id").toString());
+    Assertions.assertEquals("Ernest Hemingway", obj1.get("name").toString());
+    Assertions.assertEquals("author", obj2.getDynaClass().getName());
+    Assertions.assertEquals("2", obj2.get("author_id").toString());
+    Assertions.assertEquals("William Shakespeare", obj2.get("name").toString());
+    Assertions.assertEquals("book", obj3.getDynaClass().getName());
+    Assertions.assertEquals("1", obj3.get("book_id").toString());
+    Assertions.assertEquals("1", obj3.get("author_id").toString());
+    Assertions.assertEquals("0684830493", obj3.get("isbn").toString());
+    Assertions.assertEquals("Old Man And The Sea", obj3.get("title").toString());
+    Assertions.assertEquals("1952-01-01", obj3.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assertions.assertEquals("book", obj4.getDynaClass().getName());
+    Assertions.assertEquals("2", obj4.get("book_id").toString());
+    Assertions.assertEquals("2", obj4.get("author_id").toString());
+    Assertions.assertEquals("0198321465", obj4.get("isbn").toString());
+    Assertions.assertEquals("Macbeth", obj4.get("title").toString());
+    Assertions.assertEquals("1606-01-01", obj4.get("issue_date").toString());    // parsed as a java.sql.Date
+    Assertions.assertEquals("book", obj5.getDynaClass().getName());
+    Assertions.assertEquals("3", obj5.get("book_id").toString());
+    Assertions.assertEquals("2", obj5.get("author_id").toString());
+    Assertions.assertEquals("0140707026", obj5.get("isbn").toString());
+    Assertions.assertEquals("A Midsummer Night's Dream", obj5.get("title").toString());
+    Assertions.assertEquals("1595-01-01", obj5.get("issue_date").toString());    // parsed as a java.sql.Date
   }
 
   /**
@@ -372,25 +373,25 @@ public class TestDataReaderAndWriter {
       "  </test>\n" +
       "</data>");
 
-    Assert.assertEquals(3, beans.size());
+    Assertions.assertEquals(3, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("id").toString());
-    Assert.assertEquals("foo", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("id").toString());
+    Assertions.assertEquals("foo", obj.get("value").toString());
 
     obj = beans.get(1);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("2", obj.get("id").toString());
-    Assert.assertEquals("bar", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("2", obj.get("id").toString());
+    Assertions.assertEquals("bar", obj.get("value").toString());
 
     obj = beans.get(2);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("3", obj.get("id").toString());
-    Assert.assertEquals("baz", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("3", obj.get("id").toString());
+    Assertions.assertEquals("baz", obj.get("value").toString());
   }
 
   /**
@@ -412,13 +413,13 @@ public class TestDataReaderAndWriter {
       "  <test id='1' value='foo'/>\n" +
       "</someRandomName>");
 
-    Assert.assertEquals(1, beans.size());
+    Assertions.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("id").toString());
-    Assert.assertEquals("foo", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("id").toString());
+    Assertions.assertEquals("foo", obj.get("value").toString());
   }
 
   /**
@@ -442,19 +443,19 @@ public class TestDataReaderAndWriter {
       "  <test id='3' value='baz'/>\n" +
       "</data>");
 
-    Assert.assertEquals(2, beans.size());
+    Assertions.assertEquals(2, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("id").toString());
-    Assert.assertEquals("foo", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("id").toString());
+    Assertions.assertEquals("foo", obj.get("value").toString());
 
     obj = beans.get(1);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("3", obj.get("id").toString());
-    Assert.assertEquals("baz", obj.get("value").toString());
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("3", obj.get("id").toString());
+    Assertions.assertEquals("baz", obj.get("value").toString());
   }
 
   /**
@@ -476,13 +477,13 @@ public class TestDataReaderAndWriter {
       "  <test id='1' value1='foo'/>\n" +
       "</data>");
 
-    Assert.assertEquals(1, beans.size());
+    Assertions.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("id").toString());
-    Assert.assertNull(obj.get("value"));
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("id").toString());
+    Assertions.assertNull(obj.get("value"));
   }
 
   /**
@@ -506,13 +507,13 @@ public class TestDataReaderAndWriter {
       "  </test>\n" +
       "</data>");
 
-    Assert.assertEquals(1, beans.size());
+    Assertions.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("id").toString());
-    Assert.assertNull(obj.get("value"));
+    Assertions.assertEquals("test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("id").toString());
+    Assertions.assertNull(obj.get("value"));
   }
 
   /**
@@ -542,13 +543,13 @@ public class TestDataReaderAndWriter {
     dataReader.setSink(new TestDataSink(beans));
     dataReader.read(new StringReader(testDataXml));
 
-    Assert.assertEquals(1, beans.size());
+    Assertions.assertEquals(1, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("Test", obj.getDynaClass().getName());
-    Assert.assertEquals("2", obj.get("Id").toString());
-    Assert.assertNull(obj.get("Value"));
+    Assertions.assertEquals("Test", obj.getDynaClass().getName());
+    Assertions.assertEquals("2", obj.get("Id").toString());
+    Assertions.assertNull(obj.get("Value"));
   }
 
   /**
@@ -579,25 +580,25 @@ public class TestDataReaderAndWriter {
     dataReader.setSink(new TestDataSink(beans));
     dataReader.read(new StringReader(testDataXml));
 
-    Assert.assertEquals(3, beans.size());
+    Assertions.assertEquals(3, beans.size());
 
     DynaBean obj = beans.get(0);
 
-    Assert.assertEquals("Test", obj.getDynaClass().getName());
-    Assert.assertEquals("1", obj.get("Id").toString());
-    Assert.assertEquals("foo", obj.get("Value").toString());
+    Assertions.assertEquals("Test", obj.getDynaClass().getName());
+    Assertions.assertEquals("1", obj.get("Id").toString());
+    Assertions.assertEquals("foo", obj.get("Value").toString());
 
     obj = beans.get(1);
 
-    Assert.assertEquals("Test", obj.getDynaClass().getName());
-    Assert.assertEquals("2", obj.get("Id").toString());
-    Assert.assertEquals("bar", obj.get("Value").toString());
+    Assertions.assertEquals("Test", obj.getDynaClass().getName());
+    Assertions.assertEquals("2", obj.get("Id").toString());
+    Assertions.assertEquals("bar", obj.get("Value").toString());
 
     obj = beans.get(2);
 
-    Assert.assertEquals("Test", obj.getDynaClass().getName());
-    Assert.assertEquals("3", obj.get("Id").toString());
-    Assert.assertEquals("baz", obj.get("Value").toString());
+    Assertions.assertEquals("Test", obj.getDynaClass().getName());
+    Assertions.assertEquals("3", obj.get("Id").toString());
+    Assertions.assertEquals("baz", obj.get("Value").toString());
   }
 
   /**
@@ -693,8 +694,8 @@ public class TestDataReaderAndWriter {
     byte[] xmlData = writeBean(model, bean, "UTF-8");
     List<DynaBean> beans = readBeans(model, xmlData);
 
-    Assert.assertEquals(1, beans.size());
-    Assert.assertEquals(bean, beans.get(0));
+    Assertions.assertEquals(1, beans.size());
+    Assertions.assertEquals(bean, beans.get(0));
   }
 
   /**

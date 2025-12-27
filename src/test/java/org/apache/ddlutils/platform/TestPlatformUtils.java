@@ -35,9 +35,9 @@ import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Tests the {@link org.apache.ddlutils.PlatformUtils} class.
@@ -71,7 +71,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testAxionDriver() {
-    Assert.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.axiondb.jdbc.AxionDriver", null));
+    Assertions.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.axiondb.jdbc.AxionDriver", null));
   }
 
   /**
@@ -79,8 +79,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testAxionUrl() {
-    Assert.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb"));
-    Assert.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb:/tmp/testdbdir"));
+    Assertions.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb"));
+    Assertions.assertEquals(AxionPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:axiondb:testdb:/tmp/testdbdir"));
   }
 
   /**
@@ -88,13 +88,13 @@ public class TestPlatformUtils {
    */
   @Test
   public void testDb2Driver() {
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ibm.db2.jcc.DB2Driver", null));
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", null));
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("COM.ibm.db2.jdbc.app.DB2Driver", null));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ibm.db2.jcc.DB2Driver", null));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("COM.ibm.db2os390.sqlj.jdbc.DB2SQLJDriver", null));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("COM.ibm.db2.jdbc.app.DB2Driver", null));
     // DataDirect Connect
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.db2.DB2Driver", null));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.db2.DB2Driver", null));
     // i-net
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.drda.DRDADriver", null));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.drda.DRDADriver", null));
   }
 
   /**
@@ -102,13 +102,13 @@ public class TestPlatformUtils {
    */
   @Test
   public void testDb2Url() {
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2://sysmvs1.stl.ibm.com:5021/san_jose"));
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2os390://sysmvs1.stl.ibm.com:5021/san_jose"));
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2os390sqlj://sysmvs1.stl.ibm.com:5021/san_jose"));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2://sysmvs1.stl.ibm.com:5021/san_jose"));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2os390://sysmvs1.stl.ibm.com:5021/san_jose"));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2os390sqlj://sysmvs1.stl.ibm.com:5021/san_jose"));
     // DataDirect Connect
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:db2://server1:50000;DatabaseName=jdbc;User=test;Password=secret"));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:db2://server1:50000;DatabaseName=jdbc;User=test;Password=secret"));
     // i-net
-    Assert.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdb2://server1:50000"));
+    Assertions.assertEquals(Db2Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdb2://server1:50000"));
   }
 
   /**
@@ -116,8 +116,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testCloudscapeUrl() {
-    Assert.assertEquals(CloudscapePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2j:net:database"));
-    Assert.assertEquals(CloudscapePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:cloudscape:net:database"));
+    Assertions.assertEquals(CloudscapePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:db2j:net:database"));
+    Assertions.assertEquals(CloudscapePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:cloudscape:net:database"));
   }
 
   /**
@@ -125,8 +125,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testDerbyDriver() {
-    Assert.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.apache.derby.jdbc.ClientDriver", null));
-    Assert.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.apache.derby.jdbc.EmbeddedDriver", null));
+    Assertions.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.apache.derby.jdbc.ClientDriver", null));
+    Assertions.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.apache.derby.jdbc.EmbeddedDriver", null));
   }
 
   /**
@@ -134,7 +134,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testDerbyUrl() {
-    Assert.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:derby:sample"));
+    Assertions.assertEquals(DerbyPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:derby:sample"));
   }
 
   /**
@@ -142,7 +142,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testFirebirdDriver() {
-    Assert.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.firebirdsql.jdbc.FBDriver", null));
+    Assertions.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.firebirdsql.jdbc.FBDriver", null));
   }
 
   /**
@@ -150,10 +150,10 @@ public class TestPlatformUtils {
    */
   @Test
   public void testFirebirdUrl() {
-    Assert.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql://localhost:8080/path/to/db.fdb"));
-    Assert.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:native:localhost/8080:/path/to/db.fdb"));
-    Assert.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:local://localhost:8080:/path/to/db.fdb"));
-    Assert.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:embedded:localhost/8080:/path/to/db.fdb"));
+    Assertions.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql://localhost:8080/path/to/db.fdb"));
+    Assertions.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:native:localhost/8080:/path/to/db.fdb"));
+    Assertions.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:local://localhost:8080:/path/to/db.fdb"));
+    Assertions.assertEquals(FirebirdPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:firebirdsql:embedded:localhost/8080:/path/to/db.fdb"));
   }
 
   /**
@@ -161,7 +161,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testHsqldbDriver() {
-    Assert.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.hsqldb.jdbcDriver", null));
+    Assertions.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.hsqldb.jdbcDriver", null));
   }
 
   /**
@@ -169,7 +169,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testHsqldbUrl() {
-    Assert.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:hsqldb:/opt/db/testdb"));
+    Assertions.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:hsqldb:/opt/db/testdb"));
   }
 
   /**
@@ -177,7 +177,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testInterbaseDriver() {
-    Assert.assertEquals(InterbasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("interbase.interclient.Driver", null));
+    Assertions.assertEquals(InterbasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("interbase.interclient.Driver", null));
   }
 
   /**
@@ -185,7 +185,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testInterbaseUrl() {
-    Assert.assertEquals(InterbasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:interbase://localhost/e:/testbed/database/employee.gdb"));
+    Assertions.assertEquals(InterbasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:interbase://localhost/e:/testbed/database/employee.gdb"));
   }
 
   /**
@@ -193,7 +193,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMckoiDriver() {
-    Assert.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.mckoi.JDBCDriver", null));
+    Assertions.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.mckoi.JDBCDriver", null));
   }
 
   /**
@@ -201,8 +201,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMckoiUrl() {
-    Assert.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mckoi:local://./db.conf"));
-    Assert.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mckoi://db.myhost.org/"));
+    Assertions.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mckoi:local://./db.conf"));
+    Assertions.assertEquals(MckoiPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mckoi://db.myhost.org/"));
   }
 
   /**
@@ -210,13 +210,13 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMsSqlDriver() {
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.microsoft.jdbc.sqlserver.SQLServerDriver", null));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.microsoft.jdbc.sqlserver.SQLServerDriver", null));
     // DataDirect Connect
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.sqlserver.SQLServerDriver", null));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.sqlserver.SQLServerDriver", null));
     // JNetDirect JSQLConnect
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.jnetdirect.jsql.JSQLDriver", null));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.jnetdirect.jsql.JSQLDriver", null));
     // i-net
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.tds.TdsDriver", null));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.tds.TdsDriver", null));
   }
 
   /**
@@ -224,26 +224,26 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMsSqlUrl() {
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:microsoft:sqlserver://localhost:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:microsoft:sqlserver://localhost:1433"));
     // DataDirect Connect
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sqlserver://server1:1433;User=test;Password=secret"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sqlserver://server1:1433;User=test;Password=secret"));
     // JNetDirect JSQLConnect
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:JSQLConnect://localhost/database=master/user=sa/sqlVersion=6"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:JSQLConnect://localhost/database=master/user=sa/sqlVersion=6"));
     // i-net
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae:210.1.164.19:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae7:localHost:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae7a://MyServer/pipe/sql/query"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae:210.1.164.19:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7:localHost:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7a://MyServer/pipe/sql/query"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae:210.1.164.19:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7:localHost:1433"));
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7a://MyServer/pipe/sql/query"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae:210.1.164.19:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae7:localHost:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetdae7a://MyServer/pipe/sql/query"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae:210.1.164.19:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae6:[2002:d201:a413::d201:a413]:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7:localHost:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetdae7a://MyServer/pipe/sql/query"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae:210.1.164.19:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae6:[2002:d201:a413::d201:a413]:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7:localHost:1433"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetdae7a://MyServer/pipe/sql/query"));
     // jTDS
-    Assert.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:jtds:sqlserver://localhost:8080/test"));
+    Assertions.assertEquals(MSSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:jtds:sqlserver://localhost:8080/test"));
   }
 
   /**
@@ -251,8 +251,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMySqlDriver() {
-    Assert.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
-    Assert.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
+    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
+    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
   }
 
   /**
@@ -260,7 +260,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMySqlUrl() {
-    Assert.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
+    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
   }
 
   /**
@@ -268,12 +268,12 @@ public class TestPlatformUtils {
    */
   @Test
   public void testOracleDriver() {
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("oracle.jdbc.driver.OracleDriver", null));
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("oracle.jdbc.dnlddriver.OracleDriver", null));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("oracle.jdbc.driver.OracleDriver", null));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("oracle.jdbc.dnlddriver.OracleDriver", null));
     // DataDirect Connect
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.oracle.OracleDriver", null));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.oracle.OracleDriver", null));
     // i-net
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.ora.OraDriver", null));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.ora.OraDriver", null));
   }
 
   /**
@@ -281,14 +281,14 @@ public class TestPlatformUtils {
    */
   @Test
   public void testOracleUrl() {
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:thin:@myhost:1521:orcl"));
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:oci8:@(description=(address=(host=myhost)(protocol=tcp)(port=1521))(connect_data=(sid=orcl)))"));
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:thin:@myhost:1521:orcl"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:oci8:@(description=(address=(host=myhost)(protocol=tcp)(port=1521))(connect_data=(sid=orcl)))"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:oracle:dnldthin:@myhost:1521:orcl"));
     // DataDirect Connect
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:oracle://server3:1521;ServiceName=ORCL;User=test;Password=secret"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:oracle://server3:1521;ServiceName=ORCL;User=test;Password=secret"));
     // i-net
-    Assert.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetora:www.inetsoftware.de:1521:orcl?traceLevel=2"));
+    Assertions.assertEquals(Oracle8Platform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetora:www.inetsoftware.de:1521:orcl?traceLevel=2"));
   }
 
   /**
@@ -296,7 +296,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testPostgreSqlDriver() {
-    Assert.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
+    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
   }
 
   /**
@@ -304,8 +304,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testPostgreSqlUrl() {
-    Assert.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
-    Assert.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
+    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
+    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
   }
 
   /**
@@ -313,7 +313,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testSapDbDriver() {
-    Assert.assertEquals(SapDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sap.dbtech.jdbc.DriverSapDB", null));
+    Assertions.assertEquals(SapDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sap.dbtech.jdbc.DriverSapDB", null));
   }
 
   /**
@@ -321,7 +321,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testSapDbUrl() {
-    Assert.assertEquals(SapDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:sapdb://servermachine:9876/TST"));
+    Assertions.assertEquals(SapDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:sapdb://servermachine:9876/TST"));
   }
 
   /**
@@ -329,12 +329,12 @@ public class TestPlatformUtils {
    */
   @Test
   public void testSybaseDriver() {
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sybase.jdbc.SybDriver", null));
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sybase.jdbc2.jdbc.SybDriver", null));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sybase.jdbc.SybDriver", null));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.sybase.jdbc2.jdbc.SybDriver", null));
     // DataDirect Connect
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.sybase.SybaseDriver", null));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.ddtek.jdbc.sybase.SybaseDriver", null));
     // i-net
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.syb.SybDriver", null));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.inet.syb.SybDriver", null));
   }
 
   /**
@@ -342,14 +342,14 @@ public class TestPlatformUtils {
    */
   @Test
   public void testSybaseUrl() {
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:sybase:Tds:xyz:3767orjdbc:sybase:Tds:130.214.90.27:3767"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:sybase:Tds:xyz:3767orjdbc:sybase:Tds:130.214.90.27:3767"));
     // DataDirect Connect
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sybase://server2:5000;User=test;Password=secret"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:datadirect:sybase://server2:5000;User=test;Password=secret"));
     // i-net
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetsyb:www.inetsoftware.de:3333"));
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetsyb:www.inetsoftware.de:3333"));
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetsyb:www.inetsoftware.de:3333"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetsyb:www.inetsoftware.de:3333"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:inetsyb:www.inetsoftware.de:3333"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:inetpool:jdbc:inetsyb:www.inetsoftware.de:3333"));
     // jTDS
-    Assert.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:jtds:sybase://localhost:8080/test"));
+    Assertions.assertEquals(SybasePlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:jtds:sybase://localhost:8080/test"));
   }
 }

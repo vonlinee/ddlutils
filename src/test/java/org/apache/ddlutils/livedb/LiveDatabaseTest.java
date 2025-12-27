@@ -10,6 +10,7 @@ import org.apache.ddlutils.platform.SqlBuilder;
 import org.apache.ddlutils.platform.mysql.MySql8Platform;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import javax.sql.DataSource;
 import java.io.BufferedWriter;
@@ -25,9 +26,9 @@ public class LiveDatabaseTest {
     DataSource dataSource = TestAgainstLiveDatabaseBase.getLiveDataSource("/jdbc.mysql8.properties");
     Platform platform = PlatformFactory.createNewPlatformInstance(MySql8Platform.DATABASENAME);
     platform.setDataSource(dataSource);
-    Assert.assertTrue(platform instanceof MySql8Platform);
+    Assertions.assertTrue(platform instanceof MySql8Platform);
     String currentSchema = platform.currentSchemaName();
-    Assert.assertEquals("ddlutils", currentSchema);
+    Assertions.assertEquals("ddlutils", currentSchema);
   }
 
   // @Test

@@ -30,8 +30,6 @@ import org.apache.ddlutils.platform.TestPlatform;
 
 import java.sql.Types;
 
-import static org.junit.Assert.assertEquals;
-
 /**
  * Base class for model comparison tests.
  *

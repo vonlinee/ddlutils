@@ -23,6 +23,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.sql.Date;
 import java.sql.Types;
@@ -69,8 +70,8 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assert.assertTrue(result instanceof Date);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
@@ -87,8 +88,8 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assert.assertTrue(result instanceof Date);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
@@ -104,8 +105,8 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assert.assertTrue(result instanceof Date);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
@@ -121,8 +122,8 @@ public class TestDateConverter {
 
     Object result = _dateConverter.convertFromString(textRep, Types.DATE);
 
-    Assert.assertTrue(result instanceof Date);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
+    Assertions.assertTrue(result instanceof Date);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Date) result).getTime());
   }
 
   /**
@@ -134,8 +135,8 @@ public class TestDateConverter {
     Object result = _dateConverter.convertFromString(textRep, Types.INTEGER);
 
     // Make sure that the text representation is returned since SQL type was not a DATE
-    Assert.assertNotNull(result);
-    Assert.assertEquals(textRep, result);
+    Assertions.assertNotNull(result);
+    Assertions.assertEquals(textRep, result);
   }
 
   /**
@@ -144,7 +145,7 @@ public class TestDateConverter {
   @Test
   public void testConvertFromStringWithNullTextRep() {
     Object result = _dateConverter.convertFromString(null, Types.DATE);
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   /**
@@ -191,8 +192,8 @@ public class TestDateConverter {
     Date date = new Date(cal.getTimeInMillis());
     String result = _dateConverter.convertToString(date, Types.DATE);
 
-    Assert.assertNotNull(result);
-    Assert.assertEquals("2005-12-19", result);
+    Assertions.assertNotNull(result);
+    Assertions.assertEquals("2005-12-19", result);
   }
 
   /**
@@ -202,7 +203,7 @@ public class TestDateConverter {
   public void testConvertToStringWithNullDate() {
     String result = _dateConverter.convertToString(null, Types.DATE);
 
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   /**

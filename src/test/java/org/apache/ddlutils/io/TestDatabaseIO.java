@@ -23,6 +23,7 @@ import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.StringUtilsExt;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.io.StringReader;
 import java.io.StringWriter;
@@ -82,13 +83,13 @@ public class TestDatabaseIO {
                             int numForeignKeys,
                             int numIndexes,
                             Table table) {
-    Assert.assertEquals(name, table.getName());
-    Assert.assertEquals(description, table.getDescription());
-    Assert.assertEquals(numColumns, table.getColumnCount());
-    Assert.assertEquals(numPrimaryKeyColumns, table.getPrimaryKeyColumns().length);
-    Assert.assertEquals(numAutoIncrementColumns, table.getAutoIncrementColumns().length);
-    Assert.assertEquals(numForeignKeys, table.getForeignKeyCount());
-    Assert.assertEquals(numIndexes, table.getIndexCount());
+    Assertions.assertEquals(name, table.getName());
+    Assertions.assertEquals(description, table.getDescription());
+    Assertions.assertEquals(numColumns, table.getColumnCount());
+    Assertions.assertEquals(numPrimaryKeyColumns, table.getPrimaryKeyColumns().length);
+    Assertions.assertEquals(numAutoIncrementColumns, table.getAutoIncrementColumns().length);
+    Assertions.assertEquals(numForeignKeys, table.getForeignKeyCount());
+    Assertions.assertEquals(numIndexes, table.getIndexCount());
   }
 
   /**
@@ -117,12 +118,12 @@ public class TestDatabaseIO {
                             boolean isRequired,
                             boolean isAutoIncrement,
                             Column column) {
-    Assert.assertEquals(name, column.getName());
-    Assert.assertEquals(TypeMap.getJdbcTypeName(typeCode), column.getType());
-    Assert.assertEquals(typeCode, column.getTypeCode());
-    Assert.assertEquals(size, column.getSizeAsInt());
-    Assert.assertEquals(size, column.getPrecisionRadix());
-    Assert.assertEquals(scale, column.getScale());
+    Assertions.assertEquals(name, column.getName());
+    Assertions.assertEquals(TypeMap.getJdbcTypeName(typeCode), column.getType());
+    Assertions.assertEquals(typeCode, column.getTypeCode());
+    Assertions.assertEquals(size, column.getSizeAsInt());
+    Assertions.assertEquals(size, column.getPrecisionRadix());
+    Assertions.assertEquals(scale, column.getScale());
     if ((size <= 0) && (scale <= 0)) {
       Assert.assertNull(column.getSize());
     } else if (scale == 0) {
@@ -130,12 +131,12 @@ public class TestDatabaseIO {
     } else {
       Assert.assertEquals(size + "," + scale, column.getSize());
     }
-    Assert.assertEquals(defaultValue, column.getDefaultValue());
-    Assert.assertEquals(description, column.getDescription());
-    Assert.assertEquals(javaName, column.getJavaName());
-    Assert.assertEquals(isPrimaryKey, column.isPrimaryKey());
-    Assert.assertEquals(isRequired, column.isRequired());
-    Assert.assertEquals(isAutoIncrement, column.isAutoIncrement());
+    Assertions.assertEquals(defaultValue, column.getDefaultValue());
+    Assertions.assertEquals(description, column.getDescription());
+    Assertions.assertEquals(javaName, column.getJavaName());
+    Assertions.assertEquals(isPrimaryKey, column.isPrimaryKey());
+    Assertions.assertEquals(isRequired, column.isRequired());
+    Assertions.assertEquals(isAutoIncrement, column.isAutoIncrement());
   }
 
   /**
@@ -154,12 +155,12 @@ public class TestDatabaseIO {
                             Table referencedTable,
                             int numReferences,
                             ForeignKey foreignKey) {
-    Assert.assertEquals(name, foreignKey.getName());
-    Assert.assertEquals(onUpdate, foreignKey.getOnUpdate());
-    Assert.assertEquals(onDelete, foreignKey.getOnDelete());
-    Assert.assertEquals(referencedTable, foreignKey.getForeignTable());
-    Assert.assertEquals(referencedTable.getName(), foreignKey.getForeignTableName());
-    Assert.assertEquals(numReferences, foreignKey.getReferenceCount());
+    Assertions.assertEquals(name, foreignKey.getName());
+    Assertions.assertEquals(onUpdate, foreignKey.getOnUpdate());
+    Assertions.assertEquals(onDelete, foreignKey.getOnDelete());
+    Assertions.assertEquals(referencedTable, foreignKey.getForeignTable());
+    Assertions.assertEquals(referencedTable.getName(), foreignKey.getForeignTableName());
+    Assertions.assertEquals(numReferences, foreignKey.getReferenceCount());
   }
 
   /**
@@ -170,10 +171,10 @@ public class TestDatabaseIO {
    * @param ref           The reference
    */
   private void assertEquals(Column localColumn, Column foreignColumn, Reference ref) {
-    Assert.assertEquals(localColumn, ref.getLocalColumn());
-    Assert.assertEquals(localColumn.getName(), ref.getLocalColumnName());
-    Assert.assertEquals(foreignColumn, ref.getForeignColumn());
-    Assert.assertEquals(foreignColumn.getName(), ref.getForeignColumnName());
+    Assertions.assertEquals(localColumn, ref.getLocalColumn());
+    Assertions.assertEquals(localColumn.getName(), ref.getLocalColumnName());
+    Assertions.assertEquals(foreignColumn, ref.getForeignColumn());
+    Assertions.assertEquals(foreignColumn.getName(), ref.getForeignColumnName());
   }
 
   /**
@@ -185,9 +186,9 @@ public class TestDatabaseIO {
    * @param index      The index
    */
   private void assertEquals(String name, boolean isUnique, int numColumns, Index index) {
-    Assert.assertEquals(name, index.getName());
-    Assert.assertEquals(isUnique, index.isUnique());
-    Assert.assertEquals(numColumns, index.getColumnCount());
+    Assertions.assertEquals(name, index.getName());
+    Assertions.assertEquals(isUnique, index.isUnique());
+    Assertions.assertEquals(numColumns, index.getColumnCount());
   }
 
   /**
@@ -198,9 +199,9 @@ public class TestDatabaseIO {
    * @param indexColumn The index column
    */
   private void assertEquals(Column column, String size, IndexColumn indexColumn) {
-    Assert.assertEquals(column, indexColumn.getColumn());
-    Assert.assertEquals(column.getName(), indexColumn.getName());
-    Assert.assertEquals(size, indexColumn.getSize());
+    Assertions.assertEquals(column, indexColumn.getColumn());
+    Assertions.assertEquals(column.getName(), indexColumn.getName());
+    Assertions.assertEquals(size, indexColumn.getSize());
   }
 
   /**
@@ -211,7 +212,7 @@ public class TestDatabaseIO {
    * @param model       The database model
    */
   private void assertEquals(String expectedXml, Database model) {
-    Assert.assertEquals(expectedXml, writeModel(model));
+    Assertions.assertEquals(expectedXml, writeModel(model));
   }
 
   /**
@@ -270,8 +271,8 @@ public class TestDatabaseIO {
       "<database xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "' name='test'>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(0, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(0, model.getTableCount());
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -291,8 +292,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
     assertEquals("SomeTable", "Some table", 0, 0, 0, 0, 0,
       model.getTable(0));
 
@@ -339,8 +340,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -422,8 +423,8 @@ public class TestDatabaseIO {
 
     Database model = readModel(modelXml.toString());
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -488,8 +489,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -501,7 +502,7 @@ public class TestDatabaseIO {
     assertEquals("ID", Types.INTEGER, 0, 0, null, null, null, true, false, false,
       column);
 
-    Assert.assertEquals(column, table.getPrimaryKeyColumns()[0]);
+    Assertions.assertEquals(column, table.getPrimaryKeyColumns()[0]);
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -528,8 +529,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -563,8 +564,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -576,7 +577,7 @@ public class TestDatabaseIO {
     assertEquals("ID", Types.INTEGER, 0, 0, null, null, null, false, false, true,
       column);
 
-    Assert.assertEquals(column, table.getAutoIncrementColumns()[0]);
+    Assertions.assertEquals(column, table.getAutoIncrementColumns()[0]);
 
     assertEquals(
       "<?xml version='1.0' encoding='UTF-8'?>\n" +
@@ -603,8 +604,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -638,8 +639,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -673,8 +674,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -709,8 +710,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -744,8 +745,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -792,8 +793,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -875,8 +876,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -979,8 +980,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1056,8 +1057,8 @@ public class TestDatabaseIO {
 
     Database model = readModel(modelXml.toString());
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1148,8 +1149,8 @@ public class TestDatabaseIO {
 
     Database model = readModel(modelXml.toString());
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1549,8 +1550,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(2, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(2, model.getTableCount());
 
     Table someTable = model.getTable(0);
 
@@ -1666,8 +1667,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1722,8 +1723,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1779,8 +1780,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1912,8 +1913,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -1968,8 +1969,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -2025,8 +2026,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -2160,8 +2161,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 
@@ -2171,7 +2172,7 @@ public class TestDatabaseIO {
       table.getColumn(0));
     assertEquals("when", Types.DATE, 0, 0, null, null, null, false, false, false,
       table.getColumn(1));
-    Assert.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
+    Assertions.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
 
     Index index = table.getIndex(0);
 
@@ -2276,8 +2277,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(3, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(3, model.getTableCount());
 
     // table A
 
@@ -2291,7 +2292,7 @@ public class TestDatabaseIO {
       table.getColumn(1));
     assertEquals("name", Types.VARCHAR, 32, 0, null, "The name", null, false, true, false,
       table.getColumn(2));
-    Assert.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
+    Assertions.assertEquals(table.getColumn(0), table.getAutoIncrementColumns()[0]);
 
     ForeignKey fk = table.getForeignKey(0);
 
@@ -2620,8 +2621,8 @@ public class TestDatabaseIO {
       "  </table>\n" +
       "</database>");
 
-    Assert.assertEquals("test", model.getName());
-    Assert.assertEquals(1, model.getTableCount());
+    Assertions.assertEquals("test", model.getName());
+    Assertions.assertEquals(1, model.getTableCount());
 
     Table table = model.getTable(0);
 

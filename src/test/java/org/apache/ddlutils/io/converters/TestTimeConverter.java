@@ -23,6 +23,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.sql.Time;
 import java.sql.Types;
@@ -71,8 +72,8 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assert.assertTrue(result instanceof Time);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
@@ -90,8 +91,8 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assert.assertTrue(result instanceof Time);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
@@ -108,8 +109,8 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assert.assertTrue(result instanceof Time);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
@@ -128,8 +129,8 @@ public class TestTimeConverter {
 
     Object result = _timeConverter.convertFromString(textRep, Types.TIME);
 
-    Assert.assertTrue(result instanceof Time);
-    Assert.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
+    Assertions.assertTrue(result instanceof Time);
+    Assertions.assertEquals(cal.getTimeInMillis(), ((Time) result).getTime());
   }
 
   /**
@@ -140,8 +141,8 @@ public class TestTimeConverter {
     String textRep = "02:15:59";
     Object result = _timeConverter.convertFromString(textRep, Types.INTEGER);
 
-    Assert.assertNotNull(result);
-    Assert.assertEquals(textRep, result);
+    Assertions.assertNotNull(result);
+    Assertions.assertEquals(textRep, result);
   }
 
   /**
@@ -150,7 +151,7 @@ public class TestTimeConverter {
   @Test
   public void testConvertFromStringWithNullTextRep() {
     Object result = _timeConverter.convertFromString(null, Types.TIME);
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   /**
@@ -197,8 +198,8 @@ public class TestTimeConverter {
     Time time = new Time(cal.getTimeInMillis());
     String result = _timeConverter.convertToString(time, Types.TIME);
 
-    Assert.assertNotNull(result);
-    Assert.assertEquals("02:15:59", result);
+    Assertions.assertNotNull(result);
+    Assertions.assertEquals("02:15:59", result);
   }
 
   /**
@@ -207,7 +208,7 @@ public class TestTimeConverter {
   @Test
   public void testConvertToStringWithNullTime() {
     String result = _timeConverter.convertToString(null, Types.TIME);
-    Assert.assertNull(result);
+    Assertions.assertNull(result);
   }
 
   /**

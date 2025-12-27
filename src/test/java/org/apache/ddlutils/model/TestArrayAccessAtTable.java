@@ -22,6 +22,7 @@ package org.apache.ddlutils.model;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 /**
  * Test case for DDLUTILS-6.
@@ -81,8 +82,8 @@ public class TestArrayAccessAtTable {
   public void testGetPrimaryKeyColumns() {
     Column[] primaryKeyColumns = _testedTable.getPrimaryKeyColumns();
 
-    Assert.assertEquals(1, primaryKeyColumns.length);
-    Assert.assertSame(_column1, primaryKeyColumns[0]);
+    Assertions.assertEquals(1, primaryKeyColumns.length);
+    Assertions.assertSame(_column1, primaryKeyColumns[0]);
   }
 
   /**
@@ -92,9 +93,9 @@ public class TestArrayAccessAtTable {
   public void testGetColumns() {
     Column[] columns = _testedTable.getColumns();
 
-    Assert.assertEquals(2, columns.length);
-    Assert.assertSame(_column1, columns[0]);
-    Assert.assertSame(_column2, columns[1]);
+    Assertions.assertEquals(2, columns.length);
+    Assertions.assertSame(_column1, columns[0]);
+    Assertions.assertSame(_column2, columns[1]);
   }
 
   /**
@@ -104,8 +105,8 @@ public class TestArrayAccessAtTable {
   public void testGetNonUniqueIndices() {
     Index[] nonUniqueIndices = _testedTable.getNonUniqueIndices();
 
-    Assert.assertEquals(1, nonUniqueIndices.length);
-    Assert.assertSame(_nonUniqueIndex, nonUniqueIndices[0]);
+    Assertions.assertEquals(1, nonUniqueIndices.length);
+    Assertions.assertSame(_nonUniqueIndex, nonUniqueIndices[0]);
   }
 
   /**
@@ -115,7 +116,7 @@ public class TestArrayAccessAtTable {
   public void testGetUniqueIndices() {
     Index[] uniqueIndices = _testedTable.getUniqueIndices();
 
-    Assert.assertEquals(1, uniqueIndices.length);
-    Assert.assertSame(_uniqueIndex, uniqueIndices[0]);
+    Assertions.assertEquals(1, uniqueIndices.length);
+    Assertions.assertSame(_uniqueIndex, uniqueIndices[0]);
   }
 }

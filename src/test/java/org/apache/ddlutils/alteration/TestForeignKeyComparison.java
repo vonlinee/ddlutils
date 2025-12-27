@@ -23,6 +23,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.sql.Types;
 import java.util.List;
@@ -70,18 +71,18 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     AddColumnChange colChange = (AddColumnChange) changes.get(0);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(1);
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("COLFK", Types.INTEGER, null, null, false, false, false,
       colChange.getNewColumn());
-    Assert.assertEquals("ColPK", colChange.getPreviousColumn());
-    Assert.assertNull(colChange.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange.getPreviousColumn());
+    Assertions.assertNull(colChange.getNextColumn());
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"COLFK"}, new String[]{"ColPK"},
       fkChange.getNewForeignKey());
   }
@@ -122,23 +123,23 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     AddColumnChange colChange = (AddColumnChange) changes.get(0);
     AddPrimaryKeyChange pkChange = (AddPrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableB", colChange.getChangedTable());
+    Assertions.assertEquals("TableB", colChange.getChangedTable());
     assertColumn("COLPK", Types.INTEGER, null, null, false, true, false,
       colChange.getNewColumn());
-    Assert.assertNull(colChange.getPreviousColumn());
-    Assert.assertEquals("Col", colChange.getNextColumn());
+    Assertions.assertNull(colChange.getPreviousColumn());
+    Assertions.assertEquals("Col", colChange.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(1, pkChange.getPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK", pkChange.getPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(1, pkChange.getPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK", pkChange.getPrimaryKeyColumns()[0]);
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"COLFK"}, new String[]{"COLPK"},
       fkChange.getNewForeignKey());
   }
@@ -185,32 +186,32 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     AddColumnChange colChange1 = (AddColumnChange) changes.get(0);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(1);
     AddColumnChange colChange3 = (AddColumnChange) changes.get(2);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(3);
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
     assertColumn("COLFK1", Types.INTEGER, null, null, false, false, false,
       colChange1.getNewColumn());
-    Assert.assertEquals("ColPK", colChange1.getPreviousColumn());
-    Assert.assertNull(colChange1.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange1.getPreviousColumn());
+    Assertions.assertNull(colChange1.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assertions.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("COLFK2", Types.DOUBLE, null, null, false, false, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("COLFK1", colChange2.getPreviousColumn());
-    Assert.assertNull(colChange2.getNextColumn());
+    Assertions.assertEquals("COLFK1", colChange2.getPreviousColumn());
+    Assertions.assertNull(colChange2.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange3.getChangedTable());
+    Assertions.assertEquals("TableA", colChange3.getChangedTable());
     assertColumn("COLFK3", Types.VARCHAR, "32", null, false, false, false,
       colChange3.getNewColumn());
-    Assert.assertEquals("COLFK2", colChange3.getPreviousColumn());
-    Assert.assertNull(colChange3.getNextColumn());
+    Assertions.assertEquals("COLFK2", colChange3.getPreviousColumn());
+    Assertions.assertNull(colChange3.getNextColumn());
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"COLFK2", "COLFK1", "COLFK3"}, new String[]{"ColPK1", "ColPK2", "ColPK3"},
       fkChange.getNewForeignKey());
   }
@@ -258,32 +259,32 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     AddColumnChange colChange1 = (AddColumnChange) changes.get(0);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(1);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(2);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(3);
 
-    Assert.assertEquals("TableB", colChange1.getChangedTable());
+    Assertions.assertEquals("TableB", colChange1.getChangedTable());
     assertColumn("COLPK1", Types.DOUBLE, null, null, false, true, false,
       colChange1.getNewColumn());
-    Assert.assertNull(colChange1.getPreviousColumn());
-    Assert.assertEquals("ColPK3", colChange1.getNextColumn());
+    Assertions.assertNull(colChange1.getPreviousColumn());
+    Assertions.assertEquals("ColPK3", colChange1.getNextColumn());
 
-    Assert.assertEquals("TableB", colChange2.getChangedTable());
+    Assertions.assertEquals("TableB", colChange2.getChangedTable());
     assertColumn("COLPK2", Types.INTEGER, null, null, false, true, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("COLPK1", colChange2.getPreviousColumn());
-    Assert.assertEquals("ColPK3", colChange2.getNextColumn());
+    Assertions.assertEquals("COLPK1", colChange2.getPreviousColumn());
+    Assertions.assertEquals("ColPK3", colChange2.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1", "ColFK3"}, new String[]{"COLPK1", "COLPK2", "ColPK3"},
       fkChange.getNewForeignKey());
   }
@@ -329,7 +330,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(6, changes.size());
+    Assertions.assertEquals(6, changes.size());
 
     AddColumnChange colChange1 = (AddColumnChange) changes.get(0);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(1);
@@ -338,37 +339,37 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(4);
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(5);
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
     assertColumn("COLFK1", Types.INTEGER, null, null, false, false, false,
       colChange1.getNewColumn());
-    Assert.assertEquals("ColPK", colChange1.getPreviousColumn());
-    Assert.assertEquals("ColFK2", colChange1.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange1.getPreviousColumn());
+    Assertions.assertEquals("ColFK2", colChange1.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assertions.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("COLFK3", Types.VARCHAR, "32", null, false, false, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("ColFK2", colChange2.getPreviousColumn());
-    Assert.assertNull(colChange2.getNextColumn());
+    Assertions.assertEquals("ColFK2", colChange2.getPreviousColumn());
+    Assertions.assertNull(colChange2.getNextColumn());
 
-    Assert.assertEquals("TableB", colChange3.getChangedTable());
+    Assertions.assertEquals("TableB", colChange3.getChangedTable());
     assertColumn("COLPK1", Types.DOUBLE, null, null, false, true, false,
       colChange3.getNewColumn());
-    Assert.assertNull(colChange3.getPreviousColumn());
-    Assert.assertEquals("ColPK3", colChange3.getNextColumn());
+    Assertions.assertNull(colChange3.getPreviousColumn());
+    Assertions.assertEquals("ColPK3", colChange3.getNextColumn());
 
-    Assert.assertEquals("TableB", colChange4.getChangedTable());
+    Assertions.assertEquals("TableB", colChange4.getChangedTable());
     assertColumn("COLPK2", Types.INTEGER, null, null, false, true, false,
       colChange4.getNewColumn());
-    Assert.assertEquals("COLPK1", colChange4.getPreviousColumn());
-    Assert.assertEquals("ColPK3", colChange4.getNextColumn());
+    Assertions.assertEquals("COLPK1", colChange4.getPreviousColumn());
+    Assertions.assertEquals("ColPK3", colChange4.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("ColPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "COLFK1", "COLFK3"}, new String[]{"COLPK1", "COLPK2", "ColPK3"},
       fkChange.getNewForeignKey());
   }
@@ -408,11 +409,11 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     AddForeignKeyChange change = (AddForeignKeyChange) changes.get(0);
 
-    Assert.assertEquals("TableA", change.getChangedTable());
+    Assertions.assertEquals("TableA", change.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK"}, new String[]{"ColPK"},
       change.getNewForeignKey());
   }
@@ -462,11 +463,11 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     AddForeignKeyChange fkChange = (AddForeignKeyChange) changes.get(0);
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1", "ColFK3"}, new String[]{"ColPK1", "ColPK2", "COLPK3"},
       fkChange.getNewForeignKey());
   }
@@ -519,29 +520,29 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     AddColumnChange colChange = (AddColumnChange) changes.get(1);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(2);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(3);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("COLFK2", Types.DOUBLE, null, null, false, false, false,
       colChange.getNewColumn());
-    Assert.assertEquals("ColFK1", colChange.getPreviousColumn());
-    Assert.assertEquals("ColFK3", colChange.getNextColumn());
+    Assertions.assertEquals("ColFK1", colChange.getPreviousColumn());
+    Assertions.assertEquals("ColFK3", colChange.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"COLFK2", "ColFK1", "ColFK3"}, new String[]{"ColPK1", "ColPK2", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -594,29 +595,29 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     AddColumnChange colChange = (AddColumnChange) changes.get(1);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(2);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(3);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", colChange.getChangedTable());
+    Assertions.assertEquals("TableB", colChange.getChangedTable());
     assertColumn("COLPK3", Types.VARCHAR, "32", null, false, true, false,
       colChange.getNewColumn());
-    Assert.assertEquals("ColPK2", colChange.getPreviousColumn());
-    Assert.assertNull(colChange.getNextColumn());
+    Assertions.assertEquals("ColPK2", colChange.getPreviousColumn());
+    Assertions.assertNull(colChange.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("ColPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1", "ColFK3"}, new String[]{"ColPK1", "ColPK2", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -665,7 +666,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(7, changes.size());
+    Assertions.assertEquals(7, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     AddColumnChange colChange1 = (AddColumnChange) changes.get(1);
@@ -675,40 +676,40 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(5);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(6);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
     assertColumn("COLFK1", Types.INTEGER, null, null, false, false, false,
       colChange1.getNewColumn());
-    Assert.assertEquals("ColPK", colChange1.getPreviousColumn());
-    Assert.assertEquals("ColFK2", colChange1.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange1.getPreviousColumn());
+    Assertions.assertEquals("ColFK2", colChange1.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assertions.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("COLFK3", Types.VARCHAR, "32", null, false, false, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("ColFK2", colChange2.getPreviousColumn());
-    Assert.assertNull(colChange2.getNextColumn());
+    Assertions.assertEquals("ColFK2", colChange2.getPreviousColumn());
+    Assertions.assertNull(colChange2.getNextColumn());
 
-    Assert.assertEquals("TableB", colChange3.getChangedTable());
+    Assertions.assertEquals("TableB", colChange3.getChangedTable());
     assertColumn("COLPK2", Types.INTEGER, null, null, false, true, false,
       colChange3.getNewColumn());
-    Assert.assertEquals("ColPK1", colChange3.getPreviousColumn());
-    Assert.assertNull(colChange3.getNextColumn());
+    Assertions.assertEquals("ColPK1", colChange3.getPreviousColumn());
+    Assertions.assertNull(colChange3.getNextColumn());
 
-    Assert.assertEquals("TableB", colChange4.getChangedTable());
+    Assertions.assertEquals("TableB", colChange4.getChangedTable());
     assertColumn("COLPK3", Types.VARCHAR, "32", null, false, true, false,
       colChange4.getNewColumn());
-    Assert.assertEquals("COLPK2", colChange4.getPreviousColumn());
-    Assert.assertNull(colChange4.getNextColumn());
+    Assertions.assertEquals("COLPK2", colChange4.getPreviousColumn());
+    Assertions.assertNull(colChange4.getNextColumn());
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("ColPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "COLFK1", "COLFK3"}, new String[]{"ColPK1", "COLPK2", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -762,22 +763,22 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1", "ColFK3"}, new String[]{"COLPK1", "COLPK2", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -830,22 +831,22 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1", "ColFK3"}, new String[]{"COLPK1", "COLPK2", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -894,7 +895,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    Assert.assertTrue(changes.isEmpty());
+    Assertions.assertTrue(changes.isEmpty());
   }
 
   /**
@@ -946,22 +947,22 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
-    Assert.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(3, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("COLPK3", pkChange.getNewPrimaryKeyColumns()[2]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK1", "ColFK2", "ColFK3"}, new String[]{"COLPK2", "COLPK1", "COLPK3"},
       fkChange2.getNewForeignKey());
   }
@@ -1015,21 +1016,21 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK1", "ColFK2"}, new String[]{"COLPK2", "COLPK1"},
       fkChange2.getNewForeignKey());
   }
@@ -1083,21 +1084,21 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     PrimaryKeyChange pkChange = (PrimaryKeyChange) changes.get(1);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(2);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableB", pkChange.getChangedTable());
-    Assert.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
-    Assert.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
-    Assert.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
+    Assertions.assertEquals("TableB", pkChange.getChangedTable());
+    Assertions.assertEquals(2, pkChange.getNewPrimaryKeyColumns().length);
+    Assertions.assertEquals("COLPK1", pkChange.getNewPrimaryKeyColumns()[0]);
+    Assertions.assertEquals("COLPK2", pkChange.getNewPrimaryKeyColumns()[1]);
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK2", "ColFK1"}, new String[]{"COLPK1", "COLPK2"},
       fkChange2.getNewForeignKey());
   }
@@ -1149,7 +1150,7 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(5, changes.size());
+    Assertions.assertEquals(5, changes.size());
 
     RemoveForeignKeyChange fkChange1 = (RemoveForeignKeyChange) changes.get(0);
     RemoveColumnChange colChange1 = (RemoveColumnChange) changes.get(1);
@@ -1157,19 +1158,19 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     RemoveColumnChange colChange3 = (RemoveColumnChange) changes.get(3);
     AddForeignKeyChange fkChange2 = (AddForeignKeyChange) changes.get(4);
 
-    Assert.assertEquals("TableA", fkChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange1.findChangedForeignKey(model1, false));
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
-    Assert.assertEquals("ColFK3", colChange1.getChangedColumn());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("ColFK3", colChange1.getChangedColumn());
 
-    Assert.assertEquals("TableB", colChange2.getChangedTable());
-    Assert.assertEquals("COLPK1", colChange2.getChangedColumn());
+    Assertions.assertEquals("TableB", colChange2.getChangedTable());
+    Assertions.assertEquals("COLPK1", colChange2.getChangedColumn());
 
-    Assert.assertEquals("TableB", colChange3.getChangedTable());
-    Assert.assertEquals("COLPK3", colChange3.getChangedColumn());
+    Assertions.assertEquals("TableB", colChange3.getChangedTable());
+    Assertions.assertEquals("COLPK3", colChange3.getChangedColumn());
 
-    Assert.assertEquals("TableA", fkChange2.getChangedTable());
+    Assertions.assertEquals("TableA", fkChange2.getChangedTable());
     assertForeignKey("TESTFK", "TableB", new String[]{"ColFK1"}, new String[]{"COLPK2"},
       fkChange2.getNewForeignKey());
   }
@@ -1209,12 +1210,12 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     RemoveForeignKeyChange change = (RemoveForeignKeyChange) changes.get(0);
 
-    Assert.assertEquals("TableB", change.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableB").getForeignKey(0), change.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableB", change.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableB").getForeignKey(0), change.findChangedForeignKey(model1, false));
   }
 
 
@@ -1263,12 +1264,12 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     RemoveForeignKeyChange fkChange = (RemoveForeignKeyChange) changes.get(0);
 
-    Assert.assertEquals("TableA", fkChange.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange.findChangedForeignKey(model1, false));
+    Assertions.assertEquals("TableA", fkChange.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), fkChange.findChangedForeignKey(model1, false));
   }
 
   /**
@@ -1309,15 +1310,15 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveForeignKeyChange change1 = (RemoveForeignKeyChange) changes.get(0);
     AddForeignKeyChange change2 = (AddForeignKeyChange) changes.get(1);
 
-    Assert.assertEquals("TableB", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableB").getForeignKey(0), change1.findChangedForeignKey(model1, true));
+    Assertions.assertEquals("TableB", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableB").getForeignKey(0), change1.findChangedForeignKey(model1, true));
 
-    Assert.assertEquals("TableB", change2.getChangedTable());
+    Assertions.assertEquals("TableB", change2.getChangedTable());
     assertForeignKey("TESTFK", "TableA", new String[]{"ColFK"}, new String[]{"ColPK"},
       change2.getNewForeignKey());
   }
@@ -1366,15 +1367,15 @@ public class TestForeignKeyComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveForeignKeyChange change1 = (RemoveForeignKeyChange) changes.get(0);
     AddForeignKeyChange change2 = (AddForeignKeyChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getForeignKey(0), change1.findChangedForeignKey(model1, true));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getForeignKey(0), change1.findChangedForeignKey(model1, true));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertForeignKey("TestFK", "TableB", new String[]{"ColFK1", "ColFK2"}, new String[]{"ColPK2", "ColPK1"},
       change2.getNewForeignKey());
   }

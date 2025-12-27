@@ -23,6 +23,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 import java.sql.Types;
 import java.util.List;
@@ -65,11 +66,11 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     AddIndexChange change = (AddIndexChange) changes.get(0);
 
-    Assert.assertEquals("TableA", change.getChangedTable());
+    Assertions.assertEquals("TableA", change.getChangedTable());
     assertIndex("TESTINDEX", false, new String[]{"Col"},
       change.getNewIndex());
   }
@@ -102,18 +103,18 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     AddColumnChange colChange = (AddColumnChange) changes.get(0);
     AddIndexChange indexChange = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("COL", Types.INTEGER, null, null, false, false, false,
       colChange.getNewColumn());
-    Assert.assertEquals("ColPK", colChange.getPreviousColumn());
-    Assert.assertNull(colChange.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange.getPreviousColumn());
+    Assertions.assertNull(colChange.getNextColumn());
 
-    Assert.assertEquals("TableA", indexChange.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange.getChangedTable());
     assertIndex("TESTINDEX", false, new String[]{"COL"},
       indexChange.getNewIndex());
   }
@@ -153,11 +154,11 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     AddIndexChange change = (AddIndexChange) changes.get(0);
 
-    Assert.assertEquals("TableA", change.getChangedTable());
+    Assertions.assertEquals("TableA", change.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"Col3", "Col1", "Col2"},
       change.getNewIndex());
   }
@@ -194,32 +195,32 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     AddColumnChange colChange1 = (AddColumnChange) changes.get(0);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(1);
     AddColumnChange colChange3 = (AddColumnChange) changes.get(2);
     AddIndexChange indexChange = (AddIndexChange) changes.get(3);
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
     assertColumn("COL1", Types.INTEGER, null, null, false, false, false,
       colChange1.getNewColumn());
-    Assert.assertEquals("ColPK", colChange1.getPreviousColumn());
-    Assert.assertNull(colChange1.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange1.getPreviousColumn());
+    Assertions.assertNull(colChange1.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assertions.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("COL2", Types.DOUBLE, null, null, false, false, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("COL1", colChange2.getPreviousColumn());
-    Assert.assertNull(colChange2.getNextColumn());
+    Assertions.assertEquals("COL1", colChange2.getPreviousColumn());
+    Assertions.assertNull(colChange2.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange3.getChangedTable());
+    Assertions.assertEquals("TableA", colChange3.getChangedTable());
     assertColumn("COL3", Types.VARCHAR, "32", null, false, false, false,
       colChange3.getNewColumn());
-    Assert.assertEquals("COL2", colChange3.getPreviousColumn());
-    Assert.assertNull(colChange3.getNextColumn());
+    Assertions.assertEquals("COL2", colChange3.getPreviousColumn());
+    Assertions.assertNull(colChange3.getNextColumn());
 
-    Assert.assertEquals("TableA", indexChange.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL3", "COL1", "COL2"},
       indexChange.getNewIndex());
   }
@@ -262,22 +263,22 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     AddColumnChange colChange = (AddColumnChange) changes.get(1);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(2);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("COL2", Types.DOUBLE, null, null, false, false, false,
       colChange.getNewColumn());
-    Assert.assertEquals("COL1", colChange.getPreviousColumn());
-    Assert.assertEquals("COL3", colChange.getNextColumn());
+    Assertions.assertEquals("COL1", colChange.getPreviousColumn());
+    Assertions.assertEquals("COL3", colChange.getNextColumn());
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL3", "COL1", "COL2"},
       indexChange2.getNewIndex());
   }
@@ -318,29 +319,29 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(4, changes.size());
+    Assertions.assertEquals(4, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     AddColumnChange colChange1 = (AddColumnChange) changes.get(1);
     AddColumnChange colChange2 = (AddColumnChange) changes.get(2);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(3);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange1.getChangedTable());
+    Assertions.assertEquals("TableA", colChange1.getChangedTable());
     assertColumn("COL1", Types.INTEGER, null, null, false, false, false,
       colChange1.getNewColumn());
-    Assert.assertEquals("ColPK", colChange1.getPreviousColumn());
-    Assert.assertEquals("COL3", colChange1.getNextColumn());
+    Assertions.assertEquals("ColPK", colChange1.getPreviousColumn());
+    Assertions.assertEquals("COL3", colChange1.getNextColumn());
 
-    Assert.assertEquals("TableA", colChange2.getChangedTable());
+    Assertions.assertEquals("TableA", colChange2.getChangedTable());
     assertColumn("COL2", Types.DOUBLE, null, null, false, false, false,
       colChange2.getNewColumn());
-    Assert.assertEquals("COL1", colChange2.getPreviousColumn());
-    Assert.assertEquals("COL3", colChange2.getNextColumn());
+    Assertions.assertEquals("COL1", colChange2.getPreviousColumn());
+    Assertions.assertEquals("COL3", colChange2.getNextColumn());
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL1", "COL3", "COL2"},
       indexChange2.getNewIndex());
   }
@@ -384,15 +385,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", false, new String[]{"COL3", "COL1", "COL2"},
       indexChange2.getNewIndex());
   }
@@ -435,15 +436,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL3", "COL1", "COL2"},
       indexChange2.getNewIndex());
   }
@@ -484,15 +485,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange change1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange change2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertIndex("TestIndex", true, new String[]{"Col2", "Col1"},
       change2.getNewIndex());
   }
@@ -532,15 +533,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange change1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange change2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertIndex("TestIndex", false, new String[]{"Col1", "Col2"},
       change2.getNewIndex());
   }
@@ -580,15 +581,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange change1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange change2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertIndex("TestIndex", false, new String[]{"Col1"},
       change2.getNewIndex());
   }
@@ -629,15 +630,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange change1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange change2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertIndex("TestIndex", true, new String[]{"Col1", "Col2"},
       change2.getNewIndex());
   }
@@ -670,16 +671,16 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange indexChange = (RemoveIndexChange) changes.get(0);
     RemoveColumnChange colChange = (RemoveColumnChange) changes.get(1);
 
-    Assert.assertEquals("TableA", indexChange.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
-    Assert.assertEquals("COL1", colChange.getChangedColumn());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("COL1", colChange.getChangedColumn());
   }
 
   /**
@@ -720,19 +721,19 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     RemoveColumnChange colChange = (RemoveColumnChange) changes.get(1);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(2);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
-    Assert.assertEquals("COL2", colChange.getChangedColumn());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("COL2", colChange.getChangedColumn());
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL3", "COL1"},
       indexChange2.getNewIndex());
   }
@@ -775,22 +776,22 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     AddColumnChange colChange = (AddColumnChange) changes.get(1);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(2);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
     assertColumn("COL2", Types.DOUBLE, null, null, false, false, false,
       colChange.getNewColumn());
-    Assert.assertEquals("COL1", colChange.getPreviousColumn());
-    Assert.assertEquals("COL3", colChange.getNextColumn());
+    Assertions.assertEquals("COL1", colChange.getPreviousColumn());
+    Assertions.assertEquals("COL3", colChange.getNextColumn());
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL1", "COL2", "COL3"},
       indexChange2.getNewIndex());
   }
@@ -833,19 +834,19 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(3, changes.size());
+    Assertions.assertEquals(3, changes.size());
 
     RemoveIndexChange indexChange1 = (RemoveIndexChange) changes.get(0);
     RemoveColumnChange colChange = (RemoveColumnChange) changes.get(1);
     AddIndexChange indexChange2 = (AddIndexChange) changes.get(2);
 
-    Assert.assertEquals("TableA", indexChange1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", colChange.getChangedTable());
-    Assert.assertEquals("COL2", colChange.getChangedColumn());
+    Assertions.assertEquals("TableA", colChange.getChangedTable());
+    Assertions.assertEquals("COL2", colChange.getChangedColumn());
 
-    Assert.assertEquals("TableA", indexChange2.getChangedTable());
+    Assertions.assertEquals("TableA", indexChange2.getChangedTable());
     assertIndex("TESTINDEX", true, new String[]{"COL1", "COL3"},
       indexChange2.getNewIndex());
   }
@@ -879,12 +880,12 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     RemoveIndexChange change = (RemoveIndexChange) changes.get(0);
 
-    Assert.assertEquals("TableA", change.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change.findChangedIndex(model1, true));
+    Assertions.assertEquals("TableA", change.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change.findChangedIndex(model1, true));
   }
 
   /**
@@ -922,12 +923,12 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(false).getChanges(model1, model2);
 
-    Assert.assertEquals(1, changes.size());
+    Assertions.assertEquals(1, changes.size());
 
     RemoveIndexChange indexChange = (RemoveIndexChange) changes.get(0);
 
-    Assert.assertEquals("TableA", indexChange.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), indexChange.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", indexChange.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), indexChange.findChangedIndex(model1, false));
   }
 
   /**
@@ -962,15 +963,15 @@ public class TestIndexComparison extends TestComparisonBase {
     Database model2 = DatabaseIO.parseString(MODEL2);
     List<ModelChange> changes = getPlatform(true).getChanges(model1, model2);
 
-    Assert.assertEquals(2, changes.size());
+    Assertions.assertEquals(2, changes.size());
 
     RemoveIndexChange change1 = (RemoveIndexChange) changes.get(0);
     AddIndexChange change2 = (AddIndexChange) changes.get(1);
 
-    Assert.assertEquals("TableA", change1.getChangedTable());
-    Assert.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
+    Assertions.assertEquals("TableA", change1.getChangedTable());
+    Assertions.assertEquals(model1.findTable("TableA").getIndex(0), change1.findChangedIndex(model1, false));
 
-    Assert.assertEquals("TableA", change2.getChangedTable());
+    Assertions.assertEquals("TableA", change2.getChangedTable());
     assertIndex("TestIndex", false, new String[]{"Col"},
       change2.getNewIndex());
   }
