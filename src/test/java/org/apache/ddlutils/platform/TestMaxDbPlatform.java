@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the MaxDB platform.

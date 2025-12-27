@@ -19,7 +19,6 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import junit.framework.AssertionFailedError;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
@@ -38,6 +37,7 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
+import org.opentest4j.AssertionFailedError;
 
 import javax.sql.DataSource;
 import java.io.IOException;

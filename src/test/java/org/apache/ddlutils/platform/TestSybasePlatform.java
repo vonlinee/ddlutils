@@ -21,7 +21,7 @@ package org.apache.ddlutils.platform;
 
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the Sybase platform.

@@ -2,8 +2,8 @@ package org.apache.ddlutils.platform.hsqldb;
 
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.ddlutils.util.JdbcUtils;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +23,7 @@ public class HsqlDBPlatformTest {
         try {
           statement.execute("SELECT SUBSTR(CAST(\"1234\" AS VARCHAR),1,16)");
         } catch (Throwable throwable) {
-          Assert.assertTrue(throwable.getMessage().contains("length must be specified in type definition: VARCHAR"));
+          Assertions.assertTrue(throwable.getMessage().contains("length must be specified in type definition: VARCHAR"));
         }
       }
     }
@@ -52,14 +52,14 @@ public class HsqlDBPlatformTest {
             values.put(columnName, isNullable);
             System.out.println(columnName + " " + isNullable);
           }
-          Assert.assertEquals("YES", values.get("AVALUE"));
-          Assert.assertEquals("NO", values.get("PK1"));
-          Assert.assertEquals("NO", values.get("PK2"));
+          Assertions.assertEquals("YES", values.get("AVALUE"));
+          Assertions.assertEquals("NO", values.get("PK1"));
+          Assertions.assertEquals("NO", values.get("PK2"));
 
           // in hsqldb 1.8.0.4, it's NO, in hsqldb 2.4.1, it's YES
-          Assert.assertEquals("YES", values.get("PK3"));
+          Assertions.assertEquals("YES", values.get("PK3"));
         } catch (Throwable throwable) {
-          Assert.assertTrue(throwable.getMessage().contains("length must be specified in type definition: VARCHAR"));
+          Assertions.assertTrue(throwable.getMessage().contains("length must be specified in type definition: VARCHAR"));
         }
       }
     }

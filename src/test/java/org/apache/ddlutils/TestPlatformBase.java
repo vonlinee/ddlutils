@@ -22,8 +22,8 @@ package org.apache.ddlutils;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.SqlBuilder;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -46,7 +46,7 @@ public abstract class TestPlatformBase extends DdlUtilsTest {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     _writer = new StringWriter();
     _platform = PlatformFactory.createNewPlatformInstance(getDatabaseName());
@@ -59,7 +59,7 @@ public abstract class TestPlatformBase extends DdlUtilsTest {
   /**
    * {@inheritDoc}
    */
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     _platform = null;
     _writer = null;

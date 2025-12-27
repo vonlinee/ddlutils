@@ -21,7 +21,7 @@ package org.apache.ddlutils.task;
 
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the dropTables sub-task.

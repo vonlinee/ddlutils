@@ -3,7 +3,7 @@ package org.apache.ddlutils.platform;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.platform.mysql.MySql8Platform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 public class TestMySql8Platform {

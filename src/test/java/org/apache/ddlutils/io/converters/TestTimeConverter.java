@@ -19,10 +19,10 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.sql.Time;
@@ -43,7 +43,7 @@ public class TestTimeConverter {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     _timeConverter = new TimeConverter();
   }
@@ -51,7 +51,7 @@ public class TestTimeConverter {
   /**
    * {@inheritDoc}
    */
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     _timeConverter = null;
   }
@@ -162,7 +162,7 @@ public class TestTimeConverter {
     String textRep = "99:99:99";
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // We expect the exception
     }
@@ -176,7 +176,7 @@ public class TestTimeConverter {
     String textRep = "aa:bb:cc";
     try {
       _timeConverter.convertFromString(textRep, Types.TIME);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // We expect the exception
     }
@@ -220,7 +220,7 @@ public class TestTimeConverter {
 
     try {
       _timeConverter.convertToString(date, Types.TIME);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // We expect the exception
     }

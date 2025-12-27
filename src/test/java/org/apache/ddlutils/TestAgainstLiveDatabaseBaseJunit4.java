@@ -19,7 +19,6 @@ package org.apache.ddlutils;
  * under the License.
  */
 
-import junit.framework.AssertionFailedError;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.DynaProperty;
@@ -38,7 +37,9 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.opentest4j.AssertionFailedError;
 
 import javax.sql.DataSource;
 import java.io.IOException;
@@ -309,7 +310,7 @@ public abstract class TestAgainstLiveDatabaseBaseJunit4 extends TestPlatformBase
    * {@inheritDoc}
    */
   @Override
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
     if (propFile == null) {
@@ -350,6 +351,7 @@ public abstract class TestAgainstLiveDatabaseBaseJunit4 extends TestPlatformBase
    * {@inheritDoc}
    */
   @Override
+  @AfterEach
   public void tearDown() throws Exception {
     try {
       if (_model != null) {

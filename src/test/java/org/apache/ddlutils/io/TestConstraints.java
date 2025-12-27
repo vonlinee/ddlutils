@@ -26,7 +26,7 @@ import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 

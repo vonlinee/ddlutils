@@ -19,10 +19,10 @@ package org.apache.ddlutils.io.converters;
  * under the License.
  */
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.sql.Date;
@@ -43,7 +43,7 @@ public class TestDateConverter {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     _dateConverter = new DateConverter();
   }
@@ -51,7 +51,7 @@ public class TestDateConverter {
   /**
    * {@inheritDoc}
    */
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     _dateConverter = null;
   }
@@ -157,7 +157,7 @@ public class TestDateConverter {
 
     try {
       _dateConverter.convertFromString(textRep, Types.DATE);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // we expect the exception
     }
@@ -172,7 +172,7 @@ public class TestDateConverter {
 
     try {
       _dateConverter.convertFromString(textRep, Types.DATE);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException ex) {
       // we expect the exception
     }
@@ -215,7 +215,7 @@ public class TestDateConverter {
 
     try {
       _dateConverter.convertToString(date, Types.DATE);
-      Assert.fail("ConversionException expected");
+      Assertions.fail("ConversionException expected");
     } catch (ConversionException expected) {
       // we expect the exception
     }

@@ -24,9 +24,9 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.TestPlatform;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
@@ -44,7 +44,7 @@ public class TestAlterationAlgorithm extends DdlUtilsTest {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     _platform = new TestPlatform();
     _platform.setSqlCommentsOn(false);
@@ -54,7 +54,7 @@ public class TestAlterationAlgorithm extends DdlUtilsTest {
   /**
    * {@inheritDoc}
    */
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     _platform = null;
   }

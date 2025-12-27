@@ -21,7 +21,7 @@ package org.apache.ddlutils.task;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.io.DatabaseIO;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileWriter;

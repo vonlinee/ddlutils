@@ -25,7 +25,7 @@ import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataSink;
 import org.apache.ddlutils.io.DataSinkException;
 import org.apache.ddlutils.io.DatabaseIO;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;

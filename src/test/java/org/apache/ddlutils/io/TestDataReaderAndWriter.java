@@ -26,8 +26,8 @@ import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.util.StringUtilsExt;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.*;
@@ -245,13 +245,13 @@ public class TestDataReaderAndWriter {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(tmpFile.getAbsolutePath());
 
-      Assert.assertEquals(1, beans.size());
+      Assertions.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      Assert.assertEquals("test", obj.getDynaClass().getName());
-      Assert.assertEquals("1", obj.get("id").toString());
-      Assert.assertEquals("foo", obj.get("value").toString());
+      Assertions.assertEquals("test", obj.getDynaClass().getName());
+      Assertions.assertEquals("1", obj.get("id").toString());
+      Assertions.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }
@@ -290,13 +290,13 @@ public class TestDataReaderAndWriter {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(tmpFile);
 
-      Assert.assertEquals(1, beans.size());
+      Assertions.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      Assert.assertEquals("test", obj.getDynaClass().getName());
-      Assert.assertEquals("1", obj.get("id").toString());
-      Assert.assertEquals("foo", obj.get("value").toString());
+      Assertions.assertEquals("test", obj.getDynaClass().getName());
+      Assertions.assertEquals("1", obj.get("id").toString());
+      Assertions.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }
@@ -335,13 +335,13 @@ public class TestDataReaderAndWriter {
       dataReader.setSink(new TestDataSink(beans));
       dataReader.read(Files.newInputStream(tmpFile.toPath()));
 
-      Assert.assertEquals(1, beans.size());
+      Assertions.assertEquals(1, beans.size());
 
       DynaBean obj = beans.get(0);
 
-      Assert.assertEquals("test", obj.getDynaClass().getName());
-      Assert.assertEquals("1", obj.get("id").toString());
-      Assert.assertEquals("foo", obj.get("value").toString());
+      Assertions.assertEquals("test", obj.getDynaClass().getName());
+      Assertions.assertEquals("1", obj.get("id").toString());
+      Assertions.assertEquals("foo", obj.get("value").toString());
     } finally {
       tmpFile.delete();
     }

@@ -34,9 +34,9 @@ import org.apache.ddlutils.platform.oracle.Oracle8Platform;
 import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -53,7 +53,7 @@ public class TestPlatformUtils {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() throws Exception {
     _platformUtils = new PlatformUtils();
   }
@@ -61,7 +61,7 @@ public class TestPlatformUtils {
   /**
    * {@inheritDoc}
    */
-  @After
+  @AfterEach
   public void tearDown() throws Exception {
     _platformUtils = null;
   }

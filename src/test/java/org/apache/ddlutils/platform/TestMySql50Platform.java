@@ -23,7 +23,7 @@ import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests the MySQL platform.

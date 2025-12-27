@@ -19,8 +19,8 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 /**
@@ -53,7 +53,7 @@ public class TestArrayAccessAtTable {
   /**
    * {@inheritDoc}
    */
-  @Before
+  @BeforeEach
   public void setUp() {
     _testedTable = new Table();
 

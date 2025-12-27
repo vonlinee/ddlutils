@@ -23,7 +23,7 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.Reader;
 import java.io.StringReader;

@@ -25,7 +25,7 @@ import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.ModelBasedResultSetIterator;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;

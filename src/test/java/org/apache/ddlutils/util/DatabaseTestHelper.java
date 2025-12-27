@@ -19,7 +19,6 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
-import junit.framework.AssertionFailedError;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +26,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -83,7 +83,7 @@ public class DatabaseTestHelper {
             hasError = true;
             _log.debug("Row " + obj.toString() + " is not present in second database");
           } else {
-            throw new AssertionFailedError(failureMsg);
+            Assertions.fail(failureMsg);
           }
         } else if (result.size() > 1) {
           if (_log.isDebugEnabled()) {
@@ -100,7 +100,7 @@ public class DatabaseTestHelper {
             }
             _log.debug(debugMsg.toString());
           } else {
-            throw new AssertionFailedError(failureMsg);
+            Assertions.fail(failureMsg);
           }
         } else {
           DynaBean otherObj = result.iterator().next();
@@ -111,14 +111,14 @@ public class DatabaseTestHelper {
 
               _log.debug("Row " + obj + " is different in the second database: " + otherObj.toString());
             } else {
-              throw new AssertionFailedError(failureMsg);
+              Assertions.fail(failureMsg);
             }
           }
         }
       }
     }
     if (hasError) {
-      throw new AssertionFailedError(failureMsg);
+      Assertions.fail(failureMsg);
     }
   }
 

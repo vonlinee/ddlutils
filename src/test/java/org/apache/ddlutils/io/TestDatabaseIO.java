@@ -21,8 +21,8 @@ package org.apache.ddlutils.io;
 
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.StringUtilsExt;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.io.StringReader;
@@ -125,11 +125,11 @@ public class TestDatabaseIO {
     Assertions.assertEquals(size, column.getPrecisionRadix());
     Assertions.assertEquals(scale, column.getScale());
     if ((size <= 0) && (scale <= 0)) {
-      Assert.assertNull(column.getSize());
+      Assertions.assertNull(column.getSize());
     } else if (scale == 0) {
-      Assert.assertEquals("" + size, column.getSize());
+      Assertions.assertEquals("" + size, column.getSize());
     } else {
-      Assert.assertEquals(size + "," + scale, column.getSize());
+      Assertions.assertEquals(size + "," + scale, column.getSize());
     }
     Assertions.assertEquals(defaultValue, column.getDefaultValue());
     Assertions.assertEquals(description, column.getDescription());
@@ -223,7 +223,7 @@ public class TestDatabaseIO {
     try {
       readModel("<data-base xmlns='" + DatabaseIO.DDLUTILS_NAMESPACE + "'></data-base>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -236,7 +236,7 @@ public class TestDatabaseIO {
     try {
       readModel("<database></database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -257,7 +257,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -321,7 +321,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -375,7 +375,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -395,7 +395,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ignored) {
     }
   }
@@ -469,7 +469,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -947,7 +947,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1232,7 +1232,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1266,7 +1266,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1300,7 +1300,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1334,7 +1334,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1368,7 +1368,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1402,7 +1402,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1436,7 +1436,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1470,7 +1470,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1504,7 +1504,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1641,7 +1641,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1832,7 +1832,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -1859,7 +1859,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -1886,7 +1886,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2078,7 +2078,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2105,7 +2105,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2132,7 +2132,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
@@ -2409,7 +2409,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2436,7 +2436,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2460,7 +2460,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2484,7 +2484,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2517,7 +2517,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2551,7 +2551,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2585,7 +2585,7 @@ public class TestDatabaseIO {
         "  </table>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (ModelException ex) {
     }
   }
@@ -2601,7 +2601,7 @@ public class TestDatabaseIO {
         "  <index name='NotATable'/>\n" +
         "</database>");
 
-      Assert.fail();
+      Assertions.fail();
     } catch (DdlUtilsXMLException ex) {
     }
   }
