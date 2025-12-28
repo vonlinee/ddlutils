@@ -26,6 +26,7 @@ import org.apache.ddlutils.platform.db2.Db2v8Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
+import org.apache.ddlutils.platform.hsqldb.HsqlDbV241Platform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
@@ -178,7 +179,7 @@ public class PlatformFactory {
     addPlatform(_platforms, Db2v8Platform.DATABASENAME, Db2v8Platform.class);
     addPlatform(_platforms, DerbyPlatform.DATABASENAME, DerbyPlatform.class);
     addPlatform(_platforms, FirebirdPlatform.DATABASENAME, FirebirdPlatform.class);
-    addPlatform(_platforms, HsqlDbPlatform.DATABASENAME, HsqlDbPlatform.class);
+    addPlatform(_platforms, HsqlDbPlatform.DATABASENAME, HsqlDbV241Platform.class);
     addPlatform(_platforms, InterbasePlatform.DATABASENAME, InterbasePlatform.class);
     addPlatform(_platforms, MaxDbPlatform.DATABASENAME, MaxDbPlatform.class);
     addPlatform(_platforms, MckoiPlatform.DATABASENAME, MckoiPlatform.class);

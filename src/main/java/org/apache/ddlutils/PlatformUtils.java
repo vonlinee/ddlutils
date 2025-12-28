@@ -193,7 +193,7 @@ public class PlatformUtils {
   public static final String JDBC_SUBPROTOCOL_JTDS_SYBASE = "jtds:sybase";
 
   /**
-   * Maps the sub-protocl part of a jdbc connection url to a OJB platform name.
+   * Maps the sub-protocol part of a jdbc connection url to a OJB platform name.
    */
   private final HashMap<String, String> jdbcSubProtocolToPlatform = new HashMap<>();
   /**

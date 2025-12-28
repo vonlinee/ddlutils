@@ -37,7 +37,7 @@ import java.sql.Types;
 
 /**
  * The platform implementation for the HsqlDb database.
- *
+ * hsqldb v1.10.8.0
  * @version $Revision: 231306 $
  */
 public class HsqlDbPlatform extends PlatformImplBase {
