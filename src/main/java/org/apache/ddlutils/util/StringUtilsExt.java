@@ -110,4 +110,27 @@ public class StringUtilsExt {
   public static String repeat(final String repeat, final int count) {
     return StringUtils.repeat(repeat, count);
   }
+
+  public static String rightPad(final String str, final int size) {
+    return StringUtils.rightPad(str, size, ' ');
+  }
+
+  public static String leftTrim(String charValue) {
+    final int len = charValue.length();
+    final char[] val = charValue.toCharArray();
+    int st = 0;
+    while ((st < len) && (val[st] <= ' ')) {
+      st++;
+    }
+    return charValue.substring(st, len);
+  }
+
+  public static String rightTrim(String charValue) {
+    int len = charValue.length();
+    final char[] val = charValue.toCharArray();
+    while (val[len - 1] <= ' ') {
+      len--;
+    }
+    return len < val.length ? charValue.substring(0, len) : charValue;
+  }
 }

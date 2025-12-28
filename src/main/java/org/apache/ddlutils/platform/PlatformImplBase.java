@@ -43,6 +43,7 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -1585,7 +1586,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> columnValues = toColumnValues(properties, bean);
 
-    return _builder.getInsertSql(table, columnValues, bean == null);
+    return getSqlBuilder().getInsertSql(table, columnValues, bean == null);
   }
 
   /**
@@ -1715,15 +1716,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       }
 
       beforeInsert(connection, dynaClass.getTable());
-
       statement = connection.prepareStatement(insertSql);
-
-      for (int idx = 0; idx < properties.length; idx++) {
-        setObject(statement, idx + 1, dynaBean, properties[idx]);
-      }
-
+      setStatementParameterValues(statement, properties, dynaBean);
       int count = statement.executeUpdate();
-
       afterInsert(connection, dynaClass.getTable());
 
       if (count != 1) {
@@ -1849,9 +1844,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         }
       }
       try {
-        for (int idx = 0; idx < properties.length; idx++) {
-          setObject(statement, idx + 1, dynaBean, properties[idx]);
-        }
+        setStatementParameterValues(statement, properties, dynaBean);
         statement.addBatch();
         addedStmts++;
       } catch (SQLException ex) {
@@ -1860,6 +1853,12 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     }
     if (dynaClass != null) {
       executeBatch(statement, addedStmts, dynaClass.getTable());
+    }
+  }
+
+  protected void setStatementParameterValues(PreparedStatement statement, SqlDynaProperty[] properties, DynaBean dynaBean) throws SQLException {
+    for (int idx = 0; idx < properties.length; idx++) {
+      setObject(statement, idx + 1, dynaBean, properties[idx]);
     }
   }
 
@@ -2535,27 +2534,35 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   public Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException {
     Column column = (table == null ? null : table.findColumn(columnName, isDelimitedIdentifierModeOn()));
     Object value;
-
     if (column != null) {
-      int originalJdbcType = column.getTypeCode();
-      int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
-      int jdbcType = originalJdbcType;
-
-      // in general, we're trying to retrieve the value using the original type,
-      // but sometimes we also need the target type:
-      if ((originalJdbcType == Types.BLOB) && (targetJdbcType != Types.BLOB)) {
-        // we should not use the Blob interface if the database doesn't map to this type
-        jdbcType = targetJdbcType;
-      }
-      if ((originalJdbcType == Types.CLOB) && (targetJdbcType != Types.CLOB)) {
-        // we should not use the Clob interface if the database doesn't map to this type
-        jdbcType = targetJdbcType;
-      }
-      value = extractColumnValue(resultSet, columnName, 0, jdbcType);
+      value = getColumnObjectFromResultSet(resultSet, column);
     } else {
       value = resultSet.getObject(columnName);
     }
     return resultSet.wasNull() ? null : value;
+  }
+
+  protected Object getColumnObjectFromResultSet(ResultSet resultSet, Column column) throws SQLException {
+    int jdbcType = getColumnJdbcTypeForQuery(column);
+    return extractColumnValue(resultSet, column.getName(), 0, jdbcType);
+  }
+
+  protected int getColumnJdbcTypeForQuery(Column column) {
+    int originalJdbcType = column.getTypeCode();
+    int targetJdbcType = getPlatformInfo().getTargetJdbcType(originalJdbcType);
+    int jdbcType = originalJdbcType;
+
+    // in general, we're trying to retrieve the value using the original type,
+    // but sometimes we also need the target type:
+    if ((originalJdbcType == Types.BLOB) && (targetJdbcType != Types.BLOB)) {
+      // we should not use the Blob interface if the database doesn't map to this type
+      jdbcType = targetJdbcType;
+    }
+    if ((originalJdbcType == Types.CLOB) && (targetJdbcType != Types.CLOB)) {
+      // we should not use the Clob interface if the database doesn't map to this type
+      jdbcType = targetJdbcType;
+    }
+    return jdbcType;
   }
 
   /**

@@ -778,8 +778,7 @@ public class SqlBuilder {
 
     for (int idx = 0; idx < table.getColumnCount(); idx++) {
       Column column = table.getColumn(idx);
-
-      if (columnValues.containsKey(column.getName())) {
+      if (isInsertable(column, columnValues)) {
         if (addComma) {
           buffer.append(", ");
         }
@@ -801,8 +800,7 @@ public class SqlBuilder {
       addComma = false;
       for (int idx = 0; idx < table.getColumnCount(); idx++) {
         Column column = table.getColumn(idx);
-
-        if (columnValues.containsKey(column.getName())) {
+        if (isInsertable(column, columnValues)) {
           if (addComma) {
             buffer.append(", ");
           }
@@ -813,6 +811,10 @@ public class SqlBuilder {
     }
     buffer.append(")");
     return buffer.toString();
+  }
+
+  protected boolean isInsertable(Column column, Map<String, Object> columnValues) {
+    return columnValues.containsKey(column.getName());
   }
 
   /**

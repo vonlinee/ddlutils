@@ -4,10 +4,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.platform.DefaultValueHelper;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Types;
+import java.sql.*;
 import java.util.List;
 
 public final class ModelUtils {
@@ -121,5 +118,9 @@ public final class ModelUtils {
         columns[idx].setAutoIncrement(true);
       }
     }
+  }
+
+  public static boolean isCharColumnWithDefaultValue(Column column) {
+    return JDBCType.CHAR.getVendorTypeNumber() == column.getTypeCode() && column.getDefaultValue() != null;
   }
 }

@@ -18,8 +18,15 @@
  */
 package org.apache.ddlutils.platform.hsqldb;
 
+import org.apache.ddlutils.model.Column;
+import org.apache.ddlutils.model.ModelUtils;
+import org.apache.ddlutils.util.StringUtilsExt;
+
 import java.sql.JDBCType;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
+import java.util.Objects;
 
 /**
  * hsqldb v2.4.1
@@ -36,5 +43,44 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
 
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));
+  }
+
+  /**
+   * in Hsqldb 2.4.1, the table created with sql:
+   * <blockquote><pre>
+   * CREATE TABLE "roundtrip2"
+   * (
+   *     "pk" INTEGER NOT NULL,
+   *     "avalue1" CHAR,
+   *     "avalue2" CHAR(8) DEFAULT 'text' NOT NULL,
+   *     PRIMARY KEY ("pk")
+   * );
+   * </pre></blockquote><p>
+   * will be converted to:
+   * <blockquote><pre>
+   * CREATE TABLE PUBLIC.PUBLIC."roundtrip2" (
+   * 	"pk" INTEGER NOT NULL,
+   * 	"avalue1" CHARACTER(1),
+   * 	"avalue2" CHARACTER(8) DEFAULT 'text    ' NOT NULL,
+   * 	CONSTRAINT SYS_PK_10161 PRIMARY KEY ("pk")
+   * );
+   *
+   * </pre></blockquote><p>
+   * <p>
+   * CHAR(4) will be appended with spaces to make it 8 characters long.
+   */
+  @Override
+  protected Object getColumnObjectFromResultSet(ResultSet resultSet, Column column) throws SQLException {
+    Object value = super.getColumnObjectFromResultSet(resultSet, column);
+    if (value != null && ModelUtils.isCharColumnWithDefaultValue(column)) {
+      // TODO Is this the right way to do it ?
+      // for existed default values, we need to convert it to the expected value of the column.
+      String charValue = value.toString();
+      String expectedDefaultValue = StringUtilsExt.rightPad(column.getDefaultValue(), column.getSizeAsInt());
+      if (Objects.equals(charValue, expectedDefaultValue)) {
+        value = StringUtilsExt.rightTrim(charValue);
+      }
+    }
+    return value;
   }
 }
