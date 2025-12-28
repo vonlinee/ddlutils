@@ -1242,4 +1242,12 @@ public interface Platform {
   default boolean isDefaultValueMatched(Column column, Column anotherColumn) {
     return Objects.equals(column.getParsedDefaultValue(), anotherColumn.getParsedDefaultValue());
   }
+
+  default boolean isColumnTypeMatched(Column column, Column anotherColumn) {
+    return Objects.equals(column.getType(), anotherColumn.getType());
+  }
+
+  default boolean isColumnTypeCodeMatched(Column column, Column anotherColumn) {
+    return Objects.equals(column.getTypeCode(), anotherColumn.getTypeCode());
+  }
 }

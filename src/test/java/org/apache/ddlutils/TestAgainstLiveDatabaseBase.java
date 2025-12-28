@@ -38,6 +38,7 @@ import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.opentest4j.AssertionFailedError;
 
@@ -987,7 +988,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(expected.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()),
         getPlatform().getSqlBuilder().shortenName(actual.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()));
     }
-    assertEquals("Primary key status not the same for column " + actual.getName() + " in table " + actual  + ".",
+    assertEquals("Primary key status not the same for column " + actual.getName() + " in table " + actual + ".",
       expected.isPrimaryKey(),
       actual.isPrimaryKey());
     assertEquals("Required status not the same for column " + actual.getName() + ".",
@@ -1000,12 +1001,11 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         expected.isAutoIncrement(),
         actual.isAutoIncrement());
     }
-    assertEquals("Type not the same for column " + actual.getName() + ".",
-      expected.getType(),
-      actual.getType());
-    assertEquals("Type code not the same for column " + actual.getName() + ".",
-      expected.getTypeCode(),
-      actual.getTypeCode());
+
+    Assertions.assertTrue(getPlatform().isColumnTypeMatched(expected, actual),
+      "Type not the same for column " + actual.getName() + ".");
+    Assertions.assertTrue(getPlatform().isColumnTypeCodeMatched(expected, actual),
+      "Type code not the same for column " + actual.getName() + ".");
 
     assertTrue("Parsed default values do not match for column " + actual.getName() + ".",
       getPlatform().isDefaultValueMatched(expected, actual));

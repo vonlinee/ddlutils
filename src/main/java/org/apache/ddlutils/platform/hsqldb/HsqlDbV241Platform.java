@@ -18,6 +18,7 @@
  */
 package org.apache.ddlutils.platform.hsqldb;
 
+import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.ModelUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
@@ -36,10 +37,17 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
   public HsqlDbV241Platform() {
     super();
 
-    final int targetJdbcType = getPlatformInfo().getTargetJdbcType(JDBCType.BLOB.getVendorTypeNumber());
+    PlatformInfo info = getPlatformInfo();
+
+    final int targetJdbcType = info.getTargetJdbcType(JDBCType.BLOB.getVendorTypeNumber());
     if (targetJdbcType == Types.LONGVARBINARY) {
       getPlatformInfo().addNativeTypeMapping(Types.BLOB, "VARBINARY", Types.VARBINARY);
     }
+    info.addNativeTypeMapping(Types.REAL, "DOUBLE", Types.DOUBLE);
+    info.addNativeTypeMapping(Types.LONGVARBINARY, JDBCType.VARBINARY.name(), Types.VARBINARY);
+
+    info.setPrimaryKeyColumnAutomaticallyRequired(false);
+    info.setIdentityColumnAutomaticallyRequired(false);
 
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));

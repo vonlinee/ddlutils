@@ -897,25 +897,7 @@ public class JdbcModelReader {
    * @return The enum value
    */
   protected CascadeAction convertAction(Short jdbcActionValue) {
-    CascadeAction action = null;
-
-    if (jdbcActionValue != null) {
-      switch (jdbcActionValue) {
-        case DatabaseMetaData.importedKeyCascade:
-          action = CascadeAction.CASCADE;
-          break;
-        case DatabaseMetaData.importedKeySetNull:
-          action = CascadeAction.SET_NULL;
-          break;
-        case DatabaseMetaData.importedKeySetDefault:
-          action = CascadeAction.SET_DEFAULT;
-          break;
-        case DatabaseMetaData.importedKeyRestrict:
-          action = CascadeAction.RESTRICT;
-          break;
-      }
-    }
-    return action;
+    return CascadeAction.valueOfCode(jdbcActionValue);
   }
 
   /**

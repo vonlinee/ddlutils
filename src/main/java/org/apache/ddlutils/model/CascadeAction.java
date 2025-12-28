@@ -19,6 +19,7 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
+import java.sql.DatabaseMetaData;
 import java.util.Objects;
 
 /**
@@ -105,6 +106,29 @@ public enum CascadeAction {
       }
     }
     return null;
+  }
+
+  public static CascadeAction valueOfCode(Short jdbcActionValue) {
+    if (jdbcActionValue == null) {
+      return null;
+
+    }
+    CascadeAction action = null;
+    switch (jdbcActionValue) {
+      case DatabaseMetaData.importedKeyCascade:
+        action = CascadeAction.CASCADE;
+        break;
+      case DatabaseMetaData.importedKeySetNull:
+        action = CascadeAction.SET_NULL;
+        break;
+      case DatabaseMetaData.importedKeySetDefault:
+        action = CascadeAction.SET_DEFAULT;
+        break;
+      case DatabaseMetaData.importedKeyRestrict:
+        action = CascadeAction.RESTRICT;
+        break;
+    }
+    return action;
   }
 
   public String getName() {

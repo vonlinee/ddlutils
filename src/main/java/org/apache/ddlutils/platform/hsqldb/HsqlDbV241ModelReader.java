@@ -24,11 +24,13 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
+import org.apache.ddlutils.sql.SqlUtils;
 import org.apache.ddlutils.util.CollectionUtils;
 import org.apache.ddlutils.util.JdbcUtils;
 
 import java.sql.JDBCType;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,5 +99,33 @@ class HsqlDbV241ModelReader extends HsqlDbModelReader {
   @Override
   protected String escapeForSearch(DatabaseMetaDataWrapper metaData, String literalString) throws SQLException {
     return literalString;
+  }
+
+  @Override
+  protected Column readColumn(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
+    final Column column = super.readColumn(metaData, values);
+
+    if (column.getDefaultValue() != null) {
+      final String defaultValue = column.getDefaultValue();
+      if (column.getTypeCode() == Types.DATE) {
+        // DATE'2000-01-01'
+        if (defaultValue.startsWith("DATE")) {
+          column.setDefaultValue(SqlUtils.unwrapStringValue(defaultValue.substring(4)));
+        }
+      }
+      if (column.getTypeCode() == Types.TIME) {
+        // TIME'11:27:03'
+        if (defaultValue.startsWith("TIME")) {
+          column.setDefaultValue(SqlUtils.unwrapStringValue(defaultValue.substring(4)));
+        }
+      }
+      if (column.getTypeCode() == Types.TIMESTAMP) {
+        // TIMESTAMP'1985-06-17 16:17:18.000000'
+        if (defaultValue.startsWith("TIMESTAMP")) {
+          column.setDefaultValue(SqlUtils.unwrapStringValue(defaultValue.substring("TIMESTAMP".length())));
+        }
+      }
+    }
+    return column;
   }
 }
