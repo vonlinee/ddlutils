@@ -19,15 +19,11 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.sql.Types;
 
 /**
@@ -413,39 +409,11 @@ public class Column implements Serializable {
    * @return The parsed default value
    */
   public Object getParsedDefaultValue() {
-    if ((_defaultValue != null) && (!_defaultValue.isEmpty())) {
-      try {
-        switch (_typeCode) {
-          case Types.TINYINT:
-          case Types.SMALLINT:
-            return new Short(_defaultValue);
-          case Types.INTEGER:
-            return new Integer(_defaultValue);
-          case Types.BIGINT:
-            return new Long(_defaultValue);
-          case Types.DECIMAL:
-          case Types.NUMERIC:
-            return new BigDecimal(_defaultValue);
-          case Types.REAL:
-            return new Float(_defaultValue);
-          case Types.DOUBLE:
-          case Types.FLOAT:
-            return new Double(_defaultValue);
-          case Types.DATE:
-            return Date.valueOf(_defaultValue);
-          case Types.TIME:
-            return Time.valueOf(_defaultValue);
-          case Types.TIMESTAMP:
-            return Timestamp.valueOf(_defaultValue);
-          case Types.BIT:
-          case Types.BOOLEAN:
-            return ConvertUtils.convert(_defaultValue, Boolean.class);
-        }
-      } catch (IllegalArgumentException ex) {
-        return null;
-      }
+    try {
+      return JdbcUtils.parseValue(_defaultValue, _typeCode);
+    } catch (Exception e) {
+      return null;
     }
-    return _defaultValue;
   }
 
   /**

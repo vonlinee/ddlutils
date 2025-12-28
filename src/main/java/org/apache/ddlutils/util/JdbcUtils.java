@@ -1,11 +1,14 @@
 package org.apache.ddlutils.util;
 
+import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.MetaDataColumnDescriptor;
 
 import javax.sql.DataSource;
+import java.math.BigDecimal;
 import java.sql.*;
+import java.sql.Date;
 import java.util.*;
 
 public final class JdbcUtils {
@@ -390,5 +393,86 @@ public final class JdbcUtils {
     } else if (value instanceof Number) {
       sqlBuilder.append(value);
     }
+  }
+
+  /**
+   * Parses a string literal value according to the specified JDBC type.
+   *
+   * <p>
+   * This method converts a string representation of a value to its appropriate Java object type
+   * based on the provided JDBC type code. For example, it will convert a string to an Integer
+   * when jdbcType is Types.INTEGER, or to a Date when jdbcType is Types.DATE.
+   * </p>
+   *
+   * <p>
+   * For null or empty string values, the method returns the literal value unchanged.
+   * </p>
+   *
+   * <p>
+   * Supported JDBC types include numeric types (TINYINT, SMALLINT, INTEGER, BIGINT, DECIMAL, NUMERIC,
+   * REAL, DOUBLE, FLOAT), date/time types (DATE, TIME, TIMESTAMP), and boolean types (BIT, BOOLEAN).
+   * </p>
+   *
+   * <p>
+   * Example usage:
+   * </p>
+   *
+   * <pre>
+   * // Parse integer value
+   * Object intValue = JdbcUtils.parseValue("123", Types.INTEGER);
+   * System.out.println(intValue.getClass()); // class java.lang.Integer
+   *
+   * // Parse date value
+   * Object dateValue = JdbcUtils.parseValue("2023-12-20", Types.DATE);
+   * System.out.println(dateValue.getClass()); // class java.sql.Date
+   *
+   * // Parse boolean value
+   * Object boolValue = JdbcUtils.parseValue("true", Types.BOOLEAN);
+   * System.out.println(boolValue); // true
+   *
+   * // Parse null/empty value
+   * Object nullValue = JdbcUtils.parseValue("", Types.VARCHAR);
+   * System.out.println(nullValue); // ""
+   * </pre>
+   *
+   * @param literalValue The string representation of the value to parse (can be null or empty)
+   * @param jdbcType     The JDBC type code that determines how to parse the value
+   * @return The parsed value as an appropriate Java object type, or the original literalValue if it is null or empty
+   * @see Types
+   * @see ConvertUtils
+   */
+  public static Object parseValue(String literalValue, int jdbcType) {
+    if (literalValue == null || literalValue.isEmpty()) {
+      return literalValue;
+    }
+    switch (jdbcType) {
+      case Types.TINYINT:
+      case Types.SMALLINT:
+        return Short.valueOf(literalValue);
+      case Types.INTEGER:
+        return Integer.valueOf(literalValue);
+      case Types.BIGINT:
+        return Long.valueOf(literalValue);
+      case Types.DECIMAL:
+      case Types.NUMERIC:
+        return new BigDecimal(literalValue);
+      case Types.REAL:
+        return Float.valueOf(literalValue);
+      case Types.DOUBLE:
+      case Types.FLOAT:
+        return Double.valueOf(literalValue);
+      case Types.DATE:
+        return Date.valueOf(literalValue);
+      case Types.TIME:
+        return Time.valueOf(literalValue);
+      case Types.TIMESTAMP:
+        return Timestamp.valueOf(literalValue);
+      case Types.BIT:
+      case Types.BOOLEAN:
+        return Boolean.parseBoolean(literalValue);
+      default:
+        break;
+    }
+    return literalValue;
   }
 }
