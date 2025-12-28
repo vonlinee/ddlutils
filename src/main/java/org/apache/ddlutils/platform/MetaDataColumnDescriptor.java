@@ -23,7 +23,6 @@ import org.apache.ddlutils.util.JdbcUtils;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Types;
 
 /**
  * Describes a column in a metadata result set.
@@ -103,32 +102,6 @@ public class MetaDataColumnDescriptor {
    * @return The column value or the default value if the column is not present in the result set
    */
   public Object readColumn(ResultSet resultSet) throws SQLException {
-    Object result;
-    try {
-      switch (_jdbcType) {
-        case Types.BIT:
-          result = resultSet.getBoolean(_columnName);
-          break;
-        case Types.INTEGER:
-          result = resultSet.getInt(_columnName);
-          break;
-        case Types.TINYINT:
-          result = resultSet.getShort(_columnName);
-          break;
-        default:
-          result = resultSet.getString(_columnName);
-          break;
-      }
-      if (resultSet.wasNull()) {
-        result = null;
-      }
-    } catch (SQLException ex) {
-      if (JdbcUtils.isColumnInResultSet(resultSet, _columnName)) {
-        throw ex;
-      } else {
-        result = _defaultValue;
-      }
-    }
-    return result;
+    return JdbcUtils.getResultSetColumnValue(resultSet, _jdbcType, _columnName, _defaultValue);
   }
 }

@@ -268,4 +268,48 @@ public final class JdbcUtils {
       }
     }
   }
+
+  public static Object getResultSetColumnValue(ResultSet resultSet, int jdbcType, String columnName, Object defaultValue) throws SQLException {
+    Object result;
+    try {
+      switch (jdbcType) {
+        case Types.BIT:
+          result = resultSet.getBoolean(columnName);
+          break;
+        case Types.INTEGER:
+          result = resultSet.getInt(columnName);
+          break;
+        case Types.TINYINT:
+          result = resultSet.getShort(columnName);
+          break;
+        default:
+          result = resultSet.getString(columnName);
+          break;
+      }
+      if (resultSet.wasNull()) {
+        result = null;
+      }
+    } catch (SQLException ex) {
+      if (JdbcUtils.isColumnInResultSet(resultSet, columnName)) {
+        throw ex;
+      } else {
+        result = defaultValue;
+      }
+    }
+    return result;
+  }
+
+  /**
+   * @see JDBCType
+   * @param jdbcType jdbc type code
+   * @return jdbc type
+   */
+  public static JDBCType getJdbcType(int jdbcType) {
+    for (JDBCType type : JDBCType.values()) {
+      if (type.getVendorTypeNumber() == jdbcType) {
+        return type;
+      }
+    }
+    return null;
+  }
 }
