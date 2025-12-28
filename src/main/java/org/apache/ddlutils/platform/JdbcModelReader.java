@@ -182,6 +182,7 @@ public class JdbcModelReader {
    * Redefine this method if you want more columns or a different order.
    *
    * @return The map column name -> descriptor for the result set columns
+   * @see DatabaseMetaData#getColumns(String, String, String, String)
    */
   protected List<MetaDataColumnDescriptor> initColumnsForColumn() {
     List<MetaDataColumnDescriptor> result = new ArrayList<>();
@@ -189,16 +190,40 @@ public class JdbcModelReader {
     // As suggested by Alexandre Borgoltz, we're reading the COLUMN_DEF first because Oracle
     // has problems otherwise (it seemingly requires a LONG column to be the first to be read)
     // See also DDLUTILS-29
-    result.add(new MetaDataColumnDescriptor("COLUMN_DEF", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("TABLE_CAT", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("TABLE_SCHEM", Types.VARCHAR));
     // we're also reading the table name so that a model reader impl can filter manually
     result.add(new MetaDataColumnDescriptor("TABLE_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("COLUMN_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("DATA_TYPE", Types.INTEGER, Types.OTHER));
+    // Data source dependent type name, for a UDT the type name is fully qualified
+    result.add(new MetaDataColumnDescriptor("TYPE_NAME", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("NUM_PREC_RADIX", Types.INTEGER, 10));
     result.add(new MetaDataColumnDescriptor("DECIMAL_DIGITS", Types.INTEGER, 0));
     result.add(new MetaDataColumnDescriptor("COLUMN_SIZE", Types.VARCHAR));
+
+    // ISO rules are used to determine the nullability for a column.
+    // YES --- if the column can include NULLs
+    // NO --- if the column cannot include NULLs
+    // empty string --- if the nullability for the column is unknown
     result.add(new MetaDataColumnDescriptor("IS_NULLABLE", Types.VARCHAR, "YES"));
+
+    // is NULL allowed.
+    // columnNoNulls - might not allow NULL values
+    // columnNullable - definitely allows NULL values
+    // columnNullableUnknown - nullability unknown
+    result.add(new MetaDataColumnDescriptor("NULLABLE", Types.VARCHAR, "YES"));
     result.add(new MetaDataColumnDescriptor("REMARKS", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("COLUMN_DEF", Types.VARCHAR));
+    //  for char types the maximum number of bytes in the column
+    result.add(new MetaDataColumnDescriptor("CHAR_OCTET_LENGTH", Types.INTEGER));
+    // index of column in table (starting at 1)
+    result.add(new MetaDataColumnDescriptor("ORDINAL_POSITION", Types.INTEGER));
+    result.add(new MetaDataColumnDescriptor("SCOPE_CATALOG", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("SCOPE_TABLE", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("SOURCE_DATA_TYPE", Types.SMALLINT));
+    result.add(new MetaDataColumnDescriptor("IS_AUTOINCREMENT", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("IS_GENERATEDCOLUMN", Types.VARCHAR));
 
     return result;
   }
