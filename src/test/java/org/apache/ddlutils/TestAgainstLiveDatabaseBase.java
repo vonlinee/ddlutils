@@ -1006,9 +1006,9 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     assertEquals("Type code not the same for column " + actual.getName() + ".",
       expected.getTypeCode(),
       actual.getTypeCode());
-    assertEquals("Parsed default values do not match for column " + actual.getName() + ".",
-      expected.getParsedDefaultValue(),
-      actual.getParsedDefaultValue());
+
+    assertTrue("Parsed default values do not match for column " + actual.getName() + ".",
+      getPlatform().isDefaultValueMatched(expected, actual));
 
     // comparing the size makes only sense for types where it is relevant
     if ((expected.getTypeCode() == Types.NUMERIC) ||

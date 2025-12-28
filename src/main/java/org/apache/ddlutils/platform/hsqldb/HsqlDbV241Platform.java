@@ -83,4 +83,18 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
     }
     return value;
   }
+
+  @Override
+  public boolean isDefaultValueMatched(Column column, Column anotherColumn) {
+    if (ModelUtils.isCharColumnWithDefaultValue(column)) {
+      Object parsedDefaultValue = column.getParsedDefaultValue();
+      Object anotherParsedDefaultValue = anotherColumn.getParsedDefaultValue();
+      if (parsedDefaultValue == null || anotherParsedDefaultValue == null) {
+        return false;
+      }
+      return Objects.equals(StringUtilsExt.rightTrim(String.valueOf(parsedDefaultValue)),
+        StringUtilsExt.rightTrim(String.valueOf(anotherParsedDefaultValue)));
+    }
+    return super.isDefaultValueMatched(column, anotherColumn);
+  }
 }

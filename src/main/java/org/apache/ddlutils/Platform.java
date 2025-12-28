@@ -21,6 +21,7 @@ package org.apache.ddlutils;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.alteration.ModelChange;
+import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
@@ -32,10 +33,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A platform encapsulates the database-related functionality such as performing queries
@@ -1240,4 +1238,8 @@ public interface Platform {
    * @return qualified name
    */
   String getQualifiedName(Table table);
+
+  default boolean isDefaultValueMatched(Column column, Column anotherColumn) {
+    return Objects.equals(column.getParsedDefaultValue(), anotherColumn.getParsedDefaultValue());
+  }
 }
