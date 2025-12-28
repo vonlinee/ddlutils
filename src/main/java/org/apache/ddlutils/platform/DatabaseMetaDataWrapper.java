@@ -19,6 +19,9 @@ package org.apache.ddlutils.platform;
  * under the License.
  */
 
+import org.apache.ddlutils.util.ObjectUtils;
+
+import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -110,14 +113,7 @@ public class DatabaseMetaDataWrapper {
    * @return The table types
    */
   public String[] getTableTypes() {
-    if (_tableTypes == null) {
-      return null;
-    } else {
-      String[] result = new String[_tableTypes.length];
-
-      System.arraycopy(_tableTypes, 0, result, 0, _tableTypes.length);
-      return result;
-    }
+    return ObjectUtils.cloneStringArray(_tableTypes);
   }
 
   /**
@@ -126,13 +122,7 @@ public class DatabaseMetaDataWrapper {
    * @param types The table types
    */
   public void setTableTypes(String[] types) {
-    if (types == null) {
-      _tableTypes = null;
-    } else {
-      _tableTypes = new String[types.length];
-
-      System.arraycopy(types, 0, _tableTypes, 0, types.length);
-    }
+    this._tableTypes = ObjectUtils.cloneStringArray(types);
   }
 
   /**
@@ -234,5 +224,9 @@ public class DatabaseMetaDataWrapper {
    */
   public ResultSet getIndices(String tableNamePattern, boolean unique, boolean approximate) throws SQLException {
     return getMetaData().getIndexInfo(getCatalog(), getSchemaPattern(), tableNamePattern, unique, approximate);
+  }
+
+  public Connection getConnection() throws SQLException {
+    return _metaData.getConnection();
   }
 }

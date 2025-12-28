@@ -87,7 +87,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
     info.setDefaultSize(Types.VARBINARY, Integer.MAX_VALUE);
 
     setSqlBuilder(new HsqlDbBuilder(this));
-    setModelReader(new HsqlDbModelReader(this));
+    setModelReader(new HsqlDbV241ModelReader(this));
   }
 
   /**

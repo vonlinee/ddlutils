@@ -3,6 +3,7 @@ package org.apache.ddlutils.util;
 import java.text.Collator;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class CollectionUtils {
@@ -10,6 +11,10 @@ public class CollectionUtils {
 
   public static boolean isEmpty(Collection<?> collection) {
     return collection == null || collection.isEmpty();
+  }
+
+  public static boolean isEmpty(Map<?, ?> map) {
+    return map == null || map.isEmpty();
   }
 
   public static <E> void sortString(List<E> list, Function<E, String> mapper) {
@@ -39,5 +44,4 @@ public class CollectionUtils {
       return collator.compare(fk1Name, fk2Name);
     });
   }
-
 }

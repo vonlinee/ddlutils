@@ -2737,7 +2737,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
   protected String getCurrentSchemaName(Connection connection) throws SQLException {
     String currentSchemaQuerySql = getCurrentSchemaQuerySql();
-    return JdbcUtils.queryForSingleStringValue(connection, currentSchemaQuerySql);
+    return JdbcUtils.queryForString(connection, currentSchemaQuerySql);
   }
 
   protected String getCurrentSchemaQuerySql() {

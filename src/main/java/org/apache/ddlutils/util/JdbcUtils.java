@@ -1,6 +1,7 @@
 package org.apache.ddlutils.util;
 
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
+import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.MetaDataColumnDescriptor;
 
 import javax.sql.DataSource;
@@ -49,8 +50,8 @@ public final class JdbcUtils {
    * </pre>
    *
    * @param dataSource The DataSource to get the connection from
-   * @param username The database username (can be null)
-   * @param password The database password (can be null)
+   * @param username   The database username (can be null)
+   * @param password   The database password (can be null)
    * @return A database connection
    * @throws SQLException if a database access error occurs
    */
@@ -128,7 +129,7 @@ public final class JdbcUtils {
    * }
    * </pre>
    *
-   * @param url The database URL (e.g., jdbc:h2:~/test)
+   * @param url      The database URL (e.g., jdbc:h2:~/test)
    * @param username The database username (can be null)
    * @param password The database password (can be null)
    * @return A database connection
@@ -146,6 +147,9 @@ public final class JdbcUtils {
     return rows;
   }
 
+  public static Map<String, Object> toMap(ResultSet rs) throws SQLException {
+    return readColumnValues(rs);
+  }
 
   /**
    * Convert a <code>ResultSet</code> row into a <code>Map</code>.
@@ -171,6 +175,16 @@ public final class JdbcUtils {
         columnName = rsmd.getColumnName(i);
       }
       result.put(columnName, rs.getObject(i));
+    }
+    return result;
+  }
+
+  public static Map<Integer, Object> readColumnValuesByIndex(ResultSet rs) throws SQLException {
+    Map<Integer, Object> result = new CaseInsensitiveMap<>();
+    ResultSetMetaData rsmd = rs.getMetaData();
+    final int cols = rsmd.getColumnCount();
+    for (int i = 1; i <= cols; i++) {
+      result.put(i, rs.getObject(i));
     }
     return result;
   }
@@ -242,7 +256,7 @@ public final class JdbcUtils {
     return preparedStatement.executeQuery();
   }
 
-  public static String queryForSingleStringValue(Connection connection, String sql) throws SQLException {
+  public static String queryForString(Connection connection, String sql) throws SQLException {
     try (Statement statement = connection.createStatement()) {
       try (ResultSet rs = statement.executeQuery(sql)) {
         rs.next();
@@ -251,7 +265,7 @@ public final class JdbcUtils {
     }
   }
 
-  public static int queryForSingleIntValue(Connection connection, String sql) throws SQLException {
+  public static int queryForInt(Connection connection, String sql) throws SQLException {
     try (Statement statement = connection.createStatement()) {
       try (ResultSet rs = statement.executeQuery(sql)) {
         rs.next();
@@ -260,12 +274,24 @@ public final class JdbcUtils {
     }
   }
 
-  public static long queryForSingleLongValue(Connection connection, String sql) throws SQLException {
+  public static long queryForLong(Connection connection, String sql) throws SQLException {
     try (Statement statement = connection.createStatement()) {
       try (ResultSet rs = statement.executeQuery(sql)) {
         rs.next();
         return rs.getLong(1);
       }
+    }
+  }
+
+  public static Map<String, Object> queryForMap(Connection connection, String sql) throws SQLException {
+    try (ResultSet res = executeQuery(connection, sql)) {
+      return toMap(res);
+    }
+  }
+
+  public static List<Map<String, Object>> queryForMapList(Connection connection, String sql) throws SQLException {
+    try (ResultSet res = executeQuery(connection, sql)) {
+      return toMapList(res);
     }
   }
 
@@ -300,9 +326,9 @@ public final class JdbcUtils {
   }
 
   /**
-   * @see JDBCType
    * @param jdbcType jdbc type code
    * @return jdbc type
+   * @see JDBCType
    */
   public static JDBCType getJdbcType(int jdbcType) {
     for (JDBCType type : JDBCType.values()) {
@@ -311,5 +337,58 @@ public final class JdbcUtils {
       }
     }
     return null;
+  }
+
+  public static String[] getCatalogs(DatabaseMetaData metaData) throws SQLException {
+    List<String> list = new ArrayList<>();
+    try (ResultSet rs = metaData.getCatalogs()) {
+      while (rs.next()) {
+        list.add(rs.getString("TABLE_CAT"));
+      }
+    }
+    return list.toArray(new String[0]);
+  }
+
+  public static Map<String, List<String>> getSchemas(DatabaseMetaData metaData) throws SQLException {
+    Map<String, List<String>> schemas = new HashMap<>();
+    try (ResultSet rs = metaData.getSchemas()) {
+      while (rs.next()) {
+        List<String> schemasOfCatalog = schemas.computeIfAbsent(rs.getString("TABLE_CATALOG"),
+          (catalog) -> new ArrayList<>());
+        schemasOfCatalog.add(rs.getString("TABLE_SCHEM"));
+      }
+    }
+    return schemas;
+  }
+
+  public static boolean isTextType(int typeCode) {
+    return TypeMap.isTextType(typeCode);
+  }
+
+  public static String getInSqlFragment(Collection<?> items) {
+    final int count = items.size();
+    if (count == 0) {
+      return "";
+    }
+    final StringBuilder sb = new StringBuilder();
+    sb.append("(");
+    final Iterator<?> iterator = items.iterator();
+    for (int i = 0; i < count - 1; i++) {
+      appendSqlLiteralValue(sb, iterator.next());
+      sb.append(", ");
+    }
+    if (iterator.hasNext()) {
+      appendSqlLiteralValue(sb, iterator.next());
+    }
+    sb.append(")");
+    return sb.toString();
+  }
+
+  public static void appendSqlLiteralValue(StringBuilder sqlBuilder, Object value) {
+    if (value instanceof CharSequence) {
+      sqlBuilder.append("'").append(value).append("'");
+    } else if (value instanceof Number) {
+      sqlBuilder.append(value);
+    }
   }
 }
