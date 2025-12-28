@@ -93,4 +93,9 @@ class HsqlDbV241ModelReader extends HsqlDbModelReader {
     }
     return table;
   }
+
+  @Override
+  protected String escapeForSearch(DatabaseMetaDataWrapper metaData, String literalString) throws SQLException {
+    return literalString;
+  }
 }
