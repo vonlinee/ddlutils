@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
@@ -48,7 +48,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestMisc extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestMisc extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the backup and restore of a table with an identity column and a foreign key to

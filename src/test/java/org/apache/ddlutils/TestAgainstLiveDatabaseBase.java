@@ -37,6 +37,8 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.opentest4j.AssertionFailedError;
 
 import javax.sql.DataSource;
@@ -307,7 +309,38 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * {@inheritDoc}
    */
   @Override
+  @BeforeEach
   public void setUp() throws Exception {
+    String propFile = System.getProperty(JDBC_PROPERTIES_PROPERTY);
+    if (propFile == null) {
+      // with default value
+      propFile = "/jdbc.hsqldb-memory-embedded.properties";
+    }
+    Properties props = readTestProperties(propFile);
+    if (props == null) {
+      return;
+    }
+    DataSource dataSource = initDataSourceFromProperties(props);
+    String databaseName = determineDatabaseName(props, dataSource);
+
+    this.setTestProperties(props);
+    this.setDataSource(dataSource);
+    this.setDatabaseName(databaseName);
+    this.setUseDelimitedIdentifiers(false);
+
+
+    Platform platform = PlatformFactory.createNewPlatformInstance(databaseName);
+    if (platform == null) {
+      throw new DdlUtilsException("platform is null");
+    }
+    PlatformInfo info = platform.getPlatformInfo();
+    if (info.isDelimitedIdentifiersSupported()) {
+      this.setTestProperties(props);
+      this.setDataSource(dataSource);
+      this.setDatabaseName(databaseName);
+      this.setUseDelimitedIdentifiers(true);
+    }
+
     super.setUp();
     getPlatform().setDataSource(getDataSource());
     getPlatform().setDelimitedIdentifierModeOn(_useDelimitedIdentifiers);
@@ -317,6 +350,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * {@inheritDoc}
    */
   @Override
+  @AfterEach
   public void tearDown() throws Exception {
     try {
       if (_model != null) {

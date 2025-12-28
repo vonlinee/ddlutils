@@ -21,7 +21,7 @@ package org.apache.ddlutils.io;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.DdlUtilsException;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @version $Revision: 289996 $
  */
-public class TestConstraints extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestConstraints extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests a nullable column. Basically we're creating the test database

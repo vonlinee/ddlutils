@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.junit.jupiter.api.Test;
@@ -42,7 +42,7 @@ import java.util.TreeSet;
  *
  * @version $Revision: $
  */
-public class TestDatatypes extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestDatatypes extends TestAgainstLiveDatabaseBase {
   // TODO: special columns (java_object, array, distinct, ...)
 
   /**

@@ -20,7 +20,7 @@ package org.apache.ddlutils.dynabean;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.ModelBasedResultSetIterator;
@@ -35,7 +35,7 @@ import java.util.List;
  *
  * @version $Revision: 289996 $
  */
-public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestDynaSqlQueries extends TestAgainstLiveDatabaseBase {
 
   /**
    * Helper method to wrap the given identifier in delimiters if delimited identifier mode is turned on for the test.

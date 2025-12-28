@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestAddColumn extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the addition of a column.

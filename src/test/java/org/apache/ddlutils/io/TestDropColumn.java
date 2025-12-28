@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -32,7 +32,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestDropColumn extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestDropColumn extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the removal of a column.

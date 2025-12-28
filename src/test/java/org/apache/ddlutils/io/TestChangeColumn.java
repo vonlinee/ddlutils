@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.junit.jupiter.api.Test;
 
@@ -39,7 +39,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestChangeColumn extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
 //  - change default value (add default, remove default, change default)
 //  - combined changes, e.g

@@ -20,7 +20,7 @@ package org.apache.ddlutils.task;
  */
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.tools.ant.Project;
 
 import javax.sql.DataSource;
@@ -31,7 +31,7 @@ import java.util.Properties;
  *
  * @version $Revision: $
  */
-public abstract class TestTaskBase extends TestAgainstLiveDatabaseBaseJunit4 {
+public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
   /**
    * Returns an instance of the {@link DatabaseToDdlTask}, already configured with
    * a project and the tested database.

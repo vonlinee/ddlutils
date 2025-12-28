@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
@@ -36,7 +36,7 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public class TestInsertColumn extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the insertion of a column.

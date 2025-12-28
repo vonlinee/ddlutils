@@ -20,7 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.ddlutils.TestAgainstLiveDatabaseBaseJunit4;
+import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
@@ -44,7 +44,7 @@ import java.util.Properties;
  *
  * @version $Revision: $
  */
-public class TestAlteration extends TestAgainstLiveDatabaseBaseJunit4 {
+public class TestAlteration extends TestAgainstLiveDatabaseBase {
 
   /**
    * Tests the change of the order of the columns of a table.
