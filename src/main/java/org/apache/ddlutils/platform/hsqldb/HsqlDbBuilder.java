@@ -138,28 +138,29 @@ public class HsqlDbBuilder extends SqlBuilder {
    */
   @Override
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
-    boolean sizeChanged = ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn);
-    boolean typeChanged = ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, targetColumn);
-
+    final boolean sizeChanged = ColumnDefinitionChange.isSizeChanged(getPlatformInfo(), sourceColumn, targetColumn);
+    final boolean typeChanged = ColumnDefinitionChange.isTypeChanged(getPlatformInfo(), sourceColumn, targetColumn);
     if (sizeChanged || typeChanged) {
-      boolean needSubstr = TypeMap.isTextType(targetColumn.getTypeCode()) && sizeChanged && (sourceColumn.getSizeAsInt() > targetColumn.getSizeAsInt());
-
+      final boolean needSubstr = TypeMap.isTextType(targetColumn.getTypeCode())
+                                 && sizeChanged && (sourceColumn.getSizeAsInt() > targetColumn.getSizeAsInt());
+      // { SUBSTR | SUBSTRING } ( <char value expr>, <offset>, <length> )
+      // https://hsqldb.org/doc/guide/builtinfunctions-chapt.html
       if (needSubstr) {
-        print("SUBSTR(");
-      }
-      print("CAST(");
-      printIdentifier(getColumnName(sourceColumn));
-      print(" AS ");
-      print(getSqlType(targetColumn));
-      print(")");
-      if (needSubstr) {
-        print(",1,");
-        print(targetColumn.getSize());
-        print(")");
+        writeCastExpressionWithSubString(sourceColumn, targetColumn);
+      } else {
+        writeColumnCastExpression(sourceColumn, targetColumn);
       }
     } else {
       super.writeCastExpression(sourceColumn, targetColumn);
     }
+  }
+
+  protected void writeCastExpressionWithSubString(Column sourceColumn, Column targetColumn) throws IOException {
+    print("SUBSTR(");
+    writeColumnCastExpression(sourceColumn, targetColumn);
+    print(",1,");
+    print(targetColumn.getSize());
+    print(")");
   }
 
   /**

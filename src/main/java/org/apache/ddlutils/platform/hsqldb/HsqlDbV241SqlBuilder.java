@@ -21,6 +21,7 @@ package org.apache.ddlutils.platform.hsqldb;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.Column;
 
+import java.io.IOException;
 import java.sql.JDBCType;
 
 /**
@@ -43,5 +44,24 @@ class HsqlDbV241SqlBuilder extends HsqlDbBuilder {
       sqlType = sqlType + "(" + Integer.MAX_VALUE + ")";
     }
     return sqlType;
+  }
+
+  /**
+   * <blockquote><pre>
+   * # in hsqldb 1.10.8.1
+   * SELECT SUBSTR(CAST(123242 AS VARCHAR(20)), null) FROM INFORMATION_SCHEMA.columns;
+   * # in hsqldb 2.4.1
+   * SELECT SUBSTR(CAST(123242 AS VARCHAR(20))) FROM INFORMATION_SCHEMA.columns;
+   * </pre></blockquote>
+   */
+  @Override
+  protected void writeCastExpressionWithSubString(Column sourceColumn, Column targetColumn) throws IOException {
+    if (targetColumn.getSize() == null) {
+      print("SUBSTR(");
+      writeColumnCastExpression(sourceColumn, targetColumn);
+      print(",1)");
+    } else {
+      super.writeCastExpressionWithSubString(sourceColumn, targetColumn);
+    }
   }
 }

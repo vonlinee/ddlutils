@@ -452,9 +452,7 @@ public class SqlBuilder {
     print(") SELECT ");
     for (Iterator<Map.Entry<Column, Column>> columnsIt = columns.entrySet().iterator(); columnsIt.hasNext(); ) {
       Map.Entry<Column, Column> entry = columnsIt.next();
-
-      writeCastExpression((Column) entry.getKey(),
-        (Column) entry.getValue());
+      writeCastExpression(entry.getKey(), entry.getValue());
       if (columnsIt.hasNext()) {
         print(",");
       }
@@ -474,6 +472,14 @@ public class SqlBuilder {
    */
   protected void writeCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
     printIdentifier(getColumnName(sourceColumn));
+  }
+
+  protected void writeColumnCastExpression(Column sourceColumn, Column targetColumn) throws IOException {
+    print("CAST(");
+    printIdentifier(getColumnName(sourceColumn));
+    print(" AS ");
+    print(getSqlType(targetColumn));
+    print(")");
   }
 
   /**
