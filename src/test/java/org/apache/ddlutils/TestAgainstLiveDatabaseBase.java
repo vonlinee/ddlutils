@@ -75,7 +75,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * The prefix for properties for ddlutils.
    */
-  public static final String DDLUTILS_PROPERTY_PREFIX = "ddlutils.";
+  private static final String DDLUTILS_PROPERTY_PREFIX = "ddlutils.";
   /**
    * The property for specifying the platform.
    */
@@ -83,15 +83,15 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
   /**
    * The property specifying the catalog for the tests.
    */
-  public static final String DDLUTILS_CATALOG_PROPERTY = DDLUTILS_PROPERTY_PREFIX + "catalog";
+  private static final String DDLUTILS_CATALOG_PROPERTY = DDLUTILS_PROPERTY_PREFIX + "catalog";
   /**
    * The property specifying the schema for the tests.
    */
-  public static final String DDLUTILS_SCHEMA_PROPERTY = DDLUTILS_PROPERTY_PREFIX + "schema";
+  private static final String DDLUTILS_SCHEMA_PROPERTY = DDLUTILS_PROPERTY_PREFIX + "schema";
   /**
    * The prefix for table creation properties.
    */
-  public static final String DDLUTILS_TABLE_CREATION_PREFIX = DDLUTILS_PROPERTY_PREFIX + "tableCreation.";
+  private static final String DDLUTILS_TABLE_CREATION_PREFIX = DDLUTILS_PROPERTY_PREFIX + "tableCreation.";
   protected static final Log log = LogFactory.getLog(TestAgainstLiveDatabaseBase.class);
   /**
    * The test properties as defined by an external properties file.
@@ -143,6 +143,18 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         }
       }
     }
+  }
+
+  public String getTestCatalog() {
+    return _testProps.getProperty(DDLUTILS_CATALOG_PROPERTY);
+  }
+
+  public String getTestSchema() {
+    return _testProps.getProperty(DDLUTILS_SCHEMA_PROPERTY);
+  }
+
+  public String getTestPlatformName() {
+    return _testProps.getProperty(DDLUTILS_PLATFORM_PROPERTY);
   }
 
   public static DataSource getLiveDataSource(String propFile) {

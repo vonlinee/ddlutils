@@ -30,7 +30,6 @@ import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Properties;
 
 /**
  * Performs tests for the alteration of databases.
@@ -1686,9 +1685,8 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
 
     createDatabase(modelXml);
 
-    Properties props = getTestProperties();
-    String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
-    String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
+    String catalog = getTestCatalog();
+    String schema = getTestSchema();
     Database model = DatabaseIO.parseString(modelXml);
 
     getPlatform().setSqlCommentsOn(false);

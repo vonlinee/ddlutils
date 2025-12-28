@@ -40,9 +40,8 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
    */
   protected DatabaseToDdlTask getDatabaseToDdlTaskInstance() {
     DatabaseToDdlTask task = new DatabaseToDdlTask();
-    Properties props = getTestProperties();
-    String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
-    String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
+    String catalog = getTestCatalog();
+    String schema = getTestSchema();
     DataSource dataSource = getDataSource();
 
     if (!(dataSource instanceof BasicDataSource)) {
@@ -64,9 +63,8 @@ public abstract class TestTaskBase extends TestAgainstLiveDatabaseBase {
    */
   protected DdlToDatabaseTask getDdlToDatabaseTaskInstance() {
     DdlToDatabaseTask task = new DdlToDatabaseTask();
-    Properties props = getTestProperties();
-    String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
-    String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
+    String catalog = getTestCatalog();
+    String schema = getTestSchema();
     DataSource dataSource = getDataSource();
 
     if (!(dataSource instanceof BasicDataSource)) {
