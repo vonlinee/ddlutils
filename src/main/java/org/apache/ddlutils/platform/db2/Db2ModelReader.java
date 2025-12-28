@@ -209,7 +209,7 @@ public class Db2ModelReader extends JdbcModelReader {
       HashSet<String> pkNames = new HashSet<>();
 
       try {
-        pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(table.getName()));
+        pkData = metaData.getPrimaryKeys(escapeForSearch(metaData, table.getName()));
         while (pkData.next()) {
           Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 

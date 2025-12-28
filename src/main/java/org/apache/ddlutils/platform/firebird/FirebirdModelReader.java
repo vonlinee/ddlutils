@@ -84,7 +84,7 @@ public class FirebirdModelReader extends JdbcModelReader {
           }
         }
       } else {
-        columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
+        columnData = metaData.getColumns(escapeForSearch(metaData, tableName), getDefaultColumnPattern());
 
         while (columnData.next()) {
           Map<String, Object> values = readColumns(columnData, getColumnsForColumn());
@@ -179,7 +179,7 @@ public class FirebirdModelReader extends JdbcModelReader {
           }
         }
       } else {
-        pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(tableName));
+        pkData = metaData.getPrimaryKeys(escapeForSearch(metaData, tableName));
         while (pkData.next()) {
           Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
@@ -214,7 +214,7 @@ public class FirebirdModelReader extends JdbcModelReader {
           }
         }
       } else {
-        fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
+        fkData = metaData.getForeignKeys(escapeForSearch(metaData, tableName));
         while (fkData.next()) {
           Map<String, Object> values = readColumns(fkData, getColumnsForFK());
 
@@ -344,7 +344,7 @@ public class FirebirdModelReader extends JdbcModelReader {
         tablePattern = tablePattern.toUpperCase();
       }
 
-      tableData = metaData.getTables(metaData.escapeForSearch(tablePattern));
+      tableData = metaData.getTables(escapeForSearch(metaData, tablePattern));
 
       boolean found = false;
       String schema = null;
@@ -363,7 +363,7 @@ public class FirebirdModelReader extends JdbcModelReader {
             // So we have to filter manually below
             columnData = metaData.getColumns(getDefaultTablePattern(), getDefaultColumnPattern());
           } else {
-            columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
+            columnData = metaData.getColumns(escapeForSearch(metaData, tableName), getDefaultColumnPattern());
           }
 
           while (found && columnData.next()) {

@@ -128,7 +128,7 @@ public class MSSqlModelReader extends JdbcModelReader {
   private boolean existsPKWithName(DatabaseMetaDataWrapper metaData, Table table, String name) throws SQLException {
     ResultSet pks = null;
     try {
-      pks = metaData.getPrimaryKeys(metaData.escapeForSearch(table.getName()));
+      pks = metaData.getPrimaryKeys(escapeForSearch(metaData, table.getName()));
       while (pks.next()) {
         if (name.equals(pks.getString("PK_NAME"))) {
           return true;

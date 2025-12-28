@@ -987,7 +987,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
         getPlatform().getSqlBuilder().shortenName(expected.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()),
         getPlatform().getSqlBuilder().shortenName(actual.getName().toUpperCase(), getSqlBuilder().getMaxColumnNameLength()));
     }
-    assertEquals("Primary key status not the same for column " + actual.getName() + ".",
+    assertEquals("Primary key status not the same for column " + actual.getName() + " in table " + actual  + ".",
       expected.isPrimaryKey(),
       actual.isPrimaryKey());
     assertEquals("Required status not the same for column " + actual.getName() + ".",

@@ -727,7 +727,7 @@ public class JdbcModelReader {
     ResultSet columnData = null;
 
     try {
-      columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
+      columnData = metaData.getColumns(escapeForSearch(metaData, tableName), getDefaultColumnPattern());
 
       List<Column> columns = new ArrayList<>();
 
@@ -800,7 +800,7 @@ public class JdbcModelReader {
     ResultSet pkData = null;
 
     try {
-      pkData = metaData.getPrimaryKeys(metaData.escapeForSearch(tableName));
+      pkData = metaData.getPrimaryKeys(escapeForSearch(metaData, tableName));
       while (pkData.next()) {
         Map<String, Object> values = readColumns(pkData, getColumnsForPK());
 
@@ -810,6 +810,10 @@ public class JdbcModelReader {
       closeResultSet(pkData);
     }
     return pks;
+  }
+
+  protected String escapeForSearch(DatabaseMetaDataWrapper metaData, String literalString) throws SQLException {
+    return metaData.escapeForSearch(literalString);
   }
 
   /**
@@ -834,7 +838,7 @@ public class JdbcModelReader {
     Map<String, ForeignKey> fks = new ListOrderedMap<>();
     ResultSet fkData = null;
     try {
-      fkData = metaData.getForeignKeys(metaData.escapeForSearch(tableName));
+      fkData = metaData.getForeignKeys(escapeForSearch(metaData, tableName));
       while (fkData.next()) {
         Map<String, Object> values = readColumns(fkData, getColumnsForFK());
         readForeignKey(metaData, values, fks);
@@ -926,7 +930,7 @@ public class JdbcModelReader {
     ResultSet indexData = null;
 
     try {
-      indexData = metaData.getIndices(metaData.escapeForSearch(tableName), false, false);
+      indexData = metaData.getIndices(escapeForSearch(metaData, tableName), false, false);
 
       while (indexData.next()) {
         Map<String, Object> values = readColumns(indexData, getColumnsForIndex());
@@ -1094,7 +1098,7 @@ public class JdbcModelReader {
         tablePattern = tablePattern.toUpperCase();
       }
 
-      tableData = metaData.getTables(metaData.escapeForSearch(tablePattern));
+      tableData = metaData.getTables(escapeForSearch(metaData, tablePattern));
 
       boolean found = false;
       String schema = null;
@@ -1105,7 +1109,7 @@ public class JdbcModelReader {
 
         if ((tableName != null) && (!tableName.isEmpty())) {
           schema = (String) values.get("TABLE_SCHEM");
-          columnData = metaData.getColumns(metaData.escapeForSearch(tableName), getDefaultColumnPattern());
+          columnData = metaData.getColumns(escapeForSearch(metaData, tableName), getDefaultColumnPattern());
           found = true;
 
           while (found && columnData.next()) {
