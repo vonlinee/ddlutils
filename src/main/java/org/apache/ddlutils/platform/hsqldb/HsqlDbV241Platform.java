@@ -19,9 +19,7 @@
 package org.apache.ddlutils.platform.hsqldb;
 
 import org.apache.ddlutils.PlatformInfo;
-import org.apache.ddlutils.model.CascadeAction;
-import org.apache.ddlutils.model.Column;
-import org.apache.ddlutils.model.ModelUtils;
+import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.JDBCType;
@@ -47,7 +45,6 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
     info.addNativeTypeMapping(Types.REAL, "DOUBLE", Types.DOUBLE);
     info.addNativeTypeMapping(Types.LONGVARBINARY, JDBCType.VARBINARY.name(), Types.VARBINARY);
 
-    info.setPrimaryKeyColumnAutomaticallyRequired(false);
     info.setIdentityColumnAutomaticallyRequired(false);
 
     info.addEquivalentOnDeleteActions(CascadeAction.RESTRICT, CascadeAction.NONE);
@@ -107,5 +104,18 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
         StringUtilsExt.rightTrim(String.valueOf(anotherParsedDefaultValue)));
     }
     return super.isDefaultValueMatched(column, anotherColumn);
+  }
+
+  @Override
+  public Database adjustModel(Database sourceModel) {
+    Database database = super.adjustModel(sourceModel);
+    for (Table table : database.getTables()) {
+      for (Column column : table.getColumns()) {
+        if (column.isPrimaryKey() && !column.isRequired()) {
+          column.setRequired(true);
+        }
+      }
+    }
+    return database;
   }
 }

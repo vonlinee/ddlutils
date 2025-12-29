@@ -59,6 +59,9 @@ class HsqlDbV241ModelReader extends HsqlDbModelReader {
       if (JdbcUtils.isTextType(column.getTypeCode())) {
         nameColumnMap.put(column.getName(), column);
       }
+      if (column.isPrimaryKey()) {
+        column.setRequired(true);
+      }
     }
     if (!CollectionUtils.isEmpty(nameColumnMap)) {
       /**
