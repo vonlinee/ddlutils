@@ -1,16 +1,23 @@
 package org.apache.ddlutils.util;
 
+import org.apache.ddlutils.model.ForeignKey;
+
 import java.text.Collator;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 public class CollectionUtils {
 
+  public static boolean isNotEmpty(Collection<?> collection) {
+    return collection != null && !collection.isEmpty();
+  }
 
   public static boolean isEmpty(Collection<?> collection) {
     return collection == null || collection.isEmpty();
+  }
+
+  public static boolean isNotEmpty(Map<?, ?> map) {
+    return map != null && !map.isEmpty();
   }
 
   public static boolean isEmpty(Map<?, ?> map) {
@@ -43,5 +50,16 @@ public class CollectionUtils {
       }
       return collator.compare(fk1Name, fk2Name);
     });
+  }
+
+  public static <E, T> Set<T> toSet(Collection<E> collection, Function<E, T> mapper) {
+    if (isEmpty(collection)) {
+      return Collections.emptySet();
+    }
+    Set<T> set = new HashSet<>();
+    for (E e : collection) {
+      set.add(mapper.apply(e));
+    }
+    return set;
   }
 }

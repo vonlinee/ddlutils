@@ -4,6 +4,7 @@ import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.ddlutils.model.TypeMap;
 import org.apache.ddlutils.platform.MetaDataColumnDescriptor;
+import org.apache.ddlutils.sql.SqlUtils;
 
 import javax.sql.DataSource;
 import java.math.BigDecimal;
@@ -369,30 +370,7 @@ public final class JdbcUtils {
   }
 
   public static String getInSqlFragment(Collection<?> items) {
-    final int count = items.size();
-    if (count == 0) {
-      return "";
-    }
-    final StringBuilder sb = new StringBuilder();
-    sb.append("(");
-    final Iterator<?> iterator = items.iterator();
-    for (int i = 0; i < count - 1; i++) {
-      appendSqlLiteralValue(sb, iterator.next());
-      sb.append(", ");
-    }
-    if (iterator.hasNext()) {
-      appendSqlLiteralValue(sb, iterator.next());
-    }
-    sb.append(")");
-    return sb.toString();
-  }
-
-  public static void appendSqlLiteralValue(StringBuilder sqlBuilder, Object value) {
-    if (value instanceof CharSequence) {
-      sqlBuilder.append("'").append(value).append("'");
-    } else if (value instanceof Number) {
-      sqlBuilder.append(value);
-    }
+    return SqlUtils.getInSqlFragment(items);
   }
 
   /**

@@ -18,6 +18,9 @@
  */
 package org.apache.ddlutils.sql;
 
+import java.util.Collection;
+import java.util.Iterator;
+
 public final class SqlUtils {
 
   private SqlUtils() {
@@ -59,6 +62,33 @@ public final class SqlUtils {
       return value.toString();
     } else {
       return "'" + value + "'";
+    }
+  }
+
+  public static String getInSqlFragment(Collection<?> items) {
+    final int count = items.size();
+    if (count == 0) {
+      return "";
+    }
+    final StringBuilder sb = new StringBuilder();
+    sb.append("(");
+    final Iterator<?> iterator = items.iterator();
+    for (int i = 0; i < count - 1; i++) {
+      appendSqlLiteralValue(sb, iterator.next());
+      sb.append(", ");
+    }
+    if (iterator.hasNext()) {
+      appendSqlLiteralValue(sb, iterator.next());
+    }
+    sb.append(")");
+    return sb.toString();
+  }
+
+  public static void appendSqlLiteralValue(StringBuilder sqlBuilder, Object value) {
+    if (value instanceof CharSequence) {
+      sqlBuilder.append("'").append(value).append("'");
+    } else if (value instanceof Number) {
+      sqlBuilder.append(value);
     }
   }
 }
