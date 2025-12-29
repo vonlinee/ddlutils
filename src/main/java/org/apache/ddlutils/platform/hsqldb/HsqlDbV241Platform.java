@@ -48,6 +48,7 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
     info.setIdentityColumnAutomaticallyRequired(false);
 
     info.addEquivalentOnDeleteActions(CascadeAction.RESTRICT, CascadeAction.NONE);
+    info.addEquivalentOnUpdateActions(CascadeAction.RESTRICT, CascadeAction.NONE);
 
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));
