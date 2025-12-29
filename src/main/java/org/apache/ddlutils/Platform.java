@@ -1256,7 +1256,7 @@ public interface Platform {
    * Returns an adjusted version of the given model for type changes because of the native type mappings
    * which when read back from the database will map to different types.
    *
-   * @param sourceModel The source model
+   * @param sourceModel The source model from schema file.
    * @return The adjusted model
    */
   default Database adjustModel(Database sourceModel) {
