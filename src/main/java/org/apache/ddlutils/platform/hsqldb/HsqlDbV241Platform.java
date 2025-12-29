@@ -19,6 +19,7 @@
 package org.apache.ddlutils.platform.hsqldb;
 
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.ModelUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
@@ -48,6 +49,8 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
 
     info.setPrimaryKeyColumnAutomaticallyRequired(false);
     info.setIdentityColumnAutomaticallyRequired(false);
+
+    info.addEquivalentOnDeleteActions(CascadeAction.RESTRICT, CascadeAction.NONE);
 
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));
