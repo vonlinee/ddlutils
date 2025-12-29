@@ -729,7 +729,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
    * @return The adjusted model
    */
   protected Database adjustModel(Database sourceModel) {
-    return ModelUtils.adjustModel(getPlatform(), sourceModel);
+    return getPlatform().adjustModel(sourceModel);
   }
 
   /**

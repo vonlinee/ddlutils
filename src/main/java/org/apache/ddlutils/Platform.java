@@ -23,6 +23,7 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.model.ModelUtils;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.JdbcModelReader;
@@ -1249,5 +1250,16 @@ public interface Platform {
 
   default boolean isColumnTypeCodeMatched(Column column, Column anotherColumn) {
     return Objects.equals(column.getTypeCode(), anotherColumn.getTypeCode());
+  }
+
+  /**
+   * Returns an adjusted version of the given model for type changes because of the native type mappings
+   * which when read back from the database will map to different types.
+   *
+   * @param sourceModel The source model
+   * @return The adjusted model
+   */
+  default Database adjustModel(Database sourceModel) {
+    return ModelUtils.adjustModel(this, sourceModel);
   }
 }
