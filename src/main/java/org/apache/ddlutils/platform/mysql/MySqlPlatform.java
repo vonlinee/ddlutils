@@ -62,6 +62,7 @@ public class MySqlPlatform extends PlatformImplBase {
   public MySqlPlatform() {
     PlatformInfo info = getPlatformInfo();
 
+    info.setTrimLengthFixedCharColumnValues(true);
     info.setMaxIdentifierLength(64);
     info.setNullAsDefaultValueRequired(true);
     info.setDefaultValuesForLongTypesSupported(false);

@@ -59,7 +59,7 @@ public class HsqlDbPlatform extends PlatformImplBase {
    */
   public HsqlDbPlatform() {
     PlatformInfo info = getPlatformInfo();
-
+    info.setTrimLengthFixedCharColumnValues(true);
     info.setDefaultValueUsedForIdentitySpec(true);
     info.setNonPrimaryKeyIdentityColumnsSupported(false);
     info.setIdentityOverrideAllowed(false);

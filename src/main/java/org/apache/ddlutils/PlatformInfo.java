@@ -204,6 +204,12 @@ public class PlatformInfo {
    * Specifies the maximum length that a foreign key name can have for this database (-1 if there is no limit).
    */
   private int _maxForeignKeyNameLength = -1;
+
+  /**
+   * Whether the length of fixed char columns should be trimmed to the length of the column.
+   */
+  private boolean trimLengthFixedCharColumnValues = false;
+
   /**
    * The string used for delimiting SQL identifiers, e.g. table names, column names etc.
    */
@@ -1288,5 +1294,13 @@ public class PlatformInfo {
     Set<CascadeAction> actionsEquivalentToActionA = _equivalentOnDeleteActions.get(actionA);
 
     return actionsEquivalentToActionA != null && actionsEquivalentToActionA.contains(actionB);
+  }
+
+  public boolean isTrimLengthFixedCharColumnValues() {
+    return trimLengthFixedCharColumnValues;
+  }
+
+  public void setTrimLengthFixedCharColumnValues(boolean trimLengthFixedCharColumnValues) {
+    this.trimLengthFixedCharColumnValues = trimLengthFixedCharColumnValues;
   }
 }

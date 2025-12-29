@@ -50,6 +50,8 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
     info.addEquivalentOnDeleteActions(CascadeAction.RESTRICT, CascadeAction.NONE);
     info.addEquivalentOnUpdateActions(CascadeAction.RESTRICT, CascadeAction.NONE);
 
+    info.setTrimLengthFixedCharColumnValues(false);
+
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));
   }
@@ -77,8 +79,12 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
    * </pre></blockquote><p>
    * <p>
    * CHAR(4) will be appended with spaces to make it 8 characters long.
+   * Note: This is a wrong way to fix the problem. replace it with a better way. {@link PlatformInfo#isTrimLengthFixedCharColumnValues()}
+   *
+   * @see PlatformInfo#isTrimLengthFixedCharColumnValues()
    */
   @Override
+  @Deprecated
   protected Object getColumnObjectFromResultSet(ResultSet resultSet, Column column) throws SQLException {
     Object value = super.getColumnObjectFromResultSet(resultSet, column);
     if (value != null && ModelUtils.isCharColumnWithDefaultValue(column)) {
@@ -87,7 +93,7 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
       String charValue = value.toString();
       String expectedDefaultValue = StringUtilsExt.rightPad(column.getDefaultValue(), column.getSizeAsInt());
       if (Objects.equals(charValue, expectedDefaultValue)) {
-        value = StringUtilsExt.rightTrim(charValue);
+        // value = StringUtilsExt.rightTrim(charValue);
       }
     }
     return value;

@@ -19,6 +19,7 @@ package org.apache.ddlutils.platform.maxdb;
  * under the License.
  */
 
+import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 
 /**
@@ -40,6 +41,9 @@ public class MaxDbPlatform extends SapDbPlatform {
    */
   public MaxDbPlatform() {
     super();
+
+    PlatformInfo info = getPlatformInfo();
+    info.setTrimLengthFixedCharColumnValues(true);
     setSqlBuilder(new MaxDbBuilder(this));
     setModelReader(new MaxDbModelReader(this));
   }
