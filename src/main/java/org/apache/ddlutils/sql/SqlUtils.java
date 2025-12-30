@@ -91,4 +91,12 @@ public final class SqlUtils {
       sqlBuilder.append(value);
     }
   }
+
+  public static String getSizeExpression(Object length) {
+    return "(" + length + ")";
+  }
+
+  public static String getSizeExpression(Object length, Object precision) {
+    return "(" + length + "," + precision + ")";
+  }
 }
