@@ -3,6 +3,7 @@ package org.apache.ddlutils.model;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.platform.DefaultValueHelper;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.sql.*;
 import java.util.List;
@@ -122,5 +123,47 @@ public final class ModelUtils {
 
   public static boolean isCharColumnWithDefaultValue(Column column) {
     return JDBCType.CHAR.getVendorTypeNumber() == column.getTypeCode() && column.getDefaultValue() != null;
+  }
+
+  public static boolean isNumericColumnWithScale(Column column) {
+    return Types.NUMERIC == column.getTypeCode() && column.getScale() > 0;
+  }
+
+  /**
+   * Calculates the maximum textual length required to represent values of the given column.
+   * <p>
+   * For numeric types with scale (decimal/floating point numbers), this method adds 1 to account
+   * for the decimal point. For other numeric types, it returns the column size plus scale.
+   * For non-numeric types, it simply returns the column size.
+   *
+   * <p>for example:</p>
+   * <li>For a VARCHAR(10) column: returns 10</li>
+   *
+   * <li> For an INTEGER(5) column: returns 5 </li>
+   * <li> For a DECIMAL(8,2) column: returns 8 + 2 + 1 = 11 (8 for precision, 2 for scale, 1 for decimal point) </li>
+   * <li> For a NUMERIC(10,3) column: returns 10 + 3 + 1 = 14 </li>
+   *
+   * @param column The column to determine the maximum textual length for
+   * @return The maximum number of characters needed to represent values of this column,
+   * including space for the decimal point in numeric types with scale
+   */
+  public static int getMaxTextualLength(Column column) {
+    if (JdbcUtils.isNumericType(column.getTypeCode())) {
+      if (column.getScale() > 0) {
+        // with decimal point
+        return column.getSizeAsInt() + 1;
+      }
+      return column.getSizeAsInt() + column.getScale();
+    }
+    return column.getSizeAsInt();
+  }
+
+  public static void applyChange(Column column, Column newColumn) {
+    column.setTypeCode(newColumn.getTypeCode());
+    column.setSize(newColumn.getSize());
+    column.setAutoIncrement(newColumn.isAutoIncrement());
+    column.setRequired(newColumn.isRequired());
+    column.setDescription(newColumn.getDescription());
+    column.setDefaultValue(newColumn.getDefaultValue());
   }
 }

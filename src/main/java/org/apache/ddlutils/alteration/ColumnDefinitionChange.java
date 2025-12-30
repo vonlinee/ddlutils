@@ -22,6 +22,7 @@ package org.apache.ddlutils.alteration;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.model.ModelUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 /**
@@ -180,12 +181,6 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   @Override
   public void apply(Database model, boolean caseSensitive) {
     Column column = findChangedColumn(model, caseSensitive);
-
-    column.setTypeCode(_newColumnDef.getTypeCode());
-    column.setSize(_newColumnDef.getSize());
-    column.setAutoIncrement(_newColumnDef.isAutoIncrement());
-    column.setRequired(_newColumnDef.isRequired());
-    column.setDescription(_newColumnDef.getDescription());
-    column.setDefaultValue(_newColumnDef.getDefaultValue());
+    ModelUtils.applyChange(column, _newColumnDef);
   }
 }
