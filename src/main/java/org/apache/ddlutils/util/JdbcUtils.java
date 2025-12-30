@@ -453,4 +453,32 @@ public final class JdbcUtils {
     }
     return literalValue;
   }
+
+  public static boolean isNumericType(int jdbcType) {
+    return TypeMap.isNumericType(jdbcType);
+  }
+
+  public static boolean isDateTimeType(int jdbcType) {
+    return TypeMap.isDateTimeType(jdbcType);
+  }
+
+  public static boolean isTextType(JDBCType jdbcType) {
+    return TypeMap.isTextType(jdbcType.getVendorTypeNumber());
+  }
+
+  public static boolean isDateTimeType(JDBCType jdbcType) {
+    return TypeMap.isDateTimeType(jdbcType.getVendorTypeNumber());
+  }
+
+  public static boolean isBinaryType(JDBCType jdbcType) {
+    return TypeMap.isBinaryType(jdbcType.getVendorTypeNumber());
+  }
+
+  public static boolean isBinaryType(int jdbcType) {
+    return TypeMap.isBinaryType(jdbcType);
+  }
+
+  public static boolean isNumericType(JDBCType jdbcType) {
+    return TypeMap.isNumericType(jdbcType.getVendorTypeNumber());
+  }
 }
