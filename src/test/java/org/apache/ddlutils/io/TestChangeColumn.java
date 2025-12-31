@@ -4235,7 +4235,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * TODO FIX
    * <blockquote><pre>
    *   // if avalue has a value 12345678.12 (BigDecimal)
-   *   // will error in hsqldb : [22001]: data exception: string data, right truncation
+   *   // sql below will error in hsqldb : [22001]: data exception: string data, right truncation
    *   SELECT "pk",SUBSTR(CAST("avalue" AS VARCHAR(8)),1,8) FROM "roundtrip";
    * </pre></blockquote>
    */
