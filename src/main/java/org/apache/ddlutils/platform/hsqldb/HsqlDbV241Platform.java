@@ -52,6 +52,11 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
 
     info.setTrimLengthFixedCharColumnValues(false);
 
+    Integer defaultSize = info.getDefaultSize(Types.BINARY);
+    // if the size is not specified, hsqldb will use Integer.MAX_VALUE as the size. this
+    // will lead to OOM: Requested array size exceeds VM limit
+    info.setDefaultSize(Types.BINARY, 1024);
+
     setSqlBuilder(new HsqlDbV241SqlBuilder(this));
     setModelReader(new HsqlDbV241ModelReader(this));
   }
