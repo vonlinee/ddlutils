@@ -28,6 +28,7 @@ import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -180,5 +181,16 @@ public class HsqlDbPlatform extends PlatformImplBase {
 
     ((HsqlDbBuilder) getSqlBuilder()).dropColumn(changedTable, removedColumn);
     change.apply(currentModel, isDelimitedIdentifierModeOn());
+  }
+
+  @Override
+  public String getDatabaseVersion(Connection connection) throws SQLException {
+    final String version = JdbcUtils.queryForString(connection, "select character_value\n" +
+                                                    "from information_schema.sql_implementation_info\n" +
+                                                    "where implementation_info_name = 'DBMS VERSION'");
+    if (version == null) {
+      return super.getDatabaseVersion(connection);
+    }
+    return version.trim();
   }
 }

@@ -1262,4 +1262,12 @@ public interface Platform {
   default Database adjustModel(Database sourceModel) {
     return ModelUtils.adjustModel(this, sourceModel);
   }
+
+  /**
+   * Returns the database version
+   *
+   * @param connection the connection
+   * @return the database version
+   */
+  String getDatabaseVersion(Connection connection) throws SQLException;
 }

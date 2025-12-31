@@ -2749,4 +2749,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   protected String getCurrentSchemaQuerySql() {
     throw new UnsupportedOperationException("not implemented");
   }
+
+  @Override
+  public String getDatabaseVersion(Connection connection) throws SQLException {
+    return connection.getMetaData().getDatabaseProductVersion();
+  }
 }
