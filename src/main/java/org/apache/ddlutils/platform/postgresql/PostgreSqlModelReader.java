@@ -152,7 +152,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
   }
 
   /**
-   * Extractes the default value from a default value spec of the form
+   * Extracts the default value from a default value spec of the form
    * "'some value'::character varying" or "'2000-01-01'::date".
    *
    * @param defaultValue The default value spec
@@ -170,7 +170,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
   }
 
   /**
-   * Extractes the default value from a default value spec of the form
+   * Extracts the default value from a default value spec of the form
    * "-9000000000000000000::bigint".
    *
    * @param defaultValue The default value spec
@@ -188,7 +188,8 @@ public class PostgreSqlModelReader extends JdbcModelReader {
 
   /**
    * {@inheritDoc}
-   */  @Override
+   */
+  @Override
   protected boolean isInternalForeignKeyIndex(DatabaseMetaDataWrapper metaData, Table table, ForeignKey fk, Index index) {
     // PostgreSQL does not return an index for a foreign key
     return false;
@@ -196,7 +197,8 @@ public class PostgreSqlModelReader extends JdbcModelReader {
 
   /**
    * {@inheritDoc}
-   */  @Override
+   */
+  @Override
   protected boolean isInternalPrimaryKeyIndex(DatabaseMetaDataWrapper metaData, Table table, Index index) {
     // PostgreSql uses the form "[tablename]_pkey"
     return (table.getName() + "_pkey").equals(index.getName());
