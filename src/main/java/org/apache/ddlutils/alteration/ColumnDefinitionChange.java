@@ -103,6 +103,10 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
                    (sourceColumn.getScale() != targetColumn.getScale()));
   }
 
+  public static boolean isSizeAndTypeChanged(PlatformInfo platformInfo, Column sourceColumn, Column targetColumn) {
+    return isSizeChanged(platformInfo, sourceColumn, targetColumn) && isTypeChanged(platformInfo, sourceColumn, targetColumn);
+  }
+
   /**
    * Determines whether the size or precision/scale of the given target column is smaller than that of the given source column.
    * If size and precision/scale do not matter for the target column's type, then <code>false</code> is returned. Note that for

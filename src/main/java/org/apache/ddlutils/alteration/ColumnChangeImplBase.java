@@ -23,6 +23,8 @@ import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
 
+import java.util.Objects;
+
 /**
  * Base class for changes to columns.
  *
@@ -52,6 +54,12 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
   @Override
   public String getChangedColumn() {
     return _columnName;
+  }
+
+  @Override
+  public Column findChangedColumn(Table table, boolean caseSensitive) {
+    Objects.requireNonNull(table, "table is null");
+    return table.findColumn(_columnName, caseSensitive);
   }
 
   /**

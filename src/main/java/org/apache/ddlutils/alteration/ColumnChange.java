@@ -21,6 +21,7 @@ package org.apache.ddlutils.alteration;
 
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.model.Table;
 
 /**
  * Represents a change to a column of a table.
@@ -43,4 +44,13 @@ public interface ColumnChange extends TableChange {
    * @return The column object or <code>null</code> if it could not be found
    */
   Column findChangedColumn(Database model, boolean caseSensitive);
+
+  /**
+   * Finds the column object corresponding to the changed column in the given table.
+   *
+   * @param table         The database table
+   * @param caseSensitive Whether identifiers are case-sensitive
+   * @return The column object or <code>null</code> if it could not be found
+   */
+  Column findChangedColumn(Table table, boolean caseSensitive);
 }
