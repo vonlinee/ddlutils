@@ -21,7 +21,6 @@ package org.apache.ddlutils.io;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.io.converters.SqlTypeConverter;
@@ -37,6 +36,7 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -370,7 +370,7 @@ public class DataReader {
     String value = content.toString().trim();
 
     if (usesBase64) {
-      value = new String(Base64.decodeBase64(value.getBytes()));
+      value = new String(Base64.getDecoder().decode(value.getBytes()));
     }
 
     String name = elemQName.getLocalPart();
@@ -418,7 +418,7 @@ public class DataReader {
       value = value.trim();
 
       if (usesBase64) {
-        value = new String(Base64.decodeBase64(value.getBytes()));
+        value = new String(Base64.getDecoder().decode(value.getBytes()));
       }
     }
 

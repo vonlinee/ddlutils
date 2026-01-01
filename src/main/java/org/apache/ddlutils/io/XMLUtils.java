@@ -19,9 +19,6 @@ package org.apache.ddlutils.io;
  * under the License.
  */
 
-import org.apache.commons.codec.binary.Base64;
-
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -313,16 +310,6 @@ public class XMLUtils {
       }
     }
     return false;
-  }
-
-  /**
-   * Encodes the given value with Base64.
-   *
-   * @param value The value to encode
-   * @return The encoded value
-   */
-  public static String base64Encode(String value) {
-    return value == null ? null : new String(Base64.encodeBase64(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
   }
 
   /**

@@ -20,6 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class TableXmlWriter extends ModelXmlWriter {
 
   public TableXmlWriter(Table table) {
     if (XMLUtils.hasIllegalXMLCharacters(table.getName())) {
-      tableName = XMLUtils.base64Encode(table.getName());
+      tableName = StringUtilsExt.base64Encode(table.getName());
       formattingMethod = AS_SUB_TAG;
       base64Encoded = true;
     } else {

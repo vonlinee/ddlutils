@@ -20,6 +20,7 @@ package org.apache.ddlutils.io;
  */
 
 import org.apache.ddlutils.model.Column;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 /**
  * Helper class for writing columns to XML.
@@ -59,7 +60,7 @@ public class ColumnXmlWriter extends ModelXmlWriter {
      *   be base64 encoded.
      */
     if (XMLUtils.hasIllegalXMLCharacters(value)) {
-      columnValue = XMLUtils.base64Encode(value);
+      columnValue = StringUtilsExt.base64Encode(value);
       valueBase64Encoded = true;
     } else {
       columnValue = value;
@@ -67,7 +68,7 @@ public class ColumnXmlWriter extends ModelXmlWriter {
     }
 
     if (XMLUtils.hasIllegalXMLCharacters(column.getName())) {
-      columnName = XMLUtils.base64Encode(column.getName());
+      columnName = StringUtilsExt.base64Encode(column.getName());
       nameBase64Encoded = true;
       columnFormattingMethod = AS_VALUE;
     } else {

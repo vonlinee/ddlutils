@@ -22,7 +22,10 @@ package org.apache.ddlutils.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -157,5 +160,23 @@ public class StringUtilsExt {
       }
     }
     return items.toArray(new String[0]);
+  }
+
+  /**
+   * Encodes the given value with Base64.
+   *
+   * @param value The value to encode
+   * @return The encoded value
+   */
+  public static String base64Encode(String value) {
+    return value == null ? null : new String(Base64.getEncoder().encode(value.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+  }
+
+  public static String convertEncoding(String value, Charset from, Charset to) {
+    return value == null ? null : new String(Base64.getEncoder().encode(value.getBytes(from)), to);
+  }
+
+  public static String toUTF8(String value) {
+    return convertEncoding(value, StandardCharsets.UTF_8, StandardCharsets.UTF_8);
   }
 }
