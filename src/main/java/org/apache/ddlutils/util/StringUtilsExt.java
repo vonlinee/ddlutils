@@ -22,12 +22,18 @@ package org.apache.ddlutils.util;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
+
 /**
  * Helper class containing string utility functions.
  *
  * @version $Revision: $
  */
 public class StringUtilsExt {
+
+  public static final String[] EMPTY_STRING_ARRAY = new String[0];
 
   public static boolean isEmpty(String str) {
     return StringUtils.isEmpty(str);
@@ -132,5 +138,24 @@ public class StringUtilsExt {
       len--;
     }
     return len < val.length ? charValue.substring(0, len) : charValue;
+  }
+
+  public static String[] splitToArray(String str) {
+    return splitToArray(str, ",");
+  }
+
+  public static String[] splitToArray(String str, String delim) {
+    if (isEmpty(str)) {
+      return EMPTY_STRING_ARRAY;
+    }
+    List<String> items = new ArrayList<>();
+    StringTokenizer tokenizer = new StringTokenizer(str, delim);
+    while (tokenizer.hasMoreTokens()) {
+      String item = tokenizer.nextToken().trim();
+      if (!item.isEmpty()) {
+        items.add(item);
+      }
+    }
+    return items.toArray(new String[0]);
   }
 }

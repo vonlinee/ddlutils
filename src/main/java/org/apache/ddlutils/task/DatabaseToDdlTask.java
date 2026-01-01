@@ -22,10 +22,8 @@ package org.apache.ddlutils.task;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.ModelHelper;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.StringUtilsExt;
 import org.apache.tools.ant.BuildException;
-
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 /**
  * Task for getting structural info and data from a live database. e.g. it has sub-tasks for
@@ -215,21 +213,7 @@ public class DatabaseToDdlTask extends DatabaseTaskBase {
    * @return The table types
    */
   private String[] getTableTypes() {
-    if ((_tableTypes == null) || (_tableTypes.isEmpty())) {
-      return new String[0];
-    }
-
-    StringTokenizer tokenizer = new StringTokenizer(_tableTypes, ",");
-    ArrayList<String> result = new ArrayList<>();
-
-    while (tokenizer.hasMoreTokens()) {
-      String token = tokenizer.nextToken().trim();
-
-      if (!token.isEmpty()) {
-        result.add(token);
-      }
-    }
-    return result.toArray(new String[0]);
+    return StringUtilsExt.splitToArray(_tableTypes);
   }
 
   /**

@@ -20,10 +20,10 @@ package org.apache.ddlutils.task;
  */
 
 import org.apache.ddlutils.PlatformFactory;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringTokenizer;
 
 /**
  * Specifies a parameter for the creation of the database. These are usually platform specific.
@@ -96,17 +96,11 @@ public class Parameter {
    */
   public void setPlatforms(String platforms) {
     _platforms.clear();
-    if (platforms != null) {
-      StringTokenizer tokenizer = new StringTokenizer(platforms, ",");
-
-      while (tokenizer.hasMoreTokens()) {
-        String platform = tokenizer.nextToken().trim();
-
-        if (PlatformFactory.isPlatformSupported(platform)) {
-          _platforms.add(platform.toLowerCase());
-        } else {
-          throw new IllegalArgumentException("Platform " + platform + " is not supported");
-        }
+    for (String platform : StringUtilsExt.splitToArray(platforms)) {
+      if (PlatformFactory.isPlatformSupported(platform)) {
+        _platforms.add(platform.toLowerCase());
+      } else {
+        throw new IllegalArgumentException("Platform " + platform + " is not supported");
       }
     }
   }

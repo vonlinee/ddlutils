@@ -20,9 +20,10 @@ package org.apache.ddlutils.task;
  */
 
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+import java.util.Arrays;
 
 /**
  * Specifies a parameter for the creation of the tables. These are usually platform specific.
@@ -49,14 +50,8 @@ public class TableSpecificParameter extends Parameter {
    * the parameter is applied in the creation of all tables.
    */
   public void setTables(String tableList) {
-    StringTokenizer tokenizer = new StringTokenizer(tableList, ",");
-
-    while (tokenizer.hasMoreTokens()) {
-      String tableName = tokenizer.nextToken().trim();
-
-      // TODO: Quotation, escaped characters ?
-      _tables.add(tableName);
-    }
+    // TODO: Quotation, escaped characters ?
+    _tables.addAll(Arrays.asList(StringUtilsExt.splitToArray(tableList)));
   }
 
   /**

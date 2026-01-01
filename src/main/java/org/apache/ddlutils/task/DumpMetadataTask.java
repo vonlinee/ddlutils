@@ -23,6 +23,7 @@ import org.apache.commons.collections4.set.ListOrderedSet;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ddlutils.io.PrettyPrintingXmlWriter;
 import org.apache.ddlutils.util.JdbcUtils;
+import org.apache.ddlutils.util.StringUtilsExt;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -179,20 +180,7 @@ public class DumpMetadataTask extends Task {
    * @ant.not-required By default, all types of tables are read.
    */
   public void setTableTypes(String tableTypes) {
-    ArrayList<String> types = new ArrayList<>();
-
-    if (tableTypes != null) {
-      StringTokenizer tokenizer = new StringTokenizer(tableTypes, ",");
-
-      while (tokenizer.hasMoreTokens()) {
-        String token = tokenizer.nextToken().trim();
-
-        if (!token.isEmpty()) {
-          types.add(token);
-        }
-      }
-    }
-    _tableTypes = types.toArray(new String[0]);
+    _tableTypes = StringUtilsExt.splitToArray(tableTypes);
   }
 
   /**
