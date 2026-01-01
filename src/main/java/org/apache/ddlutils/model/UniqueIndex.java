@@ -19,9 +19,8 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Provides compatibility with Torque-style XML with separate &lt;index&gt; and
@@ -35,7 +34,6 @@ public class UniqueIndex extends IndexImplBase {
    * Unique ID for serialization purposes.
    */
   private static final long serialVersionUID = -4097003126550294993L;
-
   /**
    * {@inheritDoc}
    */
@@ -64,10 +62,10 @@ public class UniqueIndex extends IndexImplBase {
   public boolean equals(Object obj) {
     if (obj instanceof UniqueIndex) {
       UniqueIndex other = (UniqueIndex) obj;
-
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_columns, other._columns)
-        .isEquals();
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
+      return Objects.equals(_columns, other._columns);
     } else {
       return false;
     }

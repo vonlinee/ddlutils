@@ -19,10 +19,8 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents a column of an index in the database model.
@@ -157,10 +155,10 @@ public class IndexColumn implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof IndexColumn) {
       IndexColumn other = (IndexColumn) obj;
-
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_size, other._size)
-        .isEquals();
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
+      return Objects.equals(_size, other._size);
     } else {
       return false;
     }
@@ -173,9 +171,10 @@ public class IndexColumn implements Serializable {
    * @return <code>true</code> if this index column is equal (ignoring case) to the given one
    */
   public boolean equalsIgnoreCase(IndexColumn other) {
-    return new EqualsBuilder().append(_name.toUpperCase(), other._name.toUpperCase())
-      .append(_size, other._size)
-      .isEquals();
+    if (!Objects.equals(_name.toUpperCase(), other._name.toUpperCase())) {
+      return false;
+    }
+    return Objects.equals(_size, other._size);
   }
 
   /**
@@ -183,9 +182,7 @@ public class IndexColumn implements Serializable {
    */
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_size)
-      .toHashCode();
+    return Objects.hash(_name, _size);
   }
 
   /**

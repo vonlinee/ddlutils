@@ -19,15 +19,9 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.Strings;
-
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Helper class containing string utility functions.
@@ -37,17 +31,20 @@ import java.util.StringTokenizer;
 public class StringUtilsExt {
 
   public static final String[] EMPTY_STRING_ARRAY = new String[0];
+  public static final String EMPTY = "";
+  private static final int PAD_LIMIT = 8192;
+  public static final int INDEX_NOT_FOUND = -1;
 
-  public static boolean isEmpty(String str) {
-    return StringUtils.isEmpty(str);
+  public static boolean isEmpty(final CharSequence cs) {
+    return cs == null || cs.length() == 0;
   }
 
-  public static boolean equals(String str1, String str2) {
-    return Strings.CS.equals(str1, str2);
+  public static boolean equals(String s1, String s2) {
+    return Objects.equals(s1, s2);
   }
 
-  public static boolean equalsIgnoreCase(String str1, String str2) {
-    return Strings.CI.equals(str1, str2);
+  public static boolean equalsIgnoreCase(String s1, String s2) {
+    return s1 == null ? s2 == null : s1.equalsIgnoreCase(s2);
   }
 
   /**
@@ -105,23 +102,186 @@ public class StringUtilsExt {
   }
 
   public static String replace(final String text, final String searchString, final String replacement) {
-    return Strings.CS.replace(text, searchString, replacement);
+    return replace(text, searchString, replacement, -1, true);
   }
 
-  public static boolean isNotBlank(String str) {
-    return StringUtils.isNotBlank(str);
+  private static String replace(final String text, String searchString, final String replacement, int max, boolean ignoreCase) {
+    if (isEmpty(text) || isEmpty(searchString) || replacement == null || max == 0) {
+      return text;
+    }
+    if (ignoreCase) {
+      searchString = searchString.toLowerCase();
+    }
+    int start = 0;
+    int end = indexOf(text, searchString, start);
+    if (end == INDEX_NOT_FOUND) {
+      return text;
+    }
+    final int replLength = searchString.length();
+    int increase = Math.max(replacement.length() - replLength, 0);
+    increase *= max < 0 ? 16 : Math.min(max, 64);
+    final StringBuilder buf = new StringBuilder(text.length() + increase);
+    while (end != INDEX_NOT_FOUND) {
+      buf.append(text, start, end).append(replacement);
+      start = end + replLength;
+      if (--max == 0) {
+        break;
+      }
+      end = indexOf(text, searchString, start);
+    }
+    buf.append(text, start, text.length());
+    return buf.toString();
   }
 
-  public static boolean isNotEmpty(String str) {
-    return StringUtils.isNotEmpty(str);
+  public static boolean isNotEmpty(CharSequence cs) {
+    return !isEmpty(cs);
+  }
+
+  public static boolean isNotBlank(CharSequence cs) {
+    return !isBlank(cs);
+  }
+
+  public static boolean isBlank(final CharSequence cs) {
+    final int strLen = length(cs);
+    if (strLen == 0) {
+      return true;
+    }
+    for (int i = 0; i < strLen; i++) {
+      if (!Character.isWhitespace(cs.charAt(i))) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Gets a CharSequence length or {@code 0} if the CharSequence is {@code null}.
+   *
+   * @param cs a CharSequence or {@code null}.
+   * @return CharSequence length or {@code 0} if the CharSequence is {@code null}.
+   * @since 2.4
+   * @since 3.0 Changed signature from length(String) to length(CharSequence)
+   */
+  public static int length(final CharSequence cs) {
+    return cs == null ? 0 : cs.length();
+  }
+
+  public static String repeat(final char repeat, final int count) {
+    if (count <= 0) {
+      return EMPTY;
+    }
+    char[] chars = new char[count];
+    Arrays.fill(chars, repeat);
+    return new String(chars);
   }
 
   public static String repeat(final String repeat, final int count) {
-    return StringUtils.repeat(repeat, count);
+    // Performance tuned for 2.0 (JDK1.4)
+    if (repeat == null) {
+      return null;
+    }
+    if (count <= 0) {
+      return EMPTY;
+    }
+    final int inputLength = repeat.length();
+    if (count == 1 || inputLength == 0) {
+      return repeat;
+    }
+    if (inputLength == 1 && count <= PAD_LIMIT) {
+      return repeat(repeat.charAt(0), count);
+    }
+    final int outputLength = inputLength * count;
+    switch (inputLength) {
+      case 1:
+        return repeat(repeat.charAt(0), count);
+      case 2:
+        final char ch0 = repeat.charAt(0);
+        final char ch1 = repeat.charAt(1);
+        final char[] output2 = new char[outputLength];
+        for (int i = count * 2 - 2; i >= 0; i--, i--) {
+          output2[i] = ch0;
+          output2[i + 1] = ch1;
+        }
+        return new String(output2);
+      default:
+        final StringBuilder buf = new StringBuilder(outputLength);
+        for (int i = 0; i < count; i++) {
+          buf.append(repeat);
+        }
+        return buf.toString();
+    }
   }
 
   public static String rightPad(final String str, final int size) {
-    return StringUtils.rightPad(str, size, ' ');
+    return rightPad(str, size, ' ');
+  }
+
+  public static String rightPad(final String str, final int size, String padStr) {
+    if (str == null) {
+      return null;
+    }
+    if (isEmpty(padStr)) {
+      padStr = " ";
+    }
+    final int padLen = padStr.length();
+    final int strLen = str.length();
+    final int pads = size - strLen;
+    if (pads <= 0) {
+      return str; // returns original String when possible
+    }
+    if (padLen == 1 && pads <= PAD_LIMIT) {
+      return rightPad(str, size, padStr.charAt(0));
+    }
+    if (pads == padLen) {
+      return str.concat(padStr);
+    }
+    if (pads < padLen) {
+      return str.concat(padStr.substring(0, pads));
+    }
+    final char[] padding = new char[pads];
+    final char[] padChars = padStr.toCharArray();
+    for (int i = 0; i < pads; i++) {
+      padding[i] = padChars[i % padLen];
+    }
+    return str.concat(new String(padding));
+  }
+
+  public static String rightPad(final String str, final int size, final char padChar) {
+    if (str == null) {
+      return null;
+    }
+    final int pads = size - str.length();
+    if (pads <= 0) {
+      return str; // returns original String when possible
+    }
+    if (pads > PAD_LIMIT) {
+      return rightPad(str, size, String.valueOf(padChar));
+    }
+    return str.concat(repeat(padChar, pads));
+  }
+
+  /**
+   * Used by the indexOf(CharSequence methods) as a green implementation of indexOf.
+   *
+   * @param cs         the {@link CharSequence} to be processed
+   * @param searchChar the {@link CharSequence} to be searched for
+   * @param start      the start index
+   * @return the index where the search sequence was found, or {@code -1} if there is no such occurrence.
+   */
+  static int indexOf(final CharSequence cs, final CharSequence searchChar, final int start) {
+    if (cs == null || searchChar == null) {
+      return INDEX_NOT_FOUND;
+    }
+    if (cs instanceof String) {
+      return ((String) cs).indexOf(searchChar.toString(), start);
+    }
+    if (cs instanceof StringBuilder) {
+      return ((StringBuilder) cs).indexOf(searchChar.toString(), start);
+    }
+    if (cs instanceof StringBuffer) {
+      return ((StringBuffer) cs).indexOf(searchChar.toString(), start);
+    }
+    return cs.toString().indexOf(searchChar.toString(), start);
   }
 
   public static String leftTrim(String charValue) {

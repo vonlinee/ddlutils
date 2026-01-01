@@ -19,10 +19,8 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Represents an index definition for a table.
@@ -61,10 +59,10 @@ public class NonUniqueIndex extends IndexImplBase {
   public boolean equals(Object obj) {
     if (obj instanceof NonUniqueIndex) {
       NonUniqueIndex other = (NonUniqueIndex) obj;
-
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_columns, other._columns)
-        .isEquals();
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
+      return Objects.equals(_columns, other._columns);
     } else {
       return false;
     }
@@ -99,9 +97,7 @@ public class NonUniqueIndex extends IndexImplBase {
    */
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_columns)
-      .toHashCode();
+    return Objects.hash(_name, _columns);
   }
 
   /**
@@ -109,7 +105,6 @@ public class NonUniqueIndex extends IndexImplBase {
    */
   @Override
   public String toString() {
-
     return "Index [name=" +
            getName() +
            "; " +

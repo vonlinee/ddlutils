@@ -19,12 +19,11 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.Serializable;
 import java.sql.Types;
+import java.util.Objects;
 
 /**
  * Represents a column in the database model.
@@ -423,26 +422,36 @@ public class Column implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Column) {
       Column other = (Column) obj;
-      EqualsBuilder comparator = new EqualsBuilder();
-
       // Note that this compares case-sensitive
-      comparator.append(_name, other._name);
-      comparator.append(_primaryKey, other._primaryKey);
-      comparator.append(_required, other._required);
-      comparator.append(_autoIncrement, other._autoIncrement);
-      comparator.append(_typeCode, other._typeCode);
-      comparator.append(getParsedDefaultValue(), other.getParsedDefaultValue());
-
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
+      if (!Objects.equals(_primaryKey, other._primaryKey)) {
+        return false;
+      }
+      if (!Objects.equals(_required, other._required)) {
+        return false;
+      }
+      if (!Objects.equals(_autoIncrement, other._autoIncrement)) {
+        return false;
+      }
+      if (!Objects.equals(_typeCode, other._typeCode)) {
+        return false;
+      }
+      if (!Objects.equals(getParsedDefaultValue(), other.getParsedDefaultValue())) {
+        return false;
+      }
       // comparing the size makes only sense for types where it is relevant
-      if ((_typeCode == Types.NUMERIC) || (_typeCode == Types.DECIMAL)) {
-        comparator.append(_size, other._size);
-        comparator.append(_scale, other._scale);
+      if (_typeCode == Types.NUMERIC || _typeCode == Types.DECIMAL) {
+        if (!Objects.equals(_size, other._size)) {
+          return false;
+        }
+        return Objects.equals(_scale, other._scale);
       } else if ((_typeCode == Types.CHAR) || (_typeCode == Types.VARCHAR) ||
                  (_typeCode == Types.BINARY) || (_typeCode == Types.VARBINARY)) {
-        comparator.append(_size, other._size);
+        return Objects.equals(_size, other._size);
       }
-
-      return comparator.isEquals();
+      return true;
     } else {
       return false;
     }
@@ -452,22 +461,10 @@ public class Column implements Serializable {
    * {@inheritDoc}
    */
   @Override
+
   public int hashCode() {
-    HashCodeBuilder builder = new HashCodeBuilder(17, 37);
-
-    builder.append(_name);
-    builder.append(_primaryKey);
-    builder.append(_required);
-    builder.append(_autoIncrement);
-    builder.append(_typeCode);
-    builder.append(_type);
-    builder.append(_scale);
-    builder.append(getParsedDefaultValue());
-    if (!TypeMap.isNumericType(_typeCode)) {
-      builder.append(_size);
-    }
-
-    return builder.toHashCode();
+    return Objects.hash(_name, _primaryKey, _required, _autoIncrement, _typeCode, _type,
+                       _scale, getParsedDefaultValue(), TypeMap.isNumericType(_typeCode) ? null : _size);
   }
 
   /**

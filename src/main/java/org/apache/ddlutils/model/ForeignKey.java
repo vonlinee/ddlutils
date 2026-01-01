@@ -20,13 +20,12 @@ package org.apache.ddlutils.model;
  */
 
 import org.apache.commons.collections4.set.ListOrderedSet;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Represents a database foreign key.
@@ -367,14 +366,13 @@ public class ForeignKey implements Serializable {
       // Note that this compares case-sensitive
       // Note also that we can simply compare the references regardless of their order
       // (which is irrelevant for fks) because they are contained in a set
-      EqualsBuilder builder = new EqualsBuilder();
-
-      if ((_name != null) && (!_name.isEmpty()) && (otherFk._name != null) && (!otherFk._name.isEmpty())) {
-        builder.append(_name, otherFk._name);
+      if (!Objects.equals(_name, otherFk._name)) {
+        return false;
       }
-      return builder.append(_foreignTableName, otherFk._foreignTableName)
-        .append(_references, otherFk._references)
-        .isEquals();
+      if (!Objects.equals(_foreignTableName, otherFk._foreignTableName)) {
+        return false;
+      }
+      return Objects.equals(_references, otherFk._references);
     } else {
       return false;
     }
@@ -419,10 +417,7 @@ public class ForeignKey implements Serializable {
    */
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_foreignTableName)
-      .append(_references)
-      .toHashCode();
+    return Objects.hash(_name, _foreignTableName, _references);
   }
 
   /**

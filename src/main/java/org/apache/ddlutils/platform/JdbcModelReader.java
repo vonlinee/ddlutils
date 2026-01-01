@@ -20,7 +20,6 @@ package org.apache.ddlutils.platform;
  */
 
 import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
@@ -1003,7 +1002,7 @@ public class JdbcModelReader {
    * @param columnsToCheck The columns to check (e.g. the primary key columns)
    */
   protected void determineAutoIncrementFromResultSetMetaData(Table table, Column[] columnsToCheck) throws SQLException {
-    if (ArrayUtils.isEmpty(columnsToCheck)) {
+    if (columnsToCheck == null || columnsToCheck.length == 0) {
       return;
     }
     final String querySql = getDetermineAutoIncrementFromResultSetMetaDataSql(table, columnsToCheck);

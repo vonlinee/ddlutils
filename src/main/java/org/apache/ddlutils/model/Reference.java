@@ -19,10 +19,8 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Represents a reference between a column in the local table and a column in another table.
@@ -182,10 +180,10 @@ public class Reference implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Reference) {
       Reference other = (Reference) obj;
-
-      return new EqualsBuilder().append(_localColumnName, other._localColumnName)
-        .append(_foreignColumnName, other._foreignColumnName)
-        .isEquals();
+      if (!Objects.equals(_localColumnName, other._localColumnName)) {
+        return false;
+      }
+      return Objects.equals(_foreignColumnName, other._foreignColumnName);
     } else {
       return false;
     }
@@ -208,9 +206,7 @@ public class Reference implements Serializable {
    */
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_localColumnName)
-      .append(_foreignColumnName)
-      .toHashCode();
+    return Objects.hash(_localColumnName, _foreignColumnName);
   }
 
   /**

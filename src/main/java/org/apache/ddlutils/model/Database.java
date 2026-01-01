@@ -20,8 +20,6 @@ package org.apache.ddlutils.model;
  */
 
 import org.apache.commons.beanutils.DynaBean;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.ddlutils.dynabean.DynaClassCache;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.dynabean.SqlDynaException;
@@ -564,11 +562,11 @@ public class Database implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Database) {
       Database other = (Database) obj;
-
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
       // Note that this compares case-sensitive
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_tables, other._tables)
-        .isEquals();
+      return Objects.equals(_tables, other._tables);
     } else {
       return false;
     }
@@ -579,9 +577,7 @@ public class Database implements Serializable {
    */
   @Override
   public int hashCode() {
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_tables)
-      .toHashCode();
+    return Objects.hash(_name, _tables);
   }
 
   /**

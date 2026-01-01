@@ -19,15 +19,13 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.ddlutils.util.CollectionUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Represents a table in the database model.
@@ -717,15 +715,19 @@ public class Table implements Serializable {
   @Override
   public boolean equals(Object obj) {
     if (obj instanceof Table) {
-      Table other = (Table) obj;
-
       // Note that this compares case-sensitive
       // TODO: For now we ignore catalog and schema (type should be irrelevant anyways)
-      return new EqualsBuilder().append(_name, other._name)
-        .append(_columns, other._columns)
-        .append(new HashSet<>(_foreignKeys), new HashSet<>(other._foreignKeys))
-        .append(new HashSet<>(_indices), new HashSet<>(other._indices))
-        .isEquals();
+      Table other = (Table) obj;
+      if (!Objects.equals(_name, other._name)) {
+        return false;
+      }
+      if (!Objects.equals(_columns, other._columns)) {
+        return false;
+      }
+      if (!Objects.equals(_foreignKeys, other._foreignKeys)) {
+        return false;
+      }
+      return Objects.equals(_indices, other._indices);
     } else {
       return false;
     }
@@ -737,11 +739,7 @@ public class Table implements Serializable {
   @Override
   public int hashCode() {
     // TODO: For now we ignore catalog and schema (type should be irrelevant anyways)
-    return new HashCodeBuilder(17, 37).append(_name)
-      .append(_columns)
-      .append(new HashSet<>(_foreignKeys))
-      .append(new HashSet<>(_indices))
-      .toHashCode();
+    return Objects.hash(_name, _columns, _foreignKeys, _indices);
   }
 
   /**
