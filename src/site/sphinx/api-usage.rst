@@ -159,7 +159,7 @@ are then created which can be inserted by DdlUtils into the database::
     
 	    // "name" and "whatever" are columns of table "author"
 	    author.set("name",     "James");
-	    author.set("whatever", new Integer(1234));
+	    author.set("whatever", 1234);
     
 	    platform.insert(database, author);
 	}

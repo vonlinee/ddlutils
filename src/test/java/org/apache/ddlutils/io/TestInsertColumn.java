@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Tests database alterations that insert columns.
@@ -127,7 +128,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      assertTrue((avalue == null) || Objects.equals(avalue, 1));
     }
   }
 
@@ -263,7 +264,7 @@ public class TestInsertColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      assertTrue((avalue == null) || Objects.equals(avalue, 1));
     }
   }
 

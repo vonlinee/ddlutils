@@ -2594,7 +2594,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("0") : new Integer(0);
+    Object value = isSybase ? new BigDecimal("0") : 0;
 
     insertRow("roundtrip", new Object[]{1, value});
 
@@ -2650,7 +2650,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
 
     assertEquals(1, beans.get(0), "pk");
     assertEquals(value, beans.get(0), "avalue");
@@ -2683,7 +2683,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("5") : new Integer(5);
+    Object value = isSybase ? new BigDecimal("5") : 5;
 
     insertRow("roundtrip", new Object[]{value});
 
@@ -2734,7 +2734,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
 
     assertEquals(value, beans.get(0), "pk");
     assertEquals(2, beans.get(0), "avalue");
@@ -2789,7 +2789,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("0") : new Integer(0);
+    Object value = isSybase ? new BigDecimal("0") : 0;
 
     insertRow("roundtrip1", new Object[]{value});
     insertRow("roundtrip2", new Object[]{1, value});
@@ -2856,7 +2856,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
 
     insertRow("roundtrip1", new Object[]{value});
     insertRow("roundtrip2", new Object[]{1});
@@ -2923,7 +2923,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("0") : new Integer(0);
+    Object value = isSybase ? new BigDecimal("0") : 0;
 
     insertRow("roundtrip1", new Object[]{value});
     insertRow("roundtrip2", new Object[]{1, value});
@@ -3000,7 +3000,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
     List<DynaBean> beans1 = getRows("roundtrip1");
     List<DynaBean> beans2 = getRows("roundtrip2");
 
@@ -3054,7 +3054,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("0") : new Integer(0);
+    Object value = isSybase ? new BigDecimal("0") : 0;
     Timestamp time = new Timestamp(new Date().getTime());
 
     // to avoid problems with the database's time resolution
@@ -3125,7 +3125,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(getAdjustedModel(),
       readModelFromDatabase("roundtriptest"));
 
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
     List<DynaBean> beans = getRows("roundtrip");
 
     assertEquals(1, beans.get(0), "pk");
@@ -3177,7 +3177,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
 
     createDatabase(model1Xml);
 
-    Object value = isSybase ? new BigDecimal("0") : new Integer(0);
+    Object value = isSybase ? new BigDecimal("0") : 0;
 
     insertRow("roundtrip", new Object[]{1, "test", value});
 
@@ -3250,7 +3250,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
       readModelFromDatabase("roundtriptest"));
 
     List<DynaBean> beans = getRows("roundtrip");
-    Object value = isSybase ? new BigDecimal("1") : new Integer(1);
+    Object value = isSybase ? new BigDecimal("1") : 1;
 
     assertEquals(1, beans.get(0), "pk");
     assertEquals(value, beans.get(0), "avalue1");

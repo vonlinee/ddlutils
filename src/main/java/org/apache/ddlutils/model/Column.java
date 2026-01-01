@@ -307,9 +307,9 @@ public class Column implements Serializable {
       _size = size;
       if (pos < 0) {
         _scale = 0;
-        _sizeAsInt = new Integer(_size.trim());
+        _sizeAsInt = Integer.parseInt(_size.trim());
       } else {
-        _sizeAsInt = new Integer(size.substring(0, pos).trim());
+        _sizeAsInt = Integer.parseInt(size.substring(0, pos).trim());
         _scale = Integer.parseInt(size.substring(pos + 1).trim());
       }
     } else {

@@ -1134,7 +1134,7 @@ public class DumpMetadataTask extends Task {
 
         if (value != null) {
           try {
-            xmlWriter.writeAttribute(null, attrName, new Integer(value).toString());
+            xmlWriter.writeAttribute(null, attrName, value);
           } catch (NumberFormatException parseEx) {
             log("Could not parse the value from result set column " + columnName + ":" + Arrays.toString(ex.getStackTrace()), Project.MSG_ERR);
           }

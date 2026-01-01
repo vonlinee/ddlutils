@@ -30,6 +30,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Tests database alterations that add columns.
@@ -127,7 +128,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      assertTrue((avalue == null) || Objects.equals(avalue, 1));
     }
   }
 
@@ -170,8 +171,8 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue1 = beans.get(0).get("avalue1");
     Object avalue2 = beans.get(0).get("avalue2");
 
-    assertTrue((avalue1 == null) || new Integer(1).equals(avalue1));
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    assertTrue((avalue1 == null) || Objects.equals(avalue1, 1));
+    assertTrue((avalue2 == null) || Objects.equals(avalue2, 1));
   }
 
   /**
@@ -299,7 +300,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     } else {
       Object avalue = beans.get(0).get("avalue");
 
-      assertTrue((avalue == null) || new Integer(1).equals(avalue));
+      assertTrue((avalue == null) || Objects.equals(avalue, 1));
     }
   }
 
@@ -947,7 +948,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    assertTrue((avalue == null) || Objects.equals(avalue, 1));
   }
 
   /**
@@ -1251,7 +1252,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     List<DynaBean> beans = getRows("roundtrip");
     Object avalue = beans.get(0).get("avalue");
 
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    assertTrue((avalue == null) || Objects.equals(avalue, 1));
   }
 
   /**
@@ -1612,7 +1613,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    assertTrue((avalue2 == null) || Objects.equals(avalue2, 1));
   }
 
   /**
@@ -1962,7 +1963,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     Object avalue2 = beans.get(0).get("avalue2");
 
     assertEquals(2, beans.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    assertTrue((avalue2 == null) || Objects.equals(avalue2, 1));
   }
 
   /**
@@ -2363,7 +2364,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
 
     assertEquals(1, beans1.get(0), "pk");
     assertEquals(2, beans2.get(0), "pk");
-    assertTrue((avalue == null) || new Integer(1).equals(avalue));
+    assertTrue((avalue == null) || Objects.equals(avalue, 1));
   }
 
   /**
@@ -2922,7 +2923,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
     assertEquals(1, beans1.get(0), "pk2");
     assertEquals(2, beans2.get(0), "pk");
     assertEquals(1, beans2.get(0), "avalue1");
-    assertTrue((avalue2 == null) || new Integer(1).equals(avalue2));
+    assertTrue((avalue2 == null) || Objects.equals(avalue2, 1));
   }
 
   /**
