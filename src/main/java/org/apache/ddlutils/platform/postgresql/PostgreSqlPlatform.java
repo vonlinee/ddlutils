@@ -59,7 +59,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    */
   public PostgreSqlPlatform() {
     PlatformInfo info = getPlatformInfo();
-
+    info.setAllowPerformQueryWithoutExplicitAlias(true);
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     // this is the default length though it might be changed when building PostgreSQL
     // in file src/include/postgres_ext.h

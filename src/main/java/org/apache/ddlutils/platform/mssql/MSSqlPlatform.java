@@ -73,7 +73,7 @@ public class MSSqlPlatform extends PlatformImplBase {
    */
   public MSSqlPlatform() {
     PlatformInfo info = getPlatformInfo();
-
+    info.setAllowPerformQueryWithoutExplicitAlias(true);
     info.setMaxIdentifierLength(128);
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     info.setIdentityColumnAutomaticallyRequired(true);

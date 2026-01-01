@@ -65,7 +65,7 @@ public class DerbyPlatform extends CloudscapePlatform {
     super();
 
     PlatformInfo info = getPlatformInfo();
-
+    info.setAllowPerformQueryWithoutExplicitAlias(true);
     info.addNativeTypeMapping(Types.DOUBLE, "DOUBLE");
     info.addNativeTypeMapping(Types.FLOAT, "DOUBLE", Types.DOUBLE);
     info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT});

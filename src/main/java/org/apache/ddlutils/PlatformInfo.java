@@ -230,6 +230,12 @@ public class PlatformInfo {
    * The text separating individual SQL commands.
    */
   private String _sqlCommandDelimiter = ";";
+
+  /**
+   * Some JDBC drivers do not allow us to perform the query without an explicit alias
+   */
+  private boolean allowPerformQueryWithoutExplicitAlias = false;
+
   /**
    * The default ON UPDATE action.
    */
@@ -1302,5 +1308,13 @@ public class PlatformInfo {
 
   public void setTrimLengthFixedCharColumnValues(boolean trimLengthFixedCharColumnValues) {
     this.trimLengthFixedCharColumnValues = trimLengthFixedCharColumnValues;
+  }
+
+  public boolean isAllowPerformQueryWithoutExplicitAlias() {
+    return allowPerformQueryWithoutExplicitAlias;
+  }
+
+  public void setAllowPerformQueryWithoutExplicitAlias(boolean allowPerformQueryWithoutExplicitAlias) {
+    this.allowPerformQueryWithoutExplicitAlias = allowPerformQueryWithoutExplicitAlias;
   }
 }
