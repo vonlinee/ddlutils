@@ -19,10 +19,16 @@
 package org.apache.ddlutils.platform.hsqldb;
 
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.alteration.ColumnDefinitionChange;
+import org.apache.ddlutils.alteration.RecreateTableChange;
+import org.apache.ddlutils.alteration.TableChange;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.util.StringUtilsExt;
 
+import java.io.IOException;
 import java.sql.*;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -126,5 +132,33 @@ public class HsqlDbV241Platform extends HsqlDbPlatform {
       }
     }
     return database;
+  }
+
+  @Override
+  public void processChange(Database currentModel, CreationParameters params, RecreateTableChange change) throws IOException {
+    for (TableChange originalChange : change.getOriginalChanges()) {
+      if (originalChange instanceof ColumnDefinitionChange) {
+        ColumnDefinitionChange columnDefinitionChange = (ColumnDefinitionChange) originalChange;
+
+        Column column = columnDefinitionChange.findChangedColumn(currentModel, getPlatformInfo().isDelimitedIdentifiersSupported());
+
+        Column newColumn = columnDefinitionChange.findChangedColumn(change.getTargetTable(),
+          getPlatformInfo().isDelimitedIdentifiersSupported());
+
+        if (Types.NUMERIC == column.getTypeCode() && Types.VARCHAR == newColumn.getTypeCode()
+            && column.getSizeAsInt() > newColumn.getSizeAsInt()) {
+          // hsqldb 2.4.1 does not support NUMERIC to VARCHAR, so if we want to migrate table data that has NUMERIC(10, 2) to VARCHAR,
+          // the length of VARCHAR must be greater than NUMERIC. otherwise, we will get the following error:
+          // data exception: string data, right truncation.
+          if (column.getScale() > 0) {
+            newColumn.setSizeAndScale(column.getSizeAsInt() + 1 , 0);
+          } else {
+            newColumn.setSizeAndScale(column.getSizeAsInt(), 0);
+          }
+        }
+      }
+    }
+
+    super.processChange(currentModel, params, change);
   }
 }

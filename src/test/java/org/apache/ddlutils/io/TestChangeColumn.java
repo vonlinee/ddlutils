@@ -22,6 +22,7 @@ package org.apache.ddlutils.io;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -4240,6 +4241,7 @@ public class TestChangeColumn extends TestAgainstLiveDatabaseBase {
    * </pre></blockquote>
    */
   @Test
+  @Disabled // not supported test, platform may change the definition of model in XML
   public void testChangeDatatypeAndSize2() {
     final String model1Xml =
       "<?xml version='1.0' encoding='ISO-8859-1'?>\n" +
