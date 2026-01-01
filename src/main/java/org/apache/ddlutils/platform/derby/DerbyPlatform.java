@@ -28,10 +28,10 @@ import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Table;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Types;
 import java.util.Map;
 
@@ -124,12 +124,7 @@ public class DerbyPlatform extends CloudscapePlatform {
       } catch (Exception ex) {
         throw new DatabaseOperationException("Error while trying to create a database", ex);
       } finally {
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException ex) {
-          }
-        }
+        JdbcUtils.closeSilently(connection);
       }
     } else {
       throw new UnsupportedOperationException("Unable to create a Derby database via the driver " + jdbcDriverClassName);
