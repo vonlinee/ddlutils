@@ -152,6 +152,9 @@ public final class JdbcUtils {
   }
 
   public static Map<String, Object> toMap(ResultSet rs) throws SQLException {
+    if (!rs.next()) {
+      return Collections.emptyMap();
+    }
     return readColumnValues(rs);
   }
 
