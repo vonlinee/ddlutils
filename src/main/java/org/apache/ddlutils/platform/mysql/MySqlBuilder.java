@@ -222,40 +222,8 @@ public class MySqlBuilder extends SqlBuilder {
 
     if (sizeChanged || typeChanged) {
       String targetNativeType = getNativeType(targetColumn);
-
-      switch (targetColumn.getTypeCode()) {
-        case Types.BIT:
-        case Types.BOOLEAN:
-        case Types.TINYINT:
-        case Types.SMALLINT:
-        case Types.INTEGER:
-        case Types.BIGINT:
-          targetNativeType = "SIGNED";
-          break;
-        case Types.FLOAT:
-        case Types.REAL:
-        case Types.DOUBLE:
-          targetNativeType = "SIGNED"; // ?
-          break;
-        case Types.DECIMAL:
-        case Types.NUMERIC:
-          targetNativeType = "DECIMAL";
-          break;
-        case Types.DATE:
-          targetNativeType = "DATE";
-          break;
-        case Types.TIMESTAMP:
-          targetNativeType = "DATETIME";
-          break;
-        case Types.CHAR:
-        case Types.VARCHAR:
-        case Types.LONGVARCHAR:
-        case Types.CLOB:
-          targetNativeType = "CHAR";
-          break;
-        default:
-          targetNativeType = "BINARY";
-          break;
+      if (targetNativeType == null) {
+        targetNativeType = getNativeTypeNameByJdbcType(targetColumn.getTypeCode());
       }
 
       print("CAST(");
@@ -274,5 +242,44 @@ public class MySqlBuilder extends SqlBuilder {
     } else {
       printIdentifier(getColumnName(sourceColumn));
     }
+  }
+
+  static String getNativeTypeNameByJdbcType(int code) {
+    String targetNativeType;
+    switch (code) {
+      case Types.BIT:
+      case Types.BOOLEAN:
+      case Types.TINYINT:
+      case Types.SMALLINT:
+      case Types.INTEGER:
+      case Types.BIGINT:
+        targetNativeType = "SIGNED";
+        break;
+      case Types.FLOAT:
+      case Types.REAL:
+      case Types.DOUBLE:
+        targetNativeType = "SIGNED"; // ?
+        break;
+      case Types.DECIMAL:
+      case Types.NUMERIC:
+        targetNativeType = "DECIMAL";
+        break;
+      case Types.DATE:
+        targetNativeType = "DATE";
+        break;
+      case Types.TIMESTAMP:
+        targetNativeType = "DATETIME";
+        break;
+      case Types.CHAR:
+      case Types.VARCHAR:
+      case Types.LONGVARCHAR:
+      case Types.CLOB:
+        targetNativeType = "CHAR";
+        break;
+      default:
+        targetNativeType = "BINARY";
+        break;
+    }
+    return targetNativeType;
   }
 }
