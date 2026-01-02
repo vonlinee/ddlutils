@@ -65,8 +65,8 @@ public class FirebirdPlatform extends PlatformImplBase {
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     info.setCommentPrefix("/*");
     info.setCommentSuffix("*/");
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.setSupportedOnUpdateActions(CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE);
+    info.setSupportedOnDeleteActions(CascadeAction.CASCADE, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE);
 
     info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.LONGVARBINARY);
     info.addNativeTypeMapping(Types.BINARY, "BLOB", Types.LONGVARBINARY);

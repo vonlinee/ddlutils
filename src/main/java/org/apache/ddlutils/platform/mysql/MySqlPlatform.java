@@ -62,9 +62,9 @@ public class MySqlPlatform extends PlatformImplBase {
     info.setCommentPrefix("#");
     // Double quotes are only allowed for delimiting identifiers if the server SQL mode includes ANSI_QUOTES
     info.setDelimiterToken("`");
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setSupportedOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL);
     info.setDefaultOnUpdateAction(CascadeAction.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setSupportedOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL);
     info.setDefaultOnDeleteAction(CascadeAction.RESTRICT);
 
     info.addNativeTypeMapping(Types.ARRAY, "LONGBLOB", Types.LONGVARBINARY);

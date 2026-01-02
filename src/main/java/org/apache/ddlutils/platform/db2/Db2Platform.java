@@ -86,8 +86,8 @@ public class Db2Platform extends PlatformImplBase {
     info.setIdentityColumnAutomaticallyRequired(true);
     info.setPrimaryKeyColumnsHaveToBeRequired(true);
     info.setMultipleIdentityColumnsSupported(false);
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.RESTRICT, CascadeAction.NONE});
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.setSupportedOnUpdateActions(CascadeAction.RESTRICT, CascadeAction.NONE);
+    info.setSupportedOnDeleteActions(CascadeAction.RESTRICT, CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE);
 
     // the BINARY types are also handled by Db2Builder.getSqlType(Column)
     info.addNativeTypeMapping(Types.ARRAY, "BLOB", Types.BLOB);

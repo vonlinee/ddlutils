@@ -1153,7 +1153,7 @@ public class PlatformInfo {
    *
    * @param actions The actions
    */
-  public void setSupportedOnUpdateActions(CascadeAction[] actions) {
+  public void setSupportedOnUpdateActions(CascadeAction... actions) {
     _supportedOnUpdateActions.clear();
     _supportedOnUpdateActions.addAll(Arrays.asList(actions));
   }
@@ -1173,7 +1173,7 @@ public class PlatformInfo {
    *
    * @param actions The actions
    */
-  public void setSupportedOnDeleteActions(CascadeAction[] actions) {
+  public void setSupportedOnDeleteActions(CascadeAction... actions) {
     _supportedOnDeleteActions.clear();
     _supportedOnDeleteActions.addAll(Arrays.asList(actions));
   }

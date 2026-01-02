@@ -63,9 +63,9 @@ public class SapDbPlatform extends PlatformImplBase {
     info.setMultipleIdentityColumnsSupported(false);
     info.setCommentPrefix("/*");
     info.setCommentSuffix("*/");
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.RESTRICT, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.setSupportedOnDeleteActions(CascadeAction.CASCADE, CascadeAction.RESTRICT, CascadeAction.SET_DEFAULT, CascadeAction.SET_NULL, CascadeAction.NONE);
     info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE});
+    info.setSupportedOnUpdateActions(CascadeAction.NONE);
     info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     // BIGINT is also handled by the model reader

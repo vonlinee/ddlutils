@@ -78,9 +78,9 @@ public class MSSqlPlatform extends PlatformImplBase {
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
     info.setIdentityColumnAutomaticallyRequired(true);
     info.setMultipleIdentityColumnsSupported(false);
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.NONE});
+    info.setSupportedOnUpdateActions(CascadeAction.CASCADE, CascadeAction.NONE);
     info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.NONE});
+    info.setSupportedOnDeleteActions(CascadeAction.CASCADE, CascadeAction.NONE);
     info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     info.addNativeTypeMapping(Types.ARRAY, "IMAGE", Types.LONGVARBINARY);

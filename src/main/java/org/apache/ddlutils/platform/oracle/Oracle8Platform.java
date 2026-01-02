@@ -76,8 +76,8 @@ public class Oracle8Platform extends PlatformImplBase {
     info.setMaxIdentifierLength(30);
     info.setIdentityStatusReadingSupported(false);
     info.setPrimaryKeyColumnAutomaticallyRequired(true);
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE});
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE});
+    info.setSupportedOnUpdateActions(CascadeAction.NONE);
+    info.setSupportedOnDeleteActions(CascadeAction.CASCADE, CascadeAction.SET_NULL, CascadeAction.NONE);
     info.addEquivalentOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT);
 
     // Note that the back-mappings are partially done by the model reader, not the driver

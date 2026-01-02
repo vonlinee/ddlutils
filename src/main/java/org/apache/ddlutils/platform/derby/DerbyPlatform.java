@@ -68,11 +68,11 @@ public class DerbyPlatform extends CloudscapePlatform {
     info.setAllowPerformQueryWithoutExplicitAlias(true);
     info.addNativeTypeMapping(Types.DOUBLE, "DOUBLE");
     info.addNativeTypeMapping(Types.FLOAT, "DOUBLE", Types.DOUBLE);
-    info.setSupportedOnUpdateActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT});
+    info.setSupportedOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
     info.setDefaultOnUpdateAction(CascadeAction.NONE);
     info.addEquivalentOnUpdateActions(CascadeAction.NONE, CascadeAction.RESTRICT);
-    info.setSupportedOnDeleteActions(new CascadeAction[]{CascadeAction.NONE, CascadeAction.RESTRICT,
-      CascadeAction.CASCADE, CascadeAction.SET_NULL});
+    info.setSupportedOnDeleteActions(CascadeAction.NONE, CascadeAction.RESTRICT,
+      CascadeAction.CASCADE, CascadeAction.SET_NULL);
     info.setDefaultOnDeleteAction(CascadeAction.NONE);
 
     setSqlBuilder(new DerbyBuilder(this));
