@@ -47,39 +47,39 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   /**
    * Maps column names to properties.
    */
-  private final Map<String, String> _columnsToProperties = new ListOrderedMap<>();
+  private final Map<String, String> columnsToProperties = new ListOrderedMap<>();
   /**
    * The platform.
    */
-  private Platform _platform;
+  private Platform platform;
   /**
    * The base result set.
    */
-  private ResultSet _resultSet;
+  private ResultSet resultSet;
   /**
    * The dyna class to use for creating beans.
    */
-  private DynaClass _dynaClass;
+  private DynaClass dynaClass;
   /**
    * Whether the case of identifiers matters.
    */
-  private boolean _caseSensitive;
+  private boolean caseSensitive;
   /**
    * Maps column names to table objects as given by the query hints.
    */
-  private Map<String, Table> _preparedQueryHints;
+  private Map<String, Table> preparedQueryHints;
   /**
    * Whether the next call to hasNext or next needs advancement.
    */
-  private boolean _needsAdvancing = true;
+  private boolean needsAdvancing = true;
   /**
    * Whether we're already at the end of the result set.
    */
-  private boolean _isAtEnd = false;
+  private boolean isAtEnd = false;
   /**
    * Whether to close the statement and connection after finishing.
    */
-  private boolean _cleanUpAfterFinish;
+  private boolean cleanUpAfterFinish;
 
   /**
    * Creates a new iterator.
@@ -94,11 +94,11 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    */
   public ModelBasedResultSetIterator(PlatformImplBase platform, Database model, ResultSet resultSet, Table[] queryHints, boolean cleanUpAfterFinish) throws DatabaseOperationException {
     if (resultSet != null) {
-      _platform = platform;
-      _resultSet = resultSet;
-      _cleanUpAfterFinish = cleanUpAfterFinish;
-      _caseSensitive = _platform.isDelimitedIdentifierModeOn();
-      _preparedQueryHints = prepareQueryHints(queryHints);
+      this.platform = platform;
+      this.resultSet = resultSet;
+      this.cleanUpAfterFinish = cleanUpAfterFinish;
+      caseSensitive = this.platform.isDelimitedIdentifierModeOn();
+      preparedQueryHints = prepareQueryHints(queryHints);
 
       try {
         initFromMetaData(model);
@@ -107,7 +107,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
         throw new DatabaseOperationException("Could not read the metadata of the result set", ex);
       }
     } else {
-      _isAtEnd = true;
+      isAtEnd = true;
     }
   }
 
@@ -117,7 +117,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * @param model The database model
    */
   private void initFromMetaData(Database model) throws SQLException {
-    ResultSetMetaData metaData = _resultSet.getMetaData();
+    ResultSetMetaData metaData = resultSet.getMetaData();
     String tableName = null;
     boolean singleKnownTable = true;
 
@@ -132,12 +132,12 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
           tableOfColumn = tableOfColumn.substring(1, tableOfColumn.length() - 1);
         }
         // the JDBC driver gave us enough metadata info
-        table = model.findTable(tableOfColumn, _caseSensitive);
+        table = model.findTable(tableOfColumn, caseSensitive);
       }
       if (table == null) {
         // not enough info in the metadata of the result set, lets try the
         // user-supplied query hints
-        table = _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
+        table = preparedQueryHints.get(caseSensitive ? columnName : columnName.toLowerCase());
         tableOfColumn = (table == null ? null : table.getName());
       }
       if (tableName == null) {
@@ -149,24 +149,24 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
       String propName = columnName;
 
       if (table != null) {
-        Column column = table.findColumn(columnName, _caseSensitive);
+        Column column = table.findColumn(columnName, caseSensitive);
 
         if (column != null) {
           propName = column.getName();
         }
       }
-      _columnsToProperties.put(columnName, propName);
+      columnsToProperties.put(columnName, propName);
     }
     if (singleKnownTable && (tableName != null)) {
-      _dynaClass = model.getDynaClassFor(tableName);
+      dynaClass = model.getDynaClassFor(tableName);
     } else {
-      DynaProperty[] props = new DynaProperty[_columnsToProperties.size()];
+      DynaProperty[] props = new DynaProperty[columnsToProperties.size()];
       int idx = 0;
 
-      for (Iterator<String> it = _columnsToProperties.values().iterator(); it.hasNext(); idx++) {
+      for (Iterator<String> it = columnsToProperties.values().iterator(); it.hasNext(); idx++) {
         props[idx] = new DynaProperty(it.next());
       }
-      _dynaClass = new BasicDynaClass("result", BasicDynaBean.class, props);
+      dynaClass = new BasicDynaClass("result", BasicDynaBean.class, props);
     }
   }
 
@@ -183,7 +183,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
     for (int tableIdx = 0; (queryHints != null) && (tableIdx < queryHints.length); tableIdx++) {
       for (int columnIdx = 0; columnIdx < queryHints[tableIdx].getColumnCount(); columnIdx++) {
         String columnName = queryHints[tableIdx].getColumn(columnIdx).getName();
-        if (!_caseSensitive) {
+        if (!caseSensitive) {
           columnName = columnName.toLowerCase();
         }
         if (!result.containsKey(columnName)) {
@@ -200,7 +200,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   @Override
   public boolean hasNext() throws DatabaseOperationException {
     advanceIfNecessary();
-    return !_isAtEnd;
+    return !isAtEnd;
   }
 
   /**
@@ -209,11 +209,11 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   @Override
   public DynaBean next() throws DatabaseOperationException {
     advanceIfNecessary();
-    if (_isAtEnd) {
+    if (isAtEnd) {
       throw new NoSuchElementException("No more elements in the resultset");
     } else {
       try {
-        DynaBean bean = _dynaClass.newInstance();
+        DynaBean bean = dynaClass.newInstance();
         Table table = null;
 
         if (bean instanceof SqlDynaBean) {
@@ -221,19 +221,19 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
           table = dynaClass.getTable();
         }
 
-        for (Map.Entry<String, String> entry : _columnsToProperties.entrySet()) {
+        for (Map.Entry<String, String> entry : columnsToProperties.entrySet()) {
           String columnName = entry.getKey();
           String propName = entry.getValue();
           Table curTable = table;
 
           if (curTable == null) {
-            curTable = _preparedQueryHints.get(_caseSensitive ? columnName : columnName.toLowerCase());
+            curTable = preparedQueryHints.get(caseSensitive ? columnName : columnName.toLowerCase());
           }
 
-          Object value = _platform.getObjectFromResultSet(_resultSet, columnName, curTable);
+          Object value = platform.getObjectFromResultSet(resultSet, columnName, curTable);
           bean.set(propName, value);
         }
-        _needsAdvancing = true;
+        needsAdvancing = true;
         return bean;
       } catch (Exception ex) {
         cleanUp();
@@ -248,10 +248,10 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    */
   public void advance() {
     advanceIfNecessary();
-    if (_isAtEnd) {
+    if (isAtEnd) {
       throw new NoSuchElementException("No more elements in the resultset");
     } else {
-      _needsAdvancing = true;
+      needsAdvancing = true;
     }
   }
 
@@ -259,15 +259,15 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * Advances the result set if necessary.
    */
   private void advanceIfNecessary() throws DatabaseOperationException {
-    if (_needsAdvancing && !_isAtEnd) {
+    if (needsAdvancing && !isAtEnd) {
       try {
-        _isAtEnd = !_resultSet.next();
-        _needsAdvancing = false;
+        isAtEnd = !resultSet.next();
+        needsAdvancing = false;
       } catch (SQLException ex) {
         cleanUp();
         throw new DatabaseOperationException("Could not retrieve next row from result set", ex);
       }
-      if (_isAtEnd) {
+      if (isAtEnd) {
         cleanUp();
       }
     }
@@ -279,7 +279,7 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
   @Override
   public void remove() throws DatabaseOperationException {
     try {
-      _resultSet.deleteRow();
+      resultSet.deleteRow();
     } catch (SQLException ex) {
       cleanUp();
       throw new DatabaseOperationException("Failed to delete current row", ex);
@@ -290,18 +290,18 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * Closes the resources (connection, statement, resultset).
    */
   public void cleanUp() {
-    if (_cleanUpAfterFinish && (_resultSet != null)) {
+    if (cleanUpAfterFinish && (resultSet != null)) {
       Connection conn = null;
       try {
-        Statement stmt = _resultSet.getStatement();
+        Statement stmt = resultSet.getStatement();
         conn = stmt.getConnection();
         // also closes the resultset
-        _platform.closeStatement(stmt);
+        platform.closeStatement(stmt);
       } catch (SQLException ex) {
         // we ignore it
       }
-      _platform.returnConnection(conn);
-      _resultSet = null;
+      platform.returnConnection(conn);
+      resultSet = null;
     }
   }
 
@@ -319,11 +319,11 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * @return <code>true</code> if the connection is still open
    */
   public boolean isConnectionOpen() {
-    if (_resultSet == null) {
+    if (resultSet == null) {
       return false;
     }
     try {
-      Statement stmt = _resultSet.getStatement();
+      Statement stmt = resultSet.getStatement();
       Connection conn = stmt.getConnection();
 
       return !conn.isClosed();

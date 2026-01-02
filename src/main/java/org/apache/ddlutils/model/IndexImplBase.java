@@ -32,18 +32,18 @@ abstract class IndexImplBase implements Index {
   /**
    * The name of the index.
    */
-  protected String _name;
+  protected String name;
   /**
    * The columns making up the index.
    */
-  protected ArrayList<IndexColumn> _columns = new ArrayList<>();
+  protected ArrayList<IndexColumn> columns = new ArrayList<>();
 
   /**
    * {@inheritDoc}
    */
   @Override
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -51,7 +51,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -59,7 +59,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public int getColumnCount() {
-    return _columns.size();
+    return columns.size();
   }
 
   /**
@@ -67,7 +67,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public IndexColumn getColumn(int idx) {
-    return _columns.get(idx);
+    return columns.get(idx);
   }
 
   /**
@@ -75,7 +75,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public IndexColumn[] getColumns() {
-    return _columns.toArray(new IndexColumn[0]);
+    return columns.toArray(new IndexColumn[0]);
   }
 
   /**
@@ -83,7 +83,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public boolean hasColumn(Column column) {
-    for (int idx = 0; idx < _columns.size(); idx++) {
+    for (int idx = 0; idx < columns.size(); idx++) {
       IndexColumn curColumn = getColumn(idx);
 
       if (column.equals(curColumn.getColumn())) {
@@ -98,7 +98,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public boolean hasColumn(String columnName, boolean caseSensitive) {
-    for (int idx = 0; idx < _columns.size(); idx++) {
+    for (int idx = 0; idx < columns.size(); idx++) {
       IndexColumn curColumn = getColumn(idx);
 
       if (StringUtilsExt.equals(columnName, curColumn.getName(), caseSensitive)) {
@@ -114,15 +114,15 @@ abstract class IndexImplBase implements Index {
   @Override
   public void addColumn(IndexColumn column) {
     if (column != null) {
-      for (int idx = 0; idx < _columns.size(); idx++) {
+      for (int idx = 0; idx < columns.size(); idx++) {
         IndexColumn curColumn = getColumn(idx);
 
         if (curColumn.getOrdinalPosition() > column.getOrdinalPosition()) {
-          _columns.add(idx, column);
+          columns.add(idx, column);
           return;
         }
       }
-      _columns.add(column);
+      columns.add(column);
     }
   }
 
@@ -131,7 +131,7 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public void removeColumn(IndexColumn column) {
-    _columns.remove(column);
+    columns.remove(column);
   }
 
   /**
@@ -139,6 +139,6 @@ abstract class IndexImplBase implements Index {
    */
   @Override
   public void removeColumn(int idx) {
-    _columns.remove(idx);
+    columns.remove(idx);
   }
 }

@@ -39,51 +39,51 @@ public class Column implements Serializable {
   /**
    * The name of the column.
    */
-  private String _name;
+  private String name;
   /**
    * The java name of the column (optional and unused by DdlUtils, for Torque compatibility).
    */
-  private String _javaName;
+  private String javaName;
   /**
    * The column's description.
    */
-  private String _description;
+  private String description;
   /**
    * Whether the column is a primary key column.
    */
-  private boolean _primaryKey;
+  private boolean primaryKey;
   /**
    * Whether the column is required, i.e. it must not contain <code>NULL</code>.
    */
-  private boolean _required;
+  private boolean required;
   /**
    * Whether the column's value is incremented automatically.
    */
-  private boolean _autoIncrement;
+  private boolean autoIncrement;
   /**
    * The JDBC type code, one of the constants in {@link java.sql.Types}.
    */
-  private int _typeCode;
+  private int typeCode;
   /**
    * The name of the JDBC type.
    */
-  private String _type;
+  private String type;
   /**
    * The size of the column for JDBC types that require/support this.
    */
-  private String _size;
+  private String size;
   /**
    * The size of the column for JDBC types that require/support this.
    */
-  private Integer _sizeAsInt;
+  private Integer sizeAsInt;
   /**
    * The scale of the column for JDBC types that require/support this.
    */
-  private int _scale;
+  private int scale;
   /**
    * The default value.
    */
-  private String _defaultValue;
+  private String defaultValue;
 
   /**
    * Returns the name of the column.
@@ -91,7 +91,7 @@ public class Column implements Serializable {
    * @return The name
    */
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -100,7 +100,7 @@ public class Column implements Serializable {
    * @param name The name
    */
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -110,7 +110,7 @@ public class Column implements Serializable {
    * @return The java name
    */
   public String getJavaName() {
-    return _javaName;
+    return javaName;
   }
 
   /**
@@ -120,7 +120,7 @@ public class Column implements Serializable {
    * @param javaName The java name
    */
   public void setJavaName(String javaName) {
-    _javaName = javaName;
+    this.javaName = javaName;
   }
 
   /**
@@ -129,7 +129,7 @@ public class Column implements Serializable {
    * @return The description
    */
   public String getDescription() {
-    return _description;
+    return description;
   }
 
   /**
@@ -138,7 +138,7 @@ public class Column implements Serializable {
    * @param description The description
    */
   public void setDescription(String description) {
-    _description = description;
+    this.description = description;
   }
 
   /**
@@ -147,7 +147,7 @@ public class Column implements Serializable {
    * @return <code>true</code> if this column is a primary key column
    */
   public boolean isPrimaryKey() {
-    return _primaryKey;
+    return primaryKey;
   }
 
   /**
@@ -156,7 +156,7 @@ public class Column implements Serializable {
    * @param primaryKey <code>true</code> if this column is a primary key column
    */
   public void setPrimaryKey(boolean primaryKey) {
-    _primaryKey = primaryKey;
+    this.primaryKey = primaryKey;
   }
 
   /**
@@ -166,7 +166,7 @@ public class Column implements Serializable {
    * @return <code>true</code> if this column is a required column
    */
   public boolean isRequired() {
-    return _required;
+    return required;
   }
 
   /**
@@ -176,7 +176,7 @@ public class Column implements Serializable {
    * @param required <code>true</code> if this column is a required column
    */
   public void setRequired(boolean required) {
-    _required = required;
+    this.required = required;
   }
 
   /**
@@ -185,7 +185,7 @@ public class Column implements Serializable {
    * @return <code>true</code> if this column is an auto-increment column
    */
   public boolean isAutoIncrement() {
-    return _autoIncrement;
+    return autoIncrement;
   }
 
   /**
@@ -194,7 +194,7 @@ public class Column implements Serializable {
    * @param autoIncrement <code>true</code> if this column is an auto-increment column
    */
   public void setAutoIncrement(boolean autoIncrement) {
-    _autoIncrement = autoIncrement;
+    this.autoIncrement = autoIncrement;
   }
 
   /**
@@ -204,7 +204,7 @@ public class Column implements Serializable {
    * @return The type code
    */
   public int getTypeCode() {
-    return _typeCode;
+    return typeCode;
   }
 
   /**
@@ -214,11 +214,11 @@ public class Column implements Serializable {
    * @param typeCode The type code
    */
   public void setTypeCode(int typeCode) {
-    _type = TypeMap.getJdbcTypeName(typeCode);
-    if (_type == null) {
+    type = TypeMap.getJdbcTypeName(typeCode);
+    if (type == null) {
       throw new ModelException("Unknown JDBC type code " + typeCode);
     }
-    _typeCode = typeCode;
+    this.typeCode = typeCode;
   }
 
   /**
@@ -227,7 +227,7 @@ public class Column implements Serializable {
    * @return The type
    */
   public String getType() {
-    return _type;
+    return type;
   }
 
   /**
@@ -241,10 +241,10 @@ public class Column implements Serializable {
     if (typeCode == null) {
       throw new ModelException("Unknown JDBC type " + type);
     } else {
-      _typeCode = typeCode;
+      this.typeCode = typeCode;
       // we get the corresponding string value from the TypeMap in order
       // to detect extension types which we don't want in the model
-      _type = TypeMap.getJdbcTypeName(_typeCode);
+      this.type = TypeMap.getJdbcTypeName(this.typeCode);
     }
   }
 
@@ -290,7 +290,7 @@ public class Column implements Serializable {
    * @return The size
    */
   public String getSize() {
-    return _size;
+    return size;
   }
 
   /**
@@ -304,18 +304,18 @@ public class Column implements Serializable {
     if (size != null) {
       int pos = size.indexOf(",");
 
-      _size = size;
+      this.size = size;
       if (pos < 0) {
-        _scale = 0;
-        _sizeAsInt = Integer.parseInt(_size.trim());
+        scale = 0;
+        sizeAsInt = Integer.parseInt(this.size.trim());
       } else {
-        _sizeAsInt = Integer.parseInt(size.substring(0, pos).trim());
-        _scale = Integer.parseInt(size.substring(pos + 1).trim());
+        sizeAsInt = Integer.parseInt(size.substring(0, pos).trim());
+        scale = Integer.parseInt(size.substring(pos + 1).trim());
       }
     } else {
-      _size = null;
-      _sizeAsInt = null;
-      _scale = 0;
+      this.size = null;
+      sizeAsInt = null;
+      scale = 0;
     }
   }
 
@@ -325,7 +325,7 @@ public class Column implements Serializable {
    * @return The size as an integer
    */
   public int getSizeAsInt() {
-    return _sizeAsInt == null ? 0 : _sizeAsInt;
+    return sizeAsInt == null ? 0 : sizeAsInt;
   }
 
   /**
@@ -334,7 +334,7 @@ public class Column implements Serializable {
    * @return The scale
    */
   public int getScale() {
-    return _scale;
+    return scale;
   }
 
   /**
@@ -353,11 +353,11 @@ public class Column implements Serializable {
    * @param scale The scale
    */
   public void setSizeAndScale(int size, int scale) {
-    _sizeAsInt = size;
-    _scale = scale;
-    _size = String.valueOf(size);
+    sizeAsInt = size;
+    this.scale = scale;
+    this.size = String.valueOf(size);
     if (scale > 0) {
-      _size += "," + _scale;
+      this.size += "," + this.scale;
     }
   }
 
@@ -376,8 +376,8 @@ public class Column implements Serializable {
    * @param precisionRadix The precision radix
    */
   public void setPrecisionRadix(int precisionRadix) {
-    _sizeAsInt = precisionRadix;
-    _size = String.valueOf(precisionRadix);
+    sizeAsInt = precisionRadix;
+    size = String.valueOf(precisionRadix);
   }
 
   /**
@@ -386,7 +386,7 @@ public class Column implements Serializable {
    * @return The default value
    */
   public String getDefaultValue() {
-    return _defaultValue;
+    return defaultValue;
   }
 
   /**
@@ -397,7 +397,7 @@ public class Column implements Serializable {
    * @param defaultValue The default value
    */
   public void setDefaultValue(String defaultValue) {
-    _defaultValue = defaultValue;
+    this.defaultValue = defaultValue;
   }
 
   /**
@@ -409,7 +409,7 @@ public class Column implements Serializable {
    */
   public Object getParsedDefaultValue() {
     try {
-      return JdbcUtils.parseValue(_defaultValue, _typeCode);
+      return JdbcUtils.parseValue(defaultValue, typeCode);
     } catch (Exception e) {
       return null;
     }
@@ -423,33 +423,33 @@ public class Column implements Serializable {
     if (obj instanceof Column) {
       Column other = (Column) obj;
       // Note that this compares case-sensitive
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
-      if (!Objects.equals(_primaryKey, other._primaryKey)) {
+      if (!Objects.equals(primaryKey, other.primaryKey)) {
         return false;
       }
-      if (!Objects.equals(_required, other._required)) {
+      if (!Objects.equals(required, other.required)) {
         return false;
       }
-      if (!Objects.equals(_autoIncrement, other._autoIncrement)) {
+      if (!Objects.equals(autoIncrement, other.autoIncrement)) {
         return false;
       }
-      if (!Objects.equals(_typeCode, other._typeCode)) {
+      if (!Objects.equals(typeCode, other.typeCode)) {
         return false;
       }
       if (!Objects.equals(getParsedDefaultValue(), other.getParsedDefaultValue())) {
         return false;
       }
       // comparing the size makes only sense for types where it is relevant
-      if (_typeCode == Types.NUMERIC || _typeCode == Types.DECIMAL) {
-        if (!Objects.equals(_size, other._size)) {
+      if (typeCode == Types.NUMERIC || typeCode == Types.DECIMAL) {
+        if (!Objects.equals(size, other.size)) {
           return false;
         }
-        return Objects.equals(_scale, other._scale);
-      } else if ((_typeCode == Types.CHAR) || (_typeCode == Types.VARCHAR) ||
-                 (_typeCode == Types.BINARY) || (_typeCode == Types.VARBINARY)) {
-        return Objects.equals(_size, other._size);
+        return Objects.equals(scale, other.scale);
+      } else if ((typeCode == Types.CHAR) || (typeCode == Types.VARCHAR) ||
+                 (typeCode == Types.BINARY) || (typeCode == Types.VARBINARY)) {
+        return Objects.equals(size, other.size);
       }
       return true;
     } else {
@@ -463,8 +463,8 @@ public class Column implements Serializable {
   @Override
 
   public int hashCode() {
-    return Objects.hash(_name, _primaryKey, _required, _autoIncrement, _typeCode, _type,
-                       _scale, getParsedDefaultValue(), TypeMap.isNumericType(_typeCode) ? null : _size);
+    return Objects.hash(name, primaryKey, required, autoIncrement, typeCode, type,
+      scale, getParsedDefaultValue(), TypeMap.isNumericType(typeCode) ? null : size);
   }
 
   /**

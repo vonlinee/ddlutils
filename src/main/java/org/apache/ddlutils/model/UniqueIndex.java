@@ -48,10 +48,8 @@ public class UniqueIndex extends IndexImplBase {
   @Override
   public Index getClone() throws ModelException {
     UniqueIndex result = new UniqueIndex();
-
-    result._name = _name;
-    result._columns = new ArrayList<>(_columns);
-
+    result.name = name;
+    result.columns = new ArrayList<>(columns);
     return result;
   }
 
@@ -62,10 +60,10 @@ public class UniqueIndex extends IndexImplBase {
   public boolean equals(Object obj) {
     if (obj instanceof UniqueIndex) {
       UniqueIndex other = (UniqueIndex) obj;
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
-      return Objects.equals(_columns, other._columns);
+      return Objects.equals(columns, other.columns);
     } else {
       return false;
     }
@@ -79,10 +77,10 @@ public class UniqueIndex extends IndexImplBase {
     if (other instanceof UniqueIndex) {
       UniqueIndex otherIndex = (UniqueIndex) other;
 
-      boolean checkName = (_name != null) && (!_name.isEmpty()) &&
-                          (otherIndex._name != null) && (!otherIndex._name.isEmpty());
+      boolean checkName = (name != null) && (!name.isEmpty()) &&
+                          (otherIndex.name != null) && (!otherIndex.name.isEmpty());
 
-      if ((!checkName || _name.equalsIgnoreCase(otherIndex._name)) &&
+      if ((!checkName || name.equalsIgnoreCase(otherIndex.name)) &&
           (getColumnCount() == otherIndex.getColumnCount())) {
         for (int idx = 0; idx < getColumnCount(); idx++) {
           if (!getColumn(idx).equalsIgnoreCase(otherIndex.getColumn(idx))) {
@@ -100,7 +98,7 @@ public class UniqueIndex extends IndexImplBase {
    */
   @Override
   public int hashCode() {
-    return _columns.hashCode();
+    return columns.hashCode();
   }
 
   /**

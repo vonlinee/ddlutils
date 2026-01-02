@@ -40,38 +40,38 @@ public class Table implements Serializable {
   /**
    * The columns in this table.
    */
-  private final ArrayList<Column> _columns = new ArrayList<>();
+  private final ArrayList<Column> columns = new ArrayList<>();
   /**
    * The foreign keys associated to this table.
    */
-  private final ArrayList<ForeignKey> _foreignKeys = new ArrayList<>();
+  private final ArrayList<ForeignKey> foreignKeys = new ArrayList<>();
   /**
    * The indices applied to this table.
    */
-  private final ArrayList<Index> _indices = new ArrayList<>();
+  private final ArrayList<Index> indices = new ArrayList<>();
   /**
    * The catalog of this table as read from the database.
    */
-  private String _catalog;
+  private String catalog;
   /**
    * The table's schema.
    */
-  private String _schema;
+  private String schema;
   /**
    * The name.
    */
-  private String _name;
+  private String name;
   /**
    * A description of the table.
    */
-  private String _description;
+  private String description;
 
   /**
    * The table's type as read from the database.
    *
    * @see TableType
    */
-  private String _type;
+  private String type;
 
   /**
    * Returns the catalog of this table as read from the database.
@@ -79,7 +79,7 @@ public class Table implements Serializable {
    * @return The catalog
    */
   public String getCatalog() {
-    return _catalog;
+    return catalog;
   }
 
   /**
@@ -88,7 +88,7 @@ public class Table implements Serializable {
    * @param catalog The catalog
    */
   public void setCatalog(String catalog) {
-    _catalog = catalog;
+    this.catalog = catalog;
   }
 
   /**
@@ -97,7 +97,7 @@ public class Table implements Serializable {
    * @return The schema
    */
   public String getSchema() {
-    return _schema;
+    return schema;
   }
 
   /**
@@ -106,7 +106,7 @@ public class Table implements Serializable {
    * @param schema The schema
    */
   public void setSchema(String schema) {
-    _schema = schema;
+    this.schema = schema;
   }
 
   /**
@@ -115,7 +115,7 @@ public class Table implements Serializable {
    * @return The type
    */
   public String getType() {
-    return _type;
+    return type;
   }
 
   /**
@@ -124,7 +124,7 @@ public class Table implements Serializable {
    * @param type The type
    */
   public void setType(String type) {
-    _type = type;
+    this.type = type;
   }
 
   /**
@@ -133,7 +133,7 @@ public class Table implements Serializable {
    * @return The name
    */
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -142,7 +142,7 @@ public class Table implements Serializable {
    * @param name The name
    */
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -151,7 +151,7 @@ public class Table implements Serializable {
    * @return The description
    */
   public String getDescription() {
-    return _description;
+    return description;
   }
 
   /**
@@ -160,7 +160,7 @@ public class Table implements Serializable {
    * @param description The description
    */
   public void setDescription(String description) {
-    _description = description;
+    this.description = description;
   }
 
   /**
@@ -169,7 +169,7 @@ public class Table implements Serializable {
    * @return The number of columns
    */
   public int getColumnCount() {
-    return _columns.size();
+    return columns.size();
   }
 
   /**
@@ -179,7 +179,7 @@ public class Table implements Serializable {
    * @return The column at this position
    */
   public Column getColumn(int idx) {
-    return _columns.get(idx);
+    return columns.get(idx);
   }
 
   /**
@@ -188,7 +188,7 @@ public class Table implements Serializable {
    * @return The columns
    */
   public Column[] getColumns() {
-    return _columns.toArray(new Column[0]);
+    return columns.toArray(new Column[0]);
   }
 
   /**
@@ -198,7 +198,7 @@ public class Table implements Serializable {
    */
   public void addColumn(Column column) {
     if (column != null) {
-      _columns.add(column);
+      columns.add(column);
     }
   }
 
@@ -210,7 +210,7 @@ public class Table implements Serializable {
    */
   public void addColumn(int idx, Column column) {
     if (column != null) {
-      _columns.add(idx, column);
+      columns.add(idx, column);
     }
   }
 
@@ -224,9 +224,9 @@ public class Table implements Serializable {
   public void addColumn(Column previousColumn, Column column) {
     if (column != null) {
       if (previousColumn == null) {
-        _columns.add(0, column);
+        columns.add(0, column);
       } else {
-        _columns.add(_columns.indexOf(previousColumn), column);
+        columns.add(columns.indexOf(previousColumn), column);
       }
     }
   }
@@ -249,7 +249,7 @@ public class Table implements Serializable {
    */
   public void removeColumn(Column column) {
     if (column != null) {
-      _columns.remove(column);
+      columns.remove(column);
     }
   }
 
@@ -259,7 +259,7 @@ public class Table implements Serializable {
    * an illegal state.
    */
   public void removeAllColumns() {
-    _columns.clear();
+    columns.clear();
   }
 
   /**
@@ -268,7 +268,7 @@ public class Table implements Serializable {
    * @param idx The index of the column to remove
    */
   public void removeColumn(int idx) {
-    _columns.remove(idx);
+    columns.remove(idx);
   }
 
   /**
@@ -277,7 +277,7 @@ public class Table implements Serializable {
    * @return The number of foreign keys
    */
   public int getForeignKeyCount() {
-    return _foreignKeys.size();
+    return foreignKeys.size();
   }
 
   /**
@@ -287,7 +287,7 @@ public class Table implements Serializable {
    * @return The foreign key
    */
   public ForeignKey getForeignKey(int idx) {
-    return _foreignKeys.get(idx);
+    return foreignKeys.get(idx);
   }
 
   /**
@@ -296,7 +296,7 @@ public class Table implements Serializable {
    * @return The foreign keys
    */
   public ForeignKey[] getForeignKeys() {
-    return _foreignKeys.toArray(new ForeignKey[0]);
+    return foreignKeys.toArray(new ForeignKey[0]);
   }
 
   /**
@@ -306,7 +306,7 @@ public class Table implements Serializable {
    */
   public void addForeignKey(ForeignKey foreignKey) {
     if (foreignKey != null) {
-      _foreignKeys.add(foreignKey);
+      foreignKeys.add(foreignKey);
     }
   }
 
@@ -318,7 +318,7 @@ public class Table implements Serializable {
    */
   public void addForeignKey(int idx, ForeignKey foreignKey) {
     if (foreignKey != null) {
-      _foreignKeys.add(idx, foreignKey);
+      foreignKeys.add(idx, foreignKey);
     }
   }
 
@@ -337,7 +337,7 @@ public class Table implements Serializable {
    * Removes all foreign keys.
    */
   public void removeAllForeignKeys() {
-    _foreignKeys.clear();
+    foreignKeys.clear();
   }
 
   /**
@@ -347,7 +347,7 @@ public class Table implements Serializable {
    */
   public void removeForeignKey(ForeignKey foreignKey) {
     if (foreignKey != null) {
-      _foreignKeys.remove(foreignKey);
+      foreignKeys.remove(foreignKey);
     }
   }
 
@@ -357,7 +357,7 @@ public class Table implements Serializable {
    * @param idx The index of the foreign key to remove
    */
   public void removeForeignKey(int idx) {
-    _foreignKeys.remove(idx);
+    foreignKeys.remove(idx);
   }
 
   /**
@@ -366,7 +366,7 @@ public class Table implements Serializable {
    * @return The number of indices
    */
   public int getIndexCount() {
-    return _indices.size();
+    return indices.size();
   }
 
   /**
@@ -376,7 +376,7 @@ public class Table implements Serializable {
    * @return The index
    */
   public Index getIndex(int idx) {
-    return _indices.get(idx);
+    return indices.get(idx);
   }
 
   /**
@@ -386,7 +386,7 @@ public class Table implements Serializable {
    */
   public void addIndex(Index index) {
     if (index != null) {
-      _indices.add(index);
+      indices.add(index);
     }
   }
 
@@ -398,7 +398,7 @@ public class Table implements Serializable {
    */
   public void addIndex(int idx, Index index) {
     if (index != null) {
-      _indices.add(idx, index);
+      indices.add(idx, index);
     }
   }
 
@@ -419,7 +419,7 @@ public class Table implements Serializable {
    * @return The indices
    */
   public Index[] getIndices() {
-    return _indices.toArray(new Index[0]);
+    return indices.toArray(new Index[0]);
   }
 
   /**
@@ -428,7 +428,7 @@ public class Table implements Serializable {
    * @return The unique indices
    */
   public Index[] getNonUniqueIndices() {
-    return _indices.stream().filter(index -> !index.isUnique()).toArray(Index[]::new);
+    return indices.stream().filter(index -> !index.isUnique()).toArray(Index[]::new);
   }
 
   /**
@@ -437,7 +437,7 @@ public class Table implements Serializable {
    * @return The unique indices
    */
   public Index[] getUniqueIndices() {
-    return _indices.stream().filter(Index::isUnique).toArray(Index[]::new);
+    return indices.stream().filter(Index::isUnique).toArray(Index[]::new);
   }
 
   /**
@@ -447,7 +447,7 @@ public class Table implements Serializable {
    */
   public void removeIndex(Index index) {
     if (index != null) {
-      _indices.remove(index);
+      indices.remove(index);
     }
   }
 
@@ -457,7 +457,7 @@ public class Table implements Serializable {
    * @param idx The position of the index to remove
    */
   public void removeIndex(int idx) {
-    _indices.remove(idx);
+    indices.remove(idx);
   }
 
   // Helper methods
@@ -469,7 +469,7 @@ public class Table implements Serializable {
    * @return <code>true</code> if there are one or more primary key columns
    */
   public boolean hasPrimaryKey() {
-    for (Column column : _columns) {
+    for (Column column : columns) {
       if (column.isPrimaryKey()) {
         return true;
       }
@@ -499,7 +499,7 @@ public class Table implements Serializable {
    * @return The column or <code>null</code> if there is no such column
    */
   public Column findColumn(String name, boolean caseSensitive) {
-    for (Column column : _columns) {
+    for (Column column : columns) {
       if (caseSensitive) {
         if (column.getName().equals(name)) {
           return column;
@@ -522,7 +522,7 @@ public class Table implements Serializable {
   public int getColumnIndex(Column column) {
     int idx = 0;
 
-    for (Iterator<Column> it = _columns.iterator(); it.hasNext(); idx++) {
+    for (Iterator<Column> it = columns.iterator(); it.hasNext(); idx++) {
       if (column == it.next()) {
         return idx;
       }
@@ -662,7 +662,7 @@ public class Table implements Serializable {
    * @return The primary key columns
    */
   public Column[] getPrimaryKeyColumns() {
-    return _columns.stream().filter(Column::isPrimaryKey).toArray(Column[]::new);
+    return columns.stream().filter(Column::isPrimaryKey).toArray(Column[]::new);
   }
 
   /**
@@ -688,7 +688,7 @@ public class Table implements Serializable {
    * @return The auto increment columns
    */
   public Column[] getAutoIncrementColumns() {
-    return _columns.stream().filter(Column::isAutoIncrement).toArray(Column[]::new);
+    return columns.stream().filter(Column::isAutoIncrement).toArray(Column[]::new);
   }
 
   /**
@@ -698,7 +698,7 @@ public class Table implements Serializable {
    * @return The required columns
    */
   public Column[] getRequiredColumns() {
-    return _columns.stream().filter(Column::isRequired).toArray(Column[]::new);
+    return columns.stream().filter(Column::isRequired).toArray(Column[]::new);
   }
 
   /**
@@ -707,8 +707,8 @@ public class Table implements Serializable {
    * @param caseSensitive Whether case matters
    */
   public void sortForeignKeys(final boolean caseSensitive) {
-    if (!_foreignKeys.isEmpty()) {
-      CollectionUtils.sortString(_foreignKeys, ForeignKey::getName, caseSensitive);
+    if (!foreignKeys.isEmpty()) {
+      CollectionUtils.sortString(foreignKeys, ForeignKey::getName, caseSensitive);
     }
   }
 
@@ -721,16 +721,16 @@ public class Table implements Serializable {
       // Note that this compares case-sensitive
       // TODO: For now we ignore catalog and schema (type should be irrelevant anyways)
       Table other = (Table) obj;
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
-      if (!Objects.equals(_columns, other._columns)) {
+      if (!Objects.equals(columns, other.columns)) {
         return false;
       }
-      if (!Objects.equals(_foreignKeys, other._foreignKeys)) {
+      if (!Objects.equals(foreignKeys, other.foreignKeys)) {
         return false;
       }
-      return Objects.equals(_indices, other._indices);
+      return Objects.equals(indices, other.indices);
     } else {
       return false;
     }
@@ -742,7 +742,7 @@ public class Table implements Serializable {
   @Override
   public int hashCode() {
     // TODO: For now we ignore catalog and schema (type should be irrelevant anyways)
-    return Objects.hash(_name, _columns, _foreignKeys, _indices);
+    return Objects.hash(name, columns, foreignKeys, indices);
   }
 
   /**

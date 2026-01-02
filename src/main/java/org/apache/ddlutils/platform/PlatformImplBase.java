@@ -59,55 +59,55 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   /**
    * The log for this platform.
    */
-  private final Log _log = LogFactory.getLog(getClass());
+  private final Log log = LogFactory.getLog(getClass());
 
   /**
    * The platform info.
    */
-  private final PlatformInfo _info = new PlatformInfo();
+  private final PlatformInfo info = new PlatformInfo();
   /**
    * The SQL builder for this platform.
    */
-  private SqlBuilder _builder;
+  private SqlBuilder builder;
   /**
    * The model reader for this platform.
    */
-  private JdbcModelReader _modelReader;
+  private JdbcModelReader modelReader;
   /**
    * Whether script mode is on.
    */
-  private boolean _scriptModeOn;
+  private boolean scriptModeOn;
   /**
    * Whether SQL comments are generated or not.
    */
-  private boolean _sqlCommentsOn = true;
+  private boolean sqlCommentsOn = true;
   /**
    * Whether delimited identifiers are used or not.
    */
-  private boolean _delimitedIdentifierModeOn;
+  private boolean delimitedIdentifierModeOn;
   /**
    * Whether identity override is enabled.
    */
-  private boolean _identityOverrideOn;
+  private boolean identityOverrideOn;
   /**
    * Whether read foreign keys shall be sorted alphabetically.
    */
-  private boolean _foreignKeysSorted;
+  private boolean foreignKeysSorted;
   /**
    * Whether to use the default ON UPDATE action if the specified one is unsupported.
    */
-  private boolean _useDefaultOnUpdateActionIfUnsupported = true;
+  private boolean useDefaultOnUpdateActionIfUnsupported = true;
   /**
    * Whether to use the default ON DELETE action if the specified one is unsupported.
    */
-  private boolean _useDefaultOnDeleteActionIfUnsupported = true;
+  private boolean useDefaultOnDeleteActionIfUnsupported = true;
 
   /**
    * {@inheritDoc}
    */
   @Override
   public SqlBuilder getSqlBuilder() {
-    return _builder;
+    return builder;
   }
 
   /**
@@ -116,7 +116,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param builder The SQL builder
    */
   protected void setSqlBuilder(SqlBuilder builder) {
-    _builder = builder;
+    this.builder = builder;
   }
 
   /**
@@ -124,10 +124,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public JdbcModelReader getModelReader() {
-    if (_modelReader == null) {
-      _modelReader = new JdbcModelReader(this);
+    if (modelReader == null) {
+      modelReader = new JdbcModelReader(this);
     }
-    return _modelReader;
+    return modelReader;
   }
 
   /**
@@ -136,7 +136,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @param modelReader The model reader
    */
   protected void setModelReader(JdbcModelReader modelReader) {
-    _modelReader = modelReader;
+    this.modelReader = modelReader;
   }
 
   /**
@@ -144,7 +144,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public PlatformInfo getPlatformInfo() {
-    return _info;
+    return info;
   }
 
   /**
@@ -152,7 +152,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isScriptModeOn() {
-    return _scriptModeOn;
+    return scriptModeOn;
   }
 
   /**
@@ -160,7 +160,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void setScriptModeOn(boolean scriptModeOn) {
-    _scriptModeOn = scriptModeOn;
+    this.scriptModeOn = scriptModeOn;
   }
 
   /**
@@ -168,7 +168,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isSqlCommentsOn() {
-    return _sqlCommentsOn;
+    return sqlCommentsOn;
   }
 
   /**
@@ -179,7 +179,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     if (!getPlatformInfo().isSqlCommentsSupported() && sqlCommentsOn) {
       throw new DdlUtilsException("Platform " + getName() + " does not support SQL comments");
     }
-    _sqlCommentsOn = sqlCommentsOn;
+    this.sqlCommentsOn = sqlCommentsOn;
   }
 
   /**
@@ -187,7 +187,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isDelimitedIdentifierModeOn() {
-    return _delimitedIdentifierModeOn;
+    return delimitedIdentifierModeOn;
   }
 
   /**
@@ -198,7 +198,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     if (!getPlatformInfo().isDelimitedIdentifiersSupported() && delimitedIdentifierModeOn) {
       throw new DdlUtilsException("Platform " + getName() + " does not support delimited identifier");
     }
-    _delimitedIdentifierModeOn = delimitedIdentifierModeOn;
+    this.delimitedIdentifierModeOn = delimitedIdentifierModeOn;
   }
 
   /**
@@ -206,7 +206,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isIdentityOverrideOn() {
-    return _identityOverrideOn;
+    return identityOverrideOn;
   }
 
   /**
@@ -214,7 +214,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void setIdentityOverrideOn(boolean identityOverrideOn) {
-    _identityOverrideOn = identityOverrideOn;
+    this.identityOverrideOn = identityOverrideOn;
   }
 
   /**
@@ -222,7 +222,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isForeignKeysSorted() {
-    return _foreignKeysSorted;
+    return foreignKeysSorted;
   }
 
   /**
@@ -230,7 +230,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void setForeignKeysSorted(boolean foreignKeysSorted) {
-    _foreignKeysSorted = foreignKeysSorted;
+    this.foreignKeysSorted = foreignKeysSorted;
   }
 
   /**
@@ -238,7 +238,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isDefaultOnUpdateActionUsedIfUnsupported() {
-    return _useDefaultOnUpdateActionIfUnsupported;
+    return useDefaultOnUpdateActionIfUnsupported;
   }
 
   /**
@@ -246,7 +246,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void setDefaultOnUpdateActionUsedIfUnsupported(boolean useDefault) {
-    _useDefaultOnUpdateActionIfUnsupported = useDefault;
+    useDefaultOnUpdateActionIfUnsupported = useDefault;
   }
 
   /**
@@ -254,7 +254,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public boolean isDefaultOnDeleteActionUsedIfUnsupported() {
-    return _useDefaultOnDeleteActionIfUnsupported;
+    return useDefaultOnDeleteActionIfUnsupported;
   }
 
   /**
@@ -262,7 +262,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    */
   @Override
   public void setDefaultOnDeleteActionUsedIfUnsupported(boolean useDefault) {
-    _useDefaultOnDeleteActionIfUnsupported = useDefault;
+    useDefaultOnDeleteActionIfUnsupported = useDefault;
   }
 
   /**
@@ -271,7 +271,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @return The log
    */
   protected Log getLog() {
-    return _log;
+    return log;
   }
 
   /**
@@ -330,22 +330,22 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
         commandCount++;
 
-        if (_log.isDebugEnabled()) {
-          _log.debug("About to execute SQL " + command);
+        if (log.isDebugEnabled()) {
+          log.debug("About to execute SQL " + command);
         }
         try {
           int results = statement.executeUpdate(command);
 
-          if (_log.isDebugEnabled()) {
-            _log.debug("After execution, " + results + " row(s) have been changed");
+          if (log.isDebugEnabled()) {
+            log.debug("After execution, " + results + " row(s) have been changed");
           }
         } catch (SQLException ex) {
           if (continueOnError) {
             // Since the user decided to ignore this error, we log the error
             // on level warn, and the exception itself on level debug
-            _log.warn("SQL Command " + command + " failed with: " + ex.getMessage());
-            if (_log.isDebugEnabled()) {
-              _log.debug(ex);
+            log.warn("SQL Command " + command + " failed with: " + ex.getMessage());
+            if (log.isDebugEnabled()) {
+              log.debug(ex);
             }
             errors++;
           } else {
@@ -357,12 +357,12 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         SQLWarning warning = connection.getWarnings();
 
         while (warning != null) {
-          _log.warn(warning.toString());
+          log.warn(warning.toString());
           warning = warning.getNextWarning();
         }
         connection.clearWarnings();
       }
-      _log.info("Executed " + commandCount + " SQL command(s) with " + errors + " error(s)");
+      log.info("Executed " + commandCount + " SQL command(s) with " + errors + " error(s)");
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while executing SQL", ex);
     } finally {
@@ -1304,8 +1304,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         if (addColumnChange.getNewColumn().isRequired() &&
             !addColumnChange.getNewColumn().isAutoIncrement() &&
             (addColumnChange.getNewColumn().getDefaultValue() == null)) {
-          _log.warn("Data cannot be retained in table " + change.getChangedTable() +
-                    " because of the addition of the required column " + addColumnChange.getNewColumn().getName());
+          log.warn("Data cannot be retained in table " + change.getChangedTable() +
+                   " because of the addition of the required column " + addColumnChange.getNewColumn().getName());
           canMigrateData = false;
         }
       }
@@ -1599,7 +1599,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
   protected String createSelectLastInsertIdSql(Database model, SqlDynaClass dynaClass) {
     Table table = model.findTable(dynaClass.getTableName());
 
-    return _builder.getSelectLastIdentityValues(table);
+    return builder.getSelectLastIdentityValues(table);
   }
 
   /**
@@ -1611,7 +1611,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     SqlDynaProperty[] properties = dynaClass.getSqlDynaProperties();
 
     if (properties.length == 0) {
-      _log.info("Cannot insert instances of type " + dynaClass + " because it has no properties");
+      log.info("Cannot insert instances of type " + dynaClass + " because it has no properties");
       return null;
     }
 
@@ -1686,20 +1686,20 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     Column[] autoIncrColumns = getRelevantIdentityColumns(model, dynaClass, dynaBean);
 
     if ((properties.length == 0) && (autoIncrColumns.length == 0)) {
-      _log.warn("Cannot insert instances of type " + dynaClass + " because it has no usable properties");
+      log.warn("Cannot insert instances of type " + dynaClass + " because it has no usable properties");
       return;
     }
 
     String insertSql = createInsertSql(model, dynaClass, properties, null);
     String queryIdentitySql = null;
 
-    if (_log.isDebugEnabled()) {
-      _log.debug("About to execute SQL: " + insertSql);
+    if (log.isDebugEnabled()) {
+      log.debug("About to execute SQL: " + insertSql);
     }
 
     if (autoIncrColumns.length > 0) {
       if (!getPlatformInfo().isLastIdentityValueReadable()) {
-        _log.warn("The database does not support querying for auto-generated column values");
+        log.warn("The database does not support querying for auto-generated column values");
       } else {
         queryIdentitySql = createSelectLastInsertIdSql(model, dynaClass);
       }
@@ -1721,9 +1721,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       afterInsert(connection, dynaClass.getTable());
 
       if (count != 1) {
-        _log.warn("Attempted to insert a single row " + dynaBean +
-                  " in table " + dynaClass.getTableName() +
-                  " but changed " + count + " row(s)");
+        log.warn("Attempted to insert a single row " + dynaBean +
+                 " in table " + dynaClass.getTableName() +
+                 " but changed " + count + " row(s)");
       }
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while inserting into the database: " + ex.getMessage(), ex);
@@ -1822,19 +1822,19 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         properties = getPropertiesForInsertion(model, curDynaClass, dynaBean);
 
         if (properties.length == 0) {
-          _log.warn("Cannot insert instances of type " + dynaClass + " because it has no usable properties");
+          log.warn("Cannot insert instances of type " + dynaClass + " because it has no usable properties");
           continue;
         }
         if (!identityWarningPrinted &&
             (getRelevantIdentityColumns(model, curDynaClass, dynaBean).length > 0)) {
-          _log.warn("Updating the bean properties corresponding to auto-increment columns is not supported in batch mode");
+          log.warn("Updating the bean properties corresponding to auto-increment columns is not supported in batch mode");
           identityWarningPrinted = true;
         }
 
         String insertSql = createInsertSql(model, dynaClass, properties, null);
 
-        if (_log.isDebugEnabled()) {
-          _log.debug("Starting new batch with SQL: " + insertSql);
+        if (log.isDebugEnabled()) {
+          log.debug("Starting new batch with SQL: " + insertSql);
         }
         try {
           statement = connection.prepareStatement(insertSql);
@@ -1887,16 +1887,16 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           if (results[idx] < 0) {
             hasSum = false;
             if (results[idx] == Statement.EXECUTE_FAILED) {
-              _log.warn("The batch insertion of row " + idx + " into table " + table.getName() + " failed but the driver is able to continue processing");
+              log.warn("The batch insertion of row " + idx + " into table " + table.getName() + " failed but the driver is able to continue processing");
             } else if (results[idx] != Statement.SUCCESS_NO_INFO) {
-              _log.warn("The batch insertion of row " + idx + " into table " + table.getName() + " returned an undefined status value " + results[idx]);
+              log.warn("The batch insertion of row " + idx + " into table " + table.getName() + " returned an undefined status value " + results[idx]);
             }
           } else {
             sum += results[idx];
           }
         }
         if (hasSum && (sum != numRows)) {
-          _log.warn("Attempted to insert " + numRows + " rows into table " + table.getName() + " but changed " + sum + " rows");
+          log.warn("Attempted to insert " + numRows + " rows into table " + table.getName() + " but changed " + sum + " rows");
         }
       } catch (SQLException ex) {
         if (ex instanceof BatchUpdateException) {
@@ -1962,7 +1962,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
     columnValues.putAll(toColumnValues(primaryKeys, bean));
 
-    return _builder.getUpdateSql(table, columnValues, bean == null);
+    return builder.getUpdateSql(table, columnValues, bean == null);
   }
 
   /**
@@ -1984,10 +1984,10 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     HashMap<String, Object> newColumnValues = toColumnValues(properties, newBean);
 
     if (primaryKeys.length == 0) {
-      _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
+      log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return null;
     } else {
-      return _builder.getUpdateSql(table, oldColumnValues, newColumnValues, newBean == null);
+      return builder.getUpdateSql(table, oldColumnValues, newColumnValues, newBean == null);
     }
   }
 
@@ -2001,7 +2001,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     SqlDynaProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
-      _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
+      log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return null;
     } else {
       return createUpdateSql(model, dynaClass, primaryKeys, nonPrimaryKeys, dynaBean);
@@ -2018,7 +2018,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     SqlDynaProperty[] nonPrimaryKeys = dynaClass.getNonPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
-      _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
+      log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return null;
     } else {
       return createUpdateSql(model, dynaClass, primaryKeys, nonPrimaryKeys, oldDynaBean, newDynaBean);
@@ -2034,7 +2034,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     SqlDynaProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
-      _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
+      log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return;
     }
 
@@ -2042,8 +2042,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     String sql = createUpdateSql(model, dynaClass, primaryKeys, properties, null);
     PreparedStatement statement = null;
 
-    if (_log.isDebugEnabled()) {
-      _log.debug("About to execute SQL: " + sql);
+    if (log.isDebugEnabled()) {
+      log.debug("About to execute SQL: " + sql);
     }
     try {
       beforeUpdate(connection, dynaClass.getTable());
@@ -2064,9 +2064,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       afterUpdate(connection, dynaClass.getTable());
 
       if (count != 1) {
-        _log.warn("Attempted to insert a single row " + dynaBean +
-                  " into table " + dynaClass.getTableName() +
-                  " but changed " + count + " row(s)");
+        log.warn("Attempted to insert a single row " + dynaBean +
+                 " into table " + dynaClass.getTableName() +
+                 " but changed " + count + " row(s)");
       }
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while updating in the database", ex);
@@ -2101,7 +2101,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       throw new DatabaseOperationException("The old and new dyna beans need to be for the same table");
     }
     if (primaryKeys.length == 0) {
-      _log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
+      log.info("Cannot update instances of type " + dynaClass + " because it has no primary keys");
       return;
     }
 
@@ -2109,8 +2109,8 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     String sql = createUpdateSql(model, dynaClass, primaryKeys, properties, null, null);
     PreparedStatement statement = null;
 
-    if (_log.isDebugEnabled()) {
-      _log.debug("About to execute SQL: " + sql);
+    if (log.isDebugEnabled()) {
+      log.debug("About to execute SQL: " + sql);
     }
     try {
       beforeUpdate(connection, dynaClass.getTable());
@@ -2131,9 +2131,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       afterUpdate(connection, dynaClass.getTable());
 
       if (count != 1) {
-        _log.warn("Attempted to insert a single row " + newDynaBean +
-                  " into table " + dynaClass.getTableName() +
-                  " but changed " + count + " row(s)");
+        log.warn("Attempted to insert a single row " + newDynaBean +
+                 " into table " + dynaClass.getTableName() +
+                 " but changed " + count + " row(s)");
       }
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while updating in the database", ex);
@@ -2209,7 +2209,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       StringBuilder sql = new StringBuilder();
 
       sql.append("SELECT * FROM ");
-      sql.append(_builder.getDelimitedIdentifier(dynaClass.getTable().getName()));
+      sql.append(builder.getDelimitedIdentifier(dynaClass.getTable().getName()));
       sql.append(" WHERE ");
 
       for (int idx = 0; idx < primaryKeys.length; idx++) {
@@ -2218,7 +2218,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
         if (idx > 0) {
           sql.append(" AND ");
         }
-        sql.append(_builder.getDelimitedIdentifier(key));
+        sql.append(builder.getDelimitedIdentifier(key));
         sql.append("=?");
       }
 
@@ -2279,7 +2279,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     Table table = model.findTable(dynaClass.getTableName());
     HashMap<String, Object> pkValues = toColumnValues(primaryKeys, bean);
 
-    return _builder.getDeleteSql(table, pkValues, bean == null);
+    return builder.getDeleteSql(table, pkValues, bean == null);
   }
 
   /**
@@ -2291,7 +2291,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
     SqlDynaProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
     if (primaryKeys.length == 0) {
-      _log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
+      log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
       return null;
     } else {
       return createDeleteSql(model, dynaClass, primaryKeys, dynaBean);
@@ -2324,14 +2324,14 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       SqlDynaProperty[] primaryKeys = dynaClass.getPrimaryKeyProperties();
 
       if (primaryKeys.length == 0) {
-        _log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
+        log.warn("Cannot delete instances of type " + dynaClass + " because it has no primary keys");
         return;
       }
 
       String sql = createDeleteSql(model, dynaClass, primaryKeys, null);
 
-      if (_log.isDebugEnabled()) {
-        _log.debug("About to execute SQL " + sql);
+      if (log.isDebugEnabled()) {
+        log.debug("About to execute SQL " + sql);
       }
 
       statement = connection.prepareStatement(sql);
@@ -2343,9 +2343,9 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       int count = statement.executeUpdate();
 
       if (count != 1) {
-        _log.warn("Attempted to delete a single row " + dynaBean +
-                  " in table " + dynaClass.getTableName() +
-                  " but changed " + count + " row(s).");
+        log.warn("Attempted to delete a single row " + dynaBean +
+                 " in table " + dynaClass.getTableName() +
+                 " but changed " + count + " row(s).");
       }
     } catch (SQLException ex) {
       throw new DatabaseOperationException("Error while deleting from the database", ex);

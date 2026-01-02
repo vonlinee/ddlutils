@@ -39,19 +39,19 @@ public class DatabaseMetaDataWrapper {
   /**
    * The database metadata.
    */
-  private DatabaseMetaData _metaData;
+  private DatabaseMetaData metaData;
   /**
    * The catalog to access in the database.
    */
-  private String _catalog;
+  private String catalog;
   /**
    * The schema(s) to access in the database.
    */
-  private String _schemaPattern;
+  private String schemaPattern;
   /**
    * The table types to process.
    */
-  private String[] _tableTypes;
+  private String[] tableTypes;
 
   /**
    * Returns the database metadata.
@@ -59,7 +59,7 @@ public class DatabaseMetaDataWrapper {
    * @return The metadata
    */
   public DatabaseMetaData getMetaData() {
-    return _metaData;
+    return metaData;
   }
 
   /**
@@ -68,7 +68,7 @@ public class DatabaseMetaDataWrapper {
    * @param metaData The metadata
    */
   public void setMetaData(DatabaseMetaData metaData) {
-    _metaData = metaData;
+    this.metaData = metaData;
   }
 
   /**
@@ -77,7 +77,7 @@ public class DatabaseMetaDataWrapper {
    * @return The catalog
    */
   public String getCatalog() {
-    return _catalog;
+    return catalog;
   }
 
   /**
@@ -86,7 +86,7 @@ public class DatabaseMetaDataWrapper {
    * @param catalog The catalog
    */
   public void setCatalog(String catalog) {
-    _catalog = catalog;
+    this.catalog = catalog;
   }
 
   /**
@@ -95,7 +95,7 @@ public class DatabaseMetaDataWrapper {
    * @return The schema
    */
   public String getSchemaPattern() {
-    return _schemaPattern;
+    return schemaPattern;
   }
 
   /**
@@ -104,7 +104,7 @@ public class DatabaseMetaDataWrapper {
    * @param schema The schema
    */
   public void setSchemaPattern(String schema) {
-    _schemaPattern = schema;
+    schemaPattern = schema;
   }
 
   /**
@@ -113,7 +113,7 @@ public class DatabaseMetaDataWrapper {
    * @return The table types
    */
   public String[] getTableTypes() {
-    return ObjectUtils.cloneStringArray(_tableTypes);
+    return ObjectUtils.cloneStringArray(tableTypes);
   }
 
   /**
@@ -122,7 +122,7 @@ public class DatabaseMetaDataWrapper {
    * @param types The table types
    */
   public void setTableTypes(String[] types) {
-    this._tableTypes = ObjectUtils.cloneStringArray(types);
+    this.tableTypes = ObjectUtils.cloneStringArray(types);
   }
 
   /**
@@ -227,6 +227,6 @@ public class DatabaseMetaDataWrapper {
   }
 
   public Connection getConnection() throws SQLException {
-    return _metaData.getConnection();
+    return metaData.getConnection();
   }
 }

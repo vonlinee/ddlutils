@@ -45,23 +45,23 @@ public class Database implements Serializable {
   /**
    * The tables.
    */
-  private final ArrayList<Table> _tables = new ArrayList<>();
+  private final ArrayList<Table> tables = new ArrayList<>();
   /**
    * The name of the database model.
    */
-  private String _name;
+  private String name;
   /**
    * The method for generating primary keys (currently ignored).
    */
-  private String _idMethod;
+  private String idMethod;
   /**
    * The version of the model.
    */
-  private String _version;
+  private String version;
   /**
    * The dyna class cache for this model.
    */
-  private transient DynaClassCache _dynaClassCache = null;
+  private transient DynaClassCache dynaClassCache = null;
 
   /**
    * Creates an empty model without a name.
@@ -75,7 +75,7 @@ public class Database implements Serializable {
    * @param name The name
    */
   public Database(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -115,7 +115,7 @@ public class Database implements Serializable {
    * @return The name
    */
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -124,7 +124,7 @@ public class Database implements Serializable {
    * @param name The name
    */
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -133,7 +133,7 @@ public class Database implements Serializable {
    * @return The version
    */
   public String getVersion() {
-    return _version;
+    return version;
   }
 
   /**
@@ -142,7 +142,7 @@ public class Database implements Serializable {
    * @param version The version
    */
   public void setVersion(String version) {
-    _version = version;
+    this.version = version;
   }
 
   /**
@@ -151,7 +151,7 @@ public class Database implements Serializable {
    * @return The method
    */
   public String getIdMethod() {
-    return _idMethod;
+    return idMethod;
   }
 
   /**
@@ -161,7 +161,7 @@ public class Database implements Serializable {
    * @param idMethod The method
    */
   public void setIdMethod(String idMethod) {
-    _idMethod = idMethod;
+    this.idMethod = idMethod;
   }
 
   /**
@@ -170,7 +170,7 @@ public class Database implements Serializable {
    * @return The number of tables
    */
   public int getTableCount() {
-    return _tables.size();
+    return tables.size();
   }
 
   /**
@@ -179,7 +179,7 @@ public class Database implements Serializable {
    * @return The tables
    */
   public Table[] getTables() {
-    return _tables.toArray(new Table[0]);
+    return tables.toArray(new Table[0]);
   }
 
   /**
@@ -189,7 +189,7 @@ public class Database implements Serializable {
    * @return The table
    */
   public Table getTable(int idx) {
-    return _tables.get(idx);
+    return tables.get(idx);
   }
 
   /**
@@ -199,7 +199,7 @@ public class Database implements Serializable {
    */
   public void addTable(Table table) {
     if (table != null) {
-      _tables.add(table);
+      tables.add(table);
     }
   }
 
@@ -211,7 +211,7 @@ public class Database implements Serializable {
    */
   public void addTable(int idx, Table table) {
     if (table != null) {
-      _tables.add(idx, table);
+      tables.add(idx, table);
     }
   }
 
@@ -233,7 +233,7 @@ public class Database implements Serializable {
    */
   public void removeTable(Table table) {
     if (table != null) {
-      _tables.remove(table);
+      tables.remove(table);
     }
   }
 
@@ -243,7 +243,7 @@ public class Database implements Serializable {
    * @param idx The index of the table to remove
    */
   public void removeTable(int idx) {
-    _tables.remove(idx);
+    tables.remove(idx);
   }
 
   /**
@@ -252,7 +252,7 @@ public class Database implements Serializable {
    * @param tables The tables to remove
    */
   public void removeTables(Table[] tables) {
-    _tables.removeAll(Arrays.asList(tables));
+    this.tables.removeAll(Arrays.asList(tables));
   }
 
   /**
@@ -262,9 +262,9 @@ public class Database implements Serializable {
    * @param tables The tables to keep
    */
   public void removeAllTablesExcept(Table[] tables) {
-    ArrayList<Table> allTables = new ArrayList<>(_tables);
+    ArrayList<Table> allTables = new ArrayList<>(this.tables);
     allTables.removeAll(Arrays.asList(tables));
-    _tables.removeAll(allTables);
+    this.tables.removeAll(allTables);
   }
 
   // Helper methods
@@ -290,7 +290,7 @@ public class Database implements Serializable {
       throw new ModelException("The database model has no name");
     }
 
-    for (Iterator<Table> tableIt = _tables.iterator(); tableIt.hasNext(); tableIdx++) {
+    for (Iterator<Table> tableIt = tables.iterator(); tableIt.hasNext(); tableIdx++) {
       Table curTable = tableIt.next();
 
       if ((curTable.getName() == null) || (curTable.getName().isEmpty())) {
@@ -424,7 +424,7 @@ public class Database implements Serializable {
    * @return The table or <code>null</code> if there is no such table
    */
   public Table findTable(String name, boolean caseSensitive) {
-    for (Table table : _tables) {
+    for (Table table : tables) {
       if (caseSensitive) {
         if (table.getName().equals(name)) {
           return table;
@@ -475,7 +475,7 @@ public class Database implements Serializable {
     if (tableNameRegExp != null) {
       Pattern pattern = Pattern.compile(tableNameRegExp);
 
-      for (Table table : _tables) {
+      for (Table table : this.tables) {
         String tableName = table.getName();
 
         if (!caseSensitive) {
@@ -495,10 +495,10 @@ public class Database implements Serializable {
    * @return The Dyna class cache
    */
   private DynaClassCache getDynaClassCache() {
-    if (_dynaClassCache == null) {
-      _dynaClassCache = new DynaClassCache();
+    if (dynaClassCache == null) {
+      dynaClassCache = new DynaClassCache();
     }
-    return _dynaClassCache;
+    return dynaClassCache;
   }
 
   /**
@@ -506,7 +506,7 @@ public class Database implements Serializable {
    * has been added or removed to a table.
    */
   public void resetDynaClassCache() {
-    _dynaClassCache = null;
+    dynaClassCache = null;
   }
 
   /**
@@ -562,11 +562,11 @@ public class Database implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Database) {
       Database other = (Database) obj;
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
       // Note that this compares case-sensitive
-      return Objects.equals(_tables, other._tables);
+      return Objects.equals(tables, other.tables);
     } else {
       return false;
     }
@@ -577,7 +577,7 @@ public class Database implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(_name, _tables);
+    return Objects.hash(name, tables);
   }
 
   /**

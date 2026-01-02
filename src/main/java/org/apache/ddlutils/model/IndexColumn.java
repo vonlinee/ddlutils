@@ -35,19 +35,19 @@ public class IndexColumn implements Serializable {
   /**
    * The name of the column.
    */
-  protected String _name;
+  protected String name;
   /**
    * The size of the column in the index.
    */
-  protected String _size;
+  protected String size;
   /**
    * The position within the owning index.
    */
-  private int _ordinalPosition;
+  private int ordinalPosition;
   /**
    * The indexed column.
    */
-  private Column _column;
+  private Column column;
 
   /**
    * Creates a new index column object.
@@ -61,8 +61,8 @@ public class IndexColumn implements Serializable {
    * @param column The indexed column
    */
   public IndexColumn(Column column) {
-    _column = column;
-    _name = column.getName();
+    this.column = column;
+    name = column.getName();
   }
 
   /**
@@ -71,7 +71,7 @@ public class IndexColumn implements Serializable {
    * @param columnName The name of the corresponding table column
    */
   public IndexColumn(String columnName) {
-    _name = columnName;
+    name = columnName;
   }
 
   /**
@@ -80,7 +80,7 @@ public class IndexColumn implements Serializable {
    * @return The position
    */
   public int getOrdinalPosition() {
-    return _ordinalPosition;
+    return ordinalPosition;
   }
 
   /**
@@ -90,7 +90,7 @@ public class IndexColumn implements Serializable {
    * @param position The position
    */
   public void setOrdinalPosition(int position) {
-    _ordinalPosition = position;
+    ordinalPosition = position;
   }
 
   /**
@@ -99,7 +99,7 @@ public class IndexColumn implements Serializable {
    * @return The name
    */
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -108,7 +108,7 @@ public class IndexColumn implements Serializable {
    * @param name The name
    */
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -117,7 +117,7 @@ public class IndexColumn implements Serializable {
    * @return The column
    */
   public Column getColumn() {
-    return _column;
+    return column;
   }
 
   /**
@@ -126,8 +126,8 @@ public class IndexColumn implements Serializable {
    * @param column The column
    */
   public void setColumn(Column column) {
-    _column = column;
-    _name = (column == null ? null : column.getName());
+    this.column = column;
+    name = (column == null ? null : column.getName());
   }
 
   /**
@@ -136,7 +136,7 @@ public class IndexColumn implements Serializable {
    * @return The size
    */
   public String getSize() {
-    return _size;
+    return size;
   }
 
   /**
@@ -145,7 +145,7 @@ public class IndexColumn implements Serializable {
    * @param size The size
    */
   public void setSize(String size) {
-    _size = size;
+    this.size = size;
   }
 
   /**
@@ -155,10 +155,10 @@ public class IndexColumn implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof IndexColumn) {
       IndexColumn other = (IndexColumn) obj;
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
-      return Objects.equals(_size, other._size);
+      return Objects.equals(size, other.size);
     } else {
       return false;
     }
@@ -171,10 +171,10 @@ public class IndexColumn implements Serializable {
    * @return <code>true</code> if this index column is equal (ignoring case) to the given one
    */
   public boolean equalsIgnoreCase(IndexColumn other) {
-    if (!Objects.equals(_name.toUpperCase(), other._name.toUpperCase())) {
+    if (!Objects.equals(name.toUpperCase(), other.name.toUpperCase())) {
       return false;
     }
-    return Objects.equals(_size, other._size);
+    return Objects.equals(size, other.size);
   }
 
   /**
@@ -182,7 +182,7 @@ public class IndexColumn implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(_name, _size);
+    return Objects.hash(name, size);
   }
 
   /**

@@ -36,7 +36,7 @@ public class CreationParameters {
   /**
    * The parameter maps keyed by the tables.
    */
-  private final Map<String, Map<String, Object>> _parametersPerTable = new HashMap<>();
+  private final Map<String, Map<String, Object>> parametersPerTable = new HashMap<>();
 
   /**
    * Returns the parameters for the given table.
@@ -46,8 +46,8 @@ public class CreationParameters {
    */
   public Map<String, Object> getParametersFor(Table table) {
     ListOrderedMap<String, Object> result = new ListOrderedMap<>();
-    Map<String, Object> globalParams = _parametersPerTable.get(null);
-    Map<String, Object> tableParams = _parametersPerTable.get(table.getName());
+    Map<String, Object> globalParams = parametersPerTable.get(null);
+    Map<String, Object> tableParams = parametersPerTable.get(table.getName());
 
     if (globalParams != null) {
       result.putAll(globalParams);
@@ -67,12 +67,12 @@ public class CreationParameters {
    */
   public void addParameter(Table table, String paramName, String paramValue) {
     String key = (table == null ? null : table.getName());
-    Map<String, Object> params = _parametersPerTable.get(key);
+    Map<String, Object> params = parametersPerTable.get(key);
 
     if (params == null) {
       // we're using a list ordered map to retain the order
       params = new ListOrderedMap<>();
-      _parametersPerTable.put(key, params);
+      parametersPerTable.put(key, params);
     }
     params.put(paramName, paramValue);
   }

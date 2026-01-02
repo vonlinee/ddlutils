@@ -47,8 +47,8 @@ public class NonUniqueIndex extends IndexImplBase {
   @Override
   public Index getClone() throws ModelException {
     NonUniqueIndex result = new NonUniqueIndex();
-    result._name = _name;
-    result._columns = new ArrayList<>(this._columns);
+    result.name = name;
+    result.columns = new ArrayList<>(this.columns);
     return result;
   }
 
@@ -59,10 +59,10 @@ public class NonUniqueIndex extends IndexImplBase {
   public boolean equals(Object obj) {
     if (obj instanceof NonUniqueIndex) {
       NonUniqueIndex other = (NonUniqueIndex) obj;
-      if (!Objects.equals(_name, other._name)) {
+      if (!Objects.equals(name, other.name)) {
         return false;
       }
-      return Objects.equals(_columns, other._columns);
+      return Objects.equals(columns, other.columns);
     } else {
       return false;
     }
@@ -76,10 +76,10 @@ public class NonUniqueIndex extends IndexImplBase {
     if (other instanceof NonUniqueIndex) {
       NonUniqueIndex otherIndex = (NonUniqueIndex) other;
 
-      boolean checkName = (_name != null) && (!_name.isEmpty()) &&
-                          (otherIndex._name != null) && (!otherIndex._name.isEmpty());
+      boolean checkName = (name != null) && (!name.isEmpty()) &&
+                          (otherIndex.name != null) && (!otherIndex.name.isEmpty());
 
-      if ((!checkName || _name.equalsIgnoreCase(otherIndex._name)) &&
+      if ((!checkName || name.equalsIgnoreCase(otherIndex.name)) &&
           (getColumnCount() == otherIndex.getColumnCount())) {
         for (int idx = 0; idx < getColumnCount(); idx++) {
           if (!getColumn(idx).equalsIgnoreCase(otherIndex.getColumn(idx))) {
@@ -97,7 +97,7 @@ public class NonUniqueIndex extends IndexImplBase {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(_name, _columns);
+    return Objects.hash(name, columns);
   }
 
   /**

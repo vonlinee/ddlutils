@@ -36,23 +36,23 @@ public class Reference implements Serializable {
   /**
    * The sequence value within the key.
    */
-  private int _sequenceValue;
+  private int sequenceValue;
   /**
    * The local column.
    */
-  private Column _localColumn;
+  private Column localColumn;
   /**
    * The foreign column.
    */
-  private Column _foreignColumn;
+  private Column foreignColumn;
   /**
    * The name of the local column.
    */
-  private String _localColumnName;
+  private String localColumnName;
   /**
    * The name of the foreign column.
    */
-  private String _foreignColumnName;
+  private String foreignColumnName;
 
   /**
    * Creates a new, empty reference.
@@ -77,7 +77,7 @@ public class Reference implements Serializable {
    * @return The sequence value
    */
   public int getSequenceValue() {
-    return _sequenceValue;
+    return sequenceValue;
   }
 
   /**
@@ -88,7 +88,7 @@ public class Reference implements Serializable {
    * @param sequenceValue The sequence value
    */
   public void setSequenceValue(int sequenceValue) {
-    _sequenceValue = sequenceValue;
+    this.sequenceValue = sequenceValue;
   }
 
   /**
@@ -97,7 +97,7 @@ public class Reference implements Serializable {
    * @return The local column
    */
   public Column getLocalColumn() {
-    return _localColumn;
+    return localColumn;
   }
 
   /**
@@ -106,8 +106,8 @@ public class Reference implements Serializable {
    * @param localColumn The local column
    */
   public void setLocalColumn(Column localColumn) {
-    _localColumn = localColumn;
-    _localColumnName = (localColumn == null ? null : localColumn.getName());
+    this.localColumn = localColumn;
+    localColumnName = (localColumn == null ? null : localColumn.getName());
   }
 
   /**
@@ -116,7 +116,7 @@ public class Reference implements Serializable {
    * @return The foreign column
    */
   public Column getForeignColumn() {
-    return _foreignColumn;
+    return foreignColumn;
   }
 
   /**
@@ -125,8 +125,8 @@ public class Reference implements Serializable {
    * @param foreignColumn The foreign column
    */
   public void setForeignColumn(Column foreignColumn) {
-    _foreignColumn = foreignColumn;
-    _foreignColumnName = (foreignColumn == null ? null : foreignColumn.getName());
+    this.foreignColumn = foreignColumn;
+    foreignColumnName = (foreignColumn == null ? null : foreignColumn.getName());
   }
 
   /**
@@ -135,7 +135,7 @@ public class Reference implements Serializable {
    * @return The column name
    */
   public String getLocalColumnName() {
-    return _localColumnName;
+    return localColumnName;
   }
 
   /**
@@ -145,10 +145,10 @@ public class Reference implements Serializable {
    * @param localColumnName The column name
    */
   public void setLocalColumnName(String localColumnName) {
-    if ((_localColumn != null) && !_localColumn.getName().equals(localColumnName)) {
-      _localColumn = null;
+    if ((localColumn != null) && !localColumn.getName().equals(localColumnName)) {
+      localColumn = null;
     }
-    _localColumnName = localColumnName;
+    this.localColumnName = localColumnName;
   }
 
   /**
@@ -157,7 +157,7 @@ public class Reference implements Serializable {
    * @return The column name
    */
   public String getForeignColumnName() {
-    return _foreignColumnName;
+    return foreignColumnName;
   }
 
   /**
@@ -167,10 +167,10 @@ public class Reference implements Serializable {
    * @param foreignColumnName The column name
    */
   public void setForeignColumnName(String foreignColumnName) {
-    if ((_foreignColumn != null) && !_foreignColumn.getName().equals(foreignColumnName)) {
-      _foreignColumn = null;
+    if ((foreignColumn != null) && !foreignColumn.getName().equals(foreignColumnName)) {
+      foreignColumn = null;
     }
-    _foreignColumnName = foreignColumnName;
+    this.foreignColumnName = foreignColumnName;
   }
 
   /**
@@ -180,10 +180,10 @@ public class Reference implements Serializable {
   public boolean equals(Object obj) {
     if (obj instanceof Reference) {
       Reference other = (Reference) obj;
-      if (!Objects.equals(_localColumnName, other._localColumnName)) {
+      if (!Objects.equals(localColumnName, other.localColumnName)) {
         return false;
       }
-      return Objects.equals(_foreignColumnName, other._foreignColumnName);
+      return Objects.equals(foreignColumnName, other.foreignColumnName);
     } else {
       return false;
     }
@@ -197,8 +197,8 @@ public class Reference implements Serializable {
    */
   public boolean equalsIgnoreCase(Reference otherRef) {
     return (otherRef != null) &&
-           _localColumnName.equalsIgnoreCase(otherRef._localColumnName) &&
-           _foreignColumnName.equalsIgnoreCase(otherRef._foreignColumnName);
+           localColumnName.equalsIgnoreCase(otherRef.localColumnName) &&
+           foreignColumnName.equalsIgnoreCase(otherRef.foreignColumnName);
   }
 
   /**
@@ -206,7 +206,7 @@ public class Reference implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(_localColumnName, _foreignColumnName);
+    return Objects.hash(localColumnName, foreignColumnName);
   }
 
   /**

@@ -40,31 +40,31 @@ public class ForeignKey implements Serializable {
   /**
    * The references between local and remote columns.
    */
-  private final ListOrderedSet<Reference> _references = new ListOrderedSet<>();
+  private final ListOrderedSet<Reference> references = new ListOrderedSet<>();
   /**
    * The name of the foreign key, may be <code>null</code>.
    */
-  private String _name;
+  private String name;
   /**
    * The target table.
    */
-  private Table _foreignTable;
+  private Table foreignTable;
   /**
    * The name of the foreign table.
    */
-  private String _foreignTableName;
+  private String foreignTableName;
   /**
    * The action to perform when the value of the referenced column changes.
    */
-  private CascadeAction _onUpdate = CascadeAction.NONE;
+  private CascadeAction onUpdate = CascadeAction.NONE;
   /**
    * The action to perform when the referenced row is deleted.
    */
-  private CascadeAction _onDelete = CascadeAction.NONE;
+  private CascadeAction onDelete = CascadeAction.NONE;
   /**
    * Whether this foreign key has an associated auto-generated index.
    */
-  private boolean _autoIndexPresent;
+  private boolean autoIndexPresent;
 
   /**
    * Creates a new foreign key object that has no name.
@@ -79,7 +79,7 @@ public class ForeignKey implements Serializable {
    * @param name The name of the foreign key
    */
   public ForeignKey(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -88,7 +88,7 @@ public class ForeignKey implements Serializable {
    * @return The name
    */
   public String getName() {
-    return _name;
+    return name;
   }
 
   /**
@@ -97,7 +97,7 @@ public class ForeignKey implements Serializable {
    * @param name The name
    */
   public void setName(String name) {
-    _name = name;
+    this.name = name;
   }
 
   /**
@@ -106,7 +106,7 @@ public class ForeignKey implements Serializable {
    * @return The foreign table
    */
   public Table getForeignTable() {
-    return _foreignTable;
+    return foreignTable;
   }
 
   /**
@@ -115,8 +115,8 @@ public class ForeignKey implements Serializable {
    * @param foreignTable The foreign table
    */
   public void setForeignTable(Table foreignTable) {
-    _foreignTable = foreignTable;
-    _foreignTableName = (foreignTable == null ? null : foreignTable.getName());
+    this.foreignTable = foreignTable;
+    foreignTableName = (foreignTable == null ? null : foreignTable.getName());
   }
 
   /**
@@ -125,7 +125,7 @@ public class ForeignKey implements Serializable {
    * @return The table name
    */
   public String getForeignTableName() {
-    return _foreignTableName;
+    return foreignTableName;
   }
 
   /**
@@ -136,10 +136,10 @@ public class ForeignKey implements Serializable {
    * @param foreignTableName The table name
    */
   public void setForeignTableName(String foreignTableName) {
-    if ((_foreignTable != null) && !_foreignTable.getName().equals(foreignTableName)) {
-      _foreignTable = null;
+    if ((foreignTable != null) && !foreignTable.getName().equals(foreignTableName)) {
+      foreignTable = null;
     }
-    _foreignTableName = foreignTableName;
+    this.foreignTableName = foreignTableName;
   }
 
   /**
@@ -148,7 +148,7 @@ public class ForeignKey implements Serializable {
    * @return The action
    */
   public CascadeAction getOnDelete() {
-    return _onDelete;
+    return onDelete;
   }
 
   /**
@@ -161,7 +161,7 @@ public class ForeignKey implements Serializable {
     if (onDelete == null) {
       throw new NullPointerException("The onDelete action cannot be null");
     }
-    _onDelete = onDelete;
+    this.onDelete = onDelete;
   }
 
   /**
@@ -170,7 +170,7 @@ public class ForeignKey implements Serializable {
    * @return The action
    */
   public CascadeAction getOnUpdate() {
-    return _onUpdate;
+    return onUpdate;
   }
 
   /**
@@ -183,7 +183,7 @@ public class ForeignKey implements Serializable {
     if (onUpdate == null) {
       throw new NullPointerException("The onUpdate action cannot be null");
     }
-    _onUpdate = onUpdate;
+    this.onUpdate = onUpdate;
   }
 
   /**
@@ -192,7 +192,7 @@ public class ForeignKey implements Serializable {
    * @return The number of references
    */
   public int getReferenceCount() {
-    return _references.size();
+    return references.size();
   }
 
   /**
@@ -202,7 +202,7 @@ public class ForeignKey implements Serializable {
    * @return The reference
    */
   public Reference getReference(int idx) {
-    return _references.get(idx);
+    return references.get(idx);
   }
 
   /**
@@ -211,7 +211,7 @@ public class ForeignKey implements Serializable {
    * @return The references
    */
   public Reference[] getReferences() {
-    return _references.toArray(new Reference[0]);
+    return references.toArray(new Reference[0]);
   }
 
   /**
@@ -220,7 +220,7 @@ public class ForeignKey implements Serializable {
    * @return The first reference
    */
   public Reference getFirstReference() {
-    return _references.isEmpty() ? null : _references.get(0);
+    return references.isEmpty() ? null : references.get(0);
   }
 
   /**
@@ -231,15 +231,15 @@ public class ForeignKey implements Serializable {
    */
   public void addReference(Reference reference) {
     if (reference != null) {
-      for (int idx = 0; idx < _references.size(); idx++) {
+      for (int idx = 0; idx < references.size(); idx++) {
         Reference curRef = getReference(idx);
 
         if (curRef.getSequenceValue() > reference.getSequenceValue()) {
-          _references.add(idx, reference);
+          references.add(idx, reference);
           return;
         }
       }
-      _references.add(reference);
+      references.add(reference);
     }
   }
 
@@ -250,7 +250,7 @@ public class ForeignKey implements Serializable {
    */
   public void removeReference(Reference reference) {
     if (reference != null) {
-      _references.remove(reference);
+      references.remove(reference);
     }
   }
 
@@ -260,7 +260,7 @@ public class ForeignKey implements Serializable {
    * @param idx The index of the reference to remove
    */
   public void removeReference(int idx) {
-    _references.remove(idx);
+    references.remove(idx);
   }
 
   /**
@@ -342,7 +342,7 @@ public class ForeignKey implements Serializable {
    * @return <code>true</code> if an auto-generated index exists
    */
   public boolean isAutoIndexPresent() {
-    return _autoIndexPresent;
+    return autoIndexPresent;
   }
 
   /**
@@ -352,7 +352,7 @@ public class ForeignKey implements Serializable {
    * @param autoIndexPresent <code>true</code> if an auto-generated index exists
    */
   public void setAutoIndexPresent(boolean autoIndexPresent) {
-    _autoIndexPresent = autoIndexPresent;
+    this.autoIndexPresent = autoIndexPresent;
   }
 
   /**
@@ -366,13 +366,13 @@ public class ForeignKey implements Serializable {
       // Note that this compares case-sensitive
       // Note also that we can simply compare the references regardless of their order
       // (which is irrelevant for fks) because they are contained in a set
-      if (!Objects.equals(_name, otherFk._name)) {
+      if (!Objects.equals(name, otherFk.name)) {
         return false;
       }
-      if (!Objects.equals(_foreignTableName, otherFk._foreignTableName)) {
+      if (!Objects.equals(foreignTableName, otherFk.foreignTableName)) {
         return false;
       }
-      return Objects.equals(_references, otherFk._references);
+      return Objects.equals(references, otherFk.references);
     } else {
       return false;
     }
@@ -385,14 +385,14 @@ public class ForeignKey implements Serializable {
    * @return <code>true</code> if this foreign key is equal (ignoring case) to the given one
    */
   public boolean equalsIgnoreCase(ForeignKey otherFk) {
-    boolean checkName = (_name != null) && (!_name.isEmpty()) &&
-                        (otherFk._name != null) && (!otherFk._name.isEmpty());
+    boolean checkName = (name != null) && (!name.isEmpty()) &&
+                        (otherFk.name != null) && (!otherFk.name.isEmpty());
 
-    if ((!checkName || _name.equalsIgnoreCase(otherFk._name)) &&
-        _foreignTableName.equalsIgnoreCase(otherFk._foreignTableName)) {
+    if ((!checkName || name.equalsIgnoreCase(otherFk.name)) &&
+        foreignTableName.equalsIgnoreCase(otherFk.foreignTableName)) {
 
-      HashSet<Reference> otherRefs = new HashSet<>(otherFk._references);
-      for (Reference curLocalRef : _references) {
+      HashSet<Reference> otherRefs = new HashSet<>(otherFk.references);
+      for (Reference curLocalRef : references) {
         boolean found = false;
         for (Iterator<Reference> otherIt = otherRefs.iterator(); otherIt.hasNext(); ) {
           Reference curOtherRef = otherIt.next();
@@ -417,7 +417,7 @@ public class ForeignKey implements Serializable {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(_name, _foreignTableName, _references);
+    return Objects.hash(name, foreignTableName, references);
   }
 
   /**

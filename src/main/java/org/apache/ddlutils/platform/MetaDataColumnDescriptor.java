@@ -33,15 +33,15 @@ public class MetaDataColumnDescriptor {
   /**
    * The name of the column.
    */
-  private final String _columnName;
+  private final String columnName;
   /**
    * The jdbc type to read from the result set.
    */
-  private final int _jdbcType;
+  private final int jdbcType;
   /**
    * The default value if the column is not present in the result set.
    */
-  private final Object _defaultValue;
+  private final Object defaultValue;
 
   /**
    * Creates a new descriptor instance.
@@ -63,9 +63,9 @@ public class MetaDataColumnDescriptor {
    * @param defaultValue The default value if the column is not present in the result set
    */
   public MetaDataColumnDescriptor(String columnName, int jdbcType, Object defaultValue) {
-    _columnName = columnName.toUpperCase();
-    _jdbcType = jdbcType;
-    _defaultValue = defaultValue;
+    this.columnName = columnName.toUpperCase();
+    this.jdbcType = jdbcType;
+    this.defaultValue = defaultValue;
   }
 
   /**
@@ -74,7 +74,7 @@ public class MetaDataColumnDescriptor {
    * @return The name
    */
   public String getName() {
-    return _columnName;
+    return columnName;
   }
 
   /**
@@ -83,7 +83,7 @@ public class MetaDataColumnDescriptor {
    * @return The default value
    */
   public Object getDefaultValue() {
-    return _defaultValue;
+    return defaultValue;
   }
 
   /**
@@ -92,7 +92,7 @@ public class MetaDataColumnDescriptor {
    * @return The jdbc type
    */
   public int getJdbcType() {
-    return _jdbcType;
+    return jdbcType;
   }
 
   /**
@@ -102,6 +102,6 @@ public class MetaDataColumnDescriptor {
    * @return The column value or the default value if the column is not present in the result set
    */
   public Object readColumn(ResultSet resultSet) throws SQLException {
-    return JdbcUtils.getResultSetColumnValue(resultSet, _jdbcType, _columnName, _defaultValue);
+    return JdbcUtils.getResultSetColumnValue(resultSet, jdbcType, columnName, defaultValue);
   }
 }
