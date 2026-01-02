@@ -1740,9 +1740,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
           // otherwise it is possible that the auto increment hasn't happened yet
           // (the db didn't actually perform the insert yet so no triggering of
           // sequences did occur)
-          if (!connection.getAutoCommit()) {
-            connection.commit();
-          }
+          JdbcUtils.commit(connection);
         }
 
         queryStmt = connection.createStatement();
@@ -1763,13 +1761,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       } catch (SQLException ex) {
         throw new DatabaseOperationException("Error while retrieving the identity column value(s) from the database", ex);
       } finally {
-        if (lastInsertedIds != null) {
-          try {
-            lastInsertedIds.close();
-          } catch (SQLException ex) {
-            // we ignore this one
-          }
-        }
+        JdbcUtils.closeSilently(lastInsertedIds);
         closeStatement(statement);
       }
     }
@@ -2407,7 +2399,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
       Database model = reader.getDatabase(connection, name, catalog, schema, tableTypes);
 
       postprocessModelFromDatabase(model);
-      if ((model.getName() == null) || (model.getName().isEmpty())) {
+      if (StringUtilsExt.isEmpty(model.getName())) {
         model.setName(MODEL_DEFAULT_NAME);
       }
       return model;
@@ -2482,32 +2474,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @throws SQLException If an error occurred while setting the parameter value
    */
   protected void setStatementParameterValue(PreparedStatement statement, int sqlIndex, int typeCode, Object value) throws SQLException {
-    if (value == null) {
-      statement.setNull(sqlIndex, typeCode);
-    } else if (value instanceof String) {
-      statement.setString(sqlIndex, (String) value);
-    } else if (value instanceof byte[]) {
-      statement.setBytes(sqlIndex, (byte[]) value);
-    } else if (value instanceof Boolean) {
-      statement.setBoolean(sqlIndex, (Boolean) value);
-    } else if (value instanceof Byte) {
-      statement.setByte(sqlIndex, (Byte) value);
-    } else if (value instanceof Short) {
-      statement.setShort(sqlIndex, (Short) value);
-    } else if (value instanceof Integer) {
-      statement.setInt(sqlIndex, (Integer) value);
-    } else if (value instanceof Long) {
-      statement.setLong(sqlIndex, (Long) value);
-    } else if (value instanceof BigDecimal) {
-      // setObject assumes a scale of 0, so we rather use the typed setter
-      statement.setBigDecimal(sqlIndex, (BigDecimal) value);
-    } else if (value instanceof Float) {
-      statement.setFloat(sqlIndex, (Float) value);
-    } else if (value instanceof Double) {
-      statement.setDouble(sqlIndex, (Double) value);
-    } else {
-      statement.setObject(sqlIndex, value, typeCode);
-    }
+    JdbcUtils.setParameterValue(statement, sqlIndex, typeCode, value);
   }
 
   /**
@@ -2602,103 +2569,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
    * @throws SQLException If an error occurred while accessing the result set
    */
   protected Object extractColumnValue(ResultSet resultSet, String columnName, int columnIdx, int jdbcType) throws SQLException {
-    boolean useIdx = (columnName == null);
-    Object value;
-
-    switch (jdbcType) {
-      case Types.CHAR:
-      case Types.VARCHAR:
-      case Types.LONGVARCHAR:
-        value = useIdx ? resultSet.getString(columnIdx) : resultSet.getString(columnName);
-        break;
-      case Types.NUMERIC:
-      case Types.DECIMAL:
-        value = useIdx ? resultSet.getBigDecimal(columnIdx) : resultSet.getBigDecimal(columnName);
-        break;
-      case Types.BIT:
-      case Types.BOOLEAN:
-        value = useIdx ? resultSet.getBoolean(columnIdx) : resultSet.getBoolean(columnName);
-        break;
-      case Types.TINYINT:
-      case Types.SMALLINT:
-      case Types.INTEGER:
-        value = useIdx ? resultSet.getInt(columnIdx) : resultSet.getInt(columnName);
-        break;
-      case Types.BIGINT:
-        value = useIdx ? resultSet.getLong(columnIdx) : resultSet.getLong(columnName);
-        break;
-      case Types.REAL:
-        value = useIdx ? resultSet.getFloat(columnIdx) : resultSet.getFloat(columnName);
-        break;
-      case Types.FLOAT:
-      case Types.DOUBLE:
-        value = useIdx ? resultSet.getDouble(columnIdx) : resultSet.getDouble(columnName);
-        break;
-      case Types.BINARY:
-      case Types.VARBINARY:
-      case Types.LONGVARBINARY:
-        value = useIdx ? resultSet.getBytes(columnIdx) : resultSet.getBytes(columnName);
-        break;
-      case Types.DATE:
-        value = useIdx ? resultSet.getDate(columnIdx) : resultSet.getDate(columnName);
-        break;
-      case Types.TIME:
-        value = useIdx ? resultSet.getTime(columnIdx) : resultSet.getTime(columnName);
-        break;
-      case Types.TIMESTAMP:
-        value = useIdx ? resultSet.getTimestamp(columnIdx) : resultSet.getTimestamp(columnName);
-        break;
-      case Types.CLOB:
-        Clob clob = useIdx ? resultSet.getClob(columnIdx) : resultSet.getClob(columnName);
-
-        if (clob == null) {
-          value = null;
-        } else {
-          long length = clob.length();
-
-          if (length > Integer.MAX_VALUE) {
-            value = clob;
-          } else if (length == 0) {
-            // the Javadoc is not clear about whether Clob.getSubString
-            // can be used with a substring length of 0
-            // thus we do the safe thing and handle it ourselves
-            value = "";
-          } else {
-            value = clob.getSubString(1L, (int) length);
-          }
-        }
-        break;
-      case Types.BLOB:
-        Blob blob = useIdx ? resultSet.getBlob(columnIdx) : resultSet.getBlob(columnName);
-
-        if (blob == null) {
-          value = null;
-        } else {
-          long length = blob.length();
-
-          if (length > Integer.MAX_VALUE) {
-            value = blob;
-          } else if (length == 0) {
-            // the Javadoc is not clear about whether Blob.getBytes
-            // can be used with for 0 bytes to be copied
-            // thus we do the safe thing and handle it ourselves
-            value = new byte[0];
-          } else {
-            value = blob.getBytes(1L, (int) length);
-          }
-        }
-        break;
-      case Types.ARRAY:
-        value = useIdx ? resultSet.getArray(columnIdx) : resultSet.getArray(columnName);
-        break;
-      case Types.REF:
-        value = useIdx ? resultSet.getRef(columnIdx) : resultSet.getRef(columnName);
-        break;
-      default:
-        value = useIdx ? resultSet.getObject(columnIdx) : resultSet.getObject(columnName);
-        break;
-    }
-    return resultSet.wasNull() ? null : value;
+    return JdbcUtils.extractColumnValue(resultSet, columnName, columnIdx, jdbcType);
   }
 
 

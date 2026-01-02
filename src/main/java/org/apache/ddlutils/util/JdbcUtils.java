@@ -494,4 +494,138 @@ public final class JdbcUtils {
       return false;
     }
   }
+
+  public static void setParameterValue(PreparedStatement statement, int index, int jdbcType, Object value) throws SQLException {
+    if (value == null) {
+      statement.setNull(index, jdbcType);
+    } else if (value instanceof String) {
+      statement.setString(index, (String) value);
+    } else if (value instanceof byte[]) {
+      statement.setBytes(index, (byte[]) value);
+    } else if (value instanceof Boolean) {
+      statement.setBoolean(index, (Boolean) value);
+    } else if (value instanceof Byte) {
+      statement.setByte(index, (Byte) value);
+    } else if (value instanceof Short) {
+      statement.setShort(index, (Short) value);
+    } else if (value instanceof Integer) {
+      statement.setInt(index, (Integer) value);
+    } else if (value instanceof Long) {
+      statement.setLong(index, (Long) value);
+    } else if (value instanceof BigDecimal) {
+      // setObject assumes a scale of 0, so we rather use the typed setter
+      statement.setBigDecimal(index, (BigDecimal) value);
+    } else if (value instanceof Float) {
+      statement.setFloat(index, (Float) value);
+    } else if (value instanceof Double) {
+      statement.setDouble(index, (Double) value);
+    } else {
+      statement.setObject(index, value, jdbcType);
+    }
+  }
+
+  public static void commit(Connection connection) throws SQLException {
+    if (!connection.getAutoCommit()) {
+      connection.commit();
+    }
+  }
+
+  public static Object extractColumnValue(ResultSet resultSet, String columnName, int columnIdx, int jdbcType) throws SQLException {
+    final boolean useIdx = (columnName == null);
+    Object value;
+    switch (jdbcType) {
+      case Types.CHAR:
+      case Types.VARCHAR:
+      case Types.LONGVARCHAR:
+        value = useIdx ? resultSet.getString(columnIdx) : resultSet.getString(columnName);
+        break;
+      case Types.NUMERIC:
+      case Types.DECIMAL:
+        value = useIdx ? resultSet.getBigDecimal(columnIdx) : resultSet.getBigDecimal(columnName);
+        break;
+      case Types.BIT:
+      case Types.BOOLEAN:
+        value = useIdx ? resultSet.getBoolean(columnIdx) : resultSet.getBoolean(columnName);
+        break;
+      case Types.TINYINT:
+      case Types.SMALLINT:
+      case Types.INTEGER:
+        value = useIdx ? resultSet.getInt(columnIdx) : resultSet.getInt(columnName);
+        break;
+      case Types.BIGINT:
+        value = useIdx ? resultSet.getLong(columnIdx) : resultSet.getLong(columnName);
+        break;
+      case Types.REAL:
+        value = useIdx ? resultSet.getFloat(columnIdx) : resultSet.getFloat(columnName);
+        break;
+      case Types.FLOAT:
+      case Types.DOUBLE:
+        value = useIdx ? resultSet.getDouble(columnIdx) : resultSet.getDouble(columnName);
+        break;
+      case Types.BINARY:
+      case Types.VARBINARY:
+      case Types.LONGVARBINARY:
+        value = useIdx ? resultSet.getBytes(columnIdx) : resultSet.getBytes(columnName);
+        break;
+      case Types.DATE:
+        value = useIdx ? resultSet.getDate(columnIdx) : resultSet.getDate(columnName);
+        break;
+      case Types.TIME:
+        value = useIdx ? resultSet.getTime(columnIdx) : resultSet.getTime(columnName);
+        break;
+      case Types.TIMESTAMP:
+        value = useIdx ? resultSet.getTimestamp(columnIdx) : resultSet.getTimestamp(columnName);
+        break;
+      case Types.CLOB:
+        Clob clob = useIdx ? resultSet.getClob(columnIdx) : resultSet.getClob(columnName);
+
+        if (clob == null) {
+          value = null;
+        } else {
+          long length = clob.length();
+
+          if (length > Integer.MAX_VALUE) {
+            value = clob;
+          } else if (length == 0) {
+            // the Javadoc is not clear about whether Clob.getSubString
+            // can be used with a substring length of 0
+            // thus we do the safe thing and handle it ourselves
+            value = "";
+          } else {
+            value = clob.getSubString(1L, (int) length);
+          }
+        }
+        break;
+      case Types.BLOB:
+        Blob blob = useIdx ? resultSet.getBlob(columnIdx) : resultSet.getBlob(columnName);
+
+        if (blob == null) {
+          value = null;
+        } else {
+          long length = blob.length();
+
+          if (length > Integer.MAX_VALUE) {
+            value = blob;
+          } else if (length == 0) {
+            // the Javadoc is not clear about whether Blob.getBytes
+            // can be used with for 0 bytes to be copied
+            // thus we do the safe thing and handle it ourselves
+            value = new byte[0];
+          } else {
+            value = blob.getBytes(1L, (int) length);
+          }
+        }
+        break;
+      case Types.ARRAY:
+        value = useIdx ? resultSet.getArray(columnIdx) : resultSet.getArray(columnName);
+        break;
+      case Types.REF:
+        value = useIdx ? resultSet.getRef(columnIdx) : resultSet.getRef(columnName);
+        break;
+      default:
+        value = useIdx ? resultSet.getObject(columnIdx) : resultSet.getObject(columnName);
+        break;
+    }
+    return resultSet.wasNull() ? null : value;
+  }
 }
