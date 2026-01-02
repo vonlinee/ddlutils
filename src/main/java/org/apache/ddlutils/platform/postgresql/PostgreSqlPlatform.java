@@ -31,6 +31,7 @@ import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
+import org.apache.ddlutils.util.JdbcUtils;
 
 import java.io.IOException;
 import java.sql.*;
@@ -146,18 +147,8 @@ public class PostgreSqlPlatform extends PlatformImplBase {
       } catch (Exception ex) {
         throw new DatabaseOperationException("Error while trying to " + (createDb ? "create" : "drop") + " a database: " + ex.getLocalizedMessage(), ex);
       } finally {
-        if (stmt != null) {
-          try {
-            stmt.close();
-          } catch (SQLException ignored) {
-          }
-        }
-        if (connection != null) {
-          try {
-            connection.close();
-          } catch (SQLException ignored) {
-          }
-        }
+        JdbcUtils.closeSilently(stmt);
+        JdbcUtils.closeSilently(connection);
       }
     } else {
       throw new UnsupportedOperationException("Unable to " + (createDb ? "create" : "drop") + " a PostgreSQL database via the driver " + jdbcDriverClassName);
