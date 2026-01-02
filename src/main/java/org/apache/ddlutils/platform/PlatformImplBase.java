@@ -2432,13 +2432,7 @@ public abstract class PlatformImplBase extends JdbcSupport implements Platform {
 
         if (TypeMap.isTextType(column.getTypeCode()) ||
             TypeMap.isDateTimeType(column.getTypeCode())) {
-          String defaultValue = column.getDefaultValue();
-
-          if ((defaultValue != null) && (defaultValue.length() >= 2) &&
-              defaultValue.startsWith("'") && defaultValue.endsWith("'")) {
-            defaultValue = defaultValue.substring(1, defaultValue.length() - 1);
-            column.setDefaultValue(defaultValue);
-          }
+          column.setDefaultValue(StringUtilsExt.unquoteSingle(column.getDefaultValue()));
         }
       }
     }

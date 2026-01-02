@@ -349,4 +349,13 @@ public class StringUtilsExt {
     }
     return tableOfColumn;
   }
+
+  public static String unquoteSingle(String value) {
+    if (value != null && value.length() >= 2 &&
+        value.startsWith("'") && value.endsWith("'")) {
+      value = value.substring(1, value.length() - 1);
+     return value;
+    }
+    return value;
+  }
 }
