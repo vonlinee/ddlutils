@@ -19,6 +19,7 @@ package org.apache.ddlutils.model;
  * under the License.
  */
 
+import java.sql.JDBCType;
 import java.sql.Types;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,126 +33,6 @@ import java.util.Set;
  * @version $Revision$
  */
 public abstract class TypeMap {
-  /**
-   * The string representation of the {@link java.sql.Types#ARRAY} constant.
-   */
-  public static final String ARRAY = "ARRAY";
-  /**
-   * The string representation of the {@link java.sql.Types#BIGINT} constant.
-   */
-  public static final String BIGINT = "BIGINT";
-  /**
-   * The string representation of the {@link java.sql.Types#BINARY} constant.
-   */
-  public static final String BINARY = "BINARY";
-  /**
-   * The string representation of the {@link java.sql.Types#BIT} constant.
-   */
-  public static final String BIT = "BIT";
-  /**
-   * The string representation of the {@link java.sql.Types#BLOB} constant.
-   */
-  public static final String BLOB = "BLOB";
-  /**
-   * The string representation of the {@link java.sql.Types#BOOLEAN} constant.
-   */
-  public static final String BOOLEAN = "BOOLEAN";
-  /**
-   * The string representation of the {@link java.sql.Types#CHAR} constant.
-   */
-  public static final String CHAR = "CHAR";
-  /**
-   * The string representation of the {@link java.sql.Types#CLOB} constant.
-   */
-  public static final String CLOB = "CLOB";
-  /**
-   * The string representation of the {@link java.sql.Types#DATALINK} constant.
-   */
-  public static final String DATALINK = "DATALINK";
-  /**
-   * The string representation of the {@link java.sql.Types#DATE} constant.
-   */
-  public static final String DATE = "DATE";
-  /**
-   * The string representation of the {@link java.sql.Types#DECIMAL} constant.
-   */
-  public static final String DECIMAL = "DECIMAL";
-  /**
-   * The string representation of the {@link java.sql.Types#DISTINCT} constant.
-   */
-  public static final String DISTINCT = "DISTINCT";
-  /**
-   * The string representation of the {@link java.sql.Types#DOUBLE} constant.
-   */
-  public static final String DOUBLE = "DOUBLE";
-  /**
-   * The string representation of the {@link java.sql.Types#FLOAT} constant.
-   */
-  public static final String FLOAT = "FLOAT";
-  /**
-   * The string representation of the {@link java.sql.Types#INTEGER} constant.
-   */
-  public static final String INTEGER = "INTEGER";
-  /**
-   * The string representation of the {@link java.sql.Types#JAVA_OBJECT} constant.
-   */
-  public static final String JAVA_OBJECT = "JAVA_OBJECT";
-  /**
-   * The string representation of the {@link java.sql.Types#LONGVARBINARY} constant.
-   */
-  public static final String LONGVARBINARY = "LONGVARBINARY";
-  /**
-   * The string representation of the {@link java.sql.Types#LONGVARCHAR} constant.
-   */
-  public static final String LONGVARCHAR = "LONGVARCHAR";
-  /**
-   * The string representation of the {@link java.sql.Types#NULL} constant.
-   */
-  public static final String NULL = "NULL";
-  /**
-   * The string representation of the {@link java.sql.Types#NUMERIC} constant.
-   */
-  public static final String NUMERIC = "NUMERIC";
-  /**
-   * The string representation of the {@link java.sql.Types#OTHER} constant.
-   */
-  public static final String OTHER = "OTHER";
-  /**
-   * The string representation of the {@link java.sql.Types#REAL} constant.
-   */
-  public static final String REAL = "REAL";
-  /**
-   * The string representation of the {@link java.sql.Types#REF} constant.
-   */
-  public static final String REF = "REF";
-  /**
-   * The string representation of the {@link java.sql.Types#SMALLINT} constant.
-   */
-  public static final String SMALLINT = "SMALLINT";
-  /**
-   * The string representation of the {@link java.sql.Types#STRUCT} constant.
-   */
-  public static final String STRUCT = "STRUCT";
-  /**
-   * The string representation of the {@link java.sql.Types#TIME} constant.
-   */
-  public static final String TIME = "TIME";
-  /**
-   * The string representation of the {@link java.sql.Types#TIMESTAMP} constant.
-   */
-  public static final String TIMESTAMP = "TIMESTAMP";
-  /**
-   * The string representation of the {@link java.sql.Types#TINYINT} constant.
-   */
-  public static final String TINYINT = "TINYINT";
-  /**
-   * The string representation of the {@link java.sql.Types#VARBINARY} constant.
-   */
-  public static final String VARBINARY = "VARBINARY";
-  /**
-   * The string representation of the {@link java.sql.Types#VARCHAR} constant.
-   */
-  public static final String VARCHAR = "VARCHAR";
 
   /**
    * Maps type names to the corresponding {@link java.sql.Types} constants.
@@ -167,36 +48,36 @@ public abstract class TypeMap {
   private static final HashMap<JdbcTypeCategory, Set<Integer>> _typesPerCategory = new HashMap<>();
 
   static {
-    registerJdbcType(Types.ARRAY, ARRAY, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.BIGINT, BIGINT, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.BINARY, BINARY, JdbcTypeCategory.BINARY);
-    registerJdbcType(Types.BIT, BIT, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.BLOB, BLOB, JdbcTypeCategory.BINARY);
-    registerJdbcType(Types.BOOLEAN, BOOLEAN, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.CHAR, CHAR, JdbcTypeCategory.TEXTUAL);
-    registerJdbcType(Types.CLOB, CLOB, JdbcTypeCategory.TEXTUAL);
-    registerJdbcType(Types.DATALINK, DATALINK, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.DATE, DATE, JdbcTypeCategory.DATETIME);
-    registerJdbcType(Types.DECIMAL, DECIMAL, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.DISTINCT, DISTINCT, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.DOUBLE, DOUBLE, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.FLOAT, FLOAT, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.INTEGER, INTEGER, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.JAVA_OBJECT, JAVA_OBJECT, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.LONGVARBINARY, LONGVARBINARY, JdbcTypeCategory.BINARY);
-    registerJdbcType(Types.LONGVARCHAR, LONGVARCHAR, JdbcTypeCategory.TEXTUAL);
-    registerJdbcType(Types.NULL, NULL, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.NUMERIC, NUMERIC, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.OTHER, OTHER, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.REAL, REAL, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.REF, REF, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.SMALLINT, SMALLINT, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.STRUCT, STRUCT, JdbcTypeCategory.SPECIAL);
-    registerJdbcType(Types.TIME, TIME, JdbcTypeCategory.DATETIME);
-    registerJdbcType(Types.TIMESTAMP, TIMESTAMP, JdbcTypeCategory.DATETIME);
-    registerJdbcType(Types.TINYINT, TINYINT, JdbcTypeCategory.NUMERIC);
-    registerJdbcType(Types.VARBINARY, VARBINARY, JdbcTypeCategory.BINARY);
-    registerJdbcType(Types.VARCHAR, VARCHAR, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(JDBCType.ARRAY, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.BIGINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.BINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(JDBCType.BIT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.BLOB, JdbcTypeCategory.BINARY);
+    registerJdbcType(JDBCType.BOOLEAN, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.CHAR, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(JDBCType.CLOB, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(JDBCType.DATALINK, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.DATE, JdbcTypeCategory.DATETIME);
+    registerJdbcType(JDBCType.DECIMAL, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.DISTINCT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.DOUBLE, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.FLOAT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.INTEGER, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.JAVA_OBJECT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.LONGVARBINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(JDBCType.LONGVARCHAR, JdbcTypeCategory.TEXTUAL);
+    registerJdbcType(JDBCType.NULL, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.NUMERIC, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.OTHER, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.REAL, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.REF, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.SMALLINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.STRUCT, JdbcTypeCategory.SPECIAL);
+    registerJdbcType(JDBCType.TIME, JdbcTypeCategory.DATETIME);
+    registerJdbcType(JDBCType.TIMESTAMP, JdbcTypeCategory.DATETIME);
+    registerJdbcType(JDBCType.TINYINT, JdbcTypeCategory.NUMERIC);
+    registerJdbcType(JDBCType.VARBINARY, JdbcTypeCategory.BINARY);
+    registerJdbcType(JDBCType.VARCHAR, JdbcTypeCategory.TEXTUAL);
 
     // Torque/Turbine extensions which we only support when reading from an XML schema
     _typeNameToTypeCode.put("BOOLEANINT", Types.TINYINT);
@@ -252,6 +133,10 @@ public abstract class TypeMap {
     _typeNameToTypeCode.put(typeName.toUpperCase(), typeCode);
     _typeCodeToTypeName.put(typeCode, typeName.toUpperCase());
     _typesPerCategory.computeIfAbsent(category, k -> new HashSet<>()).add(typeCode);
+  }
+
+  protected static void registerJdbcType(JDBCType jdbcType, JdbcTypeCategory category) {
+    registerJdbcType(jdbcType.getVendorTypeNumber(), jdbcType.getName(), category);
   }
 
   /**
