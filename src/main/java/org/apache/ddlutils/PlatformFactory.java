@@ -27,6 +27,7 @@ import org.apache.ddlutils.platform.db2.Db2Platform;
 import org.apache.ddlutils.platform.db2.Db2v8Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
+import org.apache.ddlutils.platform.gaussdb.OpenGaussPlatform;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbV241Platform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
@@ -205,6 +206,9 @@ public class PlatformFactory {
     addPlatform(_platforms, SapDbPlatform.DATABASENAME, SapDbPlatform.class);
     addPlatform(_platforms, SybasePlatform.DATABASENAME, SybasePlatform.class);
     addPlatform(_platforms, SybaseASE15Platform.DATABASENAME, SybaseASE15Platform.class);
+
+    // gaussdb
+    addPlatform(_platforms, BuiltinDbType.OpenGauss.getName(), OpenGaussPlatform.class);
   }
 
   /**

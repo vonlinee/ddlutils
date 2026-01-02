@@ -8,6 +8,8 @@ public enum DbTypeFamily implements DbType.Family {
   // PostgreSQL
   PostgreSQL("PostgreSQL", "postgresql", 5432),
 
+  GaussDB("GaussDB", "gaussdb", 5432),
+
   HsqlDb("HsqlDb", "hsqldb", 9001),
   ;
   private final String name;

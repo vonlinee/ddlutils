@@ -13,6 +13,9 @@ public enum BuiltinDbType implements DbType {
   // PostgreSQL
   PostgreSQL("PostgreSql", "org.postgresql.Driver", DbTypeFamily.PostgreSQL, "jdbc:postgresql://%s:%d/%s"),
 
+  // GaussDB
+  OpenGauss("OpenGauss", "org.postgresql.Driver", DbTypeFamily.GaussDB, "jdbc:postgresql://%s:%d/%s"),
+
   HsqlDb("HsqlDb", "org.hsqldb.jdbcDriver", DbTypeFamily.HsqlDb, "jdbc:hsqldb:hsql://%s:%d/%s"),
 
   ;
