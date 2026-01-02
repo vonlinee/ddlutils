@@ -339,4 +339,14 @@ public class StringUtilsExt {
   public static String toUTF8(String value) {
     return convertEncoding(value, StandardCharsets.UTF_8, StandardCharsets.UTF_8);
   }
+
+  public static String unquoteDouble(String tableOfColumn) {
+    if (StringUtilsExt.isEmpty(tableOfColumn)) {
+      return tableOfColumn;
+    }
+    if (tableOfColumn.startsWith("\"") && tableOfColumn.endsWith("\"") && (tableOfColumn.length() > 1)) {
+      tableOfColumn = tableOfColumn.substring(1, tableOfColumn.length() - 1);
+    }
+    return tableOfColumn;
+  }
 }

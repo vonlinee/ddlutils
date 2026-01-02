@@ -481,4 +481,17 @@ public final class JdbcUtils {
   public static boolean isNumericType(JDBCType jdbcType) {
     return TypeMap.isNumericType(jdbcType.getVendorTypeNumber());
   }
+
+  public static boolean isConnectionOpen(ResultSet resultSet) {
+    if (resultSet == null) {
+      return false;
+    }
+    try {
+      Statement stmt = resultSet.getStatement();
+      Connection conn = stmt.getConnection();
+      return !conn.isClosed();
+    } catch (SQLException ex) {
+      return false;
+    }
+  }
 }

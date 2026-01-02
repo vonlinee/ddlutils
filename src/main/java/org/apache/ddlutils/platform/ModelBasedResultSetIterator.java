@@ -28,6 +28,8 @@ import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.util.JdbcUtils;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -122,18 +124,11 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
     boolean singleKnownTable = true;
 
     for (int idx = 1; idx <= metaData.getColumnCount(); idx++) {
-      String columnName = metaData.getColumnName(idx);
-      String tableOfColumn = metaData.getTableName(idx);
-      Table table = null;
-
-      if ((tableOfColumn != null) && (!tableOfColumn.isEmpty())) {
-        // jConnect might return a table name enclosed in quotes
-        if (tableOfColumn.startsWith("\"") && tableOfColumn.endsWith("\"") && (tableOfColumn.length() > 1)) {
-          tableOfColumn = tableOfColumn.substring(1, tableOfColumn.length() - 1);
-        }
-        // the JDBC driver gave us enough metadata info
-        table = model.findTable(tableOfColumn, caseSensitive);
-      }
+      final String columnName = metaData.getColumnName(idx);
+      // jConnect might return a table name enclosed in quotes
+      String tableOfColumn = StringUtilsExt.unquoteDouble(metaData.getTableName(idx));
+      // the JDBC driver gave us enough metadata info
+      Table table = model.findTable(tableOfColumn, caseSensitive);
       if (table == null) {
         // not enough info in the metadata of the result set, lets try the
         // user-supplied query hints
@@ -147,10 +142,8 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
       }
 
       String propName = columnName;
-
       if (table != null) {
         Column column = table.findColumn(columnName, caseSensitive);
-
         if (column != null) {
           propName = column.getName();
         }
@@ -319,16 +312,6 @@ public class ModelBasedResultSetIterator implements Iterator<DynaBean> {
    * @return <code>true</code> if the connection is still open
    */
   public boolean isConnectionOpen() {
-    if (resultSet == null) {
-      return false;
-    }
-    try {
-      Statement stmt = resultSet.getStatement();
-      Connection conn = stmt.getConnection();
-
-      return !conn.isClosed();
-    } catch (SQLException ex) {
-      return false;
-    }
+    return JdbcUtils.isConnectionOpen(resultSet);
   }
 }
