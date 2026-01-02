@@ -52,23 +52,26 @@ public class Table implements Serializable {
   /**
    * The catalog of this table as read from the database.
    */
-  private String _catalog = null;
+  private String _catalog;
   /**
    * The table's schema.
    */
-  private String _schema = null;
+  private String _schema;
   /**
    * The name.
    */
-  private String _name = null;
+  private String _name;
   /**
    * A description of the table.
    */
-  private String _description = null;
+  private String _description;
+
   /**
    * The table's type as read from the database.
+   *
+   * @see TableType
    */
-  private String _type = null;
+  private String _type;
 
   /**
    * Returns the catalog of this table as read from the database.
