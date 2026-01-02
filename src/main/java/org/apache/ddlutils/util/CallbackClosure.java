@@ -42,23 +42,23 @@ public class CallbackClosure<T> implements Consumer<T> {
   /**
    * The object on which the callbacks will be invoked.
    */
-  private final Object _callee;
+  private final Object callee;
   /**
    * The parameter types.
    */
-  private final Class<?>[] _parameterTypes;
+  private final Class<?>[] parameterTypes;
   /**
    * The parameters.
    */
-  private final Object[] _parameters;
+  private final Object[] parameters;
   /**
    * The position of the callback parameter type.
    */
-  private int _callbackTypePos = -1;
+  private int callbackTypePos = -1;
   /**
    * The cached callbacks.
    */
-  private final Map<Class<?>, Method> _callbacks = new HashMap<>();
+  private final Map<Class<?>, Method> callbacks = new HashMap<>();
 
   /**
    * Creates a new closure object.
@@ -74,28 +74,28 @@ public class CallbackClosure<T> implements Consumer<T> {
    *                       where given
    */
   public CallbackClosure(Object callee, String callbackName, Class<?>[] parameterTypes, Object[] parameters) {
-    _callee = callee;
+    this.callee = callee;
 
     if ((parameterTypes == null) || (parameterTypes.length == 0)) {
-      _parameterTypes = new Class[]{null};
-      _parameters = new Object[]{null};
-      _callbackTypePos = 0;
+      this.parameterTypes = new Class[]{null};
+      this.parameters = new Object[]{null};
+      callbackTypePos = 0;
     } else {
-      _parameterTypes = new Class[parameterTypes.length];
-      _parameters = new Object[parameterTypes.length];
+      this.parameterTypes = new Class[parameterTypes.length];
+      this.parameters = new Object[parameterTypes.length];
 
       for (int idx = 0; idx < parameterTypes.length; idx++) {
         if (parameterTypes[idx] == null) {
-          if (_callbackTypePos >= 0) {
+          if (callbackTypePos >= 0) {
             throw new IllegalArgumentException("The parameter types may contain null only once");
           }
-          _callbackTypePos = idx;
+          callbackTypePos = idx;
         } else {
-          _parameterTypes[idx] = parameterTypes[idx];
-          _parameters[idx] = parameters[idx];
+          this.parameterTypes[idx] = parameterTypes[idx];
+          this.parameters[idx] = parameters[idx];
         }
       }
-      if (_callbackTypePos < 0) {
+      if (callbackTypePos < 0) {
         throw new IllegalArgumentException("The parameter types need to a null placeholder");
       }
     }
@@ -111,7 +111,7 @@ public class CallbackClosure<T> implements Consumer<T> {
 
         method.setAccessible(true);
         if (method.getName().equals(callbackName) && typesMatch(paramTypes)) {
-          _callbacks.putIfAbsent(paramTypes[_callbackTypePos], method);
+          callbacks.putIfAbsent(paramTypes[callbackTypePos], method);
         }
       }
       type = type.getSuperclass();
@@ -126,11 +126,11 @@ public class CallbackClosure<T> implements Consumer<T> {
    * @return <code>true</code> if the parameter types match
    */
   private boolean typesMatch(Class<?>[] methodParamTypes) {
-    if ((methodParamTypes == null) || (_parameterTypes.length != methodParamTypes.length)) {
+    if ((methodParamTypes == null) || (parameterTypes.length != methodParamTypes.length)) {
       return false;
     }
-    for (int idx = 0; idx < _parameterTypes.length; idx++) {
-      if ((idx != _callbackTypePos) && !_parameterTypes[idx].equals(methodParamTypes[idx])) {
+    for (int idx = 0; idx < parameterTypes.length; idx++) {
+      if ((idx != callbackTypePos) && !parameterTypes[idx].equals(methodParamTypes[idx])) {
         return false;
       }
     }
@@ -147,12 +147,12 @@ public class CallbackClosure<T> implements Consumer<T> {
     queue.add(obj.getClass());
     while (!queue.isEmpty()) {
       Class<?> type = queue.removeFirst();
-      Method callback = _callbacks.get(type);
+      Method callback = callbacks.get(type);
 
       if (callback != null) {
         try {
-          _parameters[_callbackTypePos] = obj;
-          callback.invoke(_callee, _parameters);
+          parameters[callbackTypePos] = obj;
+          callback.invoke(callee, parameters);
           return;
         } catch (InvocationTargetException ex) {
           throw new DdlUtilsException(ex.getTargetException());

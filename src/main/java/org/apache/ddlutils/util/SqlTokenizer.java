@@ -31,23 +31,23 @@ public class SqlTokenizer {
   /**
    * The SQL to tokenize.
    */
-  private final String _sql;
+  private final String sql;
   /**
    * The index of the last character in the string.
    */
-  private final int _lastCharIdx;
+  private final int lastCharIdx;
   /**
    * The last delimiter position in the string.
    */
-  private int _lastDelimiterPos = -1;
+  private int lastDelimiterPos = -1;
   /**
    * The next delimiter position in the string.
    */
-  private int _nextDelimiterPos = -1;
+  private int nextDelimiterPos = -1;
   /**
    * Whether there are no more tokens.
    */
-  private boolean _finished;
+  private boolean finished;
 
   /**
    * Creates a new SQL tokenizer.
@@ -55,8 +55,8 @@ public class SqlTokenizer {
    * @param sql The sql text
    */
   public SqlTokenizer(String sql) {
-    _sql = sql;
-    _lastCharIdx = sql.length() - 1;
+    this.sql = sql;
+    lastCharIdx = sql.length() - 1;
   }
 
   /**
@@ -65,21 +65,21 @@ public class SqlTokenizer {
    * @return <code>true</code> if there are more statements
    */
   public boolean hasMoreStatements() {
-    if (_finished) {
+    if (finished) {
       return false;
     } else {
-      if (_nextDelimiterPos <= _lastDelimiterPos) {
-        _nextDelimiterPos = _sql.indexOf(';', _lastDelimiterPos + 1);
-        while ((_nextDelimiterPos >= 0) && (_nextDelimiterPos < _lastCharIdx)) {
-          char nextChar = _sql.charAt(_nextDelimiterPos + 1);
+      if (nextDelimiterPos <= lastDelimiterPos) {
+        nextDelimiterPos = sql.indexOf(';', lastDelimiterPos + 1);
+        while ((nextDelimiterPos >= 0) && (nextDelimiterPos < lastCharIdx)) {
+          char nextChar = sql.charAt(nextDelimiterPos + 1);
 
           if ((nextChar == '\r') || (nextChar == '\n')) {
             break;
           }
-          _nextDelimiterPos = _sql.indexOf(';', _nextDelimiterPos + 1);
+          nextDelimiterPos = sql.indexOf(';', nextDelimiterPos + 1);
         }
       }
-      return (_nextDelimiterPos >= 0) || (_lastDelimiterPos < _lastCharIdx);
+      return (nextDelimiterPos >= 0) || (lastDelimiterPos < lastCharIdx);
     }
   }
 
@@ -92,12 +92,12 @@ public class SqlTokenizer {
     String result = null;
 
     if (hasMoreStatements()) {
-      if (_nextDelimiterPos >= 0) {
-        result = _sql.substring(_lastDelimiterPos + 1, _nextDelimiterPos);
-        _lastDelimiterPos = _nextDelimiterPos;
+      if (nextDelimiterPos >= 0) {
+        result = sql.substring(lastDelimiterPos + 1, nextDelimiterPos);
+        lastDelimiterPos = nextDelimiterPos;
       } else {
-        result = _sql.substring(_lastDelimiterPos + 1);
-        _finished = true;
+        result = sql.substring(lastDelimiterPos + 1);
+        finished = true;
       }
     }
     return result;

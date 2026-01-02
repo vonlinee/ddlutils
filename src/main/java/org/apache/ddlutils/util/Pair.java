@@ -19,30 +19,22 @@ package org.apache.ddlutils.util;
  * under the License.
  */
 
+import java.util.AbstractMap;
+import java.util.Map;
+
 /**
  * Represents a pair of objects.
  *
  * @version $Revision: $
  */
-public class Pair {
-  /**
-   * The first object.
-   */
-  private final Object _firstObj;
-  /**
-   * The first object.
-   */
-  private final Object _secondObj;
+public class Pair<K, V> extends AbstractMap.SimpleEntry<K, V> {
 
-  /**
-   * Creates a pair object.
-   *
-   * @param firstObj  The first object
-   * @param secondObj The second object
-   */
-  public Pair(Object firstObj, Object secondObj) {
-    _firstObj = firstObj;
-    _secondObj = secondObj;
+  public Pair(K key, V value) {
+    super(key, value);
+  }
+
+  public Pair(Map.Entry<K, V> entry) {
+    super(entry.getKey(), entry.getValue());
   }
 
   /**
@@ -50,8 +42,8 @@ public class Pair {
    *
    * @return The first object
    */
-  public Object getFirst() {
-    return _firstObj;
+  public K getFirst() {
+    return getKey();
   }
 
   /**
@@ -59,7 +51,7 @@ public class Pair {
    *
    * @return The second object
    */
-  public Object getSecond() {
-    return _secondObj;
+  public V getSecond() {
+    return getValue();
   }
 }

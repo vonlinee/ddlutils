@@ -38,7 +38,7 @@ abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
   /**
    * List of pairs of local and corresponding foreign column names that make up the foreign key.
    */
-  private final List<Pair> referenceColumnNames = new ArrayList<>();
+  private final List<Pair<String, String>> referenceColumnNames = new ArrayList<>();
 
   /**
    * Creates a new change object.
@@ -52,7 +52,7 @@ abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
     for (int refIdx = 0; refIdx < foreignKey.getReferenceCount(); refIdx++) {
       Reference ref = foreignKey.getReference(refIdx);
 
-      referenceColumnNames.add(new Pair(ref.getLocalColumnName(), ref.getForeignColumnName()));
+      referenceColumnNames.add(new Pair<>(ref.getLocalColumnName(), ref.getForeignColumnName()));
     }
   }
 
@@ -70,7 +70,7 @@ abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
         if (curFk.getReferenceCount() == referenceColumnNames.size()) {
           for (int refIdx = 0; refIdx < curFk.getReferenceCount(); refIdx++) {
             Reference ref = curFk.getReference(refIdx);
-            Pair colNames = referenceColumnNames.get(refIdx);
+            Pair<String, String> colNames = referenceColumnNames.get(refIdx);
 
             if (caseSensitive) {
               if (ref.getLocalColumnName().equals(colNames.getFirst()) &&
@@ -78,8 +78,8 @@ abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
                 return curFk;
               }
             } else {
-              if (ref.getLocalColumnName().equalsIgnoreCase((String) colNames.getFirst()) &&
-                  ref.getForeignColumnName().equalsIgnoreCase((String) colNames.getSecond())) {
+              if (ref.getLocalColumnName().equalsIgnoreCase(colNames.getFirst()) &&
+                  ref.getForeignColumnName().equalsIgnoreCase(colNames.getSecond())) {
                 return curFk;
               }
             }
