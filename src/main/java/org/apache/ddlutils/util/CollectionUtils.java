@@ -1,7 +1,5 @@
 package org.apache.ddlutils.util;
 
-import org.apache.ddlutils.model.ForeignKey;
-
 import java.text.Collator;
 import java.util.*;
 import java.util.function.Function;

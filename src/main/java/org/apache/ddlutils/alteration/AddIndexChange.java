@@ -30,7 +30,7 @@ public class AddIndexChange extends TableChangeImplBase {
   /**
    * The new index.
    */
-  private final Index _newIndex;
+  private final Index newIndex;
 
   /**
    * Creates a new change object.
@@ -40,7 +40,7 @@ public class AddIndexChange extends TableChangeImplBase {
    */
   public AddIndexChange(String tableName, Index newIndex) {
     super(tableName);
-    _newIndex = newIndex;
+    this.newIndex = newIndex;
   }
 
   /**
@@ -49,7 +49,7 @@ public class AddIndexChange extends TableChangeImplBase {
    * @return The new index
    */
   public Index getNewIndex() {
-    return _newIndex;
+    return newIndex;
   }
 
   /**
@@ -59,9 +59,9 @@ public class AddIndexChange extends TableChangeImplBase {
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 
-    table.addIndex(_newIndex);
-    for (int idx = 0; idx < _newIndex.getColumnCount(); idx++) {
-      IndexColumn idxColumn = _newIndex.getColumn(idx);
+    table.addIndex(newIndex);
+    for (int idx = 0; idx < newIndex.getColumnCount(); idx++) {
+      IndexColumn idxColumn = newIndex.getColumn(idx);
       Column tmpColumn = idxColumn.getColumn();
 
       idxColumn.setColumn(table.findColumn(tmpColumn.getName(), caseSensitive));

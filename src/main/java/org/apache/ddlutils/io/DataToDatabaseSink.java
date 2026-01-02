@@ -50,55 +50,55 @@ public class DataToDatabaseSink implements DataSink {
   /**
    * Generates the SQL and writes it to the database.
    */
-  private final Platform _platform;
+  private final Platform platform;
   /**
    * The database model.
    */
-  private final Database _model;
+  private final Database model;
   /**
    * The queued objects for batch insertion.
    */
-  private final ArrayList<DynaBean> _batchQueue = new ArrayList<>();
+  private final ArrayList<DynaBean> batchQueue = new ArrayList<>();
   /**
    * Stores the tables that are target of a foreign key.
    */
-  private final HashSet<Table> _fkTables = new HashSet<>();
+  private final HashSet<Table> fkTables = new HashSet<>();
   /**
    * Contains the tables that have a self-referencing foreign key to a (partially) identity primary key.
    */
-  private final HashSet<Table> _tablesWithSelfIdentityReference = new HashSet<>();
+  private final HashSet<Table> tablesWithSelfIdentityReference = new HashSet<>();
   /**
    * Contains the tables that have a self-referencing foreign key that is required.
    */
-  private final HashSet<Table> _tablesWithRequiredSelfReference = new HashSet<>();
+  private final HashSet<Table> tablesWithRequiredSelfReference = new HashSet<>();
   /**
    * Maps original to processed identities.
    */
-  private final HashMap<Identity, Identity> _identityMap = new HashMap<>();
+  private final HashMap<Identity, Identity> identityMap = new HashMap<>();
   /**
    * Stores the objects that are waiting for other objects to be inserted.
    */
-  private final ArrayList<WaitingObject> _waitingObjects = new ArrayList<>();
+  private final ArrayList<WaitingObject> waitingObjects = new ArrayList<>();
   /**
    * The connection to the database.
    */
-  private Connection _connection;
+  private Connection connection;
   /**
    * Whether to stop when an error has occurred while inserting a bean into the database.
    */
-  private boolean _haltOnErrors = true;
+  private boolean haltOnErrors = true;
   /**
    * Whether to delay the insertion of beans so that the beans referenced by it via foreign keys, are already inserted into the database.
    */
-  private boolean _ensureFkOrder = true;
+  private boolean ensureFkOrder = true;
   /**
    * Whether to use batch mode inserts.
    */
-  private boolean _useBatchMode = false;
+  private boolean useBatchMode = false;
   /**
    * The number of beans to insert in one batch.
    */
-  private int _batchSize = 1024;
+  private int batchSize = 1024;
 
   /**
    * Creates a new sink instance.
@@ -107,8 +107,8 @@ public class DataToDatabaseSink implements DataSink {
    * @param model    The database model
    */
   public DataToDatabaseSink(Platform platform, Database model) {
-    _platform = platform;
-    _model = model;
+    this.platform = platform;
+    this.model = model;
     for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
       Table table = model.getTable(tableIdx);
       ForeignKey selfRefFk = table.getSelfReferencingForeignKey();
@@ -118,13 +118,13 @@ public class DataToDatabaseSink implements DataSink {
 
         for (Column pkColumn : pkColumns) {
           if (pkColumn.isAutoIncrement()) {
-            _tablesWithSelfIdentityReference.add(table);
+            tablesWithSelfIdentityReference.add(table);
             break;
           }
         }
         for (int idx = 0; idx < selfRefFk.getReferenceCount(); idx++) {
           if (selfRefFk.getReference(idx).getLocalColumn().isRequired()) {
-            _tablesWithRequiredSelfReference.add(table);
+            tablesWithRequiredSelfReference.add(table);
             break;
           }
         }
@@ -139,7 +139,7 @@ public class DataToDatabaseSink implements DataSink {
    * @return <code>true</code> if the sink stops when an error occurred
    */
   public boolean isHaltOnErrors() {
-    return _haltOnErrors;
+    return haltOnErrors;
   }
 
   /**
@@ -149,7 +149,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param haltOnErrors <code>true</code> if the sink shall stop when an error occurred
    */
   public void setHaltOnErrors(boolean haltOnErrors) {
-    _haltOnErrors = haltOnErrors;
+    this.haltOnErrors = haltOnErrors;
   }
 
   /**
@@ -159,7 +159,7 @@ public class DataToDatabaseSink implements DataSink {
    * @return <code>true</code> if beans are inserted after its foreign key-references
    */
   public boolean isEnsureFkOrder() {
-    return _ensureFkOrder;
+    return ensureFkOrder;
   }
 
   /**
@@ -172,7 +172,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param ensureFkOrder <code>true</code> if beans shall be inserted after its foreign key-references
    */
   public void setEnsureForeignKeyOrder(boolean ensureFkOrder) {
-    _ensureFkOrder = ensureFkOrder;
+    this.ensureFkOrder = ensureFkOrder;
   }
 
   /**
@@ -181,7 +181,7 @@ public class DataToDatabaseSink implements DataSink {
    * @return <code>true</code> if batch mode is used (<code>false</code> per default)
    */
   public boolean isUseBatchMode() {
-    return _useBatchMode;
+    return useBatchMode;
   }
 
   /**
@@ -191,7 +191,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param useBatchMode <code>true</code> if batch mode shall be used
    */
   public void setUseBatchMode(boolean useBatchMode) {
-    _useBatchMode = useBatchMode;
+    this.useBatchMode = useBatchMode;
   }
 
   /**
@@ -200,7 +200,7 @@ public class DataToDatabaseSink implements DataSink {
    * @return The number of beans
    */
   public int getBatchSize() {
-    return _batchSize;
+    return batchSize;
   }
 
   /**
@@ -209,7 +209,7 @@ public class DataToDatabaseSink implements DataSink {
    * @param batchSize The number of beans
    */
   public void setBatchSize(int batchSize) {
-    _batchSize = batchSize;
+    this.batchSize = batchSize;
   }
 
   /**
@@ -218,17 +218,17 @@ public class DataToDatabaseSink implements DataSink {
   @Override
   public void end() throws DataSinkException {
     purgeBatchQueue();
-    if (_connection != null) {
+    if (connection != null) {
       try {
-        _connection.close();
+        connection.close();
       } catch (SQLException ex) {
         throw new DataSinkException(ex);
       }
     }
-    if (!_waitingObjects.isEmpty()) {
+    if (!waitingObjects.isEmpty()) {
       if (_log.isDebugEnabled()) {
-        for (WaitingObject obj : _waitingObjects) {
-          Table table = _model.getDynaClassFor(obj.getObject()).getTable();
+        for (WaitingObject obj : waitingObjects) {
+          Table table = model.getDynaClassFor(obj.getObject()).getTable();
           Identity objId = buildIdentityFromPKs(table, obj.getObject());
 
           _log.debug("Row " + objId + " is still not written because it depends on these yet unwritten rows");
@@ -239,10 +239,10 @@ public class DataToDatabaseSink implements DataSink {
 
         }
       }
-      if (_waitingObjects.size() == 1) {
+      if (waitingObjects.size() == 1) {
         throw new DataSinkException("There is one row still not written because of missing referenced rows");
       } else {
-        throw new DataSinkException("There are " + _waitingObjects.size() + " rows still not written because of missing referenced rows");
+        throw new DataSinkException("There are " + waitingObjects.size() + " rows still not written because of missing referenced rows");
       }
     }
   }
@@ -252,21 +252,21 @@ public class DataToDatabaseSink implements DataSink {
    */
   @Override
   public void start() throws DataSinkException {
-    _fkTables.clear();
-    _waitingObjects.clear();
-    if (_ensureFkOrder) {
-      for (int tableIdx = 0; tableIdx < _model.getTableCount(); tableIdx++) {
-        Table table = _model.getTable(tableIdx);
+    fkTables.clear();
+    waitingObjects.clear();
+    if (ensureFkOrder) {
+      for (int tableIdx = 0; tableIdx < model.getTableCount(); tableIdx++) {
+        Table table = model.getTable(tableIdx);
 
         for (int fkIdx = 0; fkIdx < table.getForeignKeyCount(); fkIdx++) {
           ForeignKey curFk = table.getForeignKey(fkIdx);
 
-          _fkTables.add(curFk.getForeignTable());
+          fkTables.add(curFk.getForeignTable());
         }
       }
     }
     try {
-      _connection = _platform.borrowConnection();
+      connection = platform.borrowConnection();
     } catch (DatabaseOperationException ex) {
       throw new DataSinkException(ex);
     }
@@ -277,10 +277,10 @@ public class DataToDatabaseSink implements DataSink {
    */
   @Override
   public void addBean(DynaBean bean) throws DataSinkException {
-    Table table = _model.getDynaClassFor(bean).getTable();
+    Table table = model.getDynaClassFor(bean).getTable();
     Identity origIdentity = buildIdentityFromPKs(table, bean);
 
-    if (_ensureFkOrder && (table.getForeignKeyCount() > 0)) {
+    if (ensureFkOrder && (table.getForeignKeyCount() > 0)) {
       WaitingObject waitingObj = new WaitingObject(bean, origIdentity);
 
       for (int idx = 0; idx < table.getForeignKeyCount(); idx++) {
@@ -288,7 +288,7 @@ public class DataToDatabaseSink implements DataSink {
         Identity fkIdentity = buildIdentityFromFK(table, fk, bean);
 
         if ((fkIdentity != null) && !fkIdentity.equals(origIdentity)) {
-          Identity processedIdentity = _identityMap.get(fkIdentity);
+          Identity processedIdentity = identityMap.get(fkIdentity);
 
           if (processedIdentity != null) {
             updateFKColumns(bean, fkIdentity.getForeignKeyName(), processedIdentity);
@@ -310,7 +310,7 @@ public class DataToDatabaseSink implements DataSink {
           }
           _log.debug(msg.toString());
         }
-        _waitingObjects.add(waitingObj);
+        waitingObjects.add(waitingObj);
         return;
       }
     }
@@ -321,24 +321,24 @@ public class DataToDatabaseSink implements DataSink {
       _log.debug("Inserted bean " + origIdentity);
     }
 
-    if (_ensureFkOrder && _fkTables.contains(table)) {
+    if (ensureFkOrder && fkTables.contains(table)) {
       Identity newIdentity = buildIdentityFromPKs(table, bean);
       ArrayList<DynaBean> finishedObjs = new ArrayList<>();
 
-      _identityMap.put(origIdentity, newIdentity);
+      identityMap.put(origIdentity, newIdentity);
 
       // we're doing multiple passes so that we can insert as many objects in
       // one go as possible
       ArrayList<Identity> identitiesToCheck = new ArrayList<>();
 
       identitiesToCheck.add(origIdentity);
-      while (!identitiesToCheck.isEmpty() && !_waitingObjects.isEmpty()) {
+      while (!identitiesToCheck.isEmpty() && !waitingObjects.isEmpty()) {
         Identity curIdentity = identitiesToCheck.get(0);
-        Identity curNewIdentity = _identityMap.get(curIdentity);
+        Identity curNewIdentity = identityMap.get(curIdentity);
 
         identitiesToCheck.remove(0);
         finishedObjs.clear();
-        for (Iterator<WaitingObject> waitingObjIt = _waitingObjects.iterator(); waitingObjIt.hasNext(); ) {
+        for (Iterator<WaitingObject> waitingObjIt = waitingObjects.iterator(); waitingObjIt.hasNext(); ) {
           WaitingObject waitingObj = waitingObjIt.next();
           Identity fkIdentity = waitingObj.removePendingFK(curIdentity);
 
@@ -352,14 +352,14 @@ public class DataToDatabaseSink implements DataSink {
           }
         }
         for (DynaBean finishedObj : finishedObjs) {
-          Table tableForObj = _model.getDynaClassFor(finishedObj).getTable();
+          Table tableForObj = model.getDynaClassFor(finishedObj).getTable();
           Identity objIdentity = buildIdentityFromPKs(tableForObj, finishedObj);
 
           insertBeanIntoDatabase(tableForObj, finishedObj);
 
           Identity newObjIdentity = buildIdentityFromPKs(tableForObj, finishedObj);
 
-          _identityMap.put(objIdentity, newObjIdentity);
+          identityMap.put(objIdentity, newObjIdentity);
           identitiesToCheck.add(objIdentity);
           if (_log.isDebugEnabled()) {
             _log.debug("Inserted deferred row " + objIdentity);
@@ -376,9 +376,9 @@ public class DataToDatabaseSink implements DataSink {
    * @param bean  The bean
    */
   private void insertBeanIntoDatabase(Table table, DynaBean bean) throws DataSinkException {
-    if (_useBatchMode) {
-      _batchQueue.add(bean);
-      if (_batchQueue.size() >= _batchSize) {
+    if (useBatchMode) {
+      batchQueue.add(bean);
+      if (batchQueue.size() >= batchSize) {
         purgeBatchQueue();
       }
     } else {
@@ -390,24 +390,24 @@ public class DataToDatabaseSink implements DataSink {
    * Purges the batch queue by inserting the objects into the database.
    */
   private void purgeBatchQueue() throws DataSinkException {
-    if (!_batchQueue.isEmpty()) {
+    if (!batchQueue.isEmpty()) {
       try {
-        _platform.insert(_connection, _model, _batchQueue);
-        if (!_connection.getAutoCommit()) {
-          _connection.commit();
+        platform.insert(connection, model, batchQueue);
+        if (!connection.getAutoCommit()) {
+          connection.commit();
         }
         if (_log.isDebugEnabled()) {
-          _log.debug("Inserted " + _batchQueue.size() + " rows in batch mode ");
+          _log.debug("Inserted " + batchQueue.size() + " rows in batch mode ");
         }
       } catch (Exception ex) {
-        if (_haltOnErrors) {
-          _platform.returnConnection(_connection);
+        if (haltOnErrors) {
+          platform.returnConnection(connection);
           throw new DataSinkException(ex);
         } else {
-          _log.warn("Exception while inserting " + _batchQueue.size() + " rows via batch mode into the database", ex);
+          _log.warn("Exception while inserting " + batchQueue.size() + " rows via batch mode into the database", ex);
         }
       }
-      _batchQueue.clear();
+      batchQueue.clear();
     }
   }
 
@@ -422,8 +422,8 @@ public class DataToDatabaseSink implements DataSink {
       boolean needTwoStepInsert = false;
       ForeignKey selfRefFk = null;
 
-      if (!_platform.isIdentityOverrideOn() &&
-          _tablesWithSelfIdentityReference.contains(table)) {
+      if (!platform.isIdentityOverrideOn() &&
+          tablesWithSelfIdentityReference.contains(table)) {
         selfRefFk = table.getSelfReferencingForeignKey();
 
         // in case of a self-reference (fk points to the very row that we're inserting)
@@ -433,7 +433,7 @@ public class DataToDatabaseSink implements DataSink {
         Identity fkIdentity = buildIdentityFromFK(table, selfRefFk, bean);
 
         if (pkIdentity.equals(fkIdentity)) {
-          if (_tablesWithRequiredSelfReference.contains(table)) {
+          if (tablesWithRequiredSelfReference.contains(table)) {
             throw new DataSinkException("Can only insert rows with fk pointing to themselves when all fk columns can be NULL (row pk is " + pkIdentity + ")");
           } else {
             needTwoStepInsert = true;
@@ -452,20 +452,20 @@ public class DataToDatabaseSink implements DataSink {
           fkValues.add(bean.get(columnName));
           bean.set(columnName, null);
         }
-        _platform.insert(_connection, _model, bean);
+        platform.insert(connection, model, bean);
         for (int idx = 0; idx < selfRefFk.getReferenceCount(); idx++) {
           bean.set(selfRefFk.getReference(idx).getLocalColumnName(), fkValues.get(idx));
         }
-        _platform.update(_connection, _model, bean);
+        platform.update(connection, model, bean);
       } else {
-        _platform.insert(_connection, _model, bean);
+        platform.insert(connection, model, bean);
       }
-      if (!_connection.getAutoCommit()) {
-        _connection.commit();
+      if (!connection.getAutoCommit()) {
+        connection.commit();
       }
     } catch (Exception ex) {
-      if (_haltOnErrors) {
-        _platform.returnConnection(_connection);
+      if (haltOnErrors) {
+        platform.returnConnection(connection);
         throw new DataSinkException(ex);
       } else {
         _log.warn("Exception while inserting a row into the database", ex);

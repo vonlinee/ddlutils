@@ -31,12 +31,12 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public abstract class IndexChangeImplBase extends TableChangeImplBase
+abstract class IndexChangeImplBase extends TableChangeImplBase
   implements IndexChange {
   /**
    * The names of the columns in the index.
    */
-  private final List<String> _columnNames = new ArrayList<>();
+  private final List<String> columnNames = new ArrayList<>();
 
   /**
    * Creates a new change object.
@@ -48,7 +48,7 @@ public abstract class IndexChangeImplBase extends TableChangeImplBase
   public IndexChangeImplBase(String tableName, Index index) {
     super(tableName);
     for (int colIdx = 0; colIdx < index.getColumnCount(); colIdx++) {
-      _columnNames.add(index.getColumn(colIdx).getName());
+      columnNames.add(index.getColumn(colIdx).getName());
     }
   }
 
@@ -63,10 +63,10 @@ public abstract class IndexChangeImplBase extends TableChangeImplBase
       for (int indexIdx = 0; indexIdx < table.getIndexCount(); indexIdx++) {
         Index curIndex = table.getIndex(indexIdx);
 
-        if (curIndex.getColumnCount() == _columnNames.size()) {
+        if (curIndex.getColumnCount() == columnNames.size()) {
           for (int colIdx = 0; colIdx < curIndex.getColumnCount(); colIdx++) {
             String curColName = curIndex.getColumn(colIdx).getName();
-            String expectedColName = _columnNames.get(colIdx);
+            String expectedColName = columnNames.get(colIdx);
 
             if ((caseSensitive && curColName.equals(expectedColName)) ||
                 (!caseSensitive && curColName.equalsIgnoreCase(expectedColName))) {

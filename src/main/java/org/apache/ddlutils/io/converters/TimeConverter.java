@@ -38,24 +38,24 @@ public class TimeConverter implements SqlTypeConverter {
   /**
    * The regular expression pattern for the parsing of ISO times.
    */
-  private final Pattern _timePattern;
+  private final Pattern timePattern;
   /**
    * The calendar object to convert to/from times.
    */
-  private final Calendar _calendar;
+  private final Calendar calendar;
 
   /**
    * Creates a new time converter object.
    */
   public TimeConverter() {
     try {
-      _timePattern = Pattern.compile("(?:\\d{4}-\\d{2}-\\d{2}\\s)?(\\d{2})(?::(\\d{2}))?(?::(\\d{2}))?(?:\\..*)?");
+      timePattern = Pattern.compile("(?:\\d{4}-\\d{2}-\\d{2}\\s)?(\\d{2})(?::(\\d{2}))?(?::(\\d{2}))?(?:\\..*)?");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
 
-    _calendar = Calendar.getInstance();
-    _calendar.setLenient(false);
+    calendar = Calendar.getInstance();
+    calendar.setLenient(false);
   }
 
   /**
@@ -68,7 +68,7 @@ public class TimeConverter implements SqlTypeConverter {
     } else if (textRep != null) {
       // we're not using {@link java.sql.Time#valueOf(String)} as this method is too strict
       // it only parses the full spec "hh:mm:ss"
-      Matcher matcher = _timePattern.matcher(textRep);
+      Matcher matcher = timePattern.matcher(textRep);
       int hours = 0;
       int minutes = 0;
       int seconds = 0;
@@ -87,12 +87,12 @@ public class TimeConverter implements SqlTypeConverter {
         } catch (NumberFormatException ex) {
           throw new ConversionException("Not a valid time : " + textRep, ex);
         }
-        _calendar.clear();
+        calendar.clear();
         try {
-          _calendar.set(Calendar.HOUR_OF_DAY, hours);
-          _calendar.set(Calendar.MINUTE, minutes);
-          _calendar.set(Calendar.SECOND, seconds);
-          return new Time(_calendar.getTimeInMillis());
+          calendar.set(Calendar.HOUR_OF_DAY, hours);
+          calendar.set(Calendar.MINUTE, minutes);
+          calendar.set(Calendar.SECOND, seconds);
+          return new Time(calendar.getTimeInMillis());
         } catch (IllegalArgumentException ex) {
           throw new ConversionException("Not a valid time : " + textRep, ex);
         }

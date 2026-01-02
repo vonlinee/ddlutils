@@ -40,15 +40,15 @@ public class PrettyPrintingXmlWriter {
   /**
    * The output encoding.
    */
-  private final String _encoding;
+  private final String encoding;
   /**
    * The XML writer.
    */
-  private XMLStreamWriter _writer;
+  private XMLStreamWriter writer;
   /**
    * Whether we're pretty-printing.
    */
-  private boolean _prettyPrinting = true;
+  private boolean prettyPrinting = true;
 
   /**
    * Creates a XML writer instance using UTF-8 encoding.
@@ -74,15 +74,15 @@ public class PrettyPrintingXmlWriter {
       bufferedOutput = new BufferedOutputStream(output);
     }
     if ((encoding == null) || (encoding.isEmpty())) {
-      _encoding = "UTF-8";
+      this.encoding = "UTF-8";
     } else {
-      _encoding = encoding;
+      this.encoding = encoding;
     }
 
     try {
       XMLOutputFactory factory = XMLOutputFactory.newInstance();
 
-      _writer = factory.createXMLStreamWriter(bufferedOutput, _encoding);
+      writer = factory.createXMLStreamWriter(bufferedOutput, this.encoding);
     } catch (XMLStreamException ex) {
       throwException(ex);
     }
@@ -103,11 +103,11 @@ public class PrettyPrintingXmlWriter {
     } else {
       bufferedWriter = new BufferedWriter(output);
     }
-    _encoding = encoding;
+    this.encoding = encoding;
     try {
       XMLOutputFactory factory = XMLOutputFactory.newInstance();
 
-      _writer = factory.createXMLStreamWriter(bufferedWriter);
+      writer = factory.createXMLStreamWriter(bufferedWriter);
     } catch (XMLStreamException ex) {
       throwException(ex);
     }
@@ -119,7 +119,7 @@ public class PrettyPrintingXmlWriter {
    * @return The encoding
    */
   public String getEncoding() {
-    return _encoding;
+    return encoding;
   }
 
   /**
@@ -139,7 +139,7 @@ public class PrettyPrintingXmlWriter {
    * @return <code>true</code> if the output is pretty-printed
    */
   public boolean isPrettyPrinting() {
-    return _prettyPrinting;
+    return prettyPrinting;
   }
 
   /**
@@ -148,7 +148,7 @@ public class PrettyPrintingXmlWriter {
    * @param prettyPrinting <code>true</code> if the output is pretty-printed
    */
   public void setPrettyPrinting(boolean prettyPrinting) {
-    _prettyPrinting = prettyPrinting;
+    this.prettyPrinting = prettyPrinting;
   }
 
   /**
@@ -158,7 +158,7 @@ public class PrettyPrintingXmlWriter {
    */
   public void setDefaultNamespace(String uri) throws DdlUtilsXMLException {
     try {
-      _writer.setDefaultNamespace(uri);
+      writer.setDefaultNamespace(uri);
     } catch (XMLStreamException ex) {
       throwException(ex);
     }
@@ -168,9 +168,9 @@ public class PrettyPrintingXmlWriter {
    * Prints a newline if we're pretty-printing.
    */
   public void printlnIfPrettyPrinting() throws DdlUtilsXMLException {
-    if (_prettyPrinting) {
+    if (prettyPrinting) {
       try {
-        _writer.writeCharacters("\n");
+        writer.writeCharacters("\n");
       } catch (XMLStreamException ex) {
         throwException(ex);
       }
@@ -183,10 +183,10 @@ public class PrettyPrintingXmlWriter {
    * @param level The indentation level
    */
   public void indentIfPrettyPrinting(int level) throws DdlUtilsXMLException {
-    if (_prettyPrinting) {
+    if (prettyPrinting) {
       try {
         for (int idx = 0; idx < level; idx++) {
-          _writer.writeCharacters(INDENT_STRING);
+          writer.writeCharacters(INDENT_STRING);
         }
       } catch (XMLStreamException ex) {
         throwException(ex);
@@ -200,7 +200,7 @@ public class PrettyPrintingXmlWriter {
    */
   public void writeDocumentStart() throws DdlUtilsXMLException {
     try {
-      _writer.writeStartDocument(_encoding, "1.0");
+      writer.writeStartDocument(encoding, "1.0");
       printlnIfPrettyPrinting();
     } catch (XMLStreamException ex) {
       throwException(ex);
@@ -212,9 +212,9 @@ public class PrettyPrintingXmlWriter {
    */
   public void writeDocumentEnd() throws DdlUtilsXMLException {
     try {
-      _writer.writeEndDocument();
-      _writer.flush();
-      _writer.close();
+      writer.writeEndDocument();
+      writer.flush();
+      writer.close();
     } catch (XMLStreamException ex) {
       throwException(ex);
     }
@@ -229,9 +229,9 @@ public class PrettyPrintingXmlWriter {
   public void writeNamespace(String prefix, String namespaceUri) throws DdlUtilsXMLException {
     try {
       if ((prefix == null) || (prefix.isEmpty())) {
-        _writer.writeDefaultNamespace(namespaceUri);
+        writer.writeDefaultNamespace(namespaceUri);
       } else {
-        _writer.writeNamespace(prefix, namespaceUri);
+        writer.writeNamespace(prefix, namespaceUri);
       }
     } catch (XMLStreamException ex) {
       throwException(ex);
@@ -247,9 +247,9 @@ public class PrettyPrintingXmlWriter {
   public void writeElementStart(String namespaceUri, String localPart) throws DdlUtilsXMLException {
     try {
       if (namespaceUri == null) {
-        _writer.writeStartElement(localPart);
+        writer.writeStartElement(localPart);
       } else {
-        _writer.writeStartElement(namespaceUri, localPart);
+        writer.writeStartElement(namespaceUri, localPart);
       }
     } catch (XMLStreamException ex) {
       throwException(ex);
@@ -261,7 +261,7 @@ public class PrettyPrintingXmlWriter {
    */
   public void writeElementEnd() throws DdlUtilsXMLException {
     try {
-      _writer.writeEndElement();
+      writer.writeEndElement();
     } catch (XMLStreamException ex) {
       throwException(ex);
     }
@@ -278,9 +278,9 @@ public class PrettyPrintingXmlWriter {
     if (value != null) {
       try {
         if (namespaceUri == null) {
-          _writer.writeAttribute(localPart, value);
+          writer.writeAttribute(localPart, value);
         } else {
-          _writer.writeAttribute(namespaceUri, localPart, value);
+          writer.writeAttribute(namespaceUri, localPart, value);
         }
       } catch (XMLStreamException ex) {
         throwException(ex);
@@ -296,7 +296,7 @@ public class PrettyPrintingXmlWriter {
   public void writeCData(String data) throws DdlUtilsXMLException {
     if (data != null) {
       try {
-        _writer.writeCData(data);
+        writer.writeCData(data);
       } catch (XMLStreamException ex) {
         throwException(ex);
       }
@@ -311,7 +311,7 @@ public class PrettyPrintingXmlWriter {
   public void writeCharacters(String data) throws DdlUtilsXMLException {
     if (data != null) {
       try {
-        _writer.writeCharacters(data);
+        writer.writeCharacters(data);
       } catch (XMLStreamException ex) {
         throwException(ex);
       }

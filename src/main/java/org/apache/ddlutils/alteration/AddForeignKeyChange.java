@@ -33,7 +33,7 @@ public class AddForeignKeyChange extends TableChangeImplBase {
   /**
    * The new foreign key.
    */
-  private final ForeignKey _newForeignKey;
+  private final ForeignKey newForeignKey;
 
   /**
    * Creates a new change object.
@@ -43,7 +43,7 @@ public class AddForeignKeyChange extends TableChangeImplBase {
    */
   public AddForeignKeyChange(String tableName, ForeignKey newForeignKey) {
     super(tableName);
-    _newForeignKey = newForeignKey;
+    this.newForeignKey = newForeignKey;
   }
 
   /**
@@ -52,7 +52,7 @@ public class AddForeignKeyChange extends TableChangeImplBase {
    * @return The new foreign key
    */
   public ForeignKey getNewForeignKey() {
-    return _newForeignKey;
+    return newForeignKey;
   }
 
   /**
@@ -60,6 +60,6 @@ public class AddForeignKeyChange extends TableChangeImplBase {
    */
   @Override
   public void apply(Database database, boolean caseSensitive) {
-    findChangedTable(database, caseSensitive).addForeignKey(_newForeignKey);
+    findChangedTable(database, caseSensitive).addForeignKey(newForeignKey);
   }
 }

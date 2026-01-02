@@ -33,15 +33,15 @@ public class AddColumnChange extends TableChangeImplBase {
   /**
    * The new column.
    */
-  private final Column _newColumn;
+  private final Column newColumn;
   /**
    * The name of the column after which the new column should be added.
    */
-  private final String _previousColumnName;
+  private final String previousColumnName;
   /**
    * The name of the column before which the new column should be added.
    */
-  private final String _nextColumnName;
+  private final String nextColumnName;
 
   /**
    * Creates a new change object.
@@ -53,9 +53,9 @@ public class AddColumnChange extends TableChangeImplBase {
    */
   public AddColumnChange(String tableName, Column newColumn, String previousColumnName, String nextColumnName) {
     super(tableName);
-    _newColumn = newColumn;
-    _previousColumnName = previousColumnName;
-    _nextColumnName = nextColumnName;
+    this.newColumn = newColumn;
+    this.previousColumnName = previousColumnName;
+    this.nextColumnName = nextColumnName;
   }
 
   /**
@@ -64,7 +64,7 @@ public class AddColumnChange extends TableChangeImplBase {
    * @return The new column
    */
   public Column getNewColumn() {
-    return _newColumn;
+    return newColumn;
   }
 
   /**
@@ -73,7 +73,7 @@ public class AddColumnChange extends TableChangeImplBase {
    * @return The name of the previous column
    */
   public String getPreviousColumn() {
-    return _previousColumnName;
+    return previousColumnName;
   }
 
   /**
@@ -82,7 +82,7 @@ public class AddColumnChange extends TableChangeImplBase {
    * @return The name of the next column
    */
   public String getNextColumn() {
-    return _nextColumnName;
+    return nextColumnName;
   }
 
   /**
@@ -92,7 +92,7 @@ public class AddColumnChange extends TableChangeImplBase {
    * @return <code>true</code> if the column is added at the end
    */
   public boolean isAtEnd() {
-    return _nextColumnName == null;
+    return nextColumnName == null;
   }
 
   /**
@@ -101,14 +101,14 @@ public class AddColumnChange extends TableChangeImplBase {
   @Override
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
-    Column newColumn = new CloneHelper().clone(_newColumn, true);
+    Column newColumn = new CloneHelper().clone(this.newColumn, true);
 
-    if (_previousColumnName != null) {
-      Column prevColumn = table.findColumn(_previousColumnName, caseSensitive);
+    if (previousColumnName != null) {
+      Column prevColumn = table.findColumn(previousColumnName, caseSensitive);
       int idx = table.getColumnIndex(prevColumn) + 1;
 
       table.addColumn(idx, newColumn);
-    } else if (_nextColumnName != null) {
+    } else if (nextColumnName != null) {
       table.addColumn(0, newColumn);
     } else {
       table.addColumn(newColumn);

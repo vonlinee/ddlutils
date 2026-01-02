@@ -33,12 +33,12 @@ import java.util.List;
  *
  * @version $Revision: $
  */
-public abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
+abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
   implements ForeignKeyChange {
   /**
    * List of pairs of local and corresponding foreign column names that make up the foreign key.
    */
-  private final List<Pair> _referenceColumnNames = new ArrayList<>();
+  private final List<Pair> referenceColumnNames = new ArrayList<>();
 
   /**
    * Creates a new change object.
@@ -52,7 +52,7 @@ public abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
     for (int refIdx = 0; refIdx < foreignKey.getReferenceCount(); refIdx++) {
       Reference ref = foreignKey.getReference(refIdx);
 
-      _referenceColumnNames.add(new Pair(ref.getLocalColumnName(), ref.getForeignColumnName()));
+      referenceColumnNames.add(new Pair(ref.getLocalColumnName(), ref.getForeignColumnName()));
     }
   }
 
@@ -67,10 +67,10 @@ public abstract class ForeignKeyChangeImplBase extends TableChangeImplBase
       for (int fkIdx = 0; fkIdx < table.getForeignKeyCount(); fkIdx++) {
         ForeignKey curFk = table.getForeignKey(fkIdx);
 
-        if (curFk.getReferenceCount() == _referenceColumnNames.size()) {
+        if (curFk.getReferenceCount() == referenceColumnNames.size()) {
           for (int refIdx = 0; refIdx < curFk.getReferenceCount(); refIdx++) {
             Reference ref = curFk.getReference(refIdx);
-            Pair colNames = _referenceColumnNames.get(refIdx);
+            Pair colNames = referenceColumnNames.get(refIdx);
 
             if (caseSensitive) {
               if (ref.getLocalColumnName().equals(colNames.getFirst()) &&

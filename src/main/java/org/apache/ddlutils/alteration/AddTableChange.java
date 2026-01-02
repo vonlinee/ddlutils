@@ -33,7 +33,7 @@ public class AddTableChange implements ModelChange {
   /**
    * The new table.
    */
-  private final Table _newTable;
+  private final Table newTable;
 
   /**
    * Creates a new change object.
@@ -42,7 +42,7 @@ public class AddTableChange implements ModelChange {
    *                 which means that the table should not be changed after creating this change object
    */
   public AddTableChange(Table newTable) {
-    _newTable = newTable;
+    this.newTable = newTable;
   }
 
   /**
@@ -53,7 +53,7 @@ public class AddTableChange implements ModelChange {
    * @return The new table
    */
   public Table getNewTable() {
-    return _newTable;
+    return newTable;
   }
 
   /**
@@ -61,7 +61,7 @@ public class AddTableChange implements ModelChange {
    */
   @Override
   public void apply(Database database, boolean caseSensitive) {
-    Table table = new CloneHelper().clone(_newTable, true, false, database, caseSensitive);
+    Table table = new CloneHelper().clone(newTable, true, false, database, caseSensitive);
 
     database.addTable(table);
   }

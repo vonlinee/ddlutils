@@ -35,7 +35,7 @@ public class ColumnOrderChange extends TableChangeImplBase {
   /**
    * The map containing the new positions keyed by the source columns.
    */
-  private final Map<String, Integer> _newPositions;
+  private final Map<String, Integer> newPositions;
 
   /**
    * Creates a new change object.
@@ -45,7 +45,7 @@ public class ColumnOrderChange extends TableChangeImplBase {
    */
   public ColumnOrderChange(String tableName, Map<String, Integer> newPositions) {
     super(tableName);
-    _newPositions = newPositions;
+    this.newPositions = newPositions;
   }
 
   /**
@@ -59,9 +59,9 @@ public class ColumnOrderChange extends TableChangeImplBase {
     Integer newPos = null;
 
     if (caseSensitive) {
-      newPos = _newPositions.get(sourceColumnName);
+      newPos = newPositions.get(sourceColumnName);
     } else {
-      for (Map.Entry<String, Integer> entry : _newPositions.entrySet()) {
+      for (Map.Entry<String, Integer> entry : newPositions.entrySet()) {
         if (sourceColumnName.equalsIgnoreCase(entry.getKey())) {
           newPos = entry.getValue();
           break;

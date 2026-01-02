@@ -38,24 +38,24 @@ public class DateConverter implements SqlTypeConverter {
   /**
    * The regular expression pattern for the parsing of ISO dates.
    */
-  private final Pattern _datePattern;
+  private final Pattern datePattern;
   /**
    * The calendar object to convert to/from dates.
    */
-  private final Calendar _calendar;
+  private final Calendar calendar;
 
   /**
    * Creates a new date converter object.
    */
   public DateConverter() {
     try {
-      _datePattern = Pattern.compile("(\\d{2,4})(?:-(\\d{2}))?(?:-(\\d{2}))?.*");
+      datePattern = Pattern.compile("(\\d{2,4})(?:-(\\d{2}))?(?:-(\\d{2}))?.*");
     } catch (PatternSyntaxException ex) {
       throw new DdlUtilsException(ex);
     }
 
-    _calendar = Calendar.getInstance();
-    _calendar.setLenient(false);
+    calendar = Calendar.getInstance();
+    calendar.setLenient(false);
   }
 
   /**
@@ -68,7 +68,7 @@ public class DateConverter implements SqlTypeConverter {
     } else if (textRep != null) {
       // we're not using {@link java.sql.Date#valueOf(String)} as this method is too strict
       // it only parses the full spec "yyyy-mm-dd"
-      Matcher matcher = _datePattern.matcher(textRep);
+      Matcher matcher = datePattern.matcher(textRep);
       int year = 1970;
       int month = 1;
       int day = 1;
@@ -87,10 +87,10 @@ public class DateConverter implements SqlTypeConverter {
         } catch (NumberFormatException ex) {
           throw new ConversionException("Not a valid date : " + textRep, ex);
         }
-        _calendar.clear();
+        calendar.clear();
         try {
-          _calendar.set(year, month - 1, day);
-          return new Date(_calendar.getTimeInMillis());
+          calendar.set(year, month - 1, day);
+          return new Date(calendar.getTimeInMillis());
         } catch (IllegalArgumentException ex) {
           throw new ConversionException("Not a valid date : " + textRep, ex);
         }

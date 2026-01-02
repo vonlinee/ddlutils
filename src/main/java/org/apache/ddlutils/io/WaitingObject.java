@@ -35,15 +35,15 @@ public class WaitingObject {
   /**
    * The object that is waiting for insertion.
    */
-  private final DynaBean _obj;
+  private final DynaBean obj;
   /**
    * The original identity of the waiting object.
    */
-  private final Identity _objIdentity;
+  private final Identity objIdentity;
   /**
    * The identities of the waited-for objects.
    */
-  private final ListOrderedSet<Identity> _waitedForIdentities = new ListOrderedSet<>();
+  private final ListOrderedSet<Identity> waitedForIdentities = new ListOrderedSet<>();
 
   /**
    * Creates a new <code>WaitingObject</code> instance for the given object.
@@ -52,8 +52,8 @@ public class WaitingObject {
    * @param objIdentity The (original) identity of the object
    */
   public WaitingObject(DynaBean obj, Identity objIdentity) {
-    _obj = obj;
-    _objIdentity = objIdentity;
+    this.obj = obj;
+    this.objIdentity = objIdentity;
   }
 
   /**
@@ -62,7 +62,7 @@ public class WaitingObject {
    * @return The object
    */
   public DynaBean getObject() {
-    return _obj;
+    return obj;
   }
 
   /**
@@ -71,7 +71,7 @@ public class WaitingObject {
    * @param fkIdentity The identity of the waited-for object
    */
   public void addPendingFK(Identity fkIdentity) {
-    _waitedForIdentities.add(fkIdentity);
+    waitedForIdentities.add(fkIdentity);
   }
 
   /**
@@ -80,7 +80,7 @@ public class WaitingObject {
    * @return The identities
    */
   public Iterator<Identity> getPendingFKs() {
-    return _waitedForIdentities.iterator();
+    return waitedForIdentities.iterator();
   }
 
   /**
@@ -91,11 +91,11 @@ public class WaitingObject {
    */
   public Identity removePendingFK(Identity fkIdentity) {
     Identity result = null;
-    int idx = _waitedForIdentities.indexOf(fkIdentity);
+    int idx = waitedForIdentities.indexOf(fkIdentity);
 
     if (idx >= 0) {
-      result = _waitedForIdentities.get(idx);
-      _waitedForIdentities.remove(idx);
+      result = waitedForIdentities.get(idx);
+      waitedForIdentities.remove(idx);
     }
     return result;
   }
@@ -107,7 +107,7 @@ public class WaitingObject {
    * @return <code>true</code> if identities of waited-for objects are registered
    */
   public boolean hasPendingFKs() {
-    return !_waitedForIdentities.isEmpty();
+    return !waitedForIdentities.isEmpty();
   }
 
   /**
@@ -115,8 +115,8 @@ public class WaitingObject {
    */
   @Override
   public String toString() {
-    return _objIdentity +
+    return objIdentity +
            " waiting for " +
-           _waitedForIdentities;
+           waitedForIdentities;
   }
 }

@@ -27,11 +27,11 @@ import org.apache.ddlutils.model.Table;
  *
  * @version $Revision: $
  */
-public abstract class TableChangeImplBase implements TableChange {
+abstract class TableChangeImplBase implements TableChange {
   /**
    * The name of the affected table.
    */
-  private final String _tableName;
+  private final String tableName;
 
   /**
    * Creates a new change object.
@@ -39,7 +39,7 @@ public abstract class TableChangeImplBase implements TableChange {
    * @param tableName The table's name
    */
   public TableChangeImplBase(String tableName) {
-    _tableName = tableName;
+    this.tableName = tableName;
   }
 
   /**
@@ -47,7 +47,7 @@ public abstract class TableChangeImplBase implements TableChange {
    */
   @Override
   public String getChangedTable() {
-    return _tableName;
+    return tableName;
   }
 
   /**
@@ -55,6 +55,6 @@ public abstract class TableChangeImplBase implements TableChange {
    */
   @Override
   public Table findChangedTable(Database model, boolean caseSensitive) {
-    return model.findTable(_tableName, caseSensitive);
+    return model.findTable(tableName, caseSensitive);
   }
 }

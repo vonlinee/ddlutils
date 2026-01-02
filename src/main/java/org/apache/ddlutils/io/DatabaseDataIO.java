@@ -43,32 +43,32 @@ public class DatabaseDataIO {
   /**
    * The converters to use for converting between data and its XML representation.
    */
-  private final ArrayList<DataConverterRegistration> _converters = new ArrayList<>();
+  private final ArrayList<DataConverterRegistration> converters = new ArrayList<>();
   /**
    * Whether we should continue when an error was detected.
    */
-  private boolean _failOnError = true;
+  private boolean failOnError = true;
   /**
    * Whether foreign key order shall be followed when inserting data into the database.
    */
-  private boolean _ensureFKOrder = true;
+  private boolean ensureFKOrder = true;
   /**
    * Whether we should use batch mode.
    */
-  private boolean _useBatchMode;
+  private boolean useBatchMode;
   /**
    * The maximum number of objects to insert in one batch.
    */
-  private Integer _batchSize;
+  private Integer batchSize;
 
   /**
    * Whether DdlUtils should search for the schema of the tables. @deprecated
    */
-  private boolean _determineSchema;
+  private boolean determineSchema;
   /**
    * The schema pattern for finding tables when reading data from a live database. @deprecated
    */
-  private String _schemaPattern;
+  private String schemaPattern;
 
   /**
    * Registers a converter.
@@ -76,7 +76,7 @@ public class DatabaseDataIO {
    * @param converterRegistration The registration info
    */
   public void registerConverter(DataConverterRegistration converterRegistration) {
-    _converters.add(converterRegistration);
+    converters.add(converterRegistration);
   }
 
   /**
@@ -85,7 +85,7 @@ public class DatabaseDataIO {
    * @return Whether io is stopped when an error was detected (true by default)
    */
   public boolean isFailOnError() {
-    return _failOnError;
+    return failOnError;
   }
 
   /**
@@ -94,7 +94,7 @@ public class DatabaseDataIO {
    * @param failOnError Whether io should stop when an error was detected
    */
   public void setFailOnError(boolean failOnError) {
-    _failOnError = failOnError;
+    this.failOnError = failOnError;
   }
 
   /**
@@ -103,7 +103,7 @@ public class DatabaseDataIO {
    * @return <code>true</code> if batch mode is used
    */
   public boolean getUseBatchMode() {
-    return _useBatchMode;
+    return useBatchMode;
   }
 
   /**
@@ -112,7 +112,7 @@ public class DatabaseDataIO {
    * @param useBatchMode <code>true</code> if batch mode shall be used
    */
   public void setUseBatchMode(boolean useBatchMode) {
-    _useBatchMode = useBatchMode;
+    this.useBatchMode = useBatchMode;
   }
 
   /**
@@ -121,7 +121,7 @@ public class DatabaseDataIO {
    * @return The batch size if different from the default, <code>null</code> otherwise
    */
   public Integer getBatchSize() {
-    return _batchSize;
+    return batchSize;
   }
 
   /**
@@ -131,7 +131,7 @@ public class DatabaseDataIO {
    *                  the default shall be used
    */
   public void setBatchSize(Integer batchSize) {
-    _batchSize = batchSize;
+    this.batchSize = batchSize;
   }
 
   /**
@@ -141,7 +141,7 @@ public class DatabaseDataIO {
    * @return <code>true</code> if beans are inserted after its foreign key-references
    */
   public boolean isEnsureFKOrder() {
-    return _ensureFKOrder;
+    return ensureFKOrder;
   }
 
   /**
@@ -154,7 +154,7 @@ public class DatabaseDataIO {
    * @param ensureFKOrder <code>true</code> if beans shall be inserted after its foreign key-references
    */
   public void setEnsureFKOrder(boolean ensureFKOrder) {
-    _ensureFKOrder = ensureFKOrder;
+    this.ensureFKOrder = ensureFKOrder;
   }
 
   /**
@@ -165,7 +165,7 @@ public class DatabaseDataIO {
    * @deprecated Will be removed once proper schema support is in place
    */
   public void setDetermineSchema(boolean determineSchema) {
-    _determineSchema = determineSchema;
+    this.determineSchema = determineSchema;
   }
 
   /**
@@ -175,7 +175,7 @@ public class DatabaseDataIO {
    * @deprecated Will be removed once proper schema support is in place
    */
   public void setSchemaPattern(String schemaPattern) {
-    _schemaPattern = schemaPattern;
+    this.schemaPattern = schemaPattern;
   }
 
   /**
@@ -184,7 +184,7 @@ public class DatabaseDataIO {
    * @param converterConf The converter configuration
    */
   private void registerConverters(ConverterConfiguration converterConf) throws DdlUtilsException {
-    for (DataConverterRegistration registrationInfo : _converters) {
+    for (DataConverterRegistration registrationInfo : converters) {
       if (registrationInfo.getTypeCode() != Integer.MIN_VALUE) {
         converterConf.registerConverter(registrationInfo.getTypeCode(),
           registrationInfo.getConverter());
@@ -428,11 +428,11 @@ public class DatabaseDataIO {
     Connection connection = null;
     String schema = null;
 
-    if (_determineSchema) {
+    if (determineSchema) {
       try {
         // TODO: Remove this once we have full support for schemas
         connection = platform.borrowConnection();
-        schema = platform.getModelReader().determineSchemaOf(connection, _schemaPattern, tables[0]);
+        schema = platform.getModelReader().determineSchemaOf(connection, schemaPattern, tables[0]);
       } catch (SQLException ex) {
         // ignored
       } finally {
@@ -482,11 +482,11 @@ public class DatabaseDataIO {
     DataToDatabaseSink sink = new DataToDatabaseSink(platform, model);
     DataReader reader = new DataReader();
 
-    sink.setHaltOnErrors(_failOnError);
-    sink.setEnsureForeignKeyOrder(_ensureFKOrder);
-    sink.setUseBatchMode(_useBatchMode);
-    if (_batchSize != null) {
-      sink.setBatchSize(_batchSize);
+    sink.setHaltOnErrors(failOnError);
+    sink.setEnsureForeignKeyOrder(ensureFKOrder);
+    sink.setUseBatchMode(useBatchMode);
+    if (batchSize != null) {
+      sink.setBatchSize(batchSize);
     }
 
     reader.setModel(model);

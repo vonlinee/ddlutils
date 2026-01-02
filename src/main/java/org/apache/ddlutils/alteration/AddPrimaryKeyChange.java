@@ -32,7 +32,7 @@ public class AddPrimaryKeyChange extends TableChangeImplBase {
   /**
    * The names of the columns making up the primary key.
    */
-  private final String[] _primaryKeyColumns;
+  private final String[] primaryKeyColumns;
 
   /**
    * Creates a new change object.
@@ -43,11 +43,11 @@ public class AddPrimaryKeyChange extends TableChangeImplBase {
   public AddPrimaryKeyChange(String tableName, String[] primaryKeyColumns) {
     super(tableName);
     if (primaryKeyColumns == null) {
-      _primaryKeyColumns = new String[0];
+      this.primaryKeyColumns = new String[0];
     } else {
-      _primaryKeyColumns = new String[primaryKeyColumns.length];
+      this.primaryKeyColumns = new String[primaryKeyColumns.length];
 
-      System.arraycopy(primaryKeyColumns, 0, _primaryKeyColumns, 0, primaryKeyColumns.length);
+      System.arraycopy(primaryKeyColumns, 0, this.primaryKeyColumns, 0, primaryKeyColumns.length);
     }
   }
 
@@ -57,9 +57,9 @@ public class AddPrimaryKeyChange extends TableChangeImplBase {
    * @return The primary key column names
    */
   public String[] getPrimaryKeyColumns() {
-    String[] result = new String[_primaryKeyColumns.length];
+    String[] result = new String[primaryKeyColumns.length];
 
-    System.arraycopy(_primaryKeyColumns, 0, result, 0, _primaryKeyColumns.length);
+    System.arraycopy(primaryKeyColumns, 0, result, 0, primaryKeyColumns.length);
     return result;
   }
 
@@ -70,7 +70,7 @@ public class AddPrimaryKeyChange extends TableChangeImplBase {
   public void apply(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 
-    for (String primaryKeyColumn : _primaryKeyColumns) {
+    for (String primaryKeyColumn : primaryKeyColumns) {
       Column column = table.findColumn(primaryKeyColumn, caseSensitive);
 
       column.setPrimaryKey(true);

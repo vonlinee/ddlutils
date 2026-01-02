@@ -30,12 +30,12 @@ import java.util.Objects;
  *
  * @version $Revision: $
  */
-public abstract class ColumnChangeImplBase extends TableChangeImplBase
+abstract class ColumnChangeImplBase extends TableChangeImplBase
   implements ColumnChange {
   /**
    * The column's name.
    */
-  private final String _columnName;
+  private final String columnName;
 
   /**
    * Creates a new change object.
@@ -45,7 +45,7 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
    */
   public ColumnChangeImplBase(String tableName, String columnName) {
     super(tableName);
-    _columnName = columnName;
+    this.columnName = columnName;
   }
 
   /**
@@ -53,13 +53,13 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
    */
   @Override
   public String getChangedColumn() {
-    return _columnName;
+    return columnName;
   }
 
   @Override
   public Column findChangedColumn(Table table, boolean caseSensitive) {
     Objects.requireNonNull(table, "table is null");
-    return table.findColumn(_columnName, caseSensitive);
+    return table.findColumn(columnName, caseSensitive);
   }
 
   /**
@@ -69,6 +69,6 @@ public abstract class ColumnChangeImplBase extends TableChangeImplBase
   public Column findChangedColumn(Database model, boolean caseSensitive) {
     Table table = findChangedTable(model, caseSensitive);
 
-    return table == null ? null : table.findColumn(_columnName, caseSensitive);
+    return table == null ? null : table.findColumn(columnName, caseSensitive);
   }
 }

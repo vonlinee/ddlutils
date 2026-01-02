@@ -32,51 +32,43 @@ public class DataConverterRegistration {
   /**
    * The converter.
    */
-  private SqlTypeConverter _converter;
+  private SqlTypeConverter converter;
   /**
    * The SQL type for which the converter shall be registered.
    */
-  private int _typeCode = Integer.MIN_VALUE;
+  private int typeCode = Integer.MIN_VALUE;
   /**
    * The table name.
    */
-  private String _table;
+  private String table;
   /**
    * The column name.
    */
-  private String _column;
-
+  private String column;
   /**
    * Returns the converter.
    *
    * @return The converter
    */
   public SqlTypeConverter getConverter() {
-    return _converter;
+    return converter;
   }
 
-  /**
-   * Sets the converter class.
-   *
-   * @param converterClassName The fully qualified converter class name
-   */
   public void setClassName(String converterClassName) throws BuildException {
     try {
-      _converter = (SqlTypeConverter) getClass().getClassLoader().loadClass(converterClassName).newInstance();
+      converter = (SqlTypeConverter) getClass().getClassLoader().loadClass(converterClassName).newInstance();
     } catch (Exception ex) {
       throw new BuildException(ex);
     }
   }
-
   /**
    * Returns the jdbc type.
    *
    * @return The jdbc type code
    */
   public int getTypeCode() {
-    return _typeCode;
+    return typeCode;
   }
-
   /**
    * Sets the jdbc type.
    *
@@ -88,19 +80,17 @@ public class DataConverterRegistration {
     if (typeCode == null) {
       throw new BuildException("Unknown jdbc type " + jdbcTypeName);
     } else {
-      _typeCode = typeCode;
+      this.typeCode = typeCode;
     }
   }
-
   /**
    * Returns the column for which this converter is defined.
    *
    * @return The column
    */
   public String getColumn() {
-    return _column;
+    return column;
   }
-
   /**
    * Sets the column for which this converter is defined.
    *
@@ -110,29 +100,21 @@ public class DataConverterRegistration {
     if ((column == null) || (column.isEmpty())) {
       throw new BuildException("Please specify a non-empty column name");
     }
-    _column = column;
+    this.column = column;
   }
-
   /**
    * Returns the table for whose column this converter is defined.
    *
    * @return The table
    */
   public String getTable() {
-    return _table;
+    return table;
   }
 
-  /**
-   * Sets the table for whose column this converter is defined.
-   *
-   * @param table The table
-   */
   public void setTable(String table) throws BuildException {
     if ((table == null) || (table.isEmpty())) {
       throw new BuildException("Please specify a non-empty table name");
     }
-    _table = table;
+    this.table = table;
   }
-
-
 }

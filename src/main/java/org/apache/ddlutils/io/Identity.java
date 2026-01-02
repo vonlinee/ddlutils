@@ -36,15 +36,15 @@ public class Identity {
   /**
    * The table.
    */
-  private final Table _table;
+  private final Table table;
   /**
    * The identity columns and their values.
    */
-  private final HashMap<String, Object> _columnValues = new HashMap<>();
+  private final HashMap<String, Object> columnValues = new HashMap<>();
   /**
    * The optional foreign key name whose referenced object this identity represents.
    */
-  private String _fkName;
+  private String fkName;
 
   /**
    * Creates a new identity object for the given table.
@@ -52,7 +52,7 @@ public class Identity {
    * @param table The name of the table
    */
   public Identity(Table table) {
-    _table = table;
+    this.table = table;
   }
 
   /**
@@ -62,8 +62,8 @@ public class Identity {
    * @param fkName The name of the foreign key whose referenced object this identity represents
    */
   public Identity(Table table, String fkName) {
-    _table = table;
-    _fkName = fkName;
+    this.table = table;
+    this.fkName = fkName;
   }
 
   /**
@@ -72,7 +72,7 @@ public class Identity {
    * @return The table
    */
   public Table getTable() {
-    return _table;
+    return table;
   }
 
   /**
@@ -83,7 +83,7 @@ public class Identity {
    * @return The foreign key name
    */
   public String getForeignKeyName() {
-    return _fkName;
+    return fkName;
   }
 
   /**
@@ -93,7 +93,7 @@ public class Identity {
    * @param value The value for the column
    */
   public void setColumnValue(String name, Object value) {
-    _columnValues.put(name, value);
+    columnValues.put(name, value);
   }
 
   /**
@@ -103,7 +103,7 @@ public class Identity {
    * @return The column's value
    */
   public Object getColumnValue(String name) {
-    return _columnValues.get(name);
+    return columnValues.get(name);
   }
 
   /**
@@ -117,14 +117,14 @@ public class Identity {
 
     Identity otherIdentity = (Identity) obj;
 
-    if (!_table.equals(otherIdentity._table)) {
+    if (!table.equals(otherIdentity.table)) {
       return false;
     }
-    if (_columnValues.size() != otherIdentity._columnValues.size()) {
+    if (columnValues.size() != otherIdentity.columnValues.size()) {
       return false;
     }
-    for (Map.Entry<String, Object> entry : _columnValues.entrySet()) {
-      Object otherValue = otherIdentity._columnValues.get(entry.getKey());
+    for (Map.Entry<String, Object> entry : columnValues.entrySet()) {
+      Object otherValue = otherIdentity.columnValues.get(entry.getKey());
 
       if (entry.getValue() == null) {
         if (otherValue != null) {
@@ -155,9 +155,9 @@ public class Identity {
   public String toString() {
     StringBuilder buffer = new StringBuilder();
 
-    buffer.append(_table.getName());
+    buffer.append(table.getName());
     buffer.append(":");
-    for (Iterator<Map.Entry<String, Object>> it = _columnValues.entrySet().iterator(); it.hasNext(); ) {
+    for (Iterator<Map.Entry<String, Object>> it = columnValues.entrySet().iterator(); it.hasNext(); ) {
       Map.Entry<String, Object> entry = it.next();
 
       buffer.append(entry.getKey());

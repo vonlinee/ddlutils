@@ -41,25 +41,25 @@ public class SqlDynaClass extends BasicDynaClass {
   /**
    * The table for which this dyna class is defined.
    */
-  private final Table _table;
+  private final Table table;
   /**
    * The primary key dyna properties.
    */
-  private SqlDynaProperty[] _primaryKeyProperties;
+  private SqlDynaProperty[] primaryKeyProperties;
   /**
    * The non-primary key dyna properties.
    */
-  private SqlDynaProperty[] _nonPrimaryKeyProperties;
+  private SqlDynaProperty[] nonPrimaryKeyProperties;
 
   /**
    * Creates a new dyna class instance for the given table that has the given properties.
    *
    * @param table      The table
-   * @param properties The dyna properties
+   * @param properties The Dyna properties
    */
   public SqlDynaClass(Table table, SqlDynaProperty[] properties) {
     super(table.getName(), SqlDynaBean.class, properties);
-    _table = table;
+    this.table = table;
   }
 
   /**
@@ -88,7 +88,7 @@ public class SqlDynaClass extends BasicDynaClass {
    * @return The table
    */
   public Table getTable() {
-    return _table;
+    return table;
   }
 
   // Helper methods
@@ -121,12 +121,12 @@ public class SqlDynaClass extends BasicDynaClass {
    * @return The properties
    */
   public SqlDynaProperty[] getPrimaryKeyProperties() {
-    if (_primaryKeyProperties == null) {
+    if (primaryKeyProperties == null) {
       initPrimaryKeys();
     }
 
-    SqlDynaProperty[] result = new SqlDynaProperty[_primaryKeyProperties.length];
-    System.arraycopy(_primaryKeyProperties, 0, result, 0, _primaryKeyProperties.length);
+    SqlDynaProperty[] result = new SqlDynaProperty[primaryKeyProperties.length];
+    System.arraycopy(primaryKeyProperties, 0, result, 0, primaryKeyProperties.length);
     return result;
   }
 
@@ -136,12 +136,12 @@ public class SqlDynaClass extends BasicDynaClass {
    * @return The properties
    */
   public SqlDynaProperty[] getNonPrimaryKeyProperties() {
-    if (_nonPrimaryKeyProperties == null) {
+    if (nonPrimaryKeyProperties == null) {
       initPrimaryKeys();
     }
 
-    SqlDynaProperty[] result = new SqlDynaProperty[_nonPrimaryKeyProperties.length];
-    System.arraycopy(_nonPrimaryKeyProperties, 0, result, 0, _nonPrimaryKeyProperties.length);
+    SqlDynaProperty[] result = new SqlDynaProperty[nonPrimaryKeyProperties.length];
+    System.arraycopy(nonPrimaryKeyProperties, 0, result, 0, nonPrimaryKeyProperties.length);
     return result;
   }
 
@@ -167,7 +167,7 @@ public class SqlDynaClass extends BasicDynaClass {
         }
       }
     }
-    _primaryKeyProperties = pkProps.toArray(new SqlDynaProperty[0]);
-    _nonPrimaryKeyProperties = nonPkProps.toArray(new SqlDynaProperty[0]);
+    primaryKeyProperties = pkProps.toArray(new SqlDynaProperty[0]);
+    nonPrimaryKeyProperties = nonPkProps.toArray(new SqlDynaProperty[0]);
   }
 }

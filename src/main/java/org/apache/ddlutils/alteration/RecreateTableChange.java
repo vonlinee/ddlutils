@@ -37,11 +37,11 @@ public class RecreateTableChange extends TableChangeImplBase {
   /**
    * The target table definition.
    */
-  private final Table _targetTable;
+  private final Table targetTable;
   /**
    * The original table changes, one of which is unsupported by the current platform.
    */
-  private final List<TableChange> _originalChanges;
+  private final List<TableChange> originalChanges;
 
   /**
    * Creates a new change object for recreating a table. This change is used to specify that a table needs
@@ -56,8 +56,8 @@ public class RecreateTableChange extends TableChangeImplBase {
    */
   public RecreateTableChange(String tableName, Table targetTable, List<TableChange> originalChanges) {
     super(tableName);
-    _targetTable = targetTable;
-    _originalChanges = originalChanges;
+    this.targetTable = targetTable;
+    this.originalChanges = originalChanges;
   }
 
   /**
@@ -66,7 +66,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    * @return The table changes
    */
   public List<TableChange> getOriginalChanges() {
-    return _originalChanges;
+    return originalChanges;
   }
 
   /**
@@ -77,7 +77,7 @@ public class RecreateTableChange extends TableChangeImplBase {
    * @return The table definition
    */
   public Table getTargetTable() {
-    return _targetTable;
+    return targetTable;
   }
 
   /**
@@ -93,7 +93,7 @@ public class RecreateTableChange extends TableChangeImplBase {
       if ((caseSensitive && curTable.getName().equals(getChangedTable())) ||
           (!caseSensitive && curTable.getName().equalsIgnoreCase(getChangedTable()))) {
         database.removeTable(tableIdx);
-        database.addTable(tableIdx, new CloneHelper().clone(_targetTable, true, false, database, caseSensitive));
+        database.addTable(tableIdx, new CloneHelper().clone(targetTable, true, false, database, caseSensitive));
         break;
       }
     }

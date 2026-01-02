@@ -55,19 +55,19 @@ public class DataReader {
   /**
    * The converters.
    */
-  private final ConverterConfiguration _converterConf = new ConverterConfiguration();
+  private final ConverterConfiguration converterConf = new ConverterConfiguration();
   /**
    * The database model.
    */
-  private Database _model;
+  private Database model;
   /**
    * The object to receive the read beans.
    */
-  private DataSink _sink;
+  private DataSink sink;
   /**
    * Whether to be case-sensitive or not.
    */
-  private boolean _caseSensitive = false;
+  private boolean caseSensitive = false;
 
   /**
    * Returns the converter configuration of this data reader.
@@ -75,7 +75,7 @@ public class DataReader {
    * @return The converter configuration
    */
   public ConverterConfiguration getConverterConfiguration() {
-    return _converterConf;
+    return converterConf;
   }
 
   /**
@@ -84,7 +84,7 @@ public class DataReader {
    * @return The model
    */
   public Database getModel() {
-    return _model;
+    return model;
   }
 
   /**
@@ -93,7 +93,7 @@ public class DataReader {
    * @param model The model
    */
   public void setModel(Database model) {
-    _model = model;
+    this.model = model;
   }
 
   /**
@@ -102,7 +102,7 @@ public class DataReader {
    * @return The sink
    */
   public DataSink getSink() {
-    return _sink;
+    return sink;
   }
 
   /**
@@ -111,7 +111,7 @@ public class DataReader {
    * @param sink The sink
    */
   public void setSink(DataSink sink) {
-    _sink = sink;
+    this.sink = sink;
   }
 
   /**
@@ -120,7 +120,7 @@ public class DataReader {
    * @return <code>true</code> if the case of the pattern matters
    */
   public boolean isCaseSensitive() {
-    return _caseSensitive;
+    return caseSensitive;
   }
 
 
@@ -130,7 +130,7 @@ public class DataReader {
    * @param beCaseSensitive <code>true</code> if the case of the pattern shall matter
    */
   public void setCaseSensitive(boolean beCaseSensitive) {
-    _caseSensitive = beCaseSensitive;
+    caseSensitive = beCaseSensitive;
   }
 
   /**
@@ -290,13 +290,13 @@ public class DataReader {
       tableName = elemQName.getLocalPart();
     }
 
-    Table table = _model.findTable(tableName, isCaseSensitive());
+    Table table = model.findTable(tableName, isCaseSensitive());
 
     if (table == null) {
       _log.warn("Data XML contains an element " + elemQName + " at location " + location +
                 " but there is no table defined with this name. This element will be ignored.");
     } else {
-      DynaBean bean = _model.createDynaBeanFor(table);
+      DynaBean bean = model.createDynaBeanFor(table);
 
       for (int idx = 0; idx < table.getColumnCount(); idx++) {
         Column column = table.getColumn(idx);
@@ -441,7 +441,7 @@ public class DataReader {
    * @param value  The value as a string
    */
   private void setColumnValue(DynaBean bean, Table table, Column column, String value) throws DdlUtilsXMLException {
-    SqlTypeConverter converter = _converterConf.getRegisteredConverter(table, column);
+    SqlTypeConverter converter = converterConf.getRegisteredConverter(table, column);
     Object propValue = (converter != null ? converter.convertFromString(value, column.getTypeCode()) : value);
 
     try {

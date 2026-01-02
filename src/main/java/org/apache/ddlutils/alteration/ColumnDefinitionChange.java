@@ -36,7 +36,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   /**
    * The target column definition.
    */
-  private final Column _newColumnDef;
+  private final Column newColumnDef;
 
   /**
    * Creates a new change object.
@@ -47,7 +47,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
    */
   public ColumnDefinitionChange(String tableName, String columnName, Column newColumnDef) {
     super(tableName, columnName);
-    _newColumnDef = newColumnDef;
+    this.newColumnDef = newColumnDef;
   }
 
   /**
@@ -176,7 +176,7 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
    * @return The new column
    */
   public Column getNewColumn() {
-    return _newColumnDef;
+    return newColumnDef;
   }
 
   /**
@@ -185,6 +185,6 @@ public class ColumnDefinitionChange extends ColumnChangeImplBase {
   @Override
   public void apply(Database model, boolean caseSensitive) {
     Column column = findChangedColumn(model, caseSensitive);
-    ModelUtils.applyChange(column, _newColumnDef);
+    ModelUtils.applyChange(column, newColumnDef);
   }
 }

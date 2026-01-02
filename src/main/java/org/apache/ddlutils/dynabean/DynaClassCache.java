@@ -38,7 +38,7 @@ public class DynaClassCache {
   /**
    * A cache of the SqlDynaClasses per table name.
    */
-  private final Map<String, SqlDynaClass> _dynaClassCache = new HashMap<>();
+  private final Map<String, SqlDynaClass> dynaClassCache = new HashMap<>();
 
   /**
    * Creates a new dyna bean instance for the given table.
@@ -89,11 +89,11 @@ public class DynaClassCache {
    * @return The <code>SqlDynaClass</code> for the indicated table
    */
   public SqlDynaClass getDynaClass(Table table) {
-    SqlDynaClass answer = _dynaClassCache.get(table.getName());
+    SqlDynaClass answer = dynaClassCache.get(table.getName());
 
     if (answer == null) {
       answer = createDynaClass(table);
-      _dynaClassCache.put(table.getName(), answer);
+      dynaClassCache.put(table.getName(), answer);
     }
     return answer;
   }
