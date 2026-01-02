@@ -26,6 +26,7 @@ import org.apache.ddlutils.DdlUtilsException;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.sql.SqlUtils;
 import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
@@ -52,10 +53,7 @@ import java.util.Map;
  * @version $Revision$
  */
 public class SqlBuilder {
-  /**
-   * The placeholder for the size value in the native type spec.
-   */
-  protected static final String SIZE_PLACEHOLDER = "{0}";
+
   /**
    * The line separator for in between SQL commands.
    */
@@ -1248,21 +1246,8 @@ public class SqlBuilder {
    * @return The full SQL type string including the size
    */
   protected String getSqlType(Column column, String nativeType) {
-    int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
-    StringBuilder sqlType = new StringBuilder();
-
-    sqlType.append(sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType);
-
     String sizeSpec = getSizeSpec(column);
-
-    if (!StringUtilsExt.isEmpty(sizeSpec)) {
-      sqlType.append("(");
-      sqlType.append(sizeSpec);
-      sqlType.append(")");
-    }
-    sqlType.append(sizePos >= 0 ? nativeType.substring(sizePos + SIZE_PLACEHOLDER.length()) : "");
-
-    return sqlType.toString();
+    return SqlUtils.getSqlType(nativeType, sizeSpec);
   }
 
   /**
@@ -1285,9 +1270,7 @@ public class SqlBuilder {
    */
   protected String getBareNativeType(Column column) {
     String nativeType = getNativeType(column);
-    int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
-
-    return sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType;
+    return SqlUtils.getBareNativeType(nativeType);
   }
 
   /**

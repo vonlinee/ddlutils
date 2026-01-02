@@ -18,10 +18,17 @@
  */
 package org.apache.ddlutils.sql;
 
+import org.apache.ddlutils.util.StringUtilsExt;
+
 import java.util.Collection;
 import java.util.Iterator;
 
 public final class SqlUtils {
+
+  /**
+   * The placeholder for the size value in the native type spec.
+   */
+  public static final String SIZE_PLACEHOLDER = "{0}";
 
   private SqlUtils() {
   }
@@ -98,5 +105,23 @@ public final class SqlUtils {
 
   public static String getSizeExpression(Object length, Object precision) {
     return "(" + length + "," + precision + ")";
+  }
+
+  public static String getBareNativeType(String nativeType) {
+    int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
+    return sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType;
+  }
+
+  public static String getSqlType(String nativeType, String sizeSpec) {
+    int sizePos = nativeType.indexOf(SIZE_PLACEHOLDER);
+    StringBuilder sqlType = new StringBuilder();
+    sqlType.append(sizePos >= 0 ? nativeType.substring(0, sizePos) : nativeType);
+    if (!StringUtilsExt.isEmpty(sizeSpec)) {
+      sqlType.append("(");
+      sqlType.append(sizeSpec);
+      sqlType.append(")");
+    }
+    sqlType.append(sizePos >= 0 ? nativeType.substring(sizePos + SIZE_PLACEHOLDER.length()) : "");
+    return sqlType.toString();
   }
 }
