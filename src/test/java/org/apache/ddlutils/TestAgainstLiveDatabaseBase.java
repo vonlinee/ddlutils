@@ -718,8 +718,7 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
     if (catalog == null || schema == null) {
       log.warn("catalog or schema is null, retrieve they using live connection");
-      Connection connection = getPlatform().borrowConnection();
-      try {
+      try (Connection connection = getPlatform().borrowConnection()) {
         catalog = connection.getCatalog();
         schema = connection.getSchema();
       } catch (SQLException e) {
