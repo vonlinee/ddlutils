@@ -51,10 +51,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -719,7 +716,17 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     Properties props = getTestProperties();
     String catalog = props.getProperty(DDLUTILS_CATALOG_PROPERTY);
     String schema = props.getProperty(DDLUTILS_SCHEMA_PROPERTY);
-
+    if (catalog == null || schema == null) {
+      log.warn("catalog or schema is null, retrieve they using live connection");
+      Connection connection = getPlatform().borrowConnection();
+      try {
+        catalog = connection.getCatalog();
+        schema = connection.getSchema();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    log.info("readModelFromDatabase, catalog is " + catalog + ", schema is " + schema);
     return getPlatform().readModelFromDatabase(databaseName, catalog, schema, null);
   }
 
