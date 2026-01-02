@@ -19,18 +19,16 @@ package org.apache.ddlutils;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.axion.AxionPlatform;
 import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 import org.apache.ddlutils.platform.db2.Db2Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.oracle.Oracle8Platform;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.apache.ddlutils.util.JdbcUtils;
@@ -218,7 +216,7 @@ public class PlatformUtils {
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_DB2, Db2Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(DerbyPlatform.JDBC_SUBPROTOCOL, DerbyPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(FirebirdPlatform.JDBC_SUBPROTOCOL, FirebirdPlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(HsqlDbPlatform.JDBC_SUBPROTOCOL, HsqlDbPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDbType.HsqlDb.getSubProtocol(), BuiltinDbType.HsqlDb.getName());
     jdbcSubProtocolToPlatform.put(InterbasePlatform.JDBC_SUBPROTOCOL, InterbasePlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(SapDbPlatform.JDBC_SUBPROTOCOL, SapDbPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(MckoiPlatform.JDBC_SUBPROTOCOL, MckoiPlatform.DATABASENAME);
@@ -240,13 +238,13 @@ public class PlatformUtils {
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SQLSERVER7A_POOLED_2, MSSqlPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_JSQLCONNECT_SQLSERVER, MSSqlPlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_JTDS_SQLSERVER, MSSqlPlatform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(MySqlPlatform.JDBC_SUBPROTOCOL, MySqlPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDbType.MySQL.getSubProtocol(), BuiltinDbType.MySQL.getName());
     jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_THIN, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_OCI8, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(Oracle8Platform.JDBC_SUBPROTOCOL_THIN_OLD, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_ORACLE, Oracle8Platform.DATABASENAME);
-    jdbcSubProtocolToPlatform.put(PostgreSqlPlatform.JDBC_SUBPROTOCOL, PostgreSqlPlatform.DATABASENAME);
+    jdbcSubProtocolToPlatform.put(BuiltinDbType.PostgreSQL.getSubProtocol(), BuiltinDbType.PostgreSQL.getName());
     jdbcSubProtocolToPlatform.put(SybasePlatform.JDBC_SUBPROTOCOL, SybasePlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_DATADIRECT_SYBASE, SybasePlatform.DATABASENAME);
     jdbcSubProtocolToPlatform.put(PlatformUtils.JDBC_SUBPROTOCOL_INET_SYBASE, SybasePlatform.DATABASENAME);
@@ -264,7 +262,7 @@ public class PlatformUtils {
     jdbcDriverToPlatform.put(DerbyPlatform.JDBC_DRIVER_EMBEDDED, DerbyPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(DerbyPlatform.JDBC_DRIVER, DerbyPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(FirebirdPlatform.JDBC_DRIVER, FirebirdPlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(HsqlDbPlatform.JDBC_DRIVER, HsqlDbPlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDbType.HsqlDb.getDriverClassName(), BuiltinDbType.HsqlDb.getName());
     jdbcDriverToPlatform.put(InterbasePlatform.JDBC_DRIVER, InterbasePlatform.DATABASENAME);
     jdbcDriverToPlatform.put(SapDbPlatform.JDBC_DRIVER, SapDbPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(MckoiPlatform.JDBC_DRIVER, MckoiPlatform.DATABASENAME);
@@ -273,13 +271,13 @@ public class PlatformUtils {
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_SQLSERVER, MSSqlPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_SQLSERVER, MSSqlPlatform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_JSQLCONNECT_SQLSERVER, MSSqlPlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(MySqlPlatform.JDBC_DRIVER, MySqlPlatform.DATABASENAME);
-    jdbcDriverToPlatform.put(MySqlPlatform.JDBC_DRIVER_OLD, MySqlPlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDbType.MySQL5.getDriverClassName(), BuiltinDbType.MySQL.getName());
+    jdbcDriverToPlatform.put(BuiltinDbType.MySQL_OLD.getDriverClassName(), BuiltinDbType.MySQL.getName());
     jdbcDriverToPlatform.put(Oracle8Platform.JDBC_DRIVER, Oracle8Platform.DATABASENAME);
     jdbcDriverToPlatform.put(Oracle8Platform.JDBC_DRIVER_OLD, Oracle8Platform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_ORACLE, Oracle8Platform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_INET_ORACLE, Oracle8Platform.DATABASENAME);
-    jdbcDriverToPlatform.put(PostgreSqlPlatform.JDBC_DRIVER, PostgreSqlPlatform.DATABASENAME);
+    jdbcDriverToPlatform.put(BuiltinDbType.PostgreSQL.getDriverClassName(), BuiltinDbType.PostgreSQL.getName());
     jdbcDriverToPlatform.put(SybasePlatform.JDBC_DRIVER, SybasePlatform.DATABASENAME);
     jdbcDriverToPlatform.put(SybasePlatform.JDBC_DRIVER_OLD, SybasePlatform.DATABASENAME);
     jdbcDriverToPlatform.put(PlatformUtils.JDBC_DRIVER_DATADIRECT_SYBASE, SybasePlatform.DATABASENAME);

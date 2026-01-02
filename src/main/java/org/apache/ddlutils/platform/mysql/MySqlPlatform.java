@@ -25,6 +25,7 @@ import org.apache.ddlutils.model.CascadeAction;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -39,22 +40,6 @@ import java.sql.Types;
  * @version $Revision: 231306 $
  */
 public class MySqlPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "MySQL";
-  /**
-   * The standard MySQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-  /**
-   * The old MySQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER_OLD = "org.gjt.mm.mysql.Driver";
-  /**
-   * The subprotocol used by the standard MySQL driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "mysql";
 
   /**
    * Creates a new platform instance.
@@ -120,7 +105,7 @@ public class MySqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDbType.MySQL.getName();
   }
 
   /**

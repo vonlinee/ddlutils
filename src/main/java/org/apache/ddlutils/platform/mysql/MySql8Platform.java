@@ -1,12 +1,9 @@
 package org.apache.ddlutils.platform.mysql;
 
 import org.apache.ddlutils.PlatformInfo;
+import org.apache.ddlutils.platform.BuiltinDbType;
 
 public class MySql8Platform extends MySql50Platform {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "MySQL8";
 
   public MySql8Platform() {
     super();
@@ -22,6 +19,6 @@ public class MySql8Platform extends MySql50Platform {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDbType.MySQL8.getName();
   }
 }

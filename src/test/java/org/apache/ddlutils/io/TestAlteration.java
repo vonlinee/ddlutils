@@ -22,10 +22,10 @@ package org.apache.ddlutils.io;
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
+import org.apache.ddlutils.platform.BuiltinDbType;
+import org.apache.ddlutils.platform.DbTypeFamily;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
-import org.apache.ddlutils.platform.mysql.MySql50Platform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.junit.jupiter.api.Test;
 
@@ -1057,8 +1057,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-        MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-        MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
+        isKindOfDb(DbTypeFamily.MySQL) ||
         FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
       return;
     }
@@ -1126,8 +1125,7 @@ public class TestAlteration extends TestAgainstLiveDatabaseBase {
     // unless the index can be used as the FK's index
     // Firebird does not allow an index and a foreign key in the same table to have the same name at all
     if (!getPlatformInfo().isIndicesSupported() ||
-        MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-        MySql50Platform.DATABASENAME.equals(getPlatform().getName()) ||
+        getPlatform().getName().contains(BuiltinDbType.MySQL.getName()) ||
         FirebirdPlatform.DATABASENAME.equals(getPlatform().getName())) {
       return;
     }

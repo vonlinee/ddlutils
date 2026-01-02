@@ -33,7 +33,9 @@ import org.apache.ddlutils.io.DataReader;
 import org.apache.ddlutils.io.DataToDatabaseSink;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.CreationParameters;
+import org.apache.ddlutils.platform.DbType;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.util.StringUtilsExt;
@@ -1145,5 +1147,14 @@ public abstract class TestAgainstLiveDatabaseBase extends TestPlatformBase {
     assertEquals("Size not the same for index column " + actual.getName() + ".",
       expected.getSize(),
       actual.getSize());
+  }
+
+  public boolean isKindOfDb(DbType.Family family) {
+    for (BuiltinDbType type : BuiltinDbType.values()) {
+      if (type.isKindOf(family)) {
+        return true;
+      }
+    }
+    return false;
   }
 }

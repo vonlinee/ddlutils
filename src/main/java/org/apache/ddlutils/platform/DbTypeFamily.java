@@ -1,14 +1,14 @@
 package org.apache.ddlutils.platform;
 
-enum DbTypeFamily implements DbType.Family {
+public enum DbTypeFamily implements DbType.Family {
 
   // MySQL
   MySQL("MySQL", "mysql", 3306),
-  MySQL5("MySQL5", MySQL.subProtocol, MySQL.defaultPort),
-  MySQL8("MySQL8", MySQL.subProtocol, MySQL.defaultPort),
 
   // PostgreSQL
   PostgreSQL("PostgreSQL", "postgresql", 5432),
+
+  HsqlDb("HsqlDb", "hsqldb", 9001),
   ;
   private final String name;
 

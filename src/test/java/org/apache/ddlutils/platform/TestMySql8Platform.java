@@ -10,7 +10,7 @@ public class TestMySql8Platform {
 
   @Test
   public void shouldCreateMySQL8Platform() throws Exception {
-    Platform platform = PlatformFactory.createNewPlatformInstance(MySql8Platform.DATABASENAME);
+    Platform platform = PlatformFactory.createNewPlatformInstance(BuiltinDbType.MySQL8);
     Assertions.assertInstanceOf(MySql8Platform.class, platform);
   }
 }

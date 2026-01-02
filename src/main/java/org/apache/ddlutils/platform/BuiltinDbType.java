@@ -5,11 +5,16 @@ import java.util.Properties;
 public enum BuiltinDbType implements DbType {
 
   // MySQL
+  MySQL("MySQL", "com.mysql.jdbc.Driver", DbTypeFamily.MySQL, "jdbc:mysql://%s:%d/%s"),
   MySQL5("MySQL5", "com.mysql.jdbc.Driver", DbTypeFamily.MySQL, "jdbc:mysql://%s:%d/%s"),
   MySQL8("MySQL8", "com.mysql.cj.jdbc.Driver", DbTypeFamily.MySQL, "jdbc:mysql://%s:%d/%s"),
+  MySQL_OLD("MySQL-Old", "org.gjt.mm.mysql.Driver", DbTypeFamily.MySQL, "jdbc:mysql://%s:%d/%s"),
 
   // PostgreSQL
   PostgreSQL("PostgreSql", "org.postgresql.Driver", DbTypeFamily.PostgreSQL, "jdbc:postgresql://%s:%d/%s"),
+
+  HsqlDb("HsqlDb", "org.hsqldb.jdbcDriver", DbTypeFamily.HsqlDb, "jdbc:hsqldb:hsql://%s:%d/%s"),
+
   ;
 
   private final String name;
@@ -61,7 +66,7 @@ public enum BuiltinDbType implements DbType {
 
   @Override
   public boolean isKindOf(Family family) {
-    return false;
+    return getName().contains(family.getName());
   }
 
   @Override

@@ -35,7 +35,7 @@ public class TestPostgresqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return PostgreSqlPlatform.DATABASENAME;
+    return BuiltinDbType.PostgreSQL.getName();
   }
 
   /**

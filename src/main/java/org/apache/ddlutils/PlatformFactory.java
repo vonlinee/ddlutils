@@ -19,13 +19,14 @@ package org.apache.ddlutils;
  * under the License.
  */
 
+import org.apache.ddlutils.platform.BuiltinDbType;
+import org.apache.ddlutils.platform.DbType;
 import org.apache.ddlutils.platform.axion.AxionPlatform;
 import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 import org.apache.ddlutils.platform.db2.Db2Platform;
 import org.apache.ddlutils.platform.db2.Db2v8Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.hsqldb.HsqlDbV241Platform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.maxdb.MaxDbPlatform;
@@ -71,6 +72,10 @@ public class PlatformFactory {
       registerPlatforms();
     }
     return _platforms;
+  }
+
+  public static synchronized Platform createNewPlatformInstance(DbType dbType) {
+    return createNewPlatformInstance(dbType.getName());
   }
 
   /**
@@ -179,16 +184,16 @@ public class PlatformFactory {
     addPlatform(_platforms, Db2v8Platform.DATABASENAME, Db2v8Platform.class);
     addPlatform(_platforms, DerbyPlatform.DATABASENAME, DerbyPlatform.class);
     addPlatform(_platforms, FirebirdPlatform.DATABASENAME, FirebirdPlatform.class);
-    addPlatform(_platforms, HsqlDbPlatform.DATABASENAME, HsqlDbV241Platform.class);
+    addPlatform(_platforms, BuiltinDbType.HsqlDb.getName(), HsqlDbV241Platform.class);
     addPlatform(_platforms, InterbasePlatform.DATABASENAME, InterbasePlatform.class);
     addPlatform(_platforms, MaxDbPlatform.DATABASENAME, MaxDbPlatform.class);
     addPlatform(_platforms, MckoiPlatform.DATABASENAME, MckoiPlatform.class);
     addPlatform(_platforms, MSSqlPlatform.DATABASENAME, MSSqlPlatform.class);
 
     // mysql
-    addPlatform(_platforms, MySqlPlatform.DATABASENAME, MySqlPlatform.class);
-    addPlatform(_platforms, MySql50Platform.DATABASENAME, MySql50Platform.class);
-    addPlatform(_platforms, MySql8Platform.DATABASENAME, MySql8Platform.class);
+    addPlatform(_platforms, BuiltinDbType.MySQL.getName(), MySqlPlatform.class);
+    addPlatform(_platforms, BuiltinDbType.MySQL5.getName(), MySql50Platform.class);
+    addPlatform(_platforms, BuiltinDbType.MySQL8.getName(), MySql8Platform.class);
 
     // oracle
     addPlatform(_platforms, Oracle8Platform.DATABASENAME, Oracle8Platform.class);
@@ -196,7 +201,7 @@ public class PlatformFactory {
     addPlatform(_platforms, Oracle10Platform.DATABASENAME, Oracle10Platform.class);
 
     // postgresql
-    addPlatform(_platforms, PostgreSqlPlatform.DATABASENAME, PostgreSqlPlatform.class);
+    addPlatform(_platforms, BuiltinDbType.PostgreSQL.getName(), PostgreSqlPlatform.class);
     addPlatform(_platforms, SapDbPlatform.DATABASENAME, SapDbPlatform.class);
     addPlatform(_platforms, SybasePlatform.DATABASENAME, SybasePlatform.class);
     addPlatform(_platforms, SybaseASE15Platform.DATABASENAME, SybaseASE15Platform.class);

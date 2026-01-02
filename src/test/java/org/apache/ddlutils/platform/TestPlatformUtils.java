@@ -25,13 +25,10 @@ import org.apache.ddlutils.platform.cloudscape.CloudscapePlatform;
 import org.apache.ddlutils.platform.db2.Db2Platform;
 import org.apache.ddlutils.platform.derby.DerbyPlatform;
 import org.apache.ddlutils.platform.firebird.FirebirdPlatform;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mssql.MSSqlPlatform;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.apache.ddlutils.platform.oracle.Oracle8Platform;
-import org.apache.ddlutils.platform.postgresql.PostgreSqlPlatform;
 import org.apache.ddlutils.platform.sapdb.SapDbPlatform;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.junit.jupiter.api.AfterEach;
@@ -161,7 +158,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testHsqldbDriver() {
-    Assertions.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.hsqldb.jdbcDriver", null));
+    Assertions.assertEquals(BuiltinDbType.HsqlDb.getName(), _platformUtils.determineDatabaseType("org.hsqldb.jdbcDriver", null));
   }
 
   /**
@@ -169,7 +166,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testHsqldbUrl() {
-    Assertions.assertEquals(HsqlDbPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:hsqldb:/opt/db/testdb"));
+    Assertions.assertEquals(BuiltinDbType.HsqlDb.getName(), _platformUtils.determineDatabaseType(null, "jdbc:hsqldb:/opt/db/testdb"));
   }
 
   /**
@@ -251,8 +248,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMySqlDriver() {
-    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
-    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
+    Assertions.assertEquals(BuiltinDbType.MySQL.getName(), _platformUtils.determineDatabaseType("com.mysql.jdbc.Driver", null));
+    Assertions.assertEquals(BuiltinDbType.MySQL.getName(), _platformUtils.determineDatabaseType("org.gjt.mm.mysql.Driver", null));
   }
 
   /**
@@ -260,7 +257,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testMySqlUrl() {
-    Assertions.assertEquals(MySqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
+    Assertions.assertEquals(BuiltinDbType.MySQL.getName(), _platformUtils.determineDatabaseType(null, "jdbc:mysql://localhost:1234/test"));
   }
 
   /**
@@ -296,7 +293,7 @@ public class TestPlatformUtils {
    */
   @Test
   public void testPostgreSqlDriver() {
-    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
+    Assertions.assertEquals(BuiltinDbType.PostgreSQL.getName(), _platformUtils.determineDatabaseType("org.postgresql.Driver", null));
   }
 
   /**
@@ -304,8 +301,8 @@ public class TestPlatformUtils {
    */
   @Test
   public void testPostgreSqlUrl() {
-    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
-    Assertions.assertEquals(PostgreSqlPlatform.DATABASENAME, _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
+    Assertions.assertEquals(BuiltinDbType.PostgreSQL.getName(), _platformUtils.determineDatabaseType(null, "jdbc:postgresql://localhost:1234/test"));
+    Assertions.assertEquals(BuiltinDbType.PostgreSQL.getName(), _platformUtils.determineDatabaseType(null, "jdbc:postgresql://[::1]:5740/accounting"));
   }
 
   /**

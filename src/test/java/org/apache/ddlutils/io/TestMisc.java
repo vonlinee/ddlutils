@@ -24,7 +24,7 @@ import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
-import org.apache.ddlutils.platform.hsqldb.HsqlDbPlatform;
+import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.sybase.SybasePlatform;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -331,7 +331,7 @@ public class TestMisc extends TestAgainstLiveDatabaseBase {
   @Test
   public void testSelfReferenceIdentityOverrideOff() throws Exception {
     // Hsqldb does not allow rows to reference themselves
-    if (HsqlDbPlatform.DATABASENAME.equals(getPlatform().getName())) {
+    if (BuiltinDbType.HsqlDb.getName().equals(getPlatform().getName())) {
       return;
     }
 

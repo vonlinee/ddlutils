@@ -36,7 +36,7 @@ public class TestHsqlDbPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return HsqlDbPlatform.DATABASENAME;
+    return BuiltinDbType.HsqlDb.getName();
   }
 
   /**

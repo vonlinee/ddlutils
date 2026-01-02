@@ -36,7 +36,7 @@ public class TestMySql50Platform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return MySql50Platform.DATABASENAME;
+    return BuiltinDbType.MySQL5.getName();
   }
 
   /**

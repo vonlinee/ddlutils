@@ -27,6 +27,7 @@ import org.apache.ddlutils.dynabean.SqlDynaProperty;
 import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.DefaultTableDefinitionChangesPredicate;
 import org.apache.ddlutils.platform.PlatformImplBase;
@@ -41,18 +42,6 @@ import java.util.Map;
  * @version $Revision: 231306 $
  */
 public class PostgreSqlPlatform extends PlatformImplBase {
-  /**
-   * Database name of this platform.
-   */
-  public static final String DATABASENAME = "PostgreSql";
-  /**
-   * The standard PostgreSQL jdbc driver.
-   */
-  public static final String JDBC_DRIVER = "org.postgresql.Driver";
-  /**
-   * The subprotocol used by the standard PostgreSQL driver.
-   */
-  public static final String JDBC_SUBPROTOCOL = "postgresql";
 
   /**
    * Creates a new platform instance.
@@ -103,7 +92,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    */
   @Override
   public String getName() {
-    return DATABASENAME;
+    return BuiltinDbType.PostgreSQL.getName();
   }
 
   /**
@@ -117,7 +106,7 @@ public class PostgreSqlPlatform extends PlatformImplBase {
    * @param createDb            Whether to create or drop the database
    */
   private void createOrDropDatabase(String jdbcDriverClassName, String connectionUrl, String username, String password, Map<String, Object> parameters, boolean createDb) throws DatabaseOperationException, UnsupportedOperationException {
-    if (JDBC_DRIVER.equals(jdbcDriverClassName)) {
+    if (BuiltinDbType.PostgreSQL.getDriverClassName().equals(jdbcDriverClassName)) {
       int slashPos = connectionUrl.lastIndexOf('/');
 
       if (slashPos < 0) {

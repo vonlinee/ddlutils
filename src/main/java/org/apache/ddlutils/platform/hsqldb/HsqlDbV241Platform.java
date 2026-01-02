@@ -28,7 +28,6 @@ import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
 import java.sql.*;
-import java.util.Map;
 import java.util.Objects;
 
 /**

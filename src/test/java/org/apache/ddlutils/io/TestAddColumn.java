@@ -21,6 +21,8 @@ package org.apache.ddlutils.io;
 
 import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.platform.BuiltinDbType;
+import org.apache.ddlutils.platform.DbTypeFamily;
 import org.apache.ddlutils.platform.interbase.InterbasePlatform;
 import org.apache.ddlutils.platform.mckoi.MckoiPlatform;
 import org.apache.ddlutils.platform.mysql.MySql50Platform;
@@ -2373,8 +2375,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   @Test
   public void testAddFKAndLocalRequiredColumn() {
     // TODO
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-        MySql50Platform.DATABASENAME.equals(getPlatform().getName())) {
+    if (getPlatform().getName().contains(BuiltinDbType.MySQL.getName())) {
       // MySql does not allow adding a required column to a fk without a default value
       return;
     }
@@ -2576,8 +2577,7 @@ public class TestAddColumn extends TestAgainstLiveDatabaseBase {
   @Test
   public void testAddFKAndMultipleLocalColumns() {
     // TODO
-    if (MySqlPlatform.DATABASENAME.equals(getPlatform().getName()) ||
-        MySql50Platform.DATABASENAME.equals(getPlatform().getName())) {
+    if (isKindOfDb(DbTypeFamily.MySQL)) {
       // MySql does not allow adding a required column to a fk without a default value
       return;
     }

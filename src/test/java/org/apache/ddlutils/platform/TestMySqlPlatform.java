@@ -22,7 +22,6 @@ package org.apache.ddlutils.platform;
 import org.apache.ddlutils.TestPlatformBase;
 import org.apache.ddlutils.io.DatabaseIO;
 import org.apache.ddlutils.model.Database;
-import org.apache.ddlutils.platform.mysql.MySqlPlatform;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -36,7 +35,7 @@ public class TestMySqlPlatform extends TestPlatformBase {
    */
   @Override
   protected String getDatabaseName() {
-    return MySqlPlatform.DATABASENAME;
+    return BuiltinDbType.MySQL.getName();
   }
 
   /**
