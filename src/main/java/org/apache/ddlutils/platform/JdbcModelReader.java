@@ -161,6 +161,7 @@ public class JdbcModelReader {
    * Redefine this method if you want more columns or a different order.
    *
    * @return The descriptors for the result set columns
+   * @see DatabaseMetaData#getTables(String, String, String, String[])
    */
   protected List<MetaDataColumnDescriptor> initColumnsForTable() {
     List<MetaDataColumnDescriptor> result = new ArrayList<>();
@@ -170,6 +171,12 @@ public class JdbcModelReader {
     result.add(new MetaDataColumnDescriptor("TABLE_CAT", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("TABLE_SCHEM", Types.VARCHAR));
     result.add(new MetaDataColumnDescriptor("REMARKS", Types.VARCHAR));
+
+    result.add(new MetaDataColumnDescriptor("TYPE_CAT", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("TYPE_SCHEM", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("TYPE_NAME", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("SELF_REFERENCING_COL_NAME", Types.VARCHAR));
+    result.add(new MetaDataColumnDescriptor("REF_GENERATION", Types.VARCHAR));
 
     return result;
   }
