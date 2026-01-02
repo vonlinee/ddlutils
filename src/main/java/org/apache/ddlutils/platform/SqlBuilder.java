@@ -1737,26 +1737,29 @@ public class SqlBuilder {
         throw new ModelException("Unsupported cascade value '" + action +
                                  "' for onDelete in foreign key in table " + table.getName());
       }
-      switch (action) {
+
+      String cascadeActionName;
+      switch (cascadeAction) {
         case CASCADE:
-          print("CASCADE");
+          cascadeActionName = "CASCADE";
           break;
         case SET_NULL:
-          print("SET NULL");
+          cascadeActionName = "SET NULL";
           break;
         case SET_DEFAULT:
-          print("SET DEFAULT");
+          cascadeActionName = "SET DEFAULT";
           break;
         case RESTRICT:
-          print("RESTRICT");
+          cascadeActionName = "RESTRICT";
           break;
         case NONE:
-          print("NO ACTION");
+          cascadeActionName = "NO ACTION";
           break;
         default:
           throw new ModelException("Unsupported cascade value '" + action +
                                    "' for onDelete in foreign key in table " + table.getName());
       }
+      print(cascadeActionName);
     }
   }
 

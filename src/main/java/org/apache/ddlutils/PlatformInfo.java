@@ -25,10 +25,7 @@ import org.apache.ddlutils.model.CascadeAction;
 
 import java.lang.reflect.Field;
 import java.sql.Types;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Contains information about the database platform such as supported features and native type mappings.
@@ -45,165 +42,165 @@ public class PlatformInfo {
   /**
    * Contains non-default mappings from jdbc to native types.
    */
-  private final HashMap<Integer, String> _nativeTypes = new HashMap<>();
+  private final HashMap<Integer, String> nativeTypes = new HashMap<>();
   /**
    * Contains the jdbc types corresponding to the native types for non-default mappings.
    */
-  private final HashMap<Integer, Integer> _targetJdbcTypes = new HashMap<>();
+  private final HashMap<Integer, Integer> targetJdbcTypes = new HashMap<>();
 
   // properties influencing the specification of table constraints
   /**
    * Contains those JDBC types whose corresponding native types have a null value as the default value.
    */
-  private final HashSet<Integer> _typesWithNullDefault = new HashSet<>();
+  private final HashSet<Integer> typesWithNullDefault = new HashSet<>();
   /**
    * Contains those JDBC types whose corresponding native types are types that have a size on this platform.
    */
-  private final HashSet<Integer> _typesWithSize = new HashSet<>();
+  private final HashSet<Integer> typesWithSize = new HashSet<>();
   /**
    * Contains the default sizes for those JDBC types whose corresponding native types require a size.
    */
-  private final HashMap<Integer, Integer> _typesDefaultSizes = new HashMap<>();
+  private final HashMap<Integer, Integer> typesDefaultSizes = new HashMap<>();
   /**
    * Contains those JDBC types whose corresponding native types are types that have precision and scale on this platform.
    */
-  private final HashSet<Integer> _typesWithPrecisionAndScale = new HashSet<>();
+  private final HashSet<Integer> typesWithPrecisionAndScale = new HashSet<>();
   /**
    * Contains the supported ON UPDATE actions.
    */
-  private final HashSet<CascadeAction> _supportedOnUpdateActions = new HashSet<>();
+  private final HashSet<CascadeAction> supportedOnUpdateActions = new HashSet<>();
   /**
    * Contains the supported ON DELETE actions.
    */
-  private final HashSet<CascadeAction> _supportedOnDeleteActions = new HashSet<>();
+  private final HashSet<CascadeAction> supportedOnDeleteActions = new HashSet<>();
   /**
    * Contains for each ON UPDATE action the list of equivalent actions.
    */
-  private final HashMap<CascadeAction, Set<CascadeAction>> _equivalentOnUpdateActions = new HashMap<>();
+  private final HashMap<CascadeAction, Set<CascadeAction>> equivalentOnUpdateActions = new HashMap<>();
   /**
    * Contains for each ON DELETE action the list of equivalent actions.
    */
-  private final HashMap<CascadeAction, Set<CascadeAction>> _equivalentOnDeleteActions = new HashMap<>();
+  private final HashMap<CascadeAction, Set<CascadeAction>> equivalentOnDeleteActions = new HashMap<>();
   /**
    * Whether the database requires the explicit stating of NULL as the default value.
    */
-  private boolean _nullAsDefaultValueRequired = false;
+  private boolean nullAsDefaultValueRequired = false;
   /**
    * Whether default values can be defined for LONGVARCHAR/LONGVARBINARY columns.
    */
-  private boolean _defaultValuesForLongTypesSupported = true;
+  private boolean defaultValuesForLongTypesSupported = true;
 
   // properties influencing the reading of models from live databases
   /**
    * Whether primary key constraints are embedded inside the creation of table statement.
    */
-  private boolean _primaryKeyEmbedded = true;
+  private boolean primaryKeyEmbedded = true;
   /**
    * Whether primary key columns have to be required, too.
    */
-  private boolean _primaryKeyColumnsHaveToBeRequired = false;
+  private boolean primaryKeyColumnsHaveToBeRequired = false;
   /**
    * Whether mixed identity and non-identity columns in a primary key is supported.
    */
-  private boolean _mixingIdentityAndNormalPrimaryKeyColumnsSupported = true;
+  private boolean mixingIdentityAndNormalPrimaryKeyColumnsSupported = true;
   /**
    * Whether foreign key constraints are embedded inside the creation of table statement.
    */
-  private boolean _foreignKeysEmbedded = false;
+  private boolean foreignKeysEmbedded = false;
   /**
    * Whether embedded foreign key constraints are explicitly named.
    */
-  private boolean _embeddedForeignKeysNamed = false;
+  private boolean embeddedForeignKeysNamed = false;
   /**
    * Whether non-unique indices are supported.
    */
-  private boolean _indicesSupported = true;
+  private boolean indicesSupported = true;
 
   // other DDL/DML properties
   /**
    * Whether indices are embedded inside the creation of table statement.
    */
-  private boolean _indicesEmbedded = false;
+  private boolean indicesEmbedded = false;
   /**
    * Whether identity specification is supported for non-primary key columns.
    */
-  private boolean _nonPrimaryKeyIdentityColumnsSupported = true;
+  private boolean nonPrimaryKeyIdentityColumnsSupported = true;
   /**
    * Whether multiple identity columns in the same table are supported.
    */
-  private boolean _multipleIdentityColumnsSupported = true;
+  private boolean multipleIdentityColumnsSupported = true;
   /**
    * Whether the auto-increment definition is done via the DEFAULT part of the column definition.
    */
-  private boolean _defaultValueUsedForIdentitySpec = false;
+  private boolean defaultValueUsedForIdentitySpec = false;
   /**
    * Whether primary key columns are automatically required.
    */
-  private boolean _primaryKeyColumnAutomaticallyRequired = false;
+  private boolean primaryKeyColumnAutomaticallyRequired = false;
   /**
    * Whether identity columns are automatically required.
    */
-  private boolean _identityColumnAutomaticallyRequired = false;
+  private boolean identityColumnAutomaticallyRequired = false;
   /**
    * Whether system indices (database-generated indices for primary and foreign keys) are returned when
    * reading a model from a database.
    */
-  private boolean _systemIndicesReturned = true;
+  private boolean systemIndicesReturned = true;
   /**
    * Whether system indices for foreign keys are always non-unique or can be
    * unique (i.e. if a primary key column is used to establish the foreign key).
    */
-  private boolean _systemForeignKeyIndicesAlwaysNonUnique = false;
+  private boolean systemForeignKeyIndicesAlwaysNonUnique = false;
   /**
    * Whether the database returns a synthetic default value for non-identity required columns.
    */
-  private boolean _syntheticDefaultValueForRequiredReturned = false;
+  private boolean syntheticDefaultValueForRequiredReturned = false;
   /**
    * Whether the platform is able to determine auto increment status from an existing database.
    */
-  private boolean _identityStatusReadingSupported = true;
+  private boolean identityStatusReadingSupported = true;
   /**
    * Whether comments are supported.
    */
-  private boolean _sqlCommentsSupported = true;
+  private boolean sqlCommentsSupported = true;
   /**
    * Whether delimited identifiers are supported or not.
    */
-  private boolean _delimitedIdentifiersSupported = true;
+  private boolean delimitedIdentifiersSupported = true;
   /**
    * Whether an ALTER TABLE is needed to drop indexes.
    */
-  private boolean _alterTableForDropUsed = false;
+  private boolean alterTableForDropUsed = false;
   /**
    * Whether the platform allows for the explicit specification of values for identity columns in INSERT
    * and UPDATE statements.
    */
-  private boolean _identityOverrideAllowed = true;
+  private boolean identityOverrideAllowed = true;
   /**
    * Whether the values of identity columns can be read back from the database after insertion.
    */
-  private boolean _lastIdentityValueReadable = true;
+  private boolean lastIdentityValueReadable = true;
   /**
    * Whether auto-commit mode for the reading of the values of identity columns after insertion
    * shall be used.
    */
-  private boolean _autoCommitModeForLastIdentityValueReading = true;
+  private boolean autoCommitModeForLastIdentityValueReading = true;
   /**
    * Specifies the maximum length that a table name can have for this database (-1 if there is no limit).
    */
-  private int _maxTableNameLength = -1;
+  private int maxTableNameLength = -1;
   /**
    * Specifies the maximum length that a column name can have for this database (-1 if there is no limit).
    */
-  private int _maxColumnNameLength = -1;
+  private int maxColumnNameLength = -1;
   /**
    * Specifies the maximum length that a constraint name can have for this database (-1 if there is no limit).
    */
-  private int _maxConstraintNameLength = -1;
+  private int maxConstraintNameLength = -1;
   /**
    * Specifies the maximum length that a foreign key name can have for this database (-1 if there is no limit).
    */
-  private int _maxForeignKeyNameLength = -1;
+  private int maxForeignKeyNameLength = -1;
 
   /**
    * Whether the length of fixed char columns should be trimmed to the length of the column.
@@ -249,25 +246,25 @@ public class PlatformInfo {
    * Creates a new platform info object.
    */
   public PlatformInfo() {
-    _typesWithNullDefault.add(Types.CHAR);
-    _typesWithNullDefault.add(Types.VARCHAR);
-    _typesWithNullDefault.add(Types.LONGVARCHAR);
-    _typesWithNullDefault.add(Types.CLOB);
-    _typesWithNullDefault.add(Types.BINARY);
-    _typesWithNullDefault.add(Types.VARBINARY);
-    _typesWithNullDefault.add(Types.LONGVARBINARY);
-    _typesWithNullDefault.add(Types.BLOB);
+    typesWithNullDefault.add(Types.CHAR);
+    typesWithNullDefault.add(Types.VARCHAR);
+    typesWithNullDefault.add(Types.LONGVARCHAR);
+    typesWithNullDefault.add(Types.CLOB);
+    typesWithNullDefault.add(Types.BINARY);
+    typesWithNullDefault.add(Types.VARBINARY);
+    typesWithNullDefault.add(Types.LONGVARBINARY);
+    typesWithNullDefault.add(Types.BLOB);
 
-    _typesWithSize.add(Types.CHAR);
-    _typesWithSize.add(Types.VARCHAR);
-    _typesWithSize.add(Types.BINARY);
-    _typesWithSize.add(Types.VARBINARY);
+    typesWithSize.add(Types.CHAR);
+    typesWithSize.add(Types.VARCHAR);
+    typesWithSize.add(Types.BINARY);
+    typesWithSize.add(Types.VARBINARY);
 
-    _typesWithPrecisionAndScale.add(Types.DECIMAL);
-    _typesWithPrecisionAndScale.add(Types.NUMERIC);
+    typesWithPrecisionAndScale.add(Types.DECIMAL);
+    typesWithPrecisionAndScale.add(Types.NUMERIC);
 
-    _supportedOnUpdateActions.addAll(Arrays.asList(CascadeAction.values()));
-    _supportedOnDeleteActions.addAll(Arrays.asList(CascadeAction.values()));
+    supportedOnUpdateActions.addAll(Arrays.asList(CascadeAction.values()));
+    supportedOnDeleteActions.addAll(Arrays.asList(CascadeAction.values()));
   }
 
   // properties influencing the definition of columns
@@ -279,7 +276,7 @@ public class PlatformInfo {
    * @return <code>true</code> if NULL must be written for empty default values
    */
   public boolean isNullAsDefaultValueRequired() {
-    return _nullAsDefaultValueRequired;
+    return nullAsDefaultValueRequired;
   }
 
   /**
@@ -290,7 +287,7 @@ public class PlatformInfo {
    *                                   default values
    */
   public void setNullAsDefaultValueRequired(boolean requiresNullAsDefaultValue) {
-    _nullAsDefaultValueRequired = requiresNullAsDefaultValue;
+    nullAsDefaultValueRequired = requiresNullAsDefaultValue;
   }
 
   /**
@@ -299,7 +296,7 @@ public class PlatformInfo {
    * @return <code>true</code> if default values are allowed
    */
   public boolean isDefaultValuesForLongTypesSupported() {
-    return _defaultValuesForLongTypesSupported;
+    return defaultValuesForLongTypesSupported;
   }
 
   /**
@@ -308,7 +305,7 @@ public class PlatformInfo {
    * @param isSupported <code>true</code> if default values are supported
    */
   public void setDefaultValuesForLongTypesSupported(boolean isSupported) {
-    _defaultValuesForLongTypesSupported = isSupported;
+    defaultValuesForLongTypesSupported = isSupported;
   }
 
   // properties influencing the specification of table constraints
@@ -321,7 +318,7 @@ public class PlatformInfo {
    * @return <code>true</code> if pk constraints are embedded
    */
   public boolean isPrimaryKeyEmbedded() {
-    return _primaryKeyEmbedded;
+    return primaryKeyEmbedded;
   }
 
   /**
@@ -331,7 +328,7 @@ public class PlatformInfo {
    * @param primaryKeyEmbedded Whether pk constraints are embedded
    */
   public void setPrimaryKeyEmbedded(boolean primaryKeyEmbedded) {
-    _primaryKeyEmbedded = primaryKeyEmbedded;
+    this.primaryKeyEmbedded = primaryKeyEmbedded;
   }
 
   /**
@@ -340,7 +337,7 @@ public class PlatformInfo {
    * @return <code>true</code> if pk constraints have to be required
    */
   public boolean isPrimaryKeyColumnsHaveToBeRequired() {
-    return _primaryKeyColumnsHaveToBeRequired;
+    return primaryKeyColumnsHaveToBeRequired;
   }
 
   /**
@@ -349,7 +346,7 @@ public class PlatformInfo {
    * @param primaryKeyColumnsHaveToBeRequired Whether pk constraints need to be required
    */
   public void setPrimaryKeyColumnsHaveToBeRequired(boolean primaryKeyColumnsHaveToBeRequired) {
-    _primaryKeyColumnsHaveToBeRequired = primaryKeyColumnsHaveToBeRequired;
+    this.primaryKeyColumnsHaveToBeRequired = primaryKeyColumnsHaveToBeRequired;
   }
 
   /**
@@ -358,7 +355,7 @@ public class PlatformInfo {
    * @return <code>true</code> if identity and non-identity columns can be mixed in the pk
    */
   public boolean isMixingIdentityAndNormalPrimaryKeyColumnsSupported() {
-    return _mixingIdentityAndNormalPrimaryKeyColumnsSupported;
+    return mixingIdentityAndNormalPrimaryKeyColumnsSupported;
   }
 
   /**
@@ -368,7 +365,7 @@ public class PlatformInfo {
    *                                                          can be mixed in the pk
    */
   public void setMixingIdentityAndNormalPrimaryKeyColumnsSupported(boolean mixingIdentityAndNormalPrimaryKeyColumnsSupported) {
-    _mixingIdentityAndNormalPrimaryKeyColumnsSupported = mixingIdentityAndNormalPrimaryKeyColumnsSupported;
+    this.mixingIdentityAndNormalPrimaryKeyColumnsSupported = mixingIdentityAndNormalPrimaryKeyColumnsSupported;
   }
 
   /**
@@ -379,7 +376,7 @@ public class PlatformInfo {
    * @return <code>true</code> if fk constraints are embedded
    */
   public boolean isForeignKeysEmbedded() {
-    return _foreignKeysEmbedded;
+    return foreignKeysEmbedded;
   }
 
   /**
@@ -389,7 +386,7 @@ public class PlatformInfo {
    * @param foreignKeysEmbedded Whether fk constraints are embedded
    */
   public void setForeignKeysEmbedded(boolean foreignKeysEmbedded) {
-    _foreignKeysEmbedded = foreignKeysEmbedded;
+    this.foreignKeysEmbedded = foreignKeysEmbedded;
   }
 
   /**
@@ -398,7 +395,7 @@ public class PlatformInfo {
    * @return <code>true</code> if embedded fks have name
    */
   public boolean isEmbeddedForeignKeysNamed() {
-    return _embeddedForeignKeysNamed;
+    return embeddedForeignKeysNamed;
   }
 
   /**
@@ -407,7 +404,7 @@ public class PlatformInfo {
    * @param embeddedForeignKeysNamed Whether embedded fks shall have a name
    */
   public void setEmbeddedForeignKeysNamed(boolean embeddedForeignKeysNamed) {
-    _embeddedForeignKeysNamed = embeddedForeignKeysNamed;
+    this.embeddedForeignKeysNamed = embeddedForeignKeysNamed;
   }
 
   /**
@@ -416,7 +413,7 @@ public class PlatformInfo {
    * @return <code>true</code> if indices are supported
    */
   public boolean isIndicesSupported() {
-    return _indicesSupported;
+    return indicesSupported;
   }
 
   /**
@@ -425,7 +422,7 @@ public class PlatformInfo {
    * @param supportingIndices <code>true</code> if indices are supported
    */
   public void setIndicesSupported(boolean supportingIndices) {
-    _indicesSupported = supportingIndices;
+    indicesSupported = supportingIndices;
   }
 
   /**
@@ -435,7 +432,7 @@ public class PlatformInfo {
    * @return <code>true</code> if indices are embedded
    */
   public boolean isIndicesEmbedded() {
-    return _indicesEmbedded;
+    return indicesEmbedded;
   }
 
   /**
@@ -445,7 +442,7 @@ public class PlatformInfo {
    * @param indicesEmbedded Whether indices are embedded
    */
   public void setIndicesEmbedded(boolean indicesEmbedded) {
-    _indicesEmbedded = indicesEmbedded;
+    this.indicesEmbedded = indicesEmbedded;
   }
 
   /**
@@ -454,7 +451,7 @@ public class PlatformInfo {
    * @return <code>true</code> if normal non-PK columns can be auto-incrementing
    */
   public boolean isNonPrimaryKeyIdentityColumnsSupported() {
-    return _nonPrimaryKeyIdentityColumnsSupported;
+    return nonPrimaryKeyIdentityColumnsSupported;
   }
 
   /**
@@ -464,7 +461,7 @@ public class PlatformInfo {
    *                                       be auto-incrementing
    */
   public void setNonPrimaryKeyIdentityColumnsSupported(boolean supportingNonPKIdentityColumns) {
-    _nonPrimaryKeyIdentityColumnsSupported = supportingNonPKIdentityColumns;
+    nonPrimaryKeyIdentityColumnsSupported = supportingNonPKIdentityColumns;
   }
 
   /**
@@ -473,7 +470,7 @@ public class PlatformInfo {
    * @return <code>true</code> if multiple columns can be auto-incrementing in the same table
    */
   public boolean isMultipleIdentityColumnsSupported() {
-    return _multipleIdentityColumnsSupported;
+    return multipleIdentityColumnsSupported;
   }
 
   /**
@@ -483,7 +480,7 @@ public class PlatformInfo {
    *                                          in the same table
    */
   public void setMultipleIdentityColumnsSupported(boolean supportingMultipleIdentityColumns) {
-    _multipleIdentityColumnsSupported = supportingMultipleIdentityColumns;
+    multipleIdentityColumnsSupported = supportingMultipleIdentityColumns;
   }
 
   /**
@@ -493,7 +490,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the auto-increment spec is done via the DEFAULT value
    */
   public boolean isDefaultValueUsedForIdentitySpec() {
-    return _defaultValueUsedForIdentitySpec;
+    return defaultValueUsedForIdentitySpec;
   }
 
   /**
@@ -504,7 +501,7 @@ public class PlatformInfo {
    *                                     done via the DEFAULT value
    */
   public void setDefaultValueUsedForIdentitySpec(boolean identitySpecUsesDefaultValue) {
-    _defaultValueUsedForIdentitySpec = identitySpecUsesDefaultValue;
+    defaultValueUsedForIdentitySpec = identitySpecUsesDefaultValue;
   }
 
   // properties influencing the reading of models from live databases
@@ -515,7 +512,7 @@ public class PlatformInfo {
    * @return <code>true</code> if primary key columns are automatically required
    */
   public boolean isPrimaryKeyColumnAutomaticallyRequired() {
-    return _primaryKeyColumnAutomaticallyRequired;
+    return primaryKeyColumnAutomaticallyRequired;
   }
 
   /**
@@ -525,7 +522,7 @@ public class PlatformInfo {
    *                                        automatically required
    */
   public void setPrimaryKeyColumnAutomaticallyRequired(boolean primaryKeyAutomaticallyRequired) {
-    _primaryKeyColumnAutomaticallyRequired = primaryKeyAutomaticallyRequired;
+    primaryKeyColumnAutomaticallyRequired = primaryKeyAutomaticallyRequired;
   }
 
   /**
@@ -534,7 +531,7 @@ public class PlatformInfo {
    * @return <code>true</code> if identity columns are automatically required
    */
   public boolean isIdentityColumnAutomaticallyRequired() {
-    return _identityColumnAutomaticallyRequired;
+    return identityColumnAutomaticallyRequired;
   }
 
   /**
@@ -544,7 +541,7 @@ public class PlatformInfo {
    *                                      automatically required
    */
   public void setIdentityColumnAutomaticallyRequired(boolean identityAutomaticallyRequired) {
-    _identityColumnAutomaticallyRequired = identityAutomaticallyRequired;
+    identityColumnAutomaticallyRequired = identityAutomaticallyRequired;
   }
 
   /**
@@ -554,7 +551,7 @@ public class PlatformInfo {
    * @return <code>true</code> if system indices are read from a live database
    */
   public boolean isSystemIndicesReturned() {
-    return _systemIndicesReturned;
+    return systemIndicesReturned;
   }
 
   /**
@@ -565,7 +562,7 @@ public class PlatformInfo {
    *                               a live database
    */
   public void setSystemIndicesReturned(boolean returningSystemIndices) {
-    _systemIndicesReturned = returningSystemIndices;
+    systemIndicesReturned = returningSystemIndices;
   }
 
   /**
@@ -576,7 +573,7 @@ public class PlatformInfo {
    * default is <code>false</code>
    */
   public boolean isSystemForeignKeyIndicesAlwaysNonUnique() {
-    return _systemForeignKeyIndicesAlwaysNonUnique;
+    return systemForeignKeyIndicesAlwaysNonUnique;
   }
 
   /**
@@ -587,7 +584,7 @@ public class PlatformInfo {
    *                        non-unique
    */
   public void setSystemForeignKeyIndicesAlwaysNonUnique(boolean alwaysNonUnique) {
-    _systemForeignKeyIndicesAlwaysNonUnique = alwaysNonUnique;
+    systemForeignKeyIndicesAlwaysNonUnique = alwaysNonUnique;
   }
 
   /**
@@ -598,7 +595,7 @@ public class PlatformInfo {
    * required columns
    */
   public boolean isSyntheticDefaultValueForRequiredReturned() {
-    return _syntheticDefaultValueForRequiredReturned;
+    return syntheticDefaultValueForRequiredReturned;
   }
 
   /**
@@ -609,7 +606,7 @@ public class PlatformInfo {
    *                              non-identity required columns
    */
   public void setSyntheticDefaultValueForRequiredReturned(boolean returningDefaultValue) {
-    _syntheticDefaultValueForRequiredReturned = returningDefaultValue;
+    syntheticDefaultValueForRequiredReturned = returningDefaultValue;
   }
 
   /**
@@ -620,7 +617,7 @@ public class PlatformInfo {
    * database
    */
   public boolean getIdentityStatusReadingSupported() {
-    return _identityStatusReadingSupported;
+    return identityStatusReadingSupported;
   }
 
   /**
@@ -631,7 +628,7 @@ public class PlatformInfo {
    *                                   determined from an existing database
    */
   public void setIdentityStatusReadingSupported(boolean canReadAutoIncrementStatus) {
-    _identityStatusReadingSupported = canReadAutoIncrementStatus;
+    identityStatusReadingSupported = canReadAutoIncrementStatus;
   }
 
   // other ddl properties
@@ -642,7 +639,7 @@ public class PlatformInfo {
    * @return <code>true</code> if comments are supported
    */
   public boolean isSqlCommentsSupported() {
-    return _sqlCommentsSupported;
+    return sqlCommentsSupported;
   }
 
   /**
@@ -651,7 +648,7 @@ public class PlatformInfo {
    * @param commentsSupported <code>true</code> if comments are supported
    */
   public void setSqlCommentsSupported(boolean commentsSupported) {
-    _sqlCommentsSupported = commentsSupported;
+    sqlCommentsSupported = commentsSupported;
   }
 
   /**
@@ -660,7 +657,7 @@ public class PlatformInfo {
    * @return <code>true</code> if delimited identifiers are supported
    */
   public boolean isDelimitedIdentifiersSupported() {
-    return _delimitedIdentifiersSupported;
+    return delimitedIdentifiersSupported;
   }
 
   /**
@@ -669,7 +666,7 @@ public class PlatformInfo {
    * @param areSupported <code>true</code> if delimited identifiers are supported
    */
   public void setDelimitedIdentifiersSupported(boolean areSupported) {
-    _delimitedIdentifiersSupported = areSupported;
+    delimitedIdentifiersSupported = areSupported;
   }
 
   /**
@@ -679,7 +676,7 @@ public class PlatformInfo {
    * @return <code>true</code> if ALTER TABLE is required
    */
   public boolean isAlterTableForDropUsed() {
-    return _alterTableForDropUsed;
+    return alterTableForDropUsed;
   }
 
   /**
@@ -689,7 +686,7 @@ public class PlatformInfo {
    * @param useAlterTableForDrop Whether ALTER TABLE will be used
    */
   public void setAlterTableForDropUsed(boolean useAlterTableForDrop) {
-    _alterTableForDropUsed = useAlterTableForDrop;
+    alterTableForDropUsed = useAlterTableForDrop;
   }
 
   /**
@@ -699,7 +696,7 @@ public class PlatformInfo {
    * @return <code>true</code> if values for identity columns can be specified
    */
   public boolean isIdentityOverrideAllowed() {
-    return _identityOverrideAllowed;
+    return identityOverrideAllowed;
   }
 
   /**
@@ -709,7 +706,7 @@ public class PlatformInfo {
    * @param identityOverrideAllowed <code>true</code> if values for identity columns can be specified
    */
   public void setIdentityOverrideAllowed(boolean identityOverrideAllowed) {
-    _identityOverrideAllowed = identityOverrideAllowed;
+    this.identityOverrideAllowed = identityOverrideAllowed;
   }
 
   /**
@@ -719,7 +716,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the identity column(s) can be read back
    */
   public boolean isLastIdentityValueReadable() {
-    return _lastIdentityValueReadable;
+    return lastIdentityValueReadable;
   }
 
   /**
@@ -729,7 +726,7 @@ public class PlatformInfo {
    * @param lastIdentityValueReadable <code>true</code> if the identity column(s) can be read back
    */
   public void setLastIdentityValueReadable(boolean lastIdentityValueReadable) {
-    _lastIdentityValueReadable = lastIdentityValueReadable;
+    this.lastIdentityValueReadable = lastIdentityValueReadable;
   }
 
   /**
@@ -740,7 +737,7 @@ public class PlatformInfo {
    * @return <code>true</code> if auto-commit mode is used
    */
   public boolean isAutoCommitModeForLastIdentityValueReading() {
-    return _autoCommitModeForLastIdentityValueReading;
+    return autoCommitModeForLastIdentityValueReading;
   }
 
   /**
@@ -752,7 +749,7 @@ public class PlatformInfo {
    *                                                  shall be used
    */
   public void setAutoCommitModeForLastIdentityValueReading(boolean autoCommitModeForLastIdentityValueReading) {
-    _autoCommitModeForLastIdentityValueReading = autoCommitModeForLastIdentityValueReading;
+    this.autoCommitModeForLastIdentityValueReading = autoCommitModeForLastIdentityValueReading;
   }
 
   /**
@@ -761,7 +758,7 @@ public class PlatformInfo {
    * @return The number of characters, or -1 if not limited
    */
   public int getMaxTableNameLength() {
-    return _maxTableNameLength;
+    return maxTableNameLength;
   }
 
   /**
@@ -770,7 +767,7 @@ public class PlatformInfo {
    * @param maxTableNameLength The maximum length, -1 if unlimited
    */
   public void setMaxTableNameLength(int maxTableNameLength) {
-    _maxTableNameLength = maxTableNameLength;
+    this.maxTableNameLength = maxTableNameLength;
   }
 
   /**
@@ -779,7 +776,7 @@ public class PlatformInfo {
    * @return The number of characters, or -1 if not limited
    */
   public int getMaxColumnNameLength() {
-    return _maxColumnNameLength;
+    return maxColumnNameLength;
   }
 
   /**
@@ -788,7 +785,7 @@ public class PlatformInfo {
    * @param maxColumnNameLength The maximum length, -1 if unlimited
    */
   public void setMaxColumnNameLength(int maxColumnNameLength) {
-    _maxColumnNameLength = maxColumnNameLength;
+    this.maxColumnNameLength = maxColumnNameLength;
   }
 
   /**
@@ -797,7 +794,7 @@ public class PlatformInfo {
    * @return The number of characters, or -1 if not limited
    */
   public int getMaxConstraintNameLength() {
-    return _maxConstraintNameLength;
+    return maxConstraintNameLength;
   }
 
   /**
@@ -806,7 +803,7 @@ public class PlatformInfo {
    * @param maxConstraintNameLength The maximum length, -1 if unlimited
    */
   public void setMaxConstraintNameLength(int maxConstraintNameLength) {
-    _maxConstraintNameLength = maxConstraintNameLength;
+    this.maxConstraintNameLength = maxConstraintNameLength;
   }
 
   /**
@@ -815,7 +812,7 @@ public class PlatformInfo {
    * @return The number of characters, or -1 if not limited
    */
   public int getMaxForeignKeyNameLength() {
-    return _maxForeignKeyNameLength;
+    return maxForeignKeyNameLength;
   }
 
   /**
@@ -824,7 +821,7 @@ public class PlatformInfo {
    * @param maxForeignKeyNameLength The maximum length, -1 if unlimited
    */
   public void setMaxForeignKeyNameLength(int maxForeignKeyNameLength) {
-    _maxForeignKeyNameLength = maxForeignKeyNameLength;
+    this.maxForeignKeyNameLength = maxForeignKeyNameLength;
   }
 
   /**
@@ -834,10 +831,10 @@ public class PlatformInfo {
    * @param maxIdentifierLength The maximum identifier length, -1 if unlimited
    */
   public void setMaxIdentifierLength(int maxIdentifierLength) {
-    _maxTableNameLength = maxIdentifierLength;
-    _maxColumnNameLength = maxIdentifierLength;
-    _maxConstraintNameLength = maxIdentifierLength;
-    _maxForeignKeyNameLength = maxIdentifierLength;
+    maxTableNameLength = maxIdentifierLength;
+    maxColumnNameLength = maxIdentifierLength;
+    maxConstraintNameLength = maxIdentifierLength;
+    maxForeignKeyNameLength = maxIdentifierLength;
   }
 
   /**
@@ -942,7 +939,7 @@ public class PlatformInfo {
    * @return The native type or <code>null</code> if there isn't one defined
    */
   public String getNativeType(int typeCode) {
-    return _nativeTypes.get(typeCode);
+    return nativeTypes.get(typeCode);
   }
 
   /**
@@ -956,7 +953,7 @@ public class PlatformInfo {
    * @return The target jdbc type
    */
   public int getTargetJdbcType(int typeCode) {
-    Integer targetJdbcType = _targetJdbcTypes.get(typeCode);
+    Integer targetJdbcType = targetJdbcTypes.get(typeCode);
 
     return targetJdbcType == null ? typeCode : targetJdbcType;
   }
@@ -968,7 +965,7 @@ public class PlatformInfo {
    * @param nativeType   The native type
    */
   public void addNativeTypeMapping(int jdbcTypeCode, String nativeType) {
-    _nativeTypes.put(jdbcTypeCode, nativeType);
+    nativeTypes.put(jdbcTypeCode, nativeType);
   }
 
   /**
@@ -981,7 +978,7 @@ public class PlatformInfo {
    */
   public void addNativeTypeMapping(int jdbcTypeCode, String nativeType, int targetJdbcTypeCode) {
     addNativeTypeMapping(jdbcTypeCode, nativeType);
-    _targetJdbcTypes.put(jdbcTypeCode, targetJdbcTypeCode);
+    targetJdbcTypes.put(jdbcTypeCode, targetJdbcTypeCode);
   }
 
   /**
@@ -1039,7 +1036,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has a null default value
    */
   public boolean hasNullDefault(int sqlTypeCode) {
-    return _typesWithNullDefault.contains(sqlTypeCode);
+    return typesWithNullDefault.contains(sqlTypeCode);
   }
 
   /**
@@ -1051,9 +1048,9 @@ public class PlatformInfo {
    */
   public void setHasNullDefault(int sqlTypeCode, boolean hasNullDefault) {
     if (hasNullDefault) {
-      _typesWithNullDefault.add(sqlTypeCode);
+      typesWithNullDefault.add(sqlTypeCode);
     } else {
-      _typesWithNullDefault.remove(sqlTypeCode);
+      typesWithNullDefault.remove(sqlTypeCode);
     }
   }
 
@@ -1065,7 +1062,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has a size specification
    */
   public boolean hasSize(int sqlTypeCode) {
-    return _typesWithSize.contains(sqlTypeCode);
+    return typesWithSize.contains(sqlTypeCode);
   }
 
   /**
@@ -1077,9 +1074,9 @@ public class PlatformInfo {
    */
   public void setHasSize(int sqlTypeCode, boolean hasSize) {
     if (hasSize) {
-      _typesWithSize.add(sqlTypeCode);
+      typesWithSize.add(sqlTypeCode);
     } else {
-      _typesWithSize.remove(sqlTypeCode);
+      typesWithSize.remove(sqlTypeCode);
     }
   }
 
@@ -1090,7 +1087,7 @@ public class PlatformInfo {
    * @return The default size or <code>null</code> if none is defined
    */
   public Integer getDefaultSize(int jdbcTypeCode) {
-    return _typesDefaultSizes.get(jdbcTypeCode);
+    return typesDefaultSizes.get(jdbcTypeCode);
   }
 
   /**
@@ -1100,7 +1097,7 @@ public class PlatformInfo {
    * @param defaultSize  The default size
    */
   public void setDefaultSize(int jdbcTypeCode, int defaultSize) {
-    _typesDefaultSizes.put(jdbcTypeCode, defaultSize);
+    typesDefaultSizes.put(jdbcTypeCode, defaultSize);
   }
 
   /**
@@ -1129,7 +1126,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the native type has precision and scale specifications
    */
   public boolean hasPrecisionAndScale(int sqlTypeCode) {
-    return _typesWithPrecisionAndScale.contains(sqlTypeCode);
+    return typesWithPrecisionAndScale.contains(sqlTypeCode);
   }
 
   /**
@@ -1142,9 +1139,9 @@ public class PlatformInfo {
    */
   public void setHasPrecisionAndScale(int sqlTypeCode, boolean hasPrecisionAndScale) {
     if (hasPrecisionAndScale) {
-      _typesWithPrecisionAndScale.add(sqlTypeCode);
+      typesWithPrecisionAndScale.add(sqlTypeCode);
     } else {
-      _typesWithPrecisionAndScale.remove(sqlTypeCode);
+      typesWithPrecisionAndScale.remove(sqlTypeCode);
     }
   }
 
@@ -1154,8 +1151,8 @@ public class PlatformInfo {
    * @param actions The actions
    */
   public void setSupportedOnUpdateActions(CascadeAction... actions) {
-    _supportedOnUpdateActions.clear();
-    _supportedOnUpdateActions.addAll(Arrays.asList(actions));
+    supportedOnUpdateActions.clear();
+    supportedOnUpdateActions.addAll(Arrays.asList(actions));
   }
 
   /**
@@ -1165,7 +1162,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the action is supported
    */
   public boolean isActionSupportedForOnUpdate(CascadeAction action) {
-    return _supportedOnUpdateActions.contains(action);
+    return supportedOnUpdateActions.contains(action);
   }
 
   /**
@@ -1174,8 +1171,8 @@ public class PlatformInfo {
    * @param actions The actions
    */
   public void setSupportedOnDeleteActions(CascadeAction... actions) {
-    _supportedOnDeleteActions.clear();
-    _supportedOnDeleteActions.addAll(Arrays.asList(actions));
+    supportedOnDeleteActions.clear();
+    supportedOnDeleteActions.addAll(Arrays.asList(actions));
   }
 
   /**
@@ -1185,7 +1182,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the action is supported
    */
   public boolean isActionSupportedForOnDelete(CascadeAction action) {
-    return _supportedOnDeleteActions.contains(action);
+    return supportedOnDeleteActions.contains(action);
   }
 
   /**
@@ -1232,21 +1229,11 @@ public class PlatformInfo {
    * @param actionB The second action
    */
   public void addEquivalentOnUpdateActions(CascadeAction actionA, CascadeAction actionB) {
-    if (!actionA.equals(actionB)) {
-      Set<CascadeAction> actionsEquivalentToActionA = _equivalentOnUpdateActions.get(actionA);
-      Set<CascadeAction> actionsEquivalentToActionB = _equivalentOnUpdateActions.get(actionB);
-
-      if (actionsEquivalentToActionA == null) {
-        actionsEquivalentToActionA = new HashSet<>();
-        _equivalentOnUpdateActions.put(actionA, actionsEquivalentToActionA);
-      }
-      if (actionsEquivalentToActionB == null) {
-        actionsEquivalentToActionB = new HashSet<>();
-        _equivalentOnUpdateActions.put(actionB, actionsEquivalentToActionB);
-      }
-      actionsEquivalentToActionA.add(actionB);
-      actionsEquivalentToActionB.add(actionA);
+    if (Objects.equals(actionA, actionB)) {
+      return;
     }
+    equivalentOnUpdateActions.computeIfAbsent(actionA, k -> new HashSet<>()).add(actionB);
+    equivalentOnUpdateActions.computeIfAbsent(actionB, k -> new HashSet<>()).add(actionA);
   }
 
   /**
@@ -1258,8 +1245,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the two actions are equivalent
    */
   public boolean areEquivalentOnUpdateActions(CascadeAction actionA, CascadeAction actionB) {
-    Set<CascadeAction> actionsEquivalentToActionA = _equivalentOnUpdateActions.get(actionA);
-
+    Set<CascadeAction> actionsEquivalentToActionA = equivalentOnUpdateActions.get(actionA);
     return actionsEquivalentToActionA != null && actionsEquivalentToActionA.contains(actionB);
   }
 
@@ -1271,21 +1257,11 @@ public class PlatformInfo {
    * @param actionB The second action
    */
   public void addEquivalentOnDeleteActions(CascadeAction actionA, CascadeAction actionB) {
-    if (!actionA.equals(actionB)) {
-      Set<CascadeAction> actionsEquivalentToActionA = _equivalentOnDeleteActions.get(actionA);
-      Set<CascadeAction> actionsEquivalentToActionB = _equivalentOnDeleteActions.get(actionB);
-
-      if (actionsEquivalentToActionA == null) {
-        actionsEquivalentToActionA = new HashSet<>();
-        _equivalentOnDeleteActions.put(actionA, actionsEquivalentToActionA);
-      }
-      if (actionsEquivalentToActionB == null) {
-        actionsEquivalentToActionB = new HashSet<>();
-        _equivalentOnDeleteActions.put(actionB, actionsEquivalentToActionB);
-      }
-      actionsEquivalentToActionA.add(actionB);
-      actionsEquivalentToActionB.add(actionA);
+    if (Objects.equals(actionA, actionB)) {
+      return;
     }
+    equivalentOnDeleteActions.computeIfAbsent(actionA, k -> new HashSet<>()).add(actionB);
+    equivalentOnDeleteActions.computeIfAbsent(actionB, k -> new HashSet<>()).add(actionA);
   }
 
   /**
@@ -1297,8 +1273,7 @@ public class PlatformInfo {
    * @return <code>true</code> if the two actions are equivalent
    */
   public boolean areEquivalentOnDeleteActions(CascadeAction actionA, CascadeAction actionB) {
-    Set<CascadeAction> actionsEquivalentToActionA = _equivalentOnDeleteActions.get(actionA);
-
+    Set<CascadeAction> actionsEquivalentToActionA = equivalentOnDeleteActions.get(actionA);
     return actionsEquivalentToActionA != null && actionsEquivalentToActionA.contains(actionB);
   }
 
