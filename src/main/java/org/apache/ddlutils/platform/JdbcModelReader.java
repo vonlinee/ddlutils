@@ -25,6 +25,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformInfo;
 import org.apache.ddlutils.model.*;
+import org.apache.ddlutils.sql.SqlUtils;
 import org.apache.ddlutils.util.CollectionUtils;
 import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.ObjectUtils;
@@ -388,13 +389,7 @@ public class JdbcModelReader {
    * @param types The table types
    */
   public void setDefaultTableTypes(String[] types) {
-    if (types == null) {
-      defaultTableTypes = null;
-    } else {
-      defaultTableTypes = new String[types.length];
-
-      System.arraycopy(types, 0, types, 0, types.length);
-    }
+    this.defaultTableTypes = ObjectUtils.cloneStringArray(types);
   }
 
   /**
@@ -566,8 +561,7 @@ public class JdbcModelReader {
   protected Table readTable(DatabaseMetaDataWrapper metaData, Map<String, Object> values) throws SQLException {
     String tableName = (String) values.get("TABLE_NAME");
     Table table = null;
-
-    if ((tableName != null) && (!tableName.isEmpty())) {
+    if (StringUtilsExt.isNotEmpty(tableName)) {
       table = new Table();
 
       table.setName(tableName);
@@ -1009,7 +1003,7 @@ public class JdbcModelReader {
    * @param columnsToCheck The columns to check (e.g. the primary key columns)
    */
   protected void determineAutoIncrementFromResultSetMetaData(Table table, Column[] columnsToCheck) throws SQLException {
-    if (columnsToCheck == null || columnsToCheck.length == 0) {
+    if (CollectionUtils.isEmpty(columnsToCheck)) {
       return;
     }
     final String querySql = getDetermineAutoIncrementFromResultSetMetaDataSql(table, columnsToCheck);
@@ -1042,21 +1036,7 @@ public class JdbcModelReader {
    * @return The resulting text
    */
   protected String unescape(String text, String unescaped, String escaped) {
-    String result = text;
-
-    // we need special handling if the single quote is escaped via a double single quote
-    if (result != null) {
-      if (escaped.equals("''")) {
-        if ((result.length() > 2) && result.startsWith("'") && result.endsWith("'")) {
-          result = "'" + StringUtilsExt.replace(result.substring(1, result.length() - 1), escaped, unescaped) + "'";
-        } else {
-          result = StringUtilsExt.replace(result, escaped, unescaped);
-        }
-      } else {
-        result = StringUtilsExt.replace(result, escaped, unescaped);
-      }
-    }
-    return result;
+    return SqlUtils.unescape(text, unescaped, escaped);
   }
 
   /**
@@ -1095,7 +1075,7 @@ public class JdbcModelReader {
         Map<String, Object> values = readColumns(tableData, getColumnsForTable());
         String tableName = (String) values.get("TABLE_NAME");
 
-        if ((tableName != null) && (!tableName.isEmpty())) {
+        if (StringUtilsExt.isNotEmpty(tableName)) {
           schema = (String) values.get("TABLE_SCHEM");
           columnData = metaData.getColumns(escapeForSearch(metaData, tableName), getDefaultColumnPattern());
           found = true;

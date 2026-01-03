@@ -124,4 +124,21 @@ public final class SqlUtils {
     sqlType.append(sizePos >= 0 ? nativeType.substring(sizePos + SIZE_PLACEHOLDER.length()) : "");
     return sqlType.toString();
   }
+
+  public static String unescape(String text, String unescaped, String escaped) {
+    String result = text;
+    // we need special handling if the single quote is escaped via a double single quote
+    if (result != null) {
+      if (escaped.equals("''")) {
+        if ((result.length() > 2) && result.startsWith("'") && result.endsWith("'")) {
+          result = "'" + StringUtilsExt.replace(result.substring(1, result.length() - 1), escaped, unescaped) + "'";
+        } else {
+          result = StringUtilsExt.replace(result, escaped, unescaped);
+        }
+      } else {
+        result = StringUtilsExt.replace(result, escaped, unescaped);
+      }
+    }
+    return result;
+  }
 }

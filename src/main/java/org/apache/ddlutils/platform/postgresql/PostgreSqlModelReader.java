@@ -23,6 +23,7 @@ import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.model.*;
 import org.apache.ddlutils.platform.DatabaseMetaDataWrapper;
 import org.apache.ddlutils.platform.JdbcModelReader;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.sql.SQLException;
 import java.sql.Types;
@@ -114,8 +115,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
     }
 
     String defaultValue = column.getDefaultValue();
-
-    if ((defaultValue != null) && (!defaultValue.isEmpty())) {
+    if (StringUtilsExt.isNotEmpty(defaultValue)) {
       // If the default value looks like "nextval('ROUNDTRIP_VALUE_seq'::text)"
       // then it is an auto-increment column
       if (defaultValue.startsWith("nextval(")) {
@@ -129,7 +129,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
           case Types.BIGINT:
           case Types.DECIMAL:
           case Types.NUMERIC:
-            defaultValue = extractUndelimitedDefaultValue(defaultValue);
+            defaultValue = PgUtils.extractUndelimitedDefaultValue(defaultValue);
             break;
           case Types.CHAR:
           case Types.VARCHAR:
@@ -137,7 +137,7 @@ public class PostgreSqlModelReader extends JdbcModelReader {
           case Types.DATE:
           case Types.TIME:
           case Types.TIMESTAMP:
-            defaultValue = extractDelimitedDefaultValue(defaultValue);
+            defaultValue = PgUtils.extractDelimitedDefaultValue(defaultValue);
             break;
         }
         if (TypeMap.isTextType(column.getTypeCode())) {
@@ -149,41 +149,6 @@ public class PostgreSqlModelReader extends JdbcModelReader {
       column.setDefaultValue(defaultValue);
     }
     return column;
-  }
-
-  /**
-   * Extracts the default value from a default value spec of the form
-   * "'some value'::character varying" or "'2000-01-01'::date".
-   *
-   * @param defaultValue The default value spec
-   * @return The default value
-   */
-  private String extractDelimitedDefaultValue(String defaultValue) {
-    if (defaultValue.startsWith("'")) {
-      int valueEnd = defaultValue.indexOf("'::");
-
-      if (valueEnd > 0) {
-        return defaultValue.substring("'".length(), valueEnd);
-      }
-    }
-    return defaultValue;
-  }
-
-  /**
-   * Extracts the default value from a default value spec of the form
-   * "-9000000000000000000::bigint".
-   *
-   * @param defaultValue The default value spec
-   * @return The default value
-   */
-  private String extractUndelimitedDefaultValue(String defaultValue) {
-    int valueEnd = defaultValue.indexOf("::");
-
-    if (valueEnd > 0) {
-      return defaultValue.substring(0, valueEnd);
-    } else {
-      return defaultValue;
-    }
   }
 
   /**
