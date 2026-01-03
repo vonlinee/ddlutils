@@ -80,13 +80,24 @@ public class CollectionUtils {
     return set;
   }
 
-  public static <K, V> Map<K, Map<K, V>> toMap(Collection<Map<K, V>> maps, Function<Map<K, V>, K> keyMapper) {
+  public static <K, E> Map<K, E> toMap(Collection<E> maps, Function<E, K> keyMapper) {
     if (isEmpty(maps)) {
       return Collections.emptyMap();
     }
-    Map<K, Map<K, V>> map = new HashMap<>();
-    for (Map<K, V> m : maps) {
+    Map<K, E> map = new HashMap<>();
+    for (E m : maps) {
       map.put(keyMapper.apply(m), m);
+    }
+    return map;
+  }
+
+  public static <K, V, E> Map<K, V> toMap(Collection<E> collection, Function<E, K> keyMapper, Function<E, V> valueMapper) {
+    if (isEmpty(collection)) {
+      return Collections.emptyMap();
+    }
+    Map<K, V> map = new HashMap<>();
+    for (E element : collection) {
+      map.put(keyMapper.apply(element), valueMapper.apply(element));
     }
     return map;
   }

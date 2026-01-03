@@ -1270,4 +1270,8 @@ public interface Platform {
    * @return the database version
    */
   String getDatabaseVersion(Connection connection) throws SQLException;
+
+  default String currentUser(Connection connection) {
+    return null;
+  }
 }

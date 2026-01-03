@@ -755,7 +755,7 @@ public class JdbcModelReader {
     column.setName((String) values.get("COLUMN_NAME"));
     column.setDefaultValue((String) values.get("COLUMN_DEF"));
     column.setTypeCode((Integer) values.get("DATA_TYPE"));
-
+    column.setPlatformDataType((String) values.get("TYPE_NAME"));
     Integer precision = (Integer) values.get("NUM_PREC_RADIX");
 
     if (precision != null) {

@@ -68,6 +68,12 @@ public class Column implements Serializable {
    * The name of the JDBC type.
    */
   private String type;
+
+  /**
+   * The platform specific data type of the column.
+   */
+  private String platformDataType;
+
   /**
    * The size of the column for JDBC types that require/support this.
    */
@@ -413,6 +419,14 @@ public class Column implements Serializable {
     } catch (Exception e) {
       return null;
     }
+  }
+
+  public String getPlatformDataType() {
+    return platformDataType;
+  }
+
+  public void setPlatformDataType(String platformDataType) {
+    this.platformDataType = platformDataType;
   }
 
   /**

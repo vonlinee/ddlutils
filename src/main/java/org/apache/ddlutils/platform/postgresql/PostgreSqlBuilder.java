@@ -25,10 +25,19 @@ import org.apache.ddlutils.model.Column;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.model.Index;
 import org.apache.ddlutils.model.Table;
+import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.SqlBuilder;
+import org.apache.ddlutils.sql.SqlUtils;
+import org.apache.ddlutils.util.CollectionUtils;
+import org.apache.ddlutils.util.JdbcUtils;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * The SQL Builder for PostgresSql.
@@ -81,6 +90,28 @@ public class PostgreSqlBuilder extends SqlBuilder {
     printEndOfStatement();
   }
 
+  @Override
+  public void createTables(Database database, CreationParameters params, boolean dropTables) throws IOException {
+    try (Connection connection = getPlatform().borrowConnection()) {
+      params.addDatabaseScopedParameter("currentUser", getPlatform().currentUser(connection));
+      Set<String> tableNames = CollectionUtils.toSet(database.getTables(), Table::getName);
+      final String sql = String.format("select tablename, tableowner from pg_tables where schemaname = '%s' AND tablename IN %s;",
+        database.getName(), SqlUtils.getInSqlFragment(tableNames));
+      List<Map<String, Object>> list = JdbcUtils.queryForMapList(connection, sql);
+      Map<String, String> tableOwnerMap = CollectionUtils.toMap(list,
+        map -> String.valueOf(map.get("tablename")),
+        map -> String.valueOf(map.get("tableowner")));
+      for (Table table : database.getTables()) {
+        if (tableOwnerMap.containsKey(table.getName())) {
+          params.addParameter(table, "table_owner", tableOwnerMap.get(table.getName()));
+        }
+      }
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+    super.createTables(database, params, dropTables);
+  }
+
   /**
    * {@inheritDoc}
    */
@@ -94,6 +125,39 @@ public class PostgreSqlBuilder extends SqlBuilder {
       }
     }
     super.createTable(database, table, parameters);
+
+    final String tableIdentifier = getTableIdentifier(table);
+    print("ALTER TABLE ");
+    print(tableIdentifier);
+    print(" OWNER TO ");
+    print(asDelimitedIdentifier((String) parameters.get("table_owner")));
+    printEndOfStatement();
+
+    // write comments of columns
+    for (Column column : table.getColumns()) {
+      if (StringUtilsExt.isNotEmpty(column.getDescription())) {
+        print("COMMENT ON COLUMN ");
+        print(tableIdentifier);
+        print(".");
+        print(asDelimitedIdentifier(column.getName()));
+        print(" IS ");
+        print(SqlUtils.toValueLiteral(column.getDescription()));
+        printEndOfStatement();
+      }
+    }
+  }
+
+  @Override
+  protected String getTableIdentifier(Table table) {
+    return asDelimitedIdentifier(table.getSchema()) + "." + asDelimitedIdentifier(table.getName());
+  }
+
+  @Override
+  protected String getNativeType(Column column) {
+    if (column.getPlatformDataType() != null) {
+      return column.getPlatformDataType();
+    }
+    return super.getNativeType(column);
   }
 
   /**

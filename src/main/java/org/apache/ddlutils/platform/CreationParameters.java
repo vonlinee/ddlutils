@@ -58,6 +58,10 @@ public class CreationParameters {
     return result;
   }
 
+  public void addDatabaseScopedParameter(String paramName, String paramValue) {
+    addParameter(null, paramName, paramValue);
+  }
+
   /**
    * Adds a parameter.
    *

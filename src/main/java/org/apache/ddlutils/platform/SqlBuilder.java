@@ -1127,8 +1127,12 @@ public class SqlBuilder {
    */
   protected void writeTableAlterStmt(Table table) throws IOException {
     print("ALTER TABLE ");
-    printlnIdentifier(getTableName(table));
+    print(getTableIdentifier(table));
     printIndent();
+  }
+
+  protected String getTableIdentifier(Table table) {
+    return getDelimitedIdentifier(getTableName(table));
   }
 
   /**
@@ -1140,7 +1144,7 @@ public class SqlBuilder {
    */
   protected void writeTableCreationStmt(Database database, Table table, Map<String, Object> parameters) throws IOException {
     print("CREATE TABLE ");
-    printlnIdentifier(getTableName(table));
+    print(getTableIdentifier(table));
     println("(");
 
     writeColumns(table);

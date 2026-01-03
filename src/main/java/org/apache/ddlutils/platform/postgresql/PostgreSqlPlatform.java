@@ -261,4 +261,13 @@ public class PostgreSqlPlatform extends PlatformImplBase {
     ((PostgreSqlBuilder) getSqlBuilder()).dropColumn(changedTable, removedColumn);
     change.apply(currentModel, isDelimitedIdentifierModeOn());
   }
+
+  @Override
+  public String currentUser(Connection connection) {
+    try {
+      return JdbcUtils.queryForString(connection, "SELECT current_user");
+    } catch (SQLException e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
