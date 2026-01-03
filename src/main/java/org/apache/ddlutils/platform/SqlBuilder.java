@@ -678,9 +678,7 @@ public class SqlBuilder {
     // we're dropping the external foreign keys first
     for (int idx = database.getTableCount() - 1; idx >= 0; idx--) {
       Table table = database.getTable(idx);
-
-      if ((table.getName() != null) &&
-          (!table.getName().isEmpty())) {
+      if (StringUtilsExt.isNotEmpty(table.getName())) {
         dropForeignKeys(table);
       }
     }
@@ -1118,7 +1116,7 @@ public class SqlBuilder {
     printComment("-----------------------------------------------------------------------");
     printComment(getTableName(table));
     printComment("-----------------------------------------------------------------------");
-    println();
+    // println();
   }
 
   /**
@@ -1831,8 +1829,12 @@ public class SqlBuilder {
   protected void printEndOfStatement() throws IOException {
     // TODO: It might make sense to use a special writer which stores the individual
     //       statements separately (the end of a statement is identified by this method)
-    println(getPlatformInfo().getSqlCommandDelimiter());
+    printlnSqlCommandDelimiter();
     println();
+  }
+
+  protected void printlnSqlCommandDelimiter() throws IOException {
+    println(getPlatformInfo().getSqlCommandDelimiter());
   }
 
   /**
@@ -1860,10 +1862,14 @@ public class SqlBuilder {
    */
   protected String getDelimitedIdentifier(String identifier) {
     if (getPlatform().isDelimitedIdentifierModeOn()) {
-      return getPlatformInfo().getDelimiterToken() + identifier + getPlatformInfo().getDelimiterToken();
+      return asDelimitedIdentifier(identifier);
     } else {
       return identifier;
     }
+  }
+
+  protected String asDelimitedIdentifier(String identifier) {
+    return getPlatformInfo().getDelimiterToken() + identifier + getPlatformInfo().getDelimiterToken();
   }
 
   /**

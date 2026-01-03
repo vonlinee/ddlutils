@@ -23,6 +23,7 @@ import org.apache.commons.beanutils.DynaBean;
 import org.apache.ddlutils.dynabean.DynaClassCache;
 import org.apache.ddlutils.dynabean.SqlDynaClass;
 import org.apache.ddlutils.dynabean.SqlDynaException;
+import org.apache.ddlutils.util.StringUtilsExt;
 
 import java.io.Serializable;
 import java.sql.Types;
@@ -286,7 +287,7 @@ public class Database implements Serializable {
     HashSet<String> namesOfProcessedIndices = new HashSet<>();
     int tableIdx = 0;
 
-    if ((getName() == null) || (getName().isEmpty())) {
+    if (StringUtilsExt.isEmpty(getName())) {
       throw new ModelException("The database model has no name");
     }
 
@@ -307,8 +308,7 @@ public class Database implements Serializable {
 
       for (int idx = 0; idx < curTable.getColumnCount(); idx++) {
         Column column = curTable.getColumn(idx);
-
-        if ((column.getName() == null) || (column.getName().isEmpty())) {
+        if (StringUtilsExt.isEmpty(column.getName())) {
           throw new ModelException("The column nr. " + idx + " in table " + curTable.getName() + " has no name");
         }
         if (namesOfProcessedColumns.contains(column.getName())) {
@@ -316,7 +316,7 @@ public class Database implements Serializable {
         }
         namesOfProcessedColumns.add(column.getName());
 
-        if ((column.getType() == null) || (column.getType().isEmpty())) {
+        if (StringUtilsExt.isEmpty(column.getType())) {
           throw new ModelException("The column nr. " + idx + " in table " + curTable.getName() + " has no type");
         }
         if ((column.getTypeCode() == Types.OTHER) && !"OTHER".equalsIgnoreCase(column.getType())) {

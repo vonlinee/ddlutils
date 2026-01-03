@@ -49,6 +49,12 @@ public class Table implements Serializable {
    * The indices applied to this table.
    */
   private final ArrayList<Index> indices = new ArrayList<>();
+
+  /**
+   * The attributes of this table.
+   */
+  private final Attributes attributes = new Attributes();
+
   /**
    * The catalog of this table as read from the database.
    */
@@ -710,6 +716,23 @@ public class Table implements Serializable {
     if (!foreignKeys.isEmpty()) {
       CollectionUtils.sortString(foreignKeys, ForeignKey::getName, caseSensitive);
     }
+  }
+
+  public void setAttribute(String name, Object value) {
+    attributes.set(name, value);
+  }
+
+  public Object getAttribute(String name) {
+    return attributes.get(name);
+  }
+
+  /**
+   * Returns the attributes.
+   *
+   * @return The attributes
+   */
+  public Attributes getAttributes() {
+    return attributes;
   }
 
   /**

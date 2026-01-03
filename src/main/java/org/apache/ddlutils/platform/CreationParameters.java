@@ -66,7 +66,7 @@ public class CreationParameters {
    * @param paramValue The value of the parameter
    */
   public void addParameter(Table table, String paramName, String paramValue) {
-    String key = (table == null ? null : table.getName());
+    final String key = table == null ? null : table.getName();
     Map<String, Object> params = parametersPerTable.get(key);
 
     if (params == null) {

@@ -14,6 +14,14 @@ public class CollectionUtils {
     return collection == null || collection.isEmpty();
   }
 
+  public static <T> boolean isEmpty(T[] array) {
+    return array == null || array.length == 0;
+  }
+
+  public static <T> boolean isNotEmpty(T[] array) {
+    return array != null && array.length > 0;
+  }
+
   public static boolean isNotEmpty(Map<?, ?> map) {
     return map != null && !map.isEmpty();
   }
@@ -50,6 +58,17 @@ public class CollectionUtils {
     });
   }
 
+  public static <E, T> Set<T> toSet(E[] array, Function<E, T> mapper) {
+    if (isEmpty(array)) {
+      return Collections.emptySet();
+    }
+    Set<T> set = new HashSet<>();
+    for (E e : array) {
+      set.add(mapper.apply(e));
+    }
+    return set;
+  }
+
   public static <E, T> Set<T> toSet(Collection<E> collection, Function<E, T> mapper) {
     if (isEmpty(collection)) {
       return Collections.emptySet();
@@ -59,5 +78,16 @@ public class CollectionUtils {
       set.add(mapper.apply(e));
     }
     return set;
+  }
+
+  public static <K, V> Map<K, Map<K, V>> toMap(Collection<Map<K, V>> maps, Function<Map<K, V>, K> keyMapper) {
+    if (isEmpty(maps)) {
+      return Collections.emptyMap();
+    }
+    Map<K, Map<K, V>> map = new HashMap<>();
+    for (Map<K, V> m : maps) {
+      map.put(keyMapper.apply(m), m);
+    }
+    return map;
   }
 }
