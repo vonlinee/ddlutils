@@ -317,8 +317,17 @@ public class ScriptRunner {
   }
 
   public static void runScript(Connection connection, String script) {
+    runScript(connection, script, DEFAULT_DELIMITER);
+  }
+
+  public static void runScript(Connection connection, String script, String delimiter) {
     ScriptRunner scriptRunner = new ScriptRunner(connection);
+    scriptRunner.setDelimiter(delimiter);
     scriptRunner.runScript(new StringReader(script));
+  }
+
+  public static void runScript(Connection connection, File scriptFile) {
+    runScript(connection, scriptFile, DEFAULT_DELIMITER);
   }
 
   public static void runScript(Connection connection, File script, String delimiter) {

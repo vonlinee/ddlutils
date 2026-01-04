@@ -527,9 +527,13 @@ public final class JdbcUtils {
     }
   }
 
-  public static void commit(Connection connection) throws SQLException {
-    if (!connection.getAutoCommit()) {
-      connection.commit();
+  public static void commit(Connection connection) {
+    try {
+      if (!connection.getAutoCommit()) {
+        connection.commit();
+      }
+    } catch (Throwable t) {
+      throw new RuntimeException("Could not commit transaction. Cause: " + t, t);
     }
   }
 
@@ -630,5 +634,40 @@ public final class JdbcUtils {
         break;
     }
     return resultSet.wasNull() ? null : value;
+  }
+
+  public static void rollbackSilently(Connection connection) {
+    if (connection == null) {
+      return;
+    }
+    try {
+      if (!connection.getAutoCommit()) {
+        connection.rollback();
+      }
+    } catch (Throwable t) {
+      // ignore
+    }
+  }
+
+  public static void setAutoCommit(Connection connection, boolean autoCommit) {
+    try {
+      if (autoCommit != connection.getAutoCommit()) {
+        connection.setAutoCommit(autoCommit);
+      }
+    } catch (Throwable t) {
+      throw new RuntimeException("Could not set AutoCommit to " + autoCommit + ". Cause: " + t, t);
+    }
+  }
+
+  public static void throwWarnings(Statement statement) throws SQLException {
+    if (statement == null) {
+      return;
+    }
+    // In Oracle, CREATE PROCEDURE, FUNCTION, etc. returns warning
+    // instead of throwing exception if there is compilation error.
+    SQLWarning warning = statement.getWarnings();
+    if (warning != null) {
+      throw warning;
+    }
   }
 }
