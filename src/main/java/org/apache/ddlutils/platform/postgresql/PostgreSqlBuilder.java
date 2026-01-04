@@ -145,6 +145,13 @@ public class PostgreSqlBuilder extends SqlBuilder {
         printEndOfStatement();
       }
     }
+
+    if (StringUtilsExt.isNotEmpty(table.getDescription())) {
+      print("COMMENT ON TABLE ");
+      print(tableIdentifier);
+      print(" IS ");
+      print(SqlUtils.toValueLiteral(table.getDescription()));
+    }
   }
 
   @Override
