@@ -79,6 +79,12 @@ public abstract class TypeMap {
     registerJdbcType(JDBCType.VARBINARY, JdbcTypeCategory.BINARY);
     registerJdbcType(JDBCType.VARCHAR, JdbcTypeCategory.TEXTUAL);
 
+    for (JDBCType type : JDBCType.values()) {
+      if (_typeCodeToTypeName.containsKey(type.getVendorTypeNumber())) {
+        registerJdbcType(type, JdbcTypeCategory.OTHER);
+      }
+    }
+
     // Torque/Turbine extensions which we only support when reading from an XML schema
     _typeNameToTypeCode.put("BOOLEANINT", Types.TINYINT);
     _typeNameToTypeCode.put("BOOLEANCHAR", Types.CHAR);
