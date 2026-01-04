@@ -1223,6 +1223,14 @@ public interface Platform {
     }
   }
 
+  default String asIdentifier(String ...items) {
+    StringJoiner joiner = new StringJoiner(".");
+    for (String item : items) {
+      joiner.add(asIdentifier(item));
+    }
+    return joiner.toString();
+  }
+
   Object getObjectFromResultSet(ResultSet resultSet, String columnName, Table table) throws SQLException;
 
   void closeStatement(Statement stmt);
