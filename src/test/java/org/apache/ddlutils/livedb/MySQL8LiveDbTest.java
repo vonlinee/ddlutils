@@ -3,6 +3,7 @@ package org.apache.ddlutils.livedb;
 import org.apache.ddlutils.Platform;
 import org.apache.ddlutils.PlatformFactory;
 import org.apache.ddlutils.TestAgainstLiveDatabaseBase;
+import org.apache.ddlutils.alteration.ModelChange;
 import org.apache.ddlutils.model.Database;
 import org.apache.ddlutils.platform.BuiltinDbType;
 import org.apache.ddlutils.platform.CreationParameters;
@@ -81,5 +82,13 @@ public class MySQL8LiveDbTest {
       System.out.println();
       System.out.println(statement);
     }
+  }
+
+  @Test
+  @Disabled
+  public void parseSqlScript() throws Exception {
+    File schemaFile = new File(new File("").getAbsoluteFile(), "scripts/mysql/sakila-db/sakila-schema.sql");
+    List<ModelChange> modelChange = new MySQLScriptModelChangeParser(schemaFile).parse();
+    System.out.println(modelChange);
   }
 }

@@ -265,6 +265,13 @@
       <scope>test</scope>
     </dependency>
     <!-- NB: No public driver for DB2, interbase, sapdb, oracle, sqlserver -->
+
+    <!-- JSQLParser 4.9 was the last version compatible with JDK 8.  -->
+    <dependency>
+      <groupId>com.github.jsqlparser</groupId>
+      <artifactId>jsqlparser</artifactId>
+      <version>4.9</version>
+    </dependency>
   </dependencies>
 
   <profiles>
