@@ -29,16 +29,9 @@ import java.util.regex.Pattern;
  * and a constructor
  * GPSHansl, 06.08.2015: regex for delimiter, rearrange comment/delimiter detection, remove some ide warnings.
  */
-public class ScriptRunner {
+public class ScriptRunner extends ScriptSqlReader {
 
-  private static final String DEFAULT_DELIMITER = ";";
   private static final Pattern SOURCE_COMMAND = Pattern.compile("^\\s*SOURCE\\s+(.*?)\\s*$", Pattern.CASE_INSENSITIVE);
-
-  /**
-   * regex to detect delimiter.
-   * ignores spaces, allows delimiter in comment, allows an equals-sign
-   */
-  public static final Pattern PATTERN_DELIMITER = Pattern.compile("^\\s*(--)?\\s*delimiter\\s*=?\\s*([^\\s]+)+\\s*.*$", Pattern.CASE_INSENSITIVE);
 
   private final Connection connection;
 
@@ -48,8 +41,6 @@ public class ScriptRunner {
   private PrintWriter logWriter = null;
   private PrintWriter errorLogWriter = null;
 
-  private String delimiter = DEFAULT_DELIMITER;
-  private boolean fullLineDelimiter = false;
 
   private String userDirectory = System.getProperty("user.dir");
 
@@ -90,11 +81,6 @@ public class ScriptRunner {
     try (FileReader reader = new FileReader(file)) {
       new ScriptRunner(connection, true, true).runScript(reader);
     }
-  }
-
-  public void setDelimiter(String delimiter, boolean fullLineDelimiter) {
-    this.delimiter = delimiter;
-    this.fullLineDelimiter = fullLineDelimiter;
   }
 
   /**
@@ -144,7 +130,7 @@ public class ScriptRunner {
         if (originalAutoCommit != this.autoCommit) {
           connection.setAutoCommit(this.autoCommit);
         }
-        runScript(connection, reader);
+        doRunScript(reader);
       } finally {
         connection.setAutoCommit(originalAutoCommit);
       }
@@ -159,83 +145,71 @@ public class ScriptRunner {
    * Runs an SQL script (read in using the Reader parameter) using the
    * connection passed in
    *
-   * @param conn   - the connection to use for the script
    * @param reader - the source of the script
    * @throws SQLException if any SQL errors occur
    * @throws IOException  if there is an error reading from the Reader
    */
-  private void runScript(Connection conn, Reader reader) throws IOException,
-    SQLException {
-    StringBuilder command = null;
+  private void doRunScript(Reader reader) throws IOException, SQLException {
     try {
-      LineNumberReader lineReader = new LineNumberReader(reader);
-      String line;
-      while ((line = lineReader.readLine()) != null) {
-        if (command == null) {
-          command = new StringBuilder();
-        }
-        String trimmedLine = line.trim();
-        final Matcher delimMatch = PATTERN_DELIMITER.matcher(trimmedLine);
-        if (trimmedLine.isEmpty()
-            || trimmedLine.startsWith("//")) {
-          // Do nothing
-        } else if (delimMatch.matches()) {
-          setDelimiter(delimMatch.group(2), false);
-        } else if (trimmedLine.startsWith("--")) {
-          println(trimmedLine);
-        } else if (!fullLineDelimiter
-                   && trimmedLine.endsWith(getDelimiter())
-                   || fullLineDelimiter
-                      && trimmedLine.equals(getDelimiter())) {
-          command.append(line, 0, line.lastIndexOf(getDelimiter()));
-          command.append(" ");
-
-          if (command.length() > 0) {
-            this.execCommand(conn, command, lineReader);
-          }
-          command = null;
-        } else {
-          command.append(line);
-          command.append("\n");
-        }
-      }
-      if (command != null && command.length() > 0) {
-        this.execCommand(conn, command, lineReader);
-      }
-      if (!autoCommit) {
-        conn.commit();
-      }
-    } catch (IOException e) {
-      throw new IOException(String.format("Error executing '%s': %s", command, e.getMessage()), e);
+      read(reader);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
     } finally {
       // conn.rollback();
       flush();
     }
   }
 
-  private void execCommand(Connection conn, StringBuilder command,
+  @Override
+  protected void handleError(String command, Throwable throwable) throws IOException {
+    throw new IOException(String.format("Error executing '%s': %s", command, throwable.getMessage()), throwable);
+  }
+
+  @Override
+  protected void handleComment(String comment) {
+    println(comment);
+  }
+
+  @Override
+  protected void handleEndOfScript() {
+    if (!autoCommit) {
+      try {
+        connection.commit();
+      } catch (SQLException e) {
+        throw new RuntimeException(e);
+      }
+    }
+  }
+
+  @Override
+  protected void handleStatement(String command, LineNumberReader reader) {
+    try {
+      this.execCommand(connection, command, reader);
+    } catch (SQLException | IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
+  private void execCommand(Connection conn, String command,
                            LineNumberReader lineReader) throws IOException, SQLException {
     Matcher sourceCommandMatcher = SOURCE_COMMAND.matcher(command);
     if (sourceCommandMatcher.matches()) {
-      this.runScriptFile(conn, sourceCommandMatcher.group(1));
+      String filepath = sourceCommandMatcher.group(1);
+      File file = new File(userDirectory, filepath);
+      this.doRunScript(new BufferedReader(new FileReader(file)));
       return;
     }
     this.execSqlCommand(conn, command, lineReader);
   }
 
-  private void runScriptFile(Connection conn, String filepath) throws IOException, SQLException {
-    File file = new File(userDirectory, filepath);
-    this.runScript(conn, new BufferedReader(new FileReader(file)));
-  }
-
-  private void execSqlCommand(Connection conn, StringBuilder command,
+  private void execSqlCommand(Connection conn, String command,
                               LineNumberReader lineReader) throws SQLException {
 
     Statement statement = conn.createStatement();
     println(command);
     boolean hasResults = false;
     try {
-      hasResults = statement.execute(command.toString());
+      hasResults = statement.execute(command);
     } catch (SQLException e) {
       final String errText = String.format("Error executing '%s' (line %d): %s",
         command, lineReader.getLineNumber(), e.getMessage());
@@ -273,10 +247,6 @@ public class ScriptRunner {
     } catch (Exception e) {
       // Ignore to work around a bug in Jakarta DBCP
     }
-  }
-
-  private String getDelimiter() {
-    return delimiter;
   }
 
   @SuppressWarnings("UseOfSystemOutOrSystemErr")

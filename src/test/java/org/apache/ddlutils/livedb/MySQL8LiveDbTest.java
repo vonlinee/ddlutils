@@ -9,13 +9,18 @@ import org.apache.ddlutils.platform.CreationParameters;
 import org.apache.ddlutils.platform.SqlBuilder;
 import org.apache.ddlutils.util.JdbcUtils;
 import org.apache.ddlutils.util.ScriptRunner;
+import org.apache.ddlutils.util.ScriptSqlReader;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import javax.sql.DataSource;
 import java.io.File;
+import java.io.FileReader;
+import java.io.LineNumberReader;
 import java.io.StringWriter;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 @Disabled
 public class MySQL8LiveDbTest {
@@ -52,6 +57,29 @@ public class MySQL8LiveDbTest {
 
       File dataFile = new File(new File("").getAbsoluteFile(), "scripts/mysql/sakila-db/sakila-data.sql");
       ScriptRunner.runScript(connection, dataFile);
+    }
+  }
+
+  /**
+   * this should only be executed manually at local in IDE. just for test personally.
+   *
+   * @throws Exception if any error occurs
+   */
+  @Test
+  @Disabled
+  public void handleSqlScript() throws Exception {
+    File schemaFile = new File(new File("").getAbsoluteFile(), "scripts/mysql/sakila-db/sakila-schema.sql");
+    List<String> statements = new ArrayList<>();
+    new ScriptSqlReader() {
+      @Override
+      protected void handleStatement(String command, LineNumberReader reader) {
+        statements.add(command);
+      }
+    }.read(new FileReader(schemaFile));
+
+    for (String statement : statements) {
+      System.out.println();
+      System.out.println(statement);
     }
   }
 }
