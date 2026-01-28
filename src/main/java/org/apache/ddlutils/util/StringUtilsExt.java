@@ -358,4 +358,55 @@ public class StringUtilsExt {
     }
     return value;
   }
+
+  public static boolean containsVisibleCharsIgnoreCase(String str, String substr) {
+    return regionMatchesIgnoreWhitespace(str, 0, substr, true);
+  }
+
+  /**
+   * Compares a region of the source string with a target string, ignoring all whitespace.
+   * * @param source The string containing the region to check.
+   * @param sourceStart The starting index in the source.
+   * @param target The string to match against.
+   * @param ignoreCase Whether to ignore character casing.
+   * @return true if the regions match excluding whitespace.
+   */
+  public static boolean regionMatchesIgnoreWhitespace(
+    String source, int sourceStart, String target, boolean ignoreCase) {
+    int sIdx = sourceStart;
+    int tIdx = 0;
+    while (tIdx < target.length()) {
+      // 1. Skip whitespace in target
+      char tChar = target.charAt(tIdx);
+      if (Character.isWhitespace(tChar)) {
+        tIdx++;
+        continue;
+      }
+      // 2. Skip whitespace in source
+      if (sIdx < source.length() && Character.isWhitespace(source.charAt(sIdx))) {
+        sIdx++;
+        continue;
+      }
+      // 3. Boundary check for source
+      if (sIdx >= source.length()) {
+        return false;
+      }
+      // 4. Compare characters
+      char sChar = source.charAt(sIdx);
+      if (!charactersMatch(sChar, tChar, ignoreCase)) {
+        return false;
+      }
+      // 5. Move both pointers forward
+      sIdx++;
+      tIdx++;
+    }
+    return true;
+  }
+
+  private static boolean charactersMatch(char c1, char c2, boolean ignoreCase) {
+    if (ignoreCase) {
+      return Character.toLowerCase(c1) == Character.toLowerCase(c2);
+    }
+    return c1 == c2;
+  }
 }

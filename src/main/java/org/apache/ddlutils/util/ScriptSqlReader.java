@@ -52,7 +52,7 @@ public class ScriptSqlReader {
           // Do nothing
         } else if (delimMatch.matches()) {
           setDelimiter(delimMatch.group(2), false);
-        } else if (trimmedLine.startsWith("--")) {
+        } else if (isLineComment(trimmedLine)) {
           handleComment(trimmedLine);
         } else if (!fullLineDelimiter
                    && trimmedLine.endsWith(getDelimiter())
@@ -85,5 +85,16 @@ public class ScriptSqlReader {
 
   private String getDelimiter() {
     return delimiter;
+  }
+
+  public boolean isLineComment(String line) {
+    return line.startsWith("--") || isBlockLineComment(line);
+  }
+
+  private boolean isBlockLineComment(String line) {
+    if (line.endsWith(getDelimiter())) {
+      line = line.substring(0, line.length() - getDelimiter().length());
+    }
+    return line.startsWith("/*") && line.endsWith("*/");
   }
 }
