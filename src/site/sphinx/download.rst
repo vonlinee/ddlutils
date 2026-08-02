@@ -29,13 +29,13 @@ These are the currently released versions:
 `DdlUtils 1.0 <http://www.apache.org/dyn/closer.cgi/db/ddlutils/ddlutils-1.0/>`_
 
 * `Binary ZIP file <http://www.apache.org/dyn/closer.cgi/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip>`_
-  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.asc>`_, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.md5>`_, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.sha>`_)
+  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.asc>`__, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.md5>`__, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0-bin.zip.sha>`__)
 * `JAR file <http://www.apache.org/dyn/closer.cgi/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar>`_
-  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.asc>`_, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.md5>`_, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.sha>`_)
+  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.asc>`__, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.md5>`__, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/binaries/DdlUtils-1.0.jar.sha>`__)
 * `Source ZIP file <http://www.apache.org/dyn/closer.cgi/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip>`_
-  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.asc>`_, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.md5>`_, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.sha>`_)
+  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.asc>`__, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.md5>`__, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/source/DdlUtils-1.0-src.zip.sha>`__)
 * `Documentation ZIP <http://www.apache.org/dyn/closer.cgi/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip>`_
-  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.asc>`_, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.md5>`_, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.sha>`_)
+  (`Signature <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.asc>`__, `MD5 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.md5>`__, `SHA1 <http://www.apache.org/dist/db/ddlutils/ddlutils-1.0/doc/DdlUtils-1.0-doc.zip.sha>`__)
 
 You can find the KEYS file containing the public keys for verifying the signature
 `here <http://www.apache.org/dist/db/ddlutils/KEYS>`_.

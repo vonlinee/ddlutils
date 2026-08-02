@@ -27,10 +27,10 @@ data contained in it, to XML.
 Lets see examples for how to use them::
 
     <path id="runtime-classpath">
-      <fileset dir="lib">
+      <fileset dir="target/dependency">
         <include name="**/*.jar"/>
-        <include name="**/*.zip"/>
       </fileset>
+      <pathelement location="target/ddlutils-1.1.jar"/>
     </path>
 
     <target name="database-setup"
@@ -60,8 +60,8 @@ defined in the file ``src/schema/project-schema.xml`` in this database, and then
 inserts the data defined in ``src/data/data.xml``.
 
 Required for this to work is that both DdlUtils and the JDBC driver are available
-in the path specified by ``runtime-classpath``. In the above snippet, this path
-contains all JARs and ZIPs in sub-directory ``lib``.
+in the path specified by ``runtime-classpath``. When working from this source
+tree, Maven can prepare those files with ``mvn package dependency:copy-dependencies``.
 
 .. note:: Not every database platform supports creation of new databases via JDBC. Please refer to the
    documentation of the support for the individual databases :doc:`here <database-support>`.
@@ -69,10 +69,10 @@ contains all JARs and ZIPs in sub-directory ``lib``.
 The opposite direction is achieved via the ``DatabaseToDdlTask`` task::
 
     <path id="runtime-classpath">
-      <fileset dir="lib">
+      <fileset dir="target/dependency">
         <include name="**/*.jar"/>
-        <include name="**/*.zip"/>
       </fileset>
+      <pathelement location="target/ddlutils-1.1.jar"/>
     </path>
 
     <target name="database-dump" description="Dumps the database structure">
@@ -100,4 +100,4 @@ to the file ``data.xml``.
 
    ddl-to-database-task
    database-to-ddl-task
-   
+   generated/ant-task-reference

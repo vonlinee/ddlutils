@@ -105,11 +105,15 @@
   </distributionManagement>
 
   <properties>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
+    <java.version>8</java.version>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <python.executable>python</python.executable>
+    <sphinx.source.dir>${project.build.directory}/generated-site/sphinx</sphinx.source.dir>
+    <sphinx.output.dir>${project.reporting.outputDirectory}</sphinx.output.dir>
+    <site.preview.port>8000</site.preview.port>
 
     <hsqldb.version>2.4.1</hsqldb.version>
   </properties>
@@ -338,20 +342,43 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>serve-site</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.5.0</version>
+            <configuration>
+              <executable>${python.executable}</executable>
+              <workingDirectory>${project.basedir}</workingDirectory>
+              <arguments>
+                <argument>-m</argument>
+                <argument>http.server</argument>
+                <argument>${site.preview.port}</argument>
+                <argument>-d</argument>
+                <argument>${project.build.directory}/site</argument>
+              </arguments>
+            </configuration>
+            <executions>
+              <execution>
+                <id>serve-generated-site</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
   <reporting>
     <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.7.0</version>
-        <configuration>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
-          <encoding>${project.build.sourceEncoding}</encoding>
-        </configuration>
-      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-project-info-reports-plugin</artifactId>
@@ -365,23 +392,110 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>3.12.0</version>
         <configuration>
+          <doclint>none</doclint>
           <stylesheetfile>src/site/javadoc/stylesheet.css</stylesheetfile>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>kr.motd.maven</groupId>
-        <artifactId>sphinx-maven-plugin</artifactId>
-        <version>2.10.0</version>
-        <configuration>
-          <builder>html</builder>
+          <tags>
+            <tag>
+              <name>ant.task</name>
+              <placement>a</placement>
+              <head>Ant task:</head>
+            </tag>
+            <tag>
+              <name>ant.type</name>
+              <placement>a</placement>
+              <head>Ant type:</head>
+            </tag>
+            <tag>
+              <name>ant.required</name>
+              <placement>a</placement>
+              <head>Required:</head>
+            </tag>
+            <tag>
+              <name>ant.not-required</name>
+              <placement>a</placement>
+              <head>Optional:</head>
+            </tag>
+          </tags>
         </configuration>
       </plugin>
     </plugins>
   </reporting>
 
   <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.3.1</version>
+        <executions>
+          <execution>
+            <id>prepare-sphinx-site-sources</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${sphinx.source.dir}</outputDirectory>
+              <overwrite>true</overwrite>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/src/site/sphinx</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <id>generate-ant-task-reference</id>
+            <phase>pre-site</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+            <configuration>
+              <executable>${python.executable}</executable>
+              <workingDirectory>${project.basedir}</workingDirectory>
+              <arguments>
+                <argument>${project.basedir}/src/site/scripts/generate-ant-task-reference.py</argument>
+                <argument>--source-root</argument>
+                <argument>${project.basedir}/src/main/java</argument>
+                <argument>--output</argument>
+                <argument>${sphinx.source.dir}/generated/ant-task-reference.rst</argument>
+              </arguments>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>kr.motd.maven</groupId>
+        <artifactId>sphinx-maven-plugin</artifactId>
+        <version>2.10.0</version>
+        <executions>
+          <execution>
+            <id>generate-sphinx-site</id>
+            <phase>site</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <builder>html</builder>
+              <force>true</force>
+              <sourceDirectory>${sphinx.source.dir}</sourceDirectory>
+              <configDirectory>${sphinx.source.dir}</configDirectory>
+              <outputDirectory>${sphinx.output.dir}</outputDirectory>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
     <testResources>
       <testResource>
         <directory>src/test/resources</directory>

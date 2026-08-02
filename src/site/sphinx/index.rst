@@ -25,7 +25,9 @@ DdlUtils documentation
    download
    api-usage
    ant-tasks
+   building-site
    database-support
    databases/index
    schema
-   javadoc </apidocs/index.html>
+
+The generated Javadoc is available in the `API reference <apidocs/index.html>`_.

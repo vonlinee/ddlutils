@@ -106,7 +106,7 @@ Subtasks
    create-database-subtask
    drop-database-subtask
    write-dtd-to-file-subtask
-   write-file-schema-to-database-subtask
-   write-schema-sql-to-file-subtask
+   write-schema-to-database-subtask
+   write-file-schema-sql-to-file-subtask
    write-data-to-database-subtask
    write-data-to-file-subtask

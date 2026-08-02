@@ -103,9 +103,9 @@ You're also welcome to join one of the two DdlUtils' mailing lists:
 
 * User mailing list ``ddlutils-user <at> db.apache.org``
 
-  `Subscribe <mailto:ddlutils-user-subscribe@db.apache.org>`_, `Unsubscribe <mailto:ddlutils-user-unsubscribe@db.apache.org>`_, `Archive <http://mail-archives.apache.org/mod_mbox/db-ddlutils-user/>`_
+`Subscribe <mailto:ddlutils-user-subscribe@db.apache.org>`__, `Unsubscribe <mailto:ddlutils-user-unsubscribe@db.apache.org>`__, `Archive <http://mail-archives.apache.org/mod_mbox/db-ddlutils-user/>`__
 
 * Developer mailing list ``ddlutils-dev <at> db.apache.org``
 
-  `Subscribe <mailto:ddlutils-dev-subscribe@db.apache.org>`_, `Unsubscribe <mailto:ddlutils-dev-unsubscribe@db.apache.org>`_, `Archive <http://mail-archives.apache.org/mod_mbox/db-ddlutils-dev/>`_
+`Subscribe <mailto:ddlutils-dev-subscribe@db.apache.org>`__, `Unsubscribe <mailto:ddlutils-dev-unsubscribe@db.apache.org>`__, `Archive <http://mail-archives.apache.org/mod_mbox/db-ddlutils-dev/>`__
 
