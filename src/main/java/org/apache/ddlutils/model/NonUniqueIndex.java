@@ -75,19 +75,7 @@ public class NonUniqueIndex extends IndexImplBase {
   public boolean equalsIgnoreCase(Index other) {
     if (other instanceof NonUniqueIndex) {
       NonUniqueIndex otherIndex = (NonUniqueIndex) other;
-
-      boolean checkName = (name != null) && (!name.isEmpty()) &&
-                          (otherIndex.name != null) && (!otherIndex.name.isEmpty());
-
-      if ((!checkName || name.equalsIgnoreCase(otherIndex.name)) &&
-          (getColumnCount() == otherIndex.getColumnCount())) {
-        for (int idx = 0; idx < getColumnCount(); idx++) {
-          if (!getColumn(idx).equalsIgnoreCase(otherIndex.getColumn(idx))) {
-            return false;
-          }
-        }
-        return true;
-      }
+      return equalsTo(otherIndex);
     }
     return false;
   }

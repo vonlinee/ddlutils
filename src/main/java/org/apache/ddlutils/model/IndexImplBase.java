@@ -141,4 +141,20 @@ abstract class IndexImplBase implements Index {
   public void removeColumn(int idx) {
     columns.remove(idx);
   }
+
+  protected boolean equalsTo(Index otherIndex) {
+    boolean checkName = name != null && !name.isEmpty() &&
+                        otherIndex.getName() != null && !otherIndex.getName().isEmpty();
+
+    if ((!checkName || name.equalsIgnoreCase(otherIndex.getName())) &&
+        getColumnCount() == otherIndex.getColumnCount()) {
+      for (int idx = 0; idx < getColumnCount(); idx++) {
+        if (!getColumn(idx).equalsIgnoreCase(otherIndex.getColumn(idx))) {
+          return false;
+        }
+      }
+      return true;
+    }
+    return false;
+  }
 }
