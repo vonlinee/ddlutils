@@ -40,6 +40,8 @@ nbdist/
 *.auditLog
 *.xml.versionsBackup
 *.swp
+__pycache__/
+*.py[cod]
 
 !*/build/*.java
 !*/build/*.html
